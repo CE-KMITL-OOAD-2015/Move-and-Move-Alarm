@@ -1,0 +1,47 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        jar="C:\Users\kid14\AppData\Local\Android\sdk\extras\android\m2repository\com\android\support\support-annotations\23.0.1\support-annotations-23.0.1.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="1fce89a6428c51467090d7f424e4c9c3dbd55f7e">
+        <dex dex="D:\Work\Android\MAMTv1\app\build\intermediates\pre-dexed\debug\support-annotations-23.0.1-9426952bd67a17d683600d222d674923248699dc.jar" />
+    </item>
+    <item
+        jar="D:\Work\Android\MAMTv1\app\build\intermediates\exploded-aar\com.android.support\support-v4\23.0.1\jars\classes.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="c31e21b53ff2f74664e498248d01453a32e32d48">
+        <dex dex="D:\Work\Android\MAMTv1\app\build\intermediates\pre-dexed\debug\classes-e5a31aec2b4aa245c764d332dbc0a9e7cf459d01.jar" />
+    </item>
+    <item
+        jar="D:\Work\Android\MAMTv1\app\build\intermediates\exploded-aar\de.hdodenhof\circleimageview\1.2.1\jars\classes.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="4b868b833b0887aa48c4e581558eef4f1196f6a2">
+        <dex dex="D:\Work\Android\MAMTv1\app\build\intermediates\pre-dexed\debug\classes-136aab6eb5d43591072e1c7ae8c68de499615bed.jar" />
+    </item>
+    <item
+        jar="D:\Work\Android\MAMTv1\app\build\intermediates\exploded-aar\com.android.support\design\22.2.0\jars\classes.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="fc63b820d54c8a27a3a614bdd93920e0076581c2">
+        <dex dex="D:\Work\Android\MAMTv1\app\build\intermediates\pre-dexed\debug\classes-ac8a12618fb758000440ade34e87b057e531288e.jar" />
+    </item>
+    <item
+        jar="D:\Work\Android\MAMTv1\app\build\intermediates\exploded-aar\com.android.support\support-v4\23.0.1\jars\libs\internal_impl-23.0.1.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="aa92916125166649d8ad4ba3940c3dd7515596d3">
+        <dex dex="D:\Work\Android\MAMTv1\app\build\intermediates\pre-dexed\debug\internal_impl-23.0.1-c7e677210ae1592308d1b59bb942e563855ee90c.jar" />
+    </item>
+    <item
+        jar="D:\Work\Android\MAMTv1\app\build\intermediates\exploded-aar\com.android.support\appcompat-v7\23.0.1\jars\classes.jar"
+        jumboMode="false"
+        revision="23.0.1"
+        sha1="d86429b0f0b3f3cafbeb78dda1b9d89119ccb05d">
+        <dex dex="D:\Work\Android\MAMTv1\app\build\intermediates\pre-dexed\debug\classes-1f6bf61d6266c0aedc5746c1c5c815a321eded3e.jar" />
+    </item>
+
+</items>
