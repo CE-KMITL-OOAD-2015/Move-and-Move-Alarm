@@ -33,7 +33,6 @@ public class AlarmFragment extends android.support.v4.app.Fragment {
         createSpinnerAmPm(R.id.start_AP,view);
         createSpinnerAmPm(R.id.fin_AP,view);
         createSpinnerFrq(R.id.frq_min,view);
-
         return view;
     }
 
