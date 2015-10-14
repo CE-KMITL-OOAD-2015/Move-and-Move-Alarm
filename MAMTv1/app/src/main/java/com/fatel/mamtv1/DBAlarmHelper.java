@@ -40,20 +40,21 @@ public class DBAlarmHelper extends SQLiteOpenHelper{
         Log.i(TAG,"Upgrade Database from "+oldVersion+" to "+newVersion);
         onCreate(db);
     }
-    public void addAlarm(DatabaseAlarm friend) {
+    public void addAlarm(DatabaseAlarm alarm) {
         sqLiteDatabase = this.getWritableDatabase();
 
         ContentValues values = new ContentValues();
         //values.put(Friend.Column.ID, friend.getId());
-        values.put(DatabaseAlarm.Column.START_HR, friend.getStarthr());
-        values.put(DatabaseAlarm.Column.START_MIN, friend.getStartmin());
-        values.put(DatabaseAlarm.Column.STOP_HR, friend.getStophr());
-        values.put(DatabaseAlarm.Column.STOP_MIN, friend.getStopmin());
-        values.put(DatabaseAlarm.Column.START_INTERVAL, friend.getStartinterval());
-        values.put(DatabaseAlarm.Column.STOP_INTERVAL,friend.getStopinterval());
-        values.put(DatabaseAlarm.Column.FRQ, friend.getFrq());
-        values.put(DatabaseAlarm.Column.DAY, friend.getDay());
+        values.put(DatabaseAlarm.Column.START_HR, alarm.getStarthr());
+        values.put(DatabaseAlarm.Column.START_MIN, alarm.getStartmin());
+        values.put(DatabaseAlarm.Column.STOP_HR, alarm.getStophr());
+        values.put(DatabaseAlarm.Column.STOP_MIN, alarm.getStopmin());
+        values.put(DatabaseAlarm.Column.START_INTERVAL, alarm.getStartinterval());
+        values.put(DatabaseAlarm.Column.STOP_INTERVAL,alarm.getStopinterval());
+        values.put(DatabaseAlarm.Column.FRQ, alarm.getFrq());
+        values.put(DatabaseAlarm.Column.DAY, alarm.getDay());
         sqLiteDatabase.insert(DatabaseAlarm.TABLE, null, values);
         sqLiteDatabase.close();
     }
+
 }
