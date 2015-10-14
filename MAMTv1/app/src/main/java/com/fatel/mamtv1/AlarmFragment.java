@@ -3,6 +3,8 @@ package com.fatel.mamtv1;
 
 import android.app.AlertDialog;
 import android.content.DialogInterface;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -50,13 +52,13 @@ public class AlarmFragment extends android.support.v4.app.Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_alarm, container, false);
+
         mStartHr = createSpinner(12, R.id.start_hr,true,view);
         mStartMin = createSpinner(60, R.id.start_min,false,view);
         mFinishHr = createSpinner(12, R.id.fin_hr, true, view);
         mFinishMin = createSpinner(60, R.id.fin_min, false, view);
         mStartAP = createSpinnerAmPm(R.id.start_AP, view);
         mFinishAP = createSpinnerAmPm(R.id.fin_AP, view);
-
         mChkboxSun = (CheckBox)view.findViewById(R.id.chkboxSun);
         mChkboxMon = (CheckBox)view.findViewById(R.id.chkboxMon);
         mChkboxTue = (CheckBox)view.findViewById(R.id.chkboxTue);
@@ -128,8 +130,7 @@ public class AlarmFragment extends android.support.v4.app.Fragment {
                     if (ID == -1) {
                         mAlarmHelper.addAlarm(alarm);
                     } else {
-                        alarm.setId(ID);
-                        //mHelper.updateFriend(friend);
+                        mAlarmHelper.UpdateAlarm(alarm);
                     }
                     //finish();
                 FragmentTransaction tx = getFragmentManager().beginTransaction();
