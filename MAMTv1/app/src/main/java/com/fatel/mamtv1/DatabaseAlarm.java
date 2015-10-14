@@ -14,7 +14,7 @@ public class DatabaseAlarm {
     private String startinterval;
     private String stopinterval;
     private String frq;
-    private boolean[] day;
+    private String day;
     public static final String DATABASE_NAME = "fatel_alarm.db";
     public static final int DATABASE_VERSION = 1;
     public static final String TABLE = "alram";
@@ -32,7 +32,7 @@ public class DatabaseAlarm {
     public DatabaseAlarm(){
     }
     public DatabaseAlarm(int id,String starthr,String startmin,String stophr,String stopmin,
-                         String startinterval,String stopinterval,String frq,boolean[] day){
+                         String startinterval,String stopinterval,String frq,String day){
         this.id = id;
         this.starthr = starthr;
         this.startmin = startmin;
@@ -68,7 +68,7 @@ public class DatabaseAlarm {
     public String getFrq(){
         return frq;
     }
-    public boolean[] getDay(){
+    public String getDay(){
         return day;
     }
     public void setId(int id){
@@ -95,7 +95,7 @@ public class DatabaseAlarm {
     public void setFrq(String frq){
         this.frq = frq;
     }
-    public void setDay(boolean[] day){
+    public void setDay(String day){
         this.day = day;
     }
 }
