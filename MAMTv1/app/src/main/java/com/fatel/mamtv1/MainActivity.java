@@ -51,7 +51,10 @@ public class MainActivity extends AppCompatActivity {
 
                 // Insert the fragment by replacing any existing fragment
                 FragmentManager fragmentManager = getSupportFragmentManager();//getActivity()
-                fragmentManager.beginTransaction().replace(R.id.container, fragment).commit();
+                FragmentTransaction tx = fragmentManager.beginTransaction();
+                tx.setCustomAnimations(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+                tx.addToBackStack(null);
+                tx.replace(R.id.container, fragment).commit();
 
                 // Highlight the selected item, update the title, and close the drawer
                 setTitle("Profile");
@@ -135,7 +138,10 @@ public class MainActivity extends AppCompatActivity {
 
         // Insert the fragment by replacing any existing fragment
         FragmentManager fragmentManager = getSupportFragmentManager();//getActivity()
-        fragmentManager.beginTransaction().replace(R.id.container, fragment).commit();
+        FragmentTransaction tx = fragmentManager.beginTransaction();
+        tx.setCustomAnimations(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+        tx.addToBackStack(null);
+        tx.replace(R.id.container, fragment).commit();
 
         // Highlight the selected item, update the title, and close the drawer
         menuItem.setChecked(true);

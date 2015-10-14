@@ -3,10 +3,12 @@ package com.fatel.mamtv1;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.Button;
 import android.widget.Spinner;
 
 
@@ -30,10 +32,21 @@ public class AlarmFragment extends android.support.v4.app.Fragment {
         createSpinner(60, R.id.start_min,false,view);
         createSpinner(12, R.id.fin_hr,true,view);
         createSpinner(60, R.id.fin_min,false,view);
-        createSpinnerAmPm(R.id.start_AP,view);
+        createSpinnerAmPm(R.id.start_AP, view);
         createSpinnerAmPm(R.id.fin_AP,view);
-        createSpinnerFrq(R.id.frq_min,view);
+        createSpinnerFrq(R.id.frq_min, view);
 
+        Button bt = (Button) view.findViewById(R.id.buttonSet);
+        bt.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                FragmentTransaction tx = getFragmentManager().beginTransaction();
+                tx.setCustomAnimations(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+                tx.replace(R.id.container, new MainFragment());
+                tx.addToBackStack(null);
+                tx.commit();
+            }
+        });
         return view;
     }
 
