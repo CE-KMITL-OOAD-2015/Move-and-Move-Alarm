@@ -1,4 +1,5 @@
 package com.fatel.mamtv1;
+import android.content.ContentValues;
 import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
@@ -12,7 +13,7 @@ public class DBAlarmHelper extends SQLiteOpenHelper{
     private SQLiteDatabase sqLiteDatabase;
 
     public DBAlarmHelper(Context context){
-        super(context,"fatel_alarm.db",null,DatabaseAlarm.DATABASE_VERSION);
+        super(context, "fatel_alarm.db", null, DatabaseAlarm.DATABASE_VERSION);
     }
     @Override
     public void onCreate(SQLiteDatabase db){
@@ -38,5 +39,21 @@ public class DBAlarmHelper extends SQLiteOpenHelper{
         db.execSQL(DROP_ALRAM_TABLE);
         Log.i(TAG,"Upgrade Database from "+oldVersion+" to "+newVersion);
         onCreate(db);
+    }
+    public void addAlarm(DatabaseAlarm friend) {
+        sqLiteDatabase = this.getWritableDatabase();
+
+        ContentValues values = new ContentValues();
+        //values.put(Friend.Column.ID, friend.getId());
+        values.put(DatabaseAlarm.Column.START_HR, friend.getStarthr());
+        values.put(DatabaseAlarm.Column.START_MIN, friend.getStartmin());
+        values.put(DatabaseAlarm.Column.STOP_HR, friend.getStophr());
+        values.put(DatabaseAlarm.Column.STOP_MIN, friend.getStopmin());
+        values.put(DatabaseAlarm.Column.START_INTERVAL, friend.getStartinterval());
+        values.put(DatabaseAlarm.Column.STOP_INTERVAL,friend.getStopinterval());
+        values.put(DatabaseAlarm.Column.FRQ, friend.getFrq());
+        values.put(DatabaseAlarm.Column.DAY, friend.getDay());
+        sqLiteDatabase.insert(DatabaseAlarm.TABLE, null, values);
+        sqLiteDatabase.close();
     }
 }
