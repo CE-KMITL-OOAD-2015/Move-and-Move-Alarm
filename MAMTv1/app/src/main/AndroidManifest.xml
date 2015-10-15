@@ -20,6 +20,10 @@
             android:name=".Activity"
             android:label="@string/title_activity_" >
         </activity>
+        <activity
+            android:name=".actAlarm"
+            android:label="@string/title_activity_act_alarm" >
+        </activity>
     </application>
 
 </manifest>
