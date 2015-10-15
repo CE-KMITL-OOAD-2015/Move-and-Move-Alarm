@@ -1,15 +1,12 @@
 package movealarm.kmitl.net;
 
-/**
- * Created by Moobi on 15-Oct-15.
- */
-
 import java.sql.Statement;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.HashMap;
 
 public class SQLInquirer {
 
@@ -17,11 +14,13 @@ public class SQLInquirer {
     private Connection connector;
     private Statement stmt;
     private ResultSet rs;
-    private ArrayList<Object> temp = new ArrayList<Object>();
+    private ArrayList<HashMap<String, Object>> collection;
+    private boolean connectionStatus = false;
 
     public SQLInquirer()
     {
-
+        connectionStatus = startConnection();
+        collection = new ArrayList<HashMap<String, Object>>();
     }
 
     public boolean startQuery()
@@ -40,7 +39,7 @@ public class SQLInquirer {
         this.sqlCommand = sqlCommand;
     }
 
-    public boolean startConnecting()
+    public boolean startConnection()
     {
         try{
             Class.forName("org.mariadb.jdbc.Driver");
@@ -58,36 +57,25 @@ public class SQLInquirer {
         }
     }
 
-    public Object[] getColumn(int lineNum)
+    public boolean isConnecting()
     {
-        temp = new ArrayList<Object>();
+        return connectionStatus;
+    }
+
+    public void closeConnection()
+    {
         try {
-            while (rs.next())
-                temp.add(rs.getString(lineNum));
+            connector.close();
+            stmt.close();
+            rs.close();
+            connectionStatus = false;
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return temp.toArray(new String[temp.size()]);
     }
 
-    public Object[] getColumn(String colName)
+    public ArrayList<HashMap<String, Object>> getCollection()
     {
-        temp = new ArrayList<Object>();
-        try {
-            while (rs.next())
-                temp.add(rs.getObject(colName));
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return temp.toArray(new Object[temp.size()]);
-    }
-
-    public int getRowNum()
-    {
-        try {
-            return rs.getFetchSize();
-        } catch (SQLException e) {
-            return 0;
-        }
+        return collection;
     }
 }
