@@ -16,6 +16,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 
 /**
@@ -53,12 +54,14 @@ public class AlarmFragment extends android.support.v4.app.Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_alarm, container, false);
 
-        mStartHr = createSpinner(12, R.id.start_hr,true,view);
-        mStartMin = createSpinner(60, R.id.start_min,false,view);
-        mFinishHr = createSpinner(12, R.id.fin_hr, true, view);
-        mFinishMin = createSpinner(60, R.id.fin_min, false, view);
-        mStartAP = createSpinnerAmPm(R.id.start_AP, view);
-        mFinishAP = createSpinnerAmPm(R.id.fin_AP, view);
+        mAlarmHelper = new DBAlarmHelper(getActivity());
+
+        mStartHr = createSpinner(12, R.id.start_hr,true,view,mAlarmHelper,true);
+        mStartMin = createSpinner(60, R.id.start_min,false,view,mAlarmHelper,true);
+        mFinishHr = createSpinner(12, R.id.fin_hr, true, view,mAlarmHelper,false);
+        mFinishMin = createSpinner(60, R.id.fin_min, false, view, mAlarmHelper, false);
+        mStartAP = createSpinnerAmPm(R.id.start_AP, view,mAlarmHelper,true);
+        mFinishAP = createSpinnerAmPm(R.id.fin_AP, view,mAlarmHelper,false);
         mChkboxSun = (CheckBox)view.findViewById(R.id.chkboxSun);
         mChkboxMon = (CheckBox)view.findViewById(R.id.chkboxMon);
         mChkboxTue = (CheckBox)view.findViewById(R.id.chkboxTue);
@@ -66,9 +69,27 @@ public class AlarmFragment extends android.support.v4.app.Fragment {
         mChkboxThu = (CheckBox)view.findViewById(R.id.chkboxThu);
         mChkboxFri = (CheckBox)view.findViewById(R.id.chkboxFri);
         mChkboxSat = (CheckBox)view.findViewById(R.id.chkboxSat);
+        mFreq = createSpinnerFrq(R.id.frq_min, view,mAlarmHelper);
 
-        mFreq = createSpinnerFrq(R.id.frq_min, view);
-        mAlarmHelper = new DBAlarmHelper(getActivity());
+        //check checkbox tick
+        if(mAlarmHelper.checkdata()==1) {
+            DatabaseAlarm alarm = mAlarmHelper.getAlarm();
+            String day = alarm.getDay();
+            if(day.substring(0,1).equals("1"))
+                mChkboxSun.setChecked(true);
+            if(day.substring(1,2).equals("1"))
+                mChkboxMon.setChecked(true);
+            if(day.substring(2,3).equals("1"))
+                mChkboxTue.setChecked(true);
+            if(day.substring(3,4).equals("1"))
+                mChkboxWed.setChecked(true);
+            if(day.substring(4,5).equals("1"))
+                mChkboxThu.setChecked(true);
+            if(day.substring(5,6).equals("1"))
+                mChkboxFri.setChecked(true);
+            if(day.substring(6,7).equals("1"))
+                mChkboxSat.setChecked(true);
+        }
 
         Button bt = (Button) view.findViewById(R.id.buttonSet);
         bt.setOnClickListener(new View.OnClickListener() {
@@ -127,7 +148,7 @@ public class AlarmFragment extends android.support.v4.app.Fragment {
                     alarm.setStopinterval(mFinishAP.getSelectedItem().toString());
                     alarm.setDay(mdays.toString());
                     alarm.setFrq(mFreq.getSelectedItem().toString());
-                    if (ID == -1) {
+                    if (ID == -1 && (mAlarmHelper.checkdata()==0)) {
                         mAlarmHelper.addAlarm(alarm);
                     } else {
                         mAlarmHelper.UpdateAlarm(alarm);
@@ -143,7 +164,7 @@ public class AlarmFragment extends android.support.v4.app.Fragment {
         return view;
     }
 
-    public Spinner createSpinner(int num,int id,boolean isHr,View view)
+    public Spinner createSpinner(int num,int id,boolean isHr,View view,DBAlarmHelper mAlarmHelper,boolean isStart)
     {
         Spinner spinner = (Spinner)view.findViewById(id);
         String[] numm = new String[num];
@@ -158,7 +179,21 @@ public class AlarmFragment extends android.support.v4.app.Fragment {
             adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, numm);
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             spinner.setAdapter(adapter);
-            spinner.setSelection(11);
+            if(mAlarmHelper.checkdata()==0)
+                spinner.setSelection(11);
+            else
+            {
+                DatabaseAlarm alarm = mAlarmHelper.getAlarm();
+                if(isStart) {
+                    String hr = alarm.getStarthr();
+                    spinner.setSelection(Integer.parseInt(hr) - 1);
+                }
+                else
+                {
+                    String hr = alarm.getStophr();
+                    spinner.setSelection(Integer.parseInt(hr)-1);
+                }
+            }
         }
         else {
             for (int i = 0; i < num; i++) {
@@ -170,27 +205,78 @@ public class AlarmFragment extends android.support.v4.app.Fragment {
             adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, numm);
             adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
             spinner.setAdapter(adapter);
+            if(mAlarmHelper.checkdata()==1)
+            {
+                DatabaseAlarm alarm = mAlarmHelper.getAlarm();
+                if(isStart) {
+                    String min = alarm.getStartmin();
+                    spinner.setSelection(Integer.parseInt(min));
+                }
+                else
+                {
+                    String min = alarm.getStopmin();
+                    spinner.setSelection(Integer.parseInt(min));
+                }
+            }
         }
         return spinner;
     }
 
-    public Spinner createSpinnerAmPm(int id,View view)
+    public Spinner createSpinnerAmPm(int id,View view,DBAlarmHelper mAlarmHelper,boolean isStart)
     {
         Spinner spinner = (Spinner)view.findViewById(id);
         String[] numm = new String[]{"AM","PM"};
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, numm);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
+        if(mAlarmHelper.checkdata()==1)
+        {
+            DatabaseAlarm alarm = mAlarmHelper.getAlarm();
+            if(isStart) {
+                String ap = alarm.getStartinterval();
+                if(ap.equals("AM"))
+                    spinner.setSelection(0);
+                else
+                    spinner.setSelection(1);
+            }
+            else
+            {
+                String ap = alarm.getStopinterval();
+                if(ap.equals("AM"))
+                    spinner.setSelection(0);
+                else
+                    spinner.setSelection(1);
+            }
+        }
         return spinner;
     }
 
-    public Spinner createSpinnerFrq(int id,View view)
+    public Spinner createSpinnerFrq(int id,View view,DBAlarmHelper mAlarmHelper)
     {
         Spinner spinner = (Spinner)view.findViewById(id);
         String[] numm = new String[]{"15","30","45","60","75","90"};
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), android.R.layout.simple_spinner_item, numm);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinner.setAdapter(adapter);
+        if(mAlarmHelper.checkdata()==1)
+        {
+            DatabaseAlarm alarm = mAlarmHelper.getAlarm();
+            String frq = alarm.getFrq();
+            int frqint = -1;
+            if(frq.equals("15"))
+                frqint = 0;
+            else if(frq.equals("30"))
+                frqint = 1;
+            else if(frq.equals("45"))
+                frqint = 2;
+            else if(frq.equals("60"))
+                frqint = 3;
+            else if(frq.equals("75"))
+                frqint = 4;
+            else if(frq.equals("90"))
+                frqint = 5;
+            spinner.setSelection(frqint);
+        }
         return spinner;
     }
 
