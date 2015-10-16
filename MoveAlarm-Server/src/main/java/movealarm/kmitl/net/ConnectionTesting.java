@@ -58,11 +58,11 @@ import java.util.HashMap;
          return data.toString();
      }
 
-     @RequestMapping("/save")
+     /*@RequestMapping("/save")
      public String testSave(@RequestParam(value = "json")String json,@RequestParam(value = "table")String table) throws SQLException {
          SQLInquirer sql = new SQLInquirer();
          sql.startConnection();
          sql.save(json,table);
          return "save complete!";
-     }
+     }*/
 }
