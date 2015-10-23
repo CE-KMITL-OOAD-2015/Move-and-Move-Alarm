@@ -1,25 +1,16 @@
 package com.fatel.mamtv1;
 
 
+import android.content.Context;
 import android.graphics.drawable.AnimationDrawable;
 import android.os.CountDownTimer;
-import android.provider.BaseColumns;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.widget.TextView;
+
+import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 import android.widget.ImageView;
-
-import android.content.ContentValues;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
-import android.view.View;
-import android.view.View.OnClickListener;
-
-import static com.fatel.mamtv1.Constants.DESCRIPTION;
-import static com.fatel.mamtv1.Constants.IMAGE;
-import static com.fatel.mamtv1.Constants.TABLE_NAME;
-import static com.fatel.mamtv1.Constants._ID;
 
 
 public class Activity extends AppCompatActivity {
@@ -27,92 +18,43 @@ public class Activity extends AppCompatActivity {
     TextView txtR;
     TextView txtA;
     TextView txtDes;
-    ImageView img;
+    ImageView imgView;
     AnimationDrawable frameAnimation;
     int count=0;
     int[] imageId = new int[] {-1,-1,-1,-1};
-    //int[] images = new int[] {R.drawable.ex1, R.drawable.ex2, R.drawable.ex3, R.drawable.ex4 ,R.drawable.ex5,R.drawable.ex6,R.drawable.ex7,R.drawable.ex8,R.drawable.ex9};
-    int imgS;
-    int a =0;
-    String description;
-    String des;
-    int readImg=0;
+    ArrayList<Image> img;
+    int exerciseImg;
+    String exerciseDes;
 
     private static final String FORMAT = "%02d:%02d";
-
-    private static String[] COLUMNS = { _ID, IMAGE, DESCRIPTION};
-    private static String ORDER_BY = IMAGE + " DESC";
-
-    private ActivityHelper helper;
+    public static Context context;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity);
 
-        helper = new ActivityHelper(this);
-
 
         txtR=(TextView) findViewById(R.id.rtime);
         txtA=(TextView) findViewById(R.id.atime);
         txtDes=(TextView) findViewById(R.id.des);
-        img=(ImageView) findViewById(R.id.img);
-
-        for(int i=0;i<4;i++){
-            boolean same=true;
-            int x=0;
-            while(same){
-                same=false;
-                x=(int)(Math.random() * 9);
-                for(int j=0;j<i;j++) {
-                    if (x == imageId[j]){
-                        same=true;
-                        break;
-                    }
-                }
-            }
-            imageId[i]=x;
+        imgView=(ImageView) findViewById(R.id.img);
+        random();
+        context=this;
+        if(ImageCollection.size()==0){
+            ImageCollection.initial();
         }
+        img = ImageCollection.getImageById(imageId);
 
-        insertImage();
+        exerciseImg=(img.get(count)).getImage();
+        exerciseDes=(img.get(count)).getDescription();
 
-
-        try {
-            //อ่านข้อมูล
-            SQLiteDatabase db2 = helper.getReadableDatabase();
-            Cursor cursor = db2.query(TABLE_NAME, COLUMNS, null, null, null, null,null);
-            //Cursor cursor =  db2.rawQuery("select * from " + TABLE_NAME + " where " + _ID + "=" + 0  , null);
-            while(cursor.moveToNext()) {
-                int id = (int)(cursor.getLong(0));
-                readImg = cursor.getInt(1);
-                des = cursor.getString(2);
-                if(id==imageId[a]) {
-                    a++;
-                    break;
-                }
-            }
-
-        }
-        finally {
-            helper.close();
-        }
-        description=des;
-        imgS= readImg;
-        txtDes.setText(description);
-
-
-
-        // img.setImageResource(images[imageId[count]]);
-        // Load the ImageView that will host the animation and
-        // set its background to our AnimationDrawable XML resource.
-        img.setBackgroundResource(imgS);
-
+        txtDes.setText(exerciseDes);
+        imgView.setBackgroundResource(exerciseImg);
         // Get the background, which has been compiled to an AnimationDrawable object.
-        frameAnimation = (AnimationDrawable) img.getBackground();
-
+        frameAnimation = (AnimationDrawable) imgView.getBackground();
         // Start the animation (looped playback by default).
         frameAnimation.start();
-
 
         new CountDownTimer(15000, 1000) {
 
@@ -131,35 +73,15 @@ public class Activity extends AppCompatActivity {
                 count++;
                 if(count<4) {
 
-                    try {
-                        //อ่านข้อมูล
-                        SQLiteDatabase db2 = helper.getReadableDatabase();
-                        Cursor cursor = db2.query(TABLE_NAME, COLUMNS, null, null, null, null,null);
-                        //Cursor cursor =  db2.rawQuery("select * from " + TABLE_NAME + " where " + _ID + "=" + 0  , null);
-                        while(cursor.moveToNext()) {
-                            int id = (int)(cursor.getLong(0));
-                            readImg = cursor.getInt(1);
-                            des = cursor.getString(2);
-                            if(id==imageId[a]) {
-                                a++;
-                                break;
-                            }
-                        }
-
-                    }
-                    finally {
-                        helper.close();
-                    }
-                    description=des;
-                    imgS= readImg;
-                    txtDes.setText(description);
-                    img.setBackgroundResource(imgS);
-
+                    exerciseImg=(img.get(count)).getImage();
+                    exerciseDes=(img.get(count)).getDescription();
+                    txtDes.setText(exerciseDes);
+                    imgView.setBackgroundResource(exerciseImg);
                     // Get the background, which has been compiled to an AnimationDrawable object.
-                    frameAnimation = (AnimationDrawable) img.getBackground();
-
+                    frameAnimation = (AnimationDrawable) imgView.getBackground();
                     // Start the animation (looped playback by default).
                     frameAnimation.start();
+
                     start();
                 }
 
@@ -185,54 +107,23 @@ public class Activity extends AppCompatActivity {
 
 
     }
-    public void insertImage(){
-        this.deleteDatabase("images.db");
-        try {
-            //เพิ่มข้อมูลลงฐานข้อมูล
-            SQLiteDatabase db = helper.getWritableDatabase();
-            ContentValues values = new ContentValues();
-            values.put(IMAGE, R.drawable.ex1);
-            values.put(DESCRIPTION, "หมุนคอไปทางขวาจนสุด แล้วหมุนกลับ");
-            db.insertOrThrow(TABLE_NAME, null, values);
-
-            values.put(IMAGE, R.drawable.ex2);
-            values.put(DESCRIPTION, "ยกแขนสลับซ้ายขวา");
-            db.insertOrThrow(TABLE_NAME, null, values);
-
-            values.put(IMAGE, R.drawable.ex3);
-            values.put(DESCRIPTION, "หันไปทางขวาจนสุด แล้วหันไปทางซ้าย");
-            db.insertOrThrow(TABLE_NAME, null, values);
-
-            values.put(IMAGE, R.drawable.ex4);
-            values.put(DESCRIPTION, "กดคอลง  แล้วดันคอขึ้น");
-            db.insertOrThrow(TABLE_NAME, null, values);
-
-            values.put(IMAGE, R.drawable.ex5);
-            values.put(DESCRIPTION, "กางขา ย่อเข่าลงสลับซ้ายขวา");
-            db.insertOrThrow(TABLE_NAME, null, values);
-
-            values.put(IMAGE, R.drawable.ex6);
-            values.put(DESCRIPTION, "หมุนข้อเท้า สลับซ้ายขวา");
-            db.insertOrThrow(TABLE_NAME, null, values);
-            values.put(IMAGE, R.drawable.ex7);
-            values.put(DESCRIPTION, "ยกขาขึ้นด้านหลัง สลับซ้ายขวา");
-            db.insertOrThrow(TABLE_NAME, null, values);
-
-            values.put(IMAGE, R.drawable.ex8);
-            values.put(DESCRIPTION, "ยกแขนขึ้นดันข้อศอกอีกข้าง สลับซ้ายขวา");
-            db.insertOrThrow(TABLE_NAME, null, values);
-
-            values.put(IMAGE, R.drawable.ex9);
-            values.put(DESCRIPTION, "ยืดแขน สลับซ้ายขวา");
-            db.insertOrThrow(TABLE_NAME, null, values);
-
-
-
-
+    public void random(){
+        for(int i=0;i<4;i++){
+            boolean same=true;
+            int x=0;
+            while(same){
+                same=false;
+                x=(int)(Math.random() * 9);
+                for(int j=0;j<i;j++) {
+                    if (x == imageId[j]){
+                        same=true;
+                        break;
+                    }
+                }
+            }
+            imageId[i]=x;
         }
-        finally {
-            helper.close();
-        }
+
     }
 /*
     @Override

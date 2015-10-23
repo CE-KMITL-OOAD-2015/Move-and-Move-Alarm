@@ -7,22 +7,46 @@ import java.util.ArrayList;
  */
 public class ImageCollection {
 
-    private ArrayList<Image> imageCollection=new ArrayList<Image>();;
-    private int count=0;
+    private static ArrayList<Image> imageCollection=new ArrayList<>();
+    private static int count=0;
+    private ImageHelper helper;
 
-    public ImageCollection(){
+    public static void addImage(int image,String description){
 
-
-    }
-
-    public void addImage(int image,String description){
-
-        Image img = new Image(this.count,image,description);
+        Image img = new Image(count,image,description);
         imageCollection.add(img);
-        this.count++;
+        count++;
 
     }
-    
+
+    public static void initial (){
+
+        addImage(R.drawable.ex1, "บริหารกล้ามเนื้อคอ");
+        addImage(R.drawable.ex2,"ยืดกล้ามเนื้อแขน");
+        addImage(R.drawable.ex3,"บริหารกล้ามเนื้อคอ");
+        addImage(R.drawable.ex4,"บริหารกล้ามเนื้อคอ");
+        addImage(R.drawable.ex5,"ยืดกล้ามเนื้อขา");
+        addImage(R.drawable.ex6,"บริหารข้อเท้า");
+        addImage(R.drawable.ex7,"ยืดกล้ามเนื้อขา");
+        addImage(R.drawable.ex8, "ยืดกล้ามเนื้อส่วนแขน");
+        addImage(R.drawable.ex9,"ยืดกล้ามเนื้อส่วนแขน");
+
+    }
+    public static int size(){
+        return imageCollection.size();
+    }
+    public static Image getImageById(int id){
+        return imageCollection.get(id);
+    }
+    public static ArrayList<Image> getImageById(int[] id){
+        ArrayList<Image> imgcoll = new ArrayList<>();
+        for (int i=0;i<id.length;i++){
+            imgcoll.add(imageCollection.get(id[i]));
+        }
+        return imgcoll;
+    }
+
+
 
 
 }
