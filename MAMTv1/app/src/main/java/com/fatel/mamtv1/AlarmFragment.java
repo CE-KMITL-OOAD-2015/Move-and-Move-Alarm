@@ -1,20 +1,13 @@
 package com.fatel.mamtv1;
 
 
-import android.app.AlertDialog;
-import android.content.BroadcastReceiver;
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
-import android.net.Uri;
 import android.os.Bundle;
-import android.os.SystemClock;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.content.WakefulBroadcastReceiver;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -48,7 +41,7 @@ public class AlarmFragment extends android.support.v4.app.Fragment {
 
     private DBAlarmHelper mAlarmHelper;
     private int ID = -1;
-
+    private PendingIntent pendingIntent;
     public AlarmFragment() {
         // Required empty public constructor
     }
@@ -160,8 +153,9 @@ public class AlarmFragment extends android.support.v4.app.Fragment {
                         mAlarmHelper.UpdateAlarm(alarm);
                     };
                     //finish();
-                    Intent mServiceIntent = new Intent(getActivity(), MyService.class);
-                    getActivity().startService(mServiceIntent);
+                    Intent mServiceIntent = new Intent(getActivity(), SimpleWakefulReceiver.class);
+                    pendingIntent = PendingIntent.getBroadcast(getActivity(),0,mServiceIntent,0);
+                    start();
                 FragmentTransaction tx = getFragmentManager().beginTransaction();
                 tx.setCustomAnimations(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
                 tx.replace(R.id.container, new MainFragment());
@@ -287,6 +281,10 @@ public class AlarmFragment extends android.support.v4.app.Fragment {
         }
         return spinner;
     }
+    public void start() {
+        AlarmManager manager = (AlarmManager) getActivity().getSystemService(Context.ALARM_SERVICE);
+        int interval = 6000;
 
-
+        manager.setExact(AlarmManager.RTC_WAKEUP, System.currentTimeMillis()+interval, pendingIntent);
+    }
 }

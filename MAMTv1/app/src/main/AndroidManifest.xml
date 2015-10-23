@@ -20,9 +20,8 @@
             android:name=".Activity"
             android:label="@string/title_activity_" >
         </activity>
-        <service
-            android:name=".MyService"
-            android:exported="false"/>
+
+        <receiver android:name=".SimpleWakefulReceiver"></receiver>
     </application>
 
 </manifest>
