@@ -7,13 +7,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.os.SystemClock;
-import android.support.v4.content.WakefulBroadcastReceiver;
 import android.util.Log;
 import android.widget.Toast;
 
 import java.util.Calendar;
 
-public class SimpleWakefulReceiver extends BroadcastReceiver {
+public class AlarmReceiver extends BroadcastReceiver {
     private AlarmManager alarmMgr;
     private PendingIntent alarmIntent;
     private DBAlarmHelper  mAlarmHelper;
@@ -22,7 +21,6 @@ public class SimpleWakefulReceiver extends BroadcastReceiver {
     public void onReceive(Context context, Intent intent) {
         // This is the Intent to deliver to our service.
         //alarmMgr = (AlarmManager)context.getSystemService(Context.ALARM_SERVICE);
-        //Intent intentalarm = new Intent(context, SimpleWakefulReceiver.class);
         //alarmIntent = PendingIntent.getBroadcast(context, 0, intent, 0);
         /*Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(System.currentTimeMillis());
@@ -47,24 +45,27 @@ public class SimpleWakefulReceiver extends BroadcastReceiver {
         //Intent service = new Intent(context, Activity.class);
 
         // Start the service, keeping the device awake while it is launching.
+            Bundle extras = intent.getExtras();
+            String temp = extras.getString("key");
+            if(temp==null){
+                Log.i("AlarmReceiver", "Starting service @ " + SystemClock.elapsedRealtime());
+                Intent i = new Intent(context,actAlarm.class);
+                Log.i("AlarmReceiver", "CanJump");
+                i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                context.startActivity(i);
+                Toast.makeText(context, "I'm running", Toast.LENGTH_SHORT).show();
+            }
+            if(temp!=null){
+                Log.i("finish","activity is finished");
+                Intent alarmIntent = new Intent(context , AlarmReceiver.class);
+                pendingIntent = PendingIntent.getBroadcast(context, 0, alarmIntent, 0);
+                AlarmManager manager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
+                int interval = 6000;
+                manager.setExact(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + interval, pendingIntent);
+            }
+    }
+    public void settime(){
 
-        Log.i("SimpleWakefulReceiver", "Starting service @ " + SystemClock.elapsedRealtime());
-        Bundle extras = intent.getExtras();
-        //if(extras == null){
-        Intent i = new Intent(context,Activity.class);
-        Log.i("SimpleWakefulReceiver", "CanJump");
-        i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-        context.startActivity(i);
-        Toast.makeText(context, "I'm running", Toast.LENGTH_SHORT).show();
-        //}
-        while(extras==null){
-            Log.i("wait","activity");
-        }
-        Log.i("finish","activity is finished");
-        Intent alarmIntent = new Intent(context , SimpleWakefulReceiver.class);
-        pendingIntent = PendingIntent.getBroadcast(context, 0, alarmIntent, 0);
-        AlarmManager manager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-        int interval = 6000;
-        manager.setExact(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + interval, pendingIntent);
+
     }
 }

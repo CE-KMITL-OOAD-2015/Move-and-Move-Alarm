@@ -20,15 +20,11 @@
             android:name=".Activity"
             android:label="@string/title_activity_" >
         </activity>
-<<<<<<< HEAD
         <activity
             android:name=".actAlarm"
             android:label="@string/title_activity_act_alarm" >
         </activity>
-=======
-
-        <receiver android:name=".SimpleWakefulReceiver"></receiver>
->>>>>>> b1
+        <receiver android:name=".AlarmReceiver"></receiver>
     </application>
 
 </manifest>

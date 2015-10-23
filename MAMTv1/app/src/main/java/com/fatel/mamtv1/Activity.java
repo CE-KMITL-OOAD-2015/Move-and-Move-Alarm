@@ -4,12 +4,9 @@ package com.fatel.mamtv1;
 import android.content.Intent;
 import android.graphics.drawable.AnimationDrawable;
 import android.os.CountDownTimer;
-import android.provider.BaseColumns;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Window;
-import android.view.WindowManager;
 import android.widget.TextView;
 import java.util.concurrent.TimeUnit;
 import android.widget.ImageView;
@@ -17,8 +14,6 @@ import android.widget.ImageView;
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
-import android.view.View;
-import android.view.View.OnClickListener;
 
 import static com.fatel.mamtv1.Constants.DESCRIPTION;
 import static com.fatel.mamtv1.Constants.IMAGE;
@@ -53,10 +48,8 @@ public class Activity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity);
-        Log.i("Activity","Can go");
-        final Window win= getWindow();
-        win.addFlags(WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED | WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD);
-        win.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON | WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON);
+        Log.i("Activity", "Can go");
+
 
         helper = new ActivityHelper(this);
 
@@ -188,8 +181,14 @@ public class Activity extends AppCompatActivity {
 
             public void onFinish() {
                 txtA.setText("Activity Time done!");
+                Intent i = new Intent(getBaseContext(), AlarmReceiver.class);
+                Bundle b = new Bundle();
+                b.putString("key", "act complete");
+                i.putExtras(b);
+                sendBroadcast(i);
             }
         }.start();
+
     }
     public void insertImage(){
         this.deleteDatabase("images.db");
