@@ -6,6 +6,8 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 
 public class actAlarm extends AppCompatActivity {
 
@@ -13,6 +15,9 @@ public class actAlarm extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_act_alarm);
+        final Window win= getWindow();
+        win.addFlags(WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED | WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD);
+        win.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON | WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON);
     }
 
     @Override
@@ -45,5 +50,11 @@ public class actAlarm extends AppCompatActivity {
     public void linkHome(View view){
         Intent intent = new Intent(this, MainActivity.class);
         startActivity(intent);
+        //Intent i = new Intent(getBaseContext(), AlarmReceiver.class);
+        //Bundle b = new Bundle();
+        //b.putString("key", "recount");
+        //i.putExtras(b);
+       // sendBroadcast(i);
     }
+
 }

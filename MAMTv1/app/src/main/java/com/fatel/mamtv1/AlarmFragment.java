@@ -1,10 +1,10 @@
 package com.fatel.mamtv1;
 
 
-import android.app.AlertDialog;
-import android.content.DialogInterface;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -16,7 +16,9 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.Spinner;
-import android.widget.Toast;
+
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
 
 
 /**
@@ -42,7 +44,7 @@ public class AlarmFragment extends android.support.v4.app.Fragment {
 
     private DBAlarmHelper mAlarmHelper;
     private int ID = -1;
-
+    private PendingIntent pendingIntent;
     public AlarmFragment() {
         // Required empty public constructor
     }
@@ -154,6 +156,9 @@ public class AlarmFragment extends android.support.v4.app.Fragment {
                         mAlarmHelper.UpdateAlarm(alarm);
                     }
                     //finish();
+                    Intent mServiceIntent = new Intent(getActivity(), AlarmReceiver.class);
+                    pendingIntent = PendingIntent.getBroadcast(getActivity(),0,mServiceIntent,0);
+                    start();
                 FragmentTransaction tx = getFragmentManager().beginTransaction();
                 tx.setCustomAnimations(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
                 tx.replace(R.id.container, new MainFragment());
@@ -279,8 +284,18 @@ public class AlarmFragment extends android.support.v4.app.Fragment {
         }
         return spinner;
     }
+    public void start() {
+        AlarmManager manager = (AlarmManager) getActivity().getSystemService(Context.ALARM_SERVICE);
+        int interval = 6000;
 
-
-
-
+        manager.setExact(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + interval, pendingIntent);
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(System.currentTimeMillis());
+        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss.SSS");
+        DatabaseAlarm alarm = mAlarmHelper.getAlarm();
+        Log.i("Day",sdf.format(calendar.getTime())+" "+calendar.DAY_OF_WEEK+" "+alarm.getDay());
+        /*if(calendar.DAY_OF_WEEK==Integer.parseInt(alarm.getDay().substring(calendar.DAY_OF_WEEK-1,calendar.DAY_OF_WEEK))){
+            if()
+        }*/
+    }
 }

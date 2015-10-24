@@ -1,17 +1,34 @@
 package com.fatel.mamtv1;
 
 
+<<<<<<< HEAD
 import android.content.Context;
+=======
+import android.content.Intent;
+>>>>>>> front-end
 import android.graphics.drawable.AnimationDrawable;
 import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 import android.widget.ImageView;
 
+<<<<<<< HEAD
+=======
+import android.content.ContentValues;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
+
+import static com.fatel.mamtv1.Constants.DESCRIPTION;
+import static com.fatel.mamtv1.Constants.IMAGE;
+import static com.fatel.mamtv1.Constants.TABLE_NAME;
+import static com.fatel.mamtv1.Constants._ID;
+
+>>>>>>> front-end
 
 public class Activity extends AppCompatActivity {
 
@@ -33,6 +50,8 @@ public class Activity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity);
+        Log.i("Activity", "Can go");
+
 
 
         txtR=(TextView) findViewById(R.id.rtime);
@@ -102,9 +121,13 @@ public class Activity extends AppCompatActivity {
 
             public void onFinish() {
                 txtA.setText("Activity Time done!");
+                Intent i = new Intent(getBaseContext(), AlarmReceiver.class);
+                Bundle b = new Bundle();
+                b.putString("key", "act complete");
+                i.putExtras(b);
+                sendBroadcast(i);
             }
         }.start();
-
 
     }
     public void random(){
