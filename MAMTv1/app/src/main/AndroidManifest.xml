@@ -1,7 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.fatel.mamtv1" >
-    <uses-permission android:name="android.permission.WAKE_LOCK"/>
+
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -24,7 +26,21 @@
             android:name=".actAlarm"
             android:label="@string/title_activity_act_alarm" >
         </activity>
-        <receiver android:name=".AlarmReceiver"></receiver>
+
+        <receiver android:name=".AlarmReceiver" />
+
+        <activity
+            android:name=".Intro_Activity"
+            android:label="@string/title_activity_intro_" >
+        </activity>
+        <activity
+            android:name=".Login_Activity"
+            android:label="@string/title_activity_login_" >
+        </activity>
+        <activity
+            android:name=".Create_Account_Activity"
+            android:label="@string/title_activity_create__account_" >
+        </activity>
     </application>
 
 </manifest>
