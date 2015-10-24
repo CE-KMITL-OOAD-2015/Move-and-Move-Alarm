@@ -6,23 +6,30 @@ import java.util.HashMap;
 
 public class SQLInquirer {
 
+    public static SQLInquirer sqlInquirer = null;
     private Connection connector;
     private Statement stmt;
     private ResultSet rs;
-    private ArrayList<HashMap<String, Object>> collection;
     private boolean connectionStatus = false;
 
-    public SQLInquirer()
+    private SQLInquirer()
     {
         connectionStatus = startConnection();
-        collection = new ArrayList<HashMap<String, Object>>();
+    }
+
+    public static SQLInquirer getInstance()
+    {
+        if(sqlInquirer == null)
+            sqlInquirer = new SQLInquirer();
+        return sqlInquirer;
     }
 
     public ArrayList<HashMap<String, Object>> where(String tableName, String colName, String operator, String value) throws SQLException {
+        ArrayList<HashMap<String, Object>> collection = new ArrayList<>();
         rs = stmt.executeQuery("SELECT * FROM " + tableName + " WHERE " + colName + " " + operator + " '" + value + "'");
         ResultSetMetaData metaData = rs.getMetaData();
         while(rs.next()) {
-            HashMap<String, Object> temp = new HashMap<String, Object>();
+            HashMap<String, Object> temp = new HashMap<>();
             for(int i = 1; i <= metaData.getColumnCount(); i++)
                 temp.put(metaData.getColumnName(i), rs.getObject(i));
             collection.add(temp);
@@ -31,29 +38,16 @@ public class SQLInquirer {
     }
 
     public ArrayList<HashMap<String, Object>> where(String sqlCommand) throws SQLException {
+        ArrayList<HashMap<String, Object>> collection = new ArrayList<>();
         rs = stmt.executeQuery(sqlCommand);
         ResultSetMetaData metaData = rs.getMetaData();
         while(rs.next()) {
-            HashMap<String, Object> temp = new HashMap<String, Object>();
+            HashMap<String, Object> temp = new HashMap<>();
             for(int i = 1; i <= metaData.getColumnCount(); i++)
                 temp.put(metaData.getColumnName(i), rs.getObject(i));
             collection.add(temp);
         }
         return collection;
-    }
-
-    public String testQuery()  {
-        String word = "test";
-        try {
-            if(isConnecting()) {
-                rs = stmt.executeQuery("SELECT * FROM testTable");
-                rs.next();
-                word = rs.getString(1);
-            }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        return word;
     }
 
     public boolean startConnection()
@@ -108,26 +102,5 @@ public class SQLInquirer {
             }
         }
         return data;
-    }
-
-   /* public void save(Object json, String table) throws SQLException {
-        HashMap<String, String> map = new HashMap<String, String>();
-        JSONObject jObject = new JSONObject(t);
-        Iterator<?> keys = jObject.keys();
-
-        while( keys.hasNext() ){
-            String key = (String)keys.next();
-            String value = jObject.getString(key);
-            map.put(key, value);
-
-        }
-        stmt = connector.createStatement();
-        String sql = "INSERT INTO " + table + " (" + column + ") " + "VALUES " + "(" + values + ") ";
-        stmt.execute(sql);
-    }*/
-
-    public ArrayList<HashMap<String, Object>> getCollection()
-    {
-        return collection;
     }
 }
