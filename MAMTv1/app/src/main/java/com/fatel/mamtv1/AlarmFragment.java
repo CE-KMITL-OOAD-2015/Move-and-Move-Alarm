@@ -293,9 +293,53 @@ public class AlarmFragment extends android.support.v4.app.Fragment {
         calendar.setTimeInMillis(System.currentTimeMillis());
         SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss.SSS");
         DatabaseAlarm alarm = mAlarmHelper.getAlarm();
-        Log.i("Day",sdf.format(calendar.getTime())+" "+calendar.DAY_OF_WEEK+" "+alarm.getDay());
-        /*if(calendar.DAY_OF_WEEK==Integer.parseInt(alarm.getDay().substring(calendar.DAY_OF_WEEK-1,calendar.DAY_OF_WEEK))){
-            if()
-        }*/
+        Log.i("Day",sdf.format(calendar.getTime())+" "+calendar.get(Calendar.DAY_OF_WEEK)+" "+alarm.getDay()+" "
+                +calendar.get(Calendar.HOUR_OF_DAY)+" "+calendar.get(Calendar.MINUTE));
+        if(Integer.parseInt(alarm.getDay().substring(calendar.get(Calendar.DAY_OF_WEEK)-1,calendar.get(Calendar.DAY_OF_WEEK)))==1){
+            String startin = alarm.getStartinterval();
+            String stopin = alarm.getStopinterval();
+            int starthour = Integer.parseInt(alarm.getStarthr());
+            int startmin = Integer.parseInt(alarm.getStartmin());
+            int stophour = Integer.parseInt(alarm.getStophr());
+            int stopmin = Integer.parseInt(alarm.getStopmin());
+            int frequency = Integer.parseInt(alarm.getFrq());
+            if(startin.equalsIgnoreCase("am")){
+                if(starthour==12)
+                    starthour = 0;
+            }
+            else{
+                if(starthour==12)
+                    starthour=12;
+                else
+                    starthour+=12;
+            }
+            if(stopin.equalsIgnoreCase("am")){
+                if(stophour==12)
+                    stophour = 0;
+            }
+            else{
+                if(stophour==12)
+                    stophour=12;
+                else
+                    stophour+=12;
+            }
+            if(frequency+stopmin>59){
+                int tempmin = frequency+stopmin;
+                stopmin = tempmin-(60*(tempmin/60));
+                stophour += tempmin/60;
+            }
+            if(calendar.get(Calendar.HOUR_OF_DAY)>=starthour&&calendar.get(Calendar.MINUTE)>=startmin&&
+                    calendar.get(Calendar.HOUR_OF_DAY)<=stophour&&calendar.get(Calendar.MINUTE)<=stopmin){
+                int tempminite = calendar.get(Calendar.MINUTE)+frequency;
+                int setmin = tempminite;
+                int sethr = calendar.get(Calendar.HOUR_OF_DAY);
+                if(tempminite>59){
+                    setmin = tempminite-(60*(tempminite/60));
+                    sethr += tempminite/60;
+                }
+                calendar.set(calendar.HOUR_OF_DAY,sethr);
+                calendar.set(calendar.MINUTE,setmin);
+            }
+        }
     }
 }
