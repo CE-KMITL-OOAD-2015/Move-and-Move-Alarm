@@ -1,11 +1,13 @@
 package movealarm.kmitl.net;
 
+import java.util.Date;
 import java.util.HashMap;
 
 abstract class Model {
     protected static ModelCollection modelCollection = ModelCollection.getInstance();
     private String tableName;
     private int id;
+    private Date createdDate;
 
     public static Model find(int id)
     {
@@ -26,4 +28,5 @@ abstract class Model {
 
     public abstract boolean save();
     public abstract void delete();
+    public abstract HashMap<String, Object> getValues();
 }
