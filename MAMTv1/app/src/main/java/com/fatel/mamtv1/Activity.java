@@ -7,6 +7,7 @@ import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.View;
 import android.widget.TextView;
 import java.util.concurrent.TimeUnit;
 import android.widget.ImageView;
@@ -261,4 +262,10 @@ public class Activity extends AppCompatActivity {
 
         return super.onOptionsItemSelected(item);
     }*/
+
+    public void linkHome(View view)
+    {
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+    }
 }
