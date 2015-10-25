@@ -30,7 +30,8 @@ import java.util.HashMap;
      {
          ArrayList<HashMap<String, Object>> temp = null;
          try {
-             temp = sqlInquirer.where("testTable", "var2", "=", "text");
+             sqlInquirer.orderByASC("id");
+             temp = sqlInquirer.where("testTable", "var2", "=", "8988");
          } catch (SQLException e) {
              e.printStackTrace();
          }
@@ -38,14 +39,49 @@ import java.util.HashMap;
                  temp.get(1).get("id") + " value: " + temp.get(1).get("var2");
      }
 
+     @RequestMapping("/test/update_data")
+     public void testUpdate()
+     {
+         try {
+             sqlInquirer.update("testTable", "var2='5555'", "id", ">", "5");
+         } catch (SQLException e) {
+             e.printStackTrace();
+         }
+     }
+
+     @RequestMapping("/test/insert_data")
+     public void testInsert()
+     {
+         try {
+             sqlInquirer.insert("testTable", "var2", "6666");
+         } catch (SQLException e) {
+             e.printStackTrace();
+         }
+     }
+
+     @RequestMapping("/test/delete_data")
+     public void testDelete()
+     {
+         try {
+             sqlInquirer.delete("testTable", "var2='6666' OR var2='5555'");
+         } catch (SQLException e) {
+             e.printStackTrace();
+         }
+     }
+
+     @RequestMapping("/test/insert_multiple")
+     public void testInsertMultiple()
+     {
+         String[] values = {"6666", "4444", "8988"};
+         try {
+             sqlInquirer.insertMultiple("testTable", "var2", values);
+         } catch (SQLException e) {
+             e.printStackTrace();
+         }
+     }
+
      @RequestMapping("/test/database_connection")
      public boolean testConDB() {
          return sqlInquirer.isConnecting();
-     }
-
-     @RequestMapping("/test/find")
-     public String testFind(@RequestParam(value="id") int id,@RequestParam(value = "table") String table) throws SQLException {
-         HashMap<String,Object> data = sqlInquirer.find(id,table);
-         return data.toString();
      }
 }

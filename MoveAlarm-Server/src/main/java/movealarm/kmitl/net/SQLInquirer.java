@@ -11,6 +11,8 @@ public class SQLInquirer {
     private Statement stmt;
     private ResultSet rs;
     private boolean connectionStatus = false;
+    private String orderBy = "";
+    private String orderType = "";
 
     private SQLInquirer()
     {
@@ -24,21 +26,34 @@ public class SQLInquirer {
         return sqlInquirer;
     }
 
-    public ArrayList<HashMap<String, Object>> where(String tableName, String colName, String operator, String value) throws SQLException {
-        ArrayList<HashMap<String, Object>> collection = new ArrayList<>();
-        rs = stmt.executeQuery("SELECT * FROM " + tableName + " WHERE " + colName + " " + operator + " '" + value + "'");
-        ResultSetMetaData metaData = rs.getMetaData();
-        while(rs.next()) {
-            HashMap<String, Object> temp = new HashMap<>();
-            for(int i = 1; i <= metaData.getColumnCount(); i++)
-                temp.put(metaData.getColumnName(i), rs.getObject(i));
-            collection.add(temp);
-        }
-        return collection;
+    public void orderByDESC(String colNames)
+    {
+        orderBy = "ORDER BY " + colNames;
+        orderType = "DESC";
     }
 
-    public ArrayList<HashMap<String, Object>> where(String sqlCommand) throws SQLException {
+    public void orderByASC(String colNames)
+    {
+        orderBy = "ORDER BY " + colNames;
+        orderType = "ASC";
+    }
+
+    public void resetOrderBy()
+    {
+        orderBy = "ORDER BY ";
+        orderType = "";
+    }
+
+    public boolean isOrderBy()
+    {
+        return (orderBy.equals("ORDER BY ")) ? false : true;
+    }
+
+    public ArrayList<HashMap<String, Object>> where(String tableName, String colName, String operator, String value) throws SQLException {
         ArrayList<HashMap<String, Object>> collection = new ArrayList<>();
+        String sqlCommand = "SELECT * FROM " + tableName + " WHERE " + colName + " " + operator + " '" + value + "'";
+        if(isOrderBy())
+            sqlCommand += " " + orderBy + " " + orderType;
         rs = stmt.executeQuery(sqlCommand);
         ResultSetMetaData metaData = rs.getMetaData();
         while(rs.next()) {
@@ -47,7 +62,47 @@ public class SQLInquirer {
                 temp.put(metaData.getColumnName(i), rs.getObject(i));
             collection.add(temp);
         }
+
+        resetOrderBy();
         return collection;
+    }
+
+    public ArrayList<HashMap<String, Object>> where(String sqlCommand) throws SQLException {
+        ArrayList<HashMap<String, Object>> collection = new ArrayList<>();
+        if(isOrderBy())
+            sqlCommand += " " + orderBy + " " + orderType;
+        rs = stmt.executeQuery(sqlCommand);
+        ResultSetMetaData metaData = rs.getMetaData();
+        while(rs.next()) {
+            HashMap<String, Object> temp = new HashMap<>();
+            for(int i = 1; i <= metaData.getColumnCount(); i++)
+                temp.put(metaData.getColumnName(i), rs.getObject(i));
+            collection.add(temp);
+        }
+        resetOrderBy();
+        return collection;
+    }
+
+    public void update(String tableName, String valueSet, String colName, String operator, String value) throws SQLException {
+        stmt.executeUpdate("UPDATE " + tableName + " SET " + valueSet + " WHERE " + colName + " " + operator + " " + value);
+    }
+
+    public void insert(String tableName, String colNames, String values) throws SQLException {
+        stmt.executeUpdate("INSERT INTO " + tableName + " ( " + colNames + " ) VALUES (" + values + " )");
+    }
+
+    public void insertMultiple(String tableName, String colNames, String[] valuesSet) throws SQLException {
+        String values = "";
+        for(int i = 0; i < valuesSet.length; i++) {
+            values += " (" + valuesSet[i] + " )";
+            if(i != valuesSet.length - 1)
+                values += ", ";
+        }
+        stmt.executeUpdate("INSERT INTO " + tableName + " ( " + colNames + " ) VALUES " + values);
+    }
+
+    public void delete(String tableName, String conditions) throws SQLException {
+        stmt.executeUpdate("DELETE FROM " + tableName + " WHERE " + conditions);
     }
 
     public boolean startConnection()
@@ -84,23 +139,5 @@ public class SQLInquirer {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-    }
-
-    public HashMap<String,Object> find(int id,String table) throws SQLException {
-        HashMap<String,Object> data = new HashMap<>();
-        stmt = connector.createStatement();
-        String sql = "SELECT * FROM " + table;
-        rs = stmt.executeQuery(sql);
-        ResultSetMetaData rs_m = rs.getMetaData();
-        while(rs != null) {
-            rs.next();
-            if(rs.getInt("id") == id) {
-                for(int col = 1;col <= rs_m.getColumnCount();col++) {
-                    data.put(rs_m.getColumnName(col),rs.getObject(col));
-                }
-                break;
-            }
-        }
-        return data;
     }
 }
