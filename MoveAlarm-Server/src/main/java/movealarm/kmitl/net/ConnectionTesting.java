@@ -30,7 +30,8 @@ import java.util.HashMap;
      {
          ArrayList<HashMap<String, Object>> temp = null;
          try {
-             temp = sqlInquirer.where("testTable", "var2", "=", "text");
+             sqlInquirer.orderByASC("id");
+             temp = sqlInquirer.where("testTable", "var2", "=", "8988");
          } catch (SQLException e) {
              e.printStackTrace();
          }

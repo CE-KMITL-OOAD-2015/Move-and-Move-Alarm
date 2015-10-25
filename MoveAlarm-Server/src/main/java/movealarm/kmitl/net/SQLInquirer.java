@@ -11,6 +11,8 @@ public class SQLInquirer {
     private Statement stmt;
     private ResultSet rs;
     private boolean connectionStatus = false;
+    private String orderBy = "";
+    private String orderType = "";
 
     private SQLInquirer()
     {
@@ -24,21 +26,34 @@ public class SQLInquirer {
         return sqlInquirer;
     }
 
-    public ArrayList<HashMap<String, Object>> where(String tableName, String colName, String operator, String value) throws SQLException {
-        ArrayList<HashMap<String, Object>> collection = new ArrayList<>();
-        rs = stmt.executeQuery("SELECT * FROM " + tableName + " WHERE " + colName + " " + operator + " '" + value + "'");
-        ResultSetMetaData metaData = rs.getMetaData();
-        while(rs.next()) {
-            HashMap<String, Object> temp = new HashMap<>();
-            for(int i = 1; i <= metaData.getColumnCount(); i++)
-                temp.put(metaData.getColumnName(i), rs.getObject(i));
-            collection.add(temp);
-        }
-        return collection;
+    public void orderByDESC(String colNames)
+    {
+        orderBy = "ORDER BY " + colNames;
+        orderType = "DESC";
     }
 
-    public ArrayList<HashMap<String, Object>> where(String sqlCommand) throws SQLException {
+    public void orderByASC(String colNames)
+    {
+        orderBy = "ORDER BY " + colNames;
+        orderType = "ASC";
+    }
+
+    public void resetOrderBy()
+    {
+        orderBy = "ORDER BY ";
+        orderBy = "";
+    }
+
+    public boolean isOrderBy()
+    {
+        return (orderBy.equals("ORDER BY ")) ? false : true;
+    }
+
+    public ArrayList<HashMap<String, Object>> where(String tableName, String colName, String operator, String value) throws SQLException {
         ArrayList<HashMap<String, Object>> collection = new ArrayList<>();
+        String sqlCommand = "SELECT * FROM " + tableName + " WHERE " + colName + " " + operator + " '" + value + "'";
+        if(isOrderBy())
+            sqlCommand += " " + orderBy + " " + orderType;
         rs = stmt.executeQuery(sqlCommand);
         ResultSetMetaData metaData = rs.getMetaData();
         while(rs.next()) {
@@ -47,6 +62,24 @@ public class SQLInquirer {
                 temp.put(metaData.getColumnName(i), rs.getObject(i));
             collection.add(temp);
         }
+
+        resetOrderBy();
+        return collection;
+    }
+
+    public ArrayList<HashMap<String, Object>> where(String sqlCommand) throws SQLException {
+        ArrayList<HashMap<String, Object>> collection = new ArrayList<>();
+        if(isOrderBy())
+            sqlCommand += " " + orderBy + " " + orderType;
+        rs = stmt.executeQuery(sqlCommand);
+        ResultSetMetaData metaData = rs.getMetaData();
+        while(rs.next()) {
+            HashMap<String, Object> temp = new HashMap<>();
+            for(int i = 1; i <= metaData.getColumnCount(); i++)
+                temp.put(metaData.getColumnName(i), rs.getObject(i));
+            collection.add(temp);
+        }
+        resetOrderBy();
         return collection;
     }
 
