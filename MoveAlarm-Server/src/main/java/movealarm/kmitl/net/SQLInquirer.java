@@ -41,7 +41,7 @@ public class SQLInquirer {
     public void resetOrderBy()
     {
         orderBy = "ORDER BY ";
-        orderBy = "";
+        orderType = "";
     }
 
     public boolean isOrderBy()
