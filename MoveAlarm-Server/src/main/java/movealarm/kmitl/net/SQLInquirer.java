@@ -50,6 +50,28 @@ public class SQLInquirer {
         return collection;
     }
 
+    public void update(String tableName, String valueSet, String colName, String operator, String value) throws SQLException {
+        stmt.executeUpdate("UPDATE " + tableName + " SET " + valueSet + " WHERE " + colName + " " + operator + " " + value);
+    }
+
+    public void insert(String tableName, String colNames, String values) throws SQLException {
+        stmt.executeUpdate("INSERT INTO " + tableName + " ( " + colNames + " ) VALUES (" + values + " )");
+    }
+
+    public void insertMultiple(String tableName, String colNames, String[] valuesSet) throws SQLException {
+        String values = "";
+        for(int i = 0; i < valuesSet.length; i++) {
+            values += " (" + valuesSet[i] + " )";
+            if(i != valuesSet.length - 1)
+                values += ", ";
+        }
+        stmt.executeUpdate("INSERT INTO " + tableName + " ( " + colNames + " ) VALUES " + values);
+    }
+
+    public void delete(String tableName, String conditions) throws SQLException {
+        stmt.executeUpdate("DELETE FROM " + tableName + " WHERE " + conditions);
+    }
+
     public boolean startConnection()
     {
         try{
@@ -84,23 +106,5 @@ public class SQLInquirer {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-    }
-
-    public HashMap<String,Object> find(int id,String table) throws SQLException {
-        HashMap<String,Object> data = new HashMap<>();
-        stmt = connector.createStatement();
-        String sql = "SELECT * FROM " + table;
-        rs = stmt.executeQuery(sql);
-        ResultSetMetaData rs_m = rs.getMetaData();
-        while(rs != null) {
-            rs.next();
-            if(rs.getInt("id") == id) {
-                for(int col = 1;col <= rs_m.getColumnCount();col++) {
-                    data.put(rs_m.getColumnName(col),rs.getObject(col));
-                }
-                break;
-            }
-        }
-        return data;
     }
 }
