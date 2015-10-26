@@ -3,15 +3,14 @@ package movealarm.kmitl.net;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.sql.SQLException;
 import java.util.HashMap;
 
  @RestController
  public class ConnectionTesting {
      private SQLInquirer sqlInquirer = SQLInquirer.getInstance();
-     private JSON2HashMap jtoH = JSON2HashMap.getInstance();
 
      @RequestMapping("/test/server_connection")
      public String testConnection()
@@ -84,26 +83,5 @@ import java.util.HashMap;
      @RequestMapping("/test/database_connection")
      public boolean testConDB() {
          return sqlInquirer.isConnecting();
-     }
-
-     @RequestMapping("/test/jsontohashmap")
-      public String testJsonToHashMap()
-     {
-         String json = "{\n" +
-                 "  NAME:\"Albert Attard\",\n" +
-                 "  P_LANGUAGE:\"Java\",\n" +
-                 "  LOCATION:\"Malta\"\n" +
-                 "}";
-         HashMap<String,Object> map = jtoH.JsonToHashMap(json);
-         return (String)map.get("NAME");
-     }
-
-     @RequestMapping("/test/hashmaptojson")
-     public String testHashMapToJson()
-     {
-         HashMap<String,Object> map = new HashMap<>();
-         map.put("name","oat");
-         map.put("age","21");
-         return jtoH.HashMapToJson(map);
      }
 }
