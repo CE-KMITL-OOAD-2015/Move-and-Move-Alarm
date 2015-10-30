@@ -1,5 +1,7 @@
 package com.fatel.mamtv1;
 
+import android.util.Log;
+
 import java.util.ArrayList;
 
 /**
@@ -9,7 +11,7 @@ public class ImageCollection {
 
     private static ArrayList<Image> imageCollection=new ArrayList<>();
     private static int count=0;
-    private ImageHelper helper;
+    //private ImageHelper helper = new ImageHelper();
 
     public static void addImage(int image,String description){
 

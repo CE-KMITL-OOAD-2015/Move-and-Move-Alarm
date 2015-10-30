@@ -13,7 +13,7 @@ import android.util.Log;
 public class ImageHelper extends SQLiteOpenHelper {
 
     private final String TAG = getClass().getSimpleName();
-    private SQLiteDatabase sqLiteDatabase;
+    private SQLiteDatabase sqLiteDatabase ;
     public static final int DATABASE_VERSION = 1;
 
     public ImageHelper(Context context){
@@ -82,8 +82,9 @@ public class ImageHelper extends SQLiteOpenHelper {
     }
 
     public boolean hasImage(int id){
-        SQLiteDatabase db2 = this.getReadableDatabase();
-        Cursor cursor = db2.query(Image.TABLE, new String[]{Image.Column.ID, Image.Column.IMAGE, Image.Column.DESCRIPTION}, Image.Column.ID + " = ? ",
+        SQLiteDatabase db = this.getReadableDatabase();
+        //Cursor cursor = db.query(Image.TABLE, new String[]{Image.Column.ID}, null, null, null, null, null);
+        Cursor cursor = db.query(Image.TABLE, new String[]{Image.Column.ID, Image.Column.IMAGE, Image.Column.DESCRIPTION}, Image.Column.ID + " = ? ",
                 new String[]{String.valueOf(id)}, null, null, null, null);
         if (cursor != null)
             return true;

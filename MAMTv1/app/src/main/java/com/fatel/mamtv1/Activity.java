@@ -11,18 +11,14 @@ import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
-<<<<<<< HEAD
 import android.view.Window;
 import android.view.WindowManager;
-=======
 import android.view.View;
->>>>>>> front-end
 import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 import android.widget.ImageView;
-
 
 import android.content.ContentValues;
 import android.database.Cursor;
@@ -40,7 +36,7 @@ public class Activity extends AppCompatActivity {
     AnimationDrawable frameAnimation;
     int count=0;
     int[] imageId = new int[] {-1,-1,-1,-1};
-    ArrayList<Image> img;
+    ArrayList<Image> img ;
     int exerciseImg;
     String exerciseDes;
 
@@ -57,7 +53,7 @@ public class Activity extends AppCompatActivity {
         Log.i("Activity", "Can go");
 
 
-
+        img = new ArrayList<>();
         txtR=(TextView) findViewById(R.id.rtime);
         txtA=(TextView) findViewById(R.id.atime);
         txtDes=(TextView) findViewById(R.id.des);
@@ -125,7 +121,7 @@ public class Activity extends AppCompatActivity {
 
             public void onFinish() {
                 txtA.setText("Activity Time done!");
-                Intent i1 = new Intent(Activity.this, MainActivity.class);
+                /*Intent i1 = new Intent(Activity.this, MainActivity.class);
                // Bundle b1 = new Bundle();
                 //b1.putExtra("key", "main");
                 i1.putExtra("key", "main");
@@ -136,7 +132,7 @@ public class Activity extends AppCompatActivity {
                 Bundle b = new Bundle();
                 b.putString("key", "recount");
                 i.putExtras(b);
-                sendBroadcast(i);
+                sendBroadcast(i);*/
             }
         }.start();
 

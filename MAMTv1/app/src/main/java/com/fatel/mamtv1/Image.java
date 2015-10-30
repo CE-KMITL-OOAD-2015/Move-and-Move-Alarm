@@ -7,7 +7,7 @@ public class Image {
 
     private int id;
 
-    public static final String DATABASE_NAME = "fatel_alarm.db";
+    //public static final String DATABASE_NAME = "fatel_alarm.db";
     private ImageHelper helper;
 
     public static final String TABLE = "imageTB";

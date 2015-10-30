@@ -5,7 +5,7 @@ import android.provider.BaseColumns;
 /**
  * Created by Monthon on 12/10/2558.
  */
-public class DatabaseAlarm {
+public class Alarm {
     private int id;
     private String starthr;
     private String startmin;
@@ -29,10 +29,10 @@ public class DatabaseAlarm {
         public static final String FRQ = "frq";
         public static final String DAY = "day";
     }
-    public DatabaseAlarm(){
+    public Alarm(){
     }
-    public DatabaseAlarm(int id,String starthr,String startmin,String stophr,String stopmin,
-                         String startinterval,String stopinterval,String frq,String day){
+    public Alarm(int id, String starthr, String startmin, String stophr, String stopmin,
+                 String startinterval, String stopinterval, String frq, String day){
         this.id = id;
         this.starthr = starthr;
         this.startmin = startmin;

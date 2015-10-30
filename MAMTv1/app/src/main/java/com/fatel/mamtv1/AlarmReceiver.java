@@ -6,7 +6,6 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.SystemClock;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -40,11 +39,21 @@ public class AlarmReceiver extends BroadcastReceiver {
         }
         //Log.i("test checkstart",checkstart(temp,context)+"");
         if(checkstart(temp,context)){
-            Intent i = new Intent(context,actAlarm.class);
-            Log.i("AlarmReceiver", "CanJump");
-            i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-            context.startActivity(i);
-            Toast.makeText(context, "I'm running", Toast.LENGTH_SHORT).show();
+            //bug start set
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTimeInMillis(System.currentTimeMillis());
+            Alarm alarm = mAlarmHelper.getAlarm();
+
+            if (Integer.parseInt(alarm.getDay().substring(calendar.get(Calendar.DAY_OF_WEEK) - 1, calendar.get(Calendar.DAY_OF_WEEK))) == 0) {
+                Intent i = new Intent(context, actAlarm.class);
+                Log.i("AlarmReceiver", "CanJump");
+                i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                context.startActivity(i);
+                Toast.makeText(context, "I'm running", Toast.LENGTH_SHORT).show();
+            }
+            else{
+                cancel(context,temp);
+            }
         }
         else{
             cancel(context,temp);
@@ -69,7 +78,7 @@ public class AlarmReceiver extends BroadcastReceiver {
     public boolean checkcanceltime() {
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(System.currentTimeMillis());
-        DatabaseAlarm alarm = mAlarmHelper.getAlarm();
+        Alarm alarm = mAlarmHelper.getAlarm();
         int frequency = Integer.parseInt(alarm.getFrq());
         int currenthour = calendar.get(Calendar.HOUR_OF_DAY);
         int currentmin = calendar.get(Calendar.MINUTE);
@@ -182,7 +191,7 @@ public class AlarmReceiver extends BroadcastReceiver {
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(System.currentTimeMillis());
         SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss.SSS");
-        DatabaseAlarm alarm = mAlarmHelper.getAlarm();
+        Alarm alarm = mAlarmHelper.getAlarm();
         //Log.i("Day", sdf.format(calendar.getTime()) + " " + calendar.get(Calendar.DAY_OF_WEEK) + " " + alarm.getDay() + " "
                // + calendar.get(Calendar.HOUR_OF_DAY) + " " + calendar.get(Calendar.MINUTE));
         String startin = alarm.getStartinterval();
@@ -214,7 +223,7 @@ public class AlarmReceiver extends BroadcastReceiver {
         Intent alarmIntent = new Intent(context , AlarmReceiver.class);
         pendingIntent = PendingIntent.getBroadcast(context, 0, alarmIntent, 0);
         AlarmManager manager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
-        DatabaseAlarm alarm = mAlarmHelper.getAlarm();
+        Alarm alarm = mAlarmHelper.getAlarm();
         int frequency = Integer.parseInt(alarm.getFrq());
         int interval = 60*1000*frequency;
         //int interval = 60*1000/10;
@@ -223,7 +232,7 @@ public class AlarmReceiver extends BroadcastReceiver {
     public boolean checkstart(String data,Context context){
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(System.currentTimeMillis());
-        DatabaseAlarm alarm = mAlarmHelper.getAlarm();
+        Alarm alarm = mAlarmHelper.getAlarm();
         String startin = alarm.getStartinterval();
         int starthour = Integer.parseInt(alarm.getStarthr());
         int startmin = Integer.parseInt(alarm.getStartmin());
@@ -270,7 +279,7 @@ public class AlarmReceiver extends BroadcastReceiver {
         }
     }
     public boolean inRange(Date now) {
-        DatabaseAlarm alarm = mAlarmHelper.getAlarm();
+        Alarm alarm = mAlarmHelper.getAlarm();
         String stopin = alarm.getStopinterval();
         String startin = alarm.getStartinterval();
         int starthour = Integer.parseInt(alarm.getStarthr());

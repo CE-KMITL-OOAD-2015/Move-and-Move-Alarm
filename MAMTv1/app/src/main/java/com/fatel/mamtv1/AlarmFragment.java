@@ -3,12 +3,10 @@ package com.fatel.mamtv1;
 
 import android.app.AlarmManager;
 import android.app.PendingIntent;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,9 +14,6 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.Spinner;
-
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
 
 
 /**
@@ -77,7 +72,7 @@ public class AlarmFragment extends android.support.v4.app.Fragment {
 
         //check checkbox tick
         if(mAlarmHelper.checkdata()==1) {
-            DatabaseAlarm alarm = mAlarmHelper.getAlarm();
+            Alarm alarm = mAlarmHelper.getAlarm();
             String day = alarm.getDay();
             if(day.substring(0,1).equals("1"))
                 mChkboxSun.setChecked(true);
@@ -143,7 +138,7 @@ public class AlarmFragment extends android.support.v4.app.Fragment {
                 }
 
                 //keep data
-                    DatabaseAlarm alarm = new DatabaseAlarm();
+                    Alarm alarm = new Alarm();
                     alarm.setStarthr(mStartHr.getSelectedItem().toString());
                     alarm.setStartmin(mStartMin.getSelectedItem().toString());
                     alarm.setStophr(mFinishHr.getSelectedItem().toString());
@@ -189,7 +184,7 @@ public class AlarmFragment extends android.support.v4.app.Fragment {
                 spinner.setSelection(11);
             else
             {
-                DatabaseAlarm alarm = mAlarmHelper.getAlarm();
+                Alarm alarm = mAlarmHelper.getAlarm();
                 if(isStart) {
                     String hr = alarm.getStarthr();
                     spinner.setSelection(Integer.parseInt(hr) - 1);
@@ -213,7 +208,7 @@ public class AlarmFragment extends android.support.v4.app.Fragment {
             spinner.setAdapter(adapter);
             if(mAlarmHelper.checkdata()==1)
             {
-                DatabaseAlarm alarm = mAlarmHelper.getAlarm();
+                Alarm alarm = mAlarmHelper.getAlarm();
                 if(isStart) {
                     String min = alarm.getStartmin();
                     spinner.setSelection(Integer.parseInt(min));
@@ -237,7 +232,7 @@ public class AlarmFragment extends android.support.v4.app.Fragment {
         spinner.setAdapter(adapter);
         if(mAlarmHelper.checkdata()==1)
         {
-            DatabaseAlarm alarm = mAlarmHelper.getAlarm();
+            Alarm alarm = mAlarmHelper.getAlarm();
             if(isStart) {
                 String ap = alarm.getStartinterval();
                 if(ap.equals("AM"))
@@ -266,7 +261,7 @@ public class AlarmFragment extends android.support.v4.app.Fragment {
         spinner.setAdapter(adapter);
         if(mAlarmHelper.checkdata()==1)
         {
-            DatabaseAlarm alarm = mAlarmHelper.getAlarm();
+            Alarm alarm = mAlarmHelper.getAlarm();
             String frq = alarm.getFrq();
             int frqint = -1;
             if(frq.equals("15"))
@@ -290,7 +285,6 @@ public class AlarmFragment extends android.support.v4.app.Fragment {
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(System.currentTimeMillis());
         SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss.SSS");
-        DatabaseAlarm alarm = mAlarmHelper.getAlarm();
         Log.i("Day",sdf.format(calendar.getTime())+" "+calendar.get(Calendar.DAY_OF_WEEK)+" "+alarm.getDay()+" "
                 +calendar.get(Calendar.HOUR_OF_DAY)+" "+calendar.get(Calendar.MINUTE));
         String startin = alarm.getStartinterval();
@@ -334,7 +328,7 @@ public class AlarmFragment extends android.support.v4.app.Fragment {
     public boolean checkcanceltime(){
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(System.currentTimeMillis());
-        DatabaseAlarm alarm = mAlarmHelper.getAlarm();
+
         String stopin = alarm.getStopinterval();
         int stophour = Integer.parseInt(alarm.getStophr());
         int stopmin = Integer.parseInt(alarm.getStopmin());

@@ -16,13 +16,7 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.widget.ArrayAdapter;
 import android.widget.TextView;
-import android.widget.Toast;
-import android.widget.Spinner;
-
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -178,7 +172,7 @@ public class MainActivity extends AppCompatActivity {
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(System.currentTimeMillis());
         SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss.SSS");
-        DatabaseAlarm alarm = mAlarmHelper.getAlarm();
+
         Log.i("Day",sdf.format(calendar.getTime())+" "+calendar.get(Calendar.DAY_OF_WEEK)+" "+alarm.getDay()+" "
                 +calendar.get(Calendar.HOUR_OF_DAY)+" "+calendar.get(Calendar.MINUTE));
         String startin = alarm.getStartinterval();
@@ -210,7 +204,7 @@ public class MainActivity extends AppCompatActivity {
             Intent alarmIntent = new Intent(MainActivity.this , AlarmReceiver.class);
             pendingIntent = PendingIntent.getBroadcast(MainActivity.this, 0, alarmIntent, 0);
             AlarmManager manager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-            DatabaseAlarm alarm = mAlarmHelper.getAlarm();
+            Alarm alarm = mAlarmHelper.getAlarm();
             int frequency = Integer.parseInt(alarm.getFrq());
             //int interval = 60*1000*frequency;
             int interval = 60*1000*1;
