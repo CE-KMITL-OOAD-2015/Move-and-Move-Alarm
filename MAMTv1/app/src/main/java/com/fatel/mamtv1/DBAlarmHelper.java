@@ -76,7 +76,7 @@ public class DBAlarmHelper extends SQLiteOpenHelper{
     }
     public int checkdata(){
         int temp = 0;
-        sqLiteDatabase = this.getWritableDatabase();
+        sqLiteDatabase = this.getReadableDatabase();
         Cursor cursor = sqLiteDatabase.query
                 (Alarm.TABLE, null, null, null, null, null, null);
         if (cursor.moveToFirst()) {
@@ -99,6 +99,8 @@ public class DBAlarmHelper extends SQLiteOpenHelper{
             cursor.moveToFirst();
         Alarm alarm = new Alarm(Integer.parseInt(cursor.getString(0)),cursor.getString(1),cursor.getString(2),
                 cursor.getString(3),cursor.getString(4),cursor.getString(5),cursor.getString(6),cursor.getString(7),cursor.getString(8));
+        cursor.close();
+        db.close();
         return alarm;
     }
 }

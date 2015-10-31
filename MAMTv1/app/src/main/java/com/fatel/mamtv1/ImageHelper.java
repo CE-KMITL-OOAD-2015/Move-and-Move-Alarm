@@ -17,18 +17,18 @@ public class ImageHelper extends SQLiteOpenHelper {
     public static final int DATABASE_VERSION = 1;
 
     public ImageHelper(Context context){
-        super(context, "fatel_alarm.db", null, DATABASE_VERSION);
+        super(context, "fatel_image.db", null, DATABASE_VERSION);
     }
 
     @Override
     public void onCreate(SQLiteDatabase db){
         String CREATE_IMAGE_TABLE = String.format("CREATE TABLE %s " +
-                        "(%s INTEGER PRIMARY KEY  AUTOINCREMENT, %s TEXT, %s TEXT)",
+                        "(%s INTEGER, %s INTEGER, %s TEXT)",
                 Image.TABLE,
                 Image.Column.ID,
                 Image.Column.IMAGE,
                 Image.Column.DESCRIPTION);
-        Log.i(TAG,CREATE_IMAGE_TABLE);
+        // Log.i(TAG,CREATE_IMAGE_TABLE);
         db.execSQL(CREATE_IMAGE_TABLE);
     }
     @Override
@@ -86,8 +86,9 @@ public class ImageHelper extends SQLiteOpenHelper {
         //Cursor cursor = db.query(Image.TABLE, new String[]{Image.Column.ID}, null, null, null, null, null);
         Cursor cursor = db.query(Image.TABLE, new String[]{Image.Column.ID, Image.Column.IMAGE, Image.Column.DESCRIPTION}, Image.Column.ID + " = ? ",
                 new String[]{String.valueOf(id)}, null, null, null, null);
-        if (cursor != null)
+        if (cursor.moveToFirst()) {
             return true;
+        }
         return false;
     }
 

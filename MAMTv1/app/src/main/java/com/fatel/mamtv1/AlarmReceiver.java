@@ -44,7 +44,7 @@ public class AlarmReceiver extends BroadcastReceiver {
             calendar.setTimeInMillis(System.currentTimeMillis());
             Alarm alarm = mAlarmHelper.getAlarm();
 
-            if (Integer.parseInt(alarm.getDay().substring(calendar.get(Calendar.DAY_OF_WEEK) - 1, calendar.get(Calendar.DAY_OF_WEEK))) == 0) {
+            if (Integer.parseInt(alarm.getDay().substring(calendar.get(Calendar.DAY_OF_WEEK) - 1, calendar.get(Calendar.DAY_OF_WEEK))) != 0) {
                 Intent i = new Intent(context, actAlarm.class);
                 Log.i("AlarmReceiver", "CanJump");
                 i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

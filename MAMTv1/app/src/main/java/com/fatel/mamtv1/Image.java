@@ -1,5 +1,7 @@
 package com.fatel.mamtv1;
 import android.provider.BaseColumns;
+import android.util.Log;
+
 /**
  * Created by Administrator on 23/10/2558.
  */
@@ -19,12 +21,11 @@ public class Image {
 
     public Image (int id,int image,String description){
         this.id=id;
-        helper=new ImageHelper(Activity.context);
-        if (!(helper.hasImage(id))) helper.saveImage(id,image,description);
+        helper=new ImageHelper(Activity.context );
+        if (!(helper.hasImage(id))) helper.saveImage(id, image, description);
     }
 
     public int getImage(){
-
         int img = helper.loadImage(this.id);
         return img;
 
