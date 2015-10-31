@@ -7,11 +7,11 @@ import java.util.HashMap;
 /**
  * Created by oat90 on 25/10/2558.
  */
-public class JSON2HashMap {
+public class Converter {
     private Gson gson;
-    public static JSON2HashMap jToH = null;
+    public static Converter jToH = null;
 
-    public JSON2HashMap() {
+    public Converter() {
         gson = new Gson();
     }
 
@@ -25,10 +25,10 @@ public class JSON2HashMap {
         return gson.toJson(map);
     }
 
-    public static JSON2HashMap getInstance()
+    public static Converter getInstance()
     {
         if(jToH == null) {
-            jToH = new JSON2HashMap();
+            jToH = new Converter();
         }
         return jToH;
     }

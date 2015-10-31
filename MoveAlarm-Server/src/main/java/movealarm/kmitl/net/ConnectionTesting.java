@@ -11,6 +11,7 @@ import java.util.HashMap;
  @RestController
  public class ConnectionTesting {
      private SQLInquirer sqlInquirer = SQLInquirer.getInstance();
+     private Converter jtoH = Converter.getInstance();
 
      @RequestMapping("/test/server_connection")
      public String testConnection()
@@ -83,5 +84,25 @@ import java.util.HashMap;
      @RequestMapping("/test/database_connection")
      public boolean testConDB() {
          return sqlInquirer.isConnecting();
+     }
+
+     @RequestMapping("/test/jsontohashmap")
+      public String testJsonToHashMap()
+     {
+         /*String json = "{\n" +
+                 "  NAME:\"Albert Attard\",\n" +
+                 "  P_LANGUAGE:\"Java\",\n" +
+                 "  LOCATION:\"Malta\"\n" +
+                 "}";*/
+         HashMap<String,Object> map = jtoH.JsonToHashMap(testHashMapToJson());
+         return map.get("friend").toString();
+     }
+
+     @RequestMapping("/test/hashmaptojson")
+     public String testHashMapToJson()
+     {
+         HashMap<String,Object> map = new HashMap<>();
+         map.put("name","oat");
+         return jtoH.HashMapToJson(map);
      }
 }
