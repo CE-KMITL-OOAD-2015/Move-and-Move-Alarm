@@ -3,12 +3,10 @@ package com.fatel.mamtv1;
 
 import android.app.AlarmManager;
 import android.app.PendingIntent;
-import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,9 +14,6 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.Spinner;
-
-import java.text.SimpleDateFormat;
-import java.util.Calendar;
 
 
 /**
@@ -44,7 +39,9 @@ public class AlarmFragment extends android.support.v4.app.Fragment {
 
     private DBAlarmHelper mAlarmHelper;
     private int ID = -1;
+
     private PendingIntent pendingIntent;
+    private AlarmManager manager;
     public AlarmFragment() {
         // Required empty public constructor
     }
@@ -75,7 +72,7 @@ public class AlarmFragment extends android.support.v4.app.Fragment {
 
         //check checkbox tick
         if(mAlarmHelper.checkdata()==1) {
-            DatabaseAlarm alarm = mAlarmHelper.getAlarm();
+            Alarm alarm = mAlarmHelper.getAlarm();
             String day = alarm.getDay();
             if(day.substring(0,1).equals("1"))
                 mChkboxSun.setChecked(true);
@@ -141,7 +138,7 @@ public class AlarmFragment extends android.support.v4.app.Fragment {
                 }
 
                 //keep data
-                    DatabaseAlarm alarm = new DatabaseAlarm();
+                    Alarm alarm = new Alarm();
                     alarm.setStarthr(mStartHr.getSelectedItem().toString());
                     alarm.setStartmin(mStartMin.getSelectedItem().toString());
                     alarm.setStophr(mFinishHr.getSelectedItem().toString());
@@ -155,10 +152,9 @@ public class AlarmFragment extends android.support.v4.app.Fragment {
                     } else {
                         mAlarmHelper.UpdateAlarm(alarm);
                     }
-                    //finish();
-                    Intent mServiceIntent = new Intent(getActivity(), AlarmReceiver.class);
-                    pendingIntent = PendingIntent.getBroadcast(getActivity(),0,mServiceIntent,0);
-                    start();
+                Intent mServiceIntent = new Intent(getActivity(), AlarmReceiver.class);
+                pendingIntent = PendingIntent.getBroadcast(getActivity(),0,mServiceIntent,0);
+                start();
                 FragmentTransaction tx = getFragmentManager().beginTransaction();
                 tx.setCustomAnimations(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
                 tx.replace(R.id.container, new MainFragment());
@@ -188,7 +184,7 @@ public class AlarmFragment extends android.support.v4.app.Fragment {
                 spinner.setSelection(11);
             else
             {
-                DatabaseAlarm alarm = mAlarmHelper.getAlarm();
+                Alarm alarm = mAlarmHelper.getAlarm();
                 if(isStart) {
                     String hr = alarm.getStarthr();
                     spinner.setSelection(Integer.parseInt(hr) - 1);
@@ -212,7 +208,7 @@ public class AlarmFragment extends android.support.v4.app.Fragment {
             spinner.setAdapter(adapter);
             if(mAlarmHelper.checkdata()==1)
             {
-                DatabaseAlarm alarm = mAlarmHelper.getAlarm();
+                Alarm alarm = mAlarmHelper.getAlarm();
                 if(isStart) {
                     String min = alarm.getStartmin();
                     spinner.setSelection(Integer.parseInt(min));
@@ -236,7 +232,7 @@ public class AlarmFragment extends android.support.v4.app.Fragment {
         spinner.setAdapter(adapter);
         if(mAlarmHelper.checkdata()==1)
         {
-            DatabaseAlarm alarm = mAlarmHelper.getAlarm();
+            Alarm alarm = mAlarmHelper.getAlarm();
             if(isStart) {
                 String ap = alarm.getStartinterval();
                 if(ap.equals("AM"))
@@ -265,7 +261,7 @@ public class AlarmFragment extends android.support.v4.app.Fragment {
         spinner.setAdapter(adapter);
         if(mAlarmHelper.checkdata()==1)
         {
-            DatabaseAlarm alarm = mAlarmHelper.getAlarm();
+            Alarm alarm = mAlarmHelper.getAlarm();
             String frq = alarm.getFrq();
             int frqint = -1;
             if(frq.equals("15"))
@@ -285,17 +281,88 @@ public class AlarmFragment extends android.support.v4.app.Fragment {
         return spinner;
     }
     public void start() {
-        AlarmManager manager = (AlarmManager) getActivity().getSystemService(Context.ALARM_SERVICE);
-        int interval = 6000;
-
-        manager.setExact(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + interval, pendingIntent);
+        /*manager = (AlarmManager) getActivity().getSystemService(Context.ALARM_SERVICE);
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(System.currentTimeMillis());
         SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss.SSS");
-        DatabaseAlarm alarm = mAlarmHelper.getAlarm();
-        Log.i("Day",sdf.format(calendar.getTime())+" "+calendar.DAY_OF_WEEK+" "+alarm.getDay());
-        /*if(calendar.DAY_OF_WEEK==Integer.parseInt(alarm.getDay().substring(calendar.DAY_OF_WEEK-1,calendar.DAY_OF_WEEK))){
-            if()
-        }*/
+        Log.i("Day",sdf.format(calendar.getTime())+" "+calendar.get(Calendar.DAY_OF_WEEK)+" "+alarm.getDay()+" "
+                +calendar.get(Calendar.HOUR_OF_DAY)+" "+calendar.get(Calendar.MINUTE));
+        String startin = alarm.getStartinterval();
+        int starthour = Integer.parseInt(alarm.getStarthr());
+        int startmin = Integer.parseInt(alarm.getStartmin());
+        if(startin.equalsIgnoreCase("am")){
+            if(starthour==12)
+                starthour = 0;
+        }
+        else{
+            if(starthour==12)
+                starthour=12;
+            else
+                starthour+=12;
+        }
+        Log.i("fragment",calendar.get(Calendar.HOUR_OF_DAY)+" start "+starthour+" "
+                +calendar.get(Calendar.MINUTE)+" "+startmin);
+        calendar.set(Calendar.HOUR_OF_DAY, starthour);
+        calendar.set(Calendar.MINUTE, startmin);
+        calendar.set(Calendar.SECOND, 0);
+        manager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);*/
+        Intent i = new Intent(getActivity(), AlarmReceiver.class);
+        Bundle b = new Bundle();
+        b.putString("key", "set");
+        i.putExtras(b);
+        getActivity().sendBroadcast(i);
     }
+    /*public void cancel(){
+            if (manager!= null&&checkcanceltime()) {
+                manager.cancel(pendingIntent);
+            }
+            if (checkcanceltime()==false) {
+                start();
+            }
+            else{
+                manager = (AlarmManager) getActivity().getSystemService(Context.ALARM_SERVICE);
+                int interval = 60*1000*10;
+                manager.setExact(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + interval, pendingIntent);
+            }
+    }
+    public boolean checkcanceltime(){
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(System.currentTimeMillis());
+
+        String stopin = alarm.getStopinterval();
+        int stophour = Integer.parseInt(alarm.getStophr());
+        int stopmin = Integer.parseInt(alarm.getStopmin());
+        int frequency = Integer.parseInt(alarm.getFrq());
+        if(stopin.equalsIgnoreCase("am")){
+            if(stophour==12)
+                stophour = 0;
+        }
+        else{
+            if(stophour==12)
+                stophour=12;
+            else
+                stophour+=12;
+        }
+        if(frequency+stopmin>59){
+            int tempmin = frequency+stopmin;
+            stopmin = tempmin-(60*(tempmin/60));
+            stophour += tempmin/60;
+        }
+        int currenthour = calendar.get(Calendar.HOUR_OF_DAY);
+        int currentmin = calendar.get(Calendar.MINUTE);
+        if(frequency+currentmin>59){
+            int tempmin = frequency+currentmin;
+            currentmin = tempmin-(60*(tempmin/60));
+            currenthour += tempmin/60;
+        }
+        if(Integer.parseInt(alarm.getDay().substring(calendar.get(Calendar.DAY_OF_WEEK)-1,calendar.get(Calendar.DAY_OF_WEEK)))==0){
+            return true;
+        }
+        else if(currenthour<=stophour&&currentmin<=stopmin){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }*/
 }

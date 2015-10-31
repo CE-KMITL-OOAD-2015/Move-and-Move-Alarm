@@ -11,13 +11,14 @@ import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Window;
+import android.view.WindowManager;
 import android.view.View;
 import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
 import android.widget.ImageView;
-
 
 import android.content.ContentValues;
 import android.database.Cursor;
@@ -34,8 +35,8 @@ public class Activity extends AppCompatActivity {
     ImageView imgView;
     AnimationDrawable frameAnimation;
     int count=0;
-    int[] imageId = new int[] {-1,-1,-1,-1};
-    ArrayList<Image> img;
+    //int[] imageId = new int[] {-1,-1,-1,-1};
+    ArrayList<Image> img ;
     int exerciseImg;
     String exerciseDes;
 
@@ -44,32 +45,45 @@ public class Activity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Log.i("Activity", "Can go");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity);
-        Log.i("Activity", "Can go");
+        final Window win= getWindow();
+        win.addFlags(WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED | WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD);
+        win.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON | WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON);
 
-
-
+        img = new ArrayList<>();
         txtR=(TextView) findViewById(R.id.rtime);
         txtA=(TextView) findViewById(R.id.atime);
         txtDes=(TextView) findViewById(R.id.des);
         imgView=(ImageView) findViewById(R.id.img);
-        random();
-        context=this;
+        ActivityHandle activityHandle=new ActivityHandle();
+
+        context=getApplicationContext();
         if(ImageCollection.size()==0){
             ImageCollection.initial();
         }
-        img = ImageCollection.getImageById(imageId);
 
+        Log.i("Activity","can go +1");
+        img = ImageCollection.getImageById(activityHandle.getImageId());
+        Log.i("Activity","can go +1"+img);
+        Log.i("Activity","can go +2");
         exerciseImg=(img.get(count)).getImage();
+        Log.i("Activity",""+(img.get(count)).getImage());
+        Log.i("Activity","can go +3");
         exerciseDes=(img.get(count)).getDescription();
-
+        Log.i("Activity",""+(img.get(count)).getDescription());
+        Log.i("Activity","can go +4");
         txtDes.setText(exerciseDes);
+        Log.i("Activity", "can go +5");
         imgView.setBackgroundResource(exerciseImg);
+        Log.i("Activity", "can go +6");
         // Get the background, which has been compiled to an AnimationDrawable object.
         frameAnimation = (AnimationDrawable) imgView.getBackground();
+        Log.i("Activity","can go +7");
         // Start the animation (looped playback by default).
         frameAnimation.start();
+        Log.i("Activity", "can go +8");
 
         new CountDownTimer(15000, 1000) {
 
@@ -117,16 +131,23 @@ public class Activity extends AppCompatActivity {
 
             public void onFinish() {
                 txtA.setText("Activity Time done!");
+                Intent i1 = new Intent(Activity.this, MainActivity.class);
+               // Bundle b1 = new Bundle();
+                //b1.putExtra("key", "main");
+                //i1.putExtra("key", "main");
+                startActivity(i1);
+                //Intent intent = new Intent(Activity.this, MainActivity.class);
+                //startActivity(intent);
                 Intent i = new Intent(getBaseContext(), AlarmReceiver.class);
                 Bundle b = new Bundle();
-                b.putString("key", "act complete");
+                b.putString("key", "recount");
                 i.putExtras(b);
                 sendBroadcast(i);
             }
         }.start();
 
     }
-    public void random(){
+  /*  public void random(){
         for(int i=0;i<4;i++){
             boolean same=true;
             int x=0;
@@ -143,7 +164,7 @@ public class Activity extends AppCompatActivity {
             imageId[i]=x;
         }
 
-    }
+    }*/
 /*
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {

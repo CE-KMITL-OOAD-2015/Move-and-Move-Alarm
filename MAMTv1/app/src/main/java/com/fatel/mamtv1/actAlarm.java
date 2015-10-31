@@ -48,13 +48,17 @@ public class actAlarm extends AppCompatActivity {
     }
 
     public void linkHome(View view){
-        Intent intent = new Intent(this, MainActivity.class);
-        startActivity(intent);
-        //Intent i = new Intent(getBaseContext(), AlarmReceiver.class);
-        //Bundle b = new Bundle();
-        //b.putString("key", "recount");
-        //i.putExtras(b);
-       // sendBroadcast(i);
+        Intent i1 = new Intent(actAlarm.this, MainActivity.class);
+        // Bundle b1 = new Bundle();
+        //b1.putExtra("key", "main");
+        i1.putExtra("key", "main");
+        startActivity(i1);
+        //sendBroadcast(i1);
+        Intent i = new Intent(getBaseContext(), AlarmReceiver.class);
+        Bundle b = new Bundle();
+        b.putString("key", "recount");
+        i.putExtras(b);
+        sendBroadcast(i);
     }
 
 }

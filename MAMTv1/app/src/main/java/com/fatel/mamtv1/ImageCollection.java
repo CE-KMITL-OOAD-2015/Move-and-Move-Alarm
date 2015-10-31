@@ -1,5 +1,7 @@
 package com.fatel.mamtv1;
 
+import android.util.Log;
+
 import java.util.ArrayList;
 
 /**
@@ -8,11 +10,10 @@ import java.util.ArrayList;
 public class ImageCollection {
 
     private static ArrayList<Image> imageCollection=new ArrayList<>();
-    private static int count=0;
-    private ImageHelper helper;
+    private static int count=1;
+    //private ImageHelper helper = new ImageHelper();
 
     public static void addImage(int image,String description){
-
         Image img = new Image(count,image,description);
         imageCollection.add(img);
         count++;
@@ -20,7 +21,6 @@ public class ImageCollection {
     }
 
     public static void initial (){
-
         addImage(R.drawable.ex1, "บริหารกล้ามเนื้อคอ");
         addImage(R.drawable.ex2,"ยืดกล้ามเนื้อแขน");
         addImage(R.drawable.ex3,"บริหารกล้ามเนื้อคอ");
