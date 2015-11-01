@@ -25,7 +25,7 @@ public class BootBroadcastReceiver extends BroadcastReceiver {
                 manager.setInexactRepeating(AlarmManager.RTC_WAKEUP, System.currentTimeMillis(), interval, pendingIntent);*/
                 Intent i = new Intent(context, AlarmReceiver.class);
                 Bundle b = new Bundle();
-                b.putString("key", "boot");
+                b.putString("key", "first");
                 i.putExtras(b);
                 context.sendBroadcast(i);
                 Toast.makeText(context, "Alarm Set", Toast.LENGTH_SHORT).show();
