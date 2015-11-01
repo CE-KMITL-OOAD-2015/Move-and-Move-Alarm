@@ -85,6 +85,7 @@ import java.util.HashMap;
      public boolean testConDB() {
          return sqlInquirer.isConnecting();
      }
+<<<<<<< 9ddf2a751f07a5287b6f455d82c0d458fdc9710d
 
      @RequestMapping("/test/jsontohashmap")
       public String testJsonToHashMap()
@@ -105,4 +106,6 @@ import java.util.HashMap;
          map.put("name","oat");
          return jtoH.HashMapToJson(map);
      }
+=======
+>>>>>>> [#33] created the user class with basic functionality.
 }
