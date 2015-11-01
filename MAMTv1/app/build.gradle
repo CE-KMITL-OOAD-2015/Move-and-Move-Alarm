@@ -28,4 +28,5 @@ dependencies {
     compile "com.android.support:support-v4:20.0.+"
     compile 'com.android.support:design:22.2.0'
     compile 'de.hdodenhof:circleimageview:1.2.1'
+    compile 'com.facebook.android:facebook-android-sdk:4.6.0'
 }

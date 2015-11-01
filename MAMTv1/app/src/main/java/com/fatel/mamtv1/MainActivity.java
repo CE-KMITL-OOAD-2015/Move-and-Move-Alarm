@@ -18,6 +18,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
+import com.facebook.login.LoginManager;
+
 public class MainActivity extends AppCompatActivity {
 
     private DrawerLayout mDrawerLayout;
@@ -124,6 +126,13 @@ public class MainActivity extends AppCompatActivity {
             case R.id.nav_alarm_fragment:
                 fragmentClass = AlarmFragment.class;
                 break;
+            case R.id.nav_logout_fragment:
+                fragmentClass = null;
+                LoginManager.getInstance().logOut();
+                mDrawerLayout.closeDrawers();
+                Intent intent = new Intent(this, Intro_Activity.class);
+                startActivity(intent);
+                break;
 //            case R.id.nav_third_fragment:
 //                fragmentClass = ThirdFragment.class;
 //                break;
@@ -136,21 +145,22 @@ public class MainActivity extends AppCompatActivity {
         } catch (Exception e) {
             e.printStackTrace();
         }
+        if(fragmentClass!=null) {
+            // Insert the fragment by replacing any existing fragment
+            FragmentManager fragmentManager = getSupportFragmentManager();//getActivity()
+            FragmentTransaction tx = fragmentManager.beginTransaction();
+            tx.setCustomAnimations(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+            tx.addToBackStack(null);
+            tx.replace(R.id.container, fragment).commit();
 
-        // Insert the fragment by replacing any existing fragment
-        FragmentManager fragmentManager = getSupportFragmentManager();//getActivity()
-        FragmentTransaction tx = fragmentManager.beginTransaction();
-        tx.setCustomAnimations(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
-        tx.addToBackStack(null);
-        tx.replace(R.id.container, fragment).commit();
-
-        // Highlight the selected item, update the title, and close the drawer
-        menuItem.setChecked(true);
-        if(menuItem.getTitle().equals("Home"))
-            setTitle("Move Alarm");
-        else
-            setTitle(menuItem.getTitle());
-        mDrawerLayout.closeDrawers();
+            // Highlight the selected item, update the title, and close the drawer
+            menuItem.setChecked(true);
+            if (menuItem.getTitle().equals("Home"))
+                setTitle("Move Alarm");
+            else
+                setTitle(menuItem.getTitle());
+            mDrawerLayout.closeDrawers();
+        }
     }
 
     @Override
