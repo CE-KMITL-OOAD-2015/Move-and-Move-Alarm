@@ -1,5 +1,8 @@
 package com.fatel.mamtv1;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -51,14 +54,19 @@ public class actAlarm extends AppCompatActivity {
         Intent i1 = new Intent(actAlarm.this, MainActivity.class);
         // Bundle b1 = new Bundle();
         //b1.putExtra("key", "main");
-        i1.putExtra("key", "main");
+        //i1.putExtra("key", "main");
         startActivity(i1);
         //sendBroadcast(i1);
         Intent i = new Intent(getBaseContext(), AlarmReceiver.class);
+
         Bundle b = new Bundle();
-        b.putString("key", "recount");
+        b.putString("key", "first");
         i.putExtras(b);
         sendBroadcast(i);
+        //AlarmManager manager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+        //int interval = 60*1000*1;
+        //PendingIntent pendingIntent = PendingIntent.getBroadcast(actAlarm.this, 0, i, 0);
+        //manager.setExact(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + interval, pendingIntent);
     }
 
 }

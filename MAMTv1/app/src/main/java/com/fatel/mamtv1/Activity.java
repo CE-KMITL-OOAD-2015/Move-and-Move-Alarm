@@ -2,6 +2,8 @@ package com.fatel.mamtv1;
 
 
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
 import android.content.Context;
 
 import android.content.Intent;
@@ -131,6 +133,8 @@ public class Activity extends AppCompatActivity {
 
             public void onFinish() {
                 txtA.setText("Activity Time done!");
+
+                //go to main
                 Intent i1 = new Intent(Activity.this, MainActivity.class);
                // Bundle b1 = new Bundle();
                 //b1.putExtra("key", "main");
@@ -138,6 +142,8 @@ public class Activity extends AppCompatActivity {
                 startActivity(i1);
                 //Intent intent = new Intent(Activity.this, MainActivity.class);
                 //startActivity(intent);
+
+                //set frq
                 Intent i = new Intent(getBaseContext(), AlarmReceiver.class);
                 Bundle b = new Bundle();
                 b.putString("key", "recount");
@@ -190,7 +196,21 @@ public class Activity extends AppCompatActivity {
 
     public void linkHome(View view)
     {
-        Intent intent = new Intent(this, MainActivity.class);
-        startActivity(intent);
+        Intent i1 = new Intent(Activity.this, MainActivity.class);
+        // Bundle b1 = new Bundle();
+        //b1.putExtra("key", "main");
+        //i1.putExtra("key", "main");
+        startActivity(i1);
+        //sendBroadcast(i1);
+        Intent i = new Intent(getBaseContext(), AlarmReceiver.class);
+
+        Bundle b = new Bundle();
+        b.putString("key", "first");
+        i.putExtras(b);
+        sendBroadcast(i);
+        //AlarmManager manager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+        //int interval = 60*1000*1;
+        //PendingIntent pendingIntent = PendingIntent.getBroadcast(Activity.this, 0, i, 0);
+       // manager.setExact(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + interval, pendingIntent);
     }
 }

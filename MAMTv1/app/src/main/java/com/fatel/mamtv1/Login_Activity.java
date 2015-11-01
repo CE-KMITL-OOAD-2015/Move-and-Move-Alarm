@@ -1,8 +1,12 @@
 package com.fatel.mamtv1;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -10,11 +14,14 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 public class Login_Activity extends AppCompatActivity {
-
+    private PendingIntent pendingIntent;
+    private AlarmManager manager;
+    private DBAlarmHelper mAlarmHelper;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.login_layout);
+        mAlarmHelper = new DBAlarmHelper(this);
     }
 
     @Override
@@ -62,10 +69,73 @@ public class Login_Activity extends AppCompatActivity {
         else if (true/*ifSuccess ใช้เช็คว่า username กับ password ตรงกับฐานข้อมูลรึเปล่า*/) {
             Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
+            // ดูว่ามีการตั้งค่าเวลาหรือเปล่า
+            if(mAlarmHelper.checkdata()==1){
+                start();
+            }
         }
         else{
             Toast toast = Toast.makeText(this, "Username or Password incorrect.", Toast.LENGTH_SHORT);
             toast.show();
         }
+    }
+    public void start(){
+        Intent i = new Intent(getBaseContext(), AlarmReceiver.class);
+        Bundle b = new Bundle();
+        b.putString("key", "set");
+        i.putExtras(b);
+        sendBroadcast(i);
+        /*manager = (AlarmManager)getSystemService(Context.ALARM_SERVICE);
+        Calendar calendar = Calendar.getInstance();
+        calendar.setTimeInMillis(System.currentTimeMillis());
+        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss.SSS");
+
+        Log.i("Day",sdf.format(calendar.getTime())+" "+calendar.get(Calendar.DAY_OF_WEEK)+" "+alarm.getDay()+" "
+                +calendar.get(Calendar.HOUR_OF_DAY)+" "+calendar.get(Calendar.MINUTE));
+        String startin = alarm.getStartinterval();
+        int starthour = Integer.parseInt(alarm.getStarthr());
+        int startmin = Integer.parseInt(alarm.getStartmin());
+        if(startin.equalsIgnoreCase("am")){
+            if(starthour==12)
+                starthour = 0;
+        }
+        else{
+            if(starthour==12)
+                starthour=12;
+            else
+                starthour+=12;
+        }
+        Log.i("main","set calendar "+calendar.get(Calendar.HOUR_OF_DAY)+" start "+starthour+" "
+                +calendar.get(Calendar.MINUTE)+" "+startmin);
+        calendar.set(Calendar.HOUR_OF_DAY, starthour);
+        calendar.set(Calendar.MINUTE, startmin);
+        calendar.set(Calendar.SECOND, 0);
+        manager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);*/
+       // Bundle extras = getIntent().getExtras();
+        // String temp = extras.getString("key");
+       // if (extras != null) {
+            //String value = extras.getStringExtra("key");
+       // }
+        /*if(extras==null){
+            Log.i("extras","extras main == null");
+            Intent alarmIntent = new Intent(Login_Activity.this , AlarmReceiver.class);
+            pendingIntent = PendingIntent.getBroadcast(Login_Activity.this, 0, alarmIntent, 0);
+            AlarmManager manager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
+            Alarm alarm = mAlarmHelper.getAlarm();
+            int frequency = Integer.parseInt(alarm.getFrq());
+            //int interval = 60*1000*frequency;
+            int interval = 60*1000*1;
+            manager.setExact(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + interval, pendingIntent);
+        }*/
+        /*else{
+            Log.i("extras",extras.getString("key"));
+            if(!extras.getString("key").equalsIgnoreCase("recount")){
+
+            }
+            else if(extras.getString("key").equalsIgnoreCase("main")){
+                Log.i("act to main ",extras.getString("key"));
+            }
+        }*/
+        //manager.setRepeating(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), 1000 * 60 * Integer.parseInt(alarm.getFrq()), pendingIntent);
     }
 }
