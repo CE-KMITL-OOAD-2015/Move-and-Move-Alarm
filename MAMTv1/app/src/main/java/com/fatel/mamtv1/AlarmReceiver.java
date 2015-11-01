@@ -51,7 +51,7 @@ public class AlarmReceiver extends BroadcastReceiver {
                     context.startActivity(i);
                     Toast.makeText(context, "I'm running", Toast.LENGTH_SHORT).show();
             }
-            else if(inRange(timenow())){
+            else if(inRange(timenow())||checkstarttime()){
                 Log.i("range", "true");
                 setfrq(context,temp);
             }
@@ -122,7 +122,7 @@ public class AlarmReceiver extends BroadcastReceiver {
         Date end = null;
         try {
             //All your parse Operations
-            //Log.i("inRange","error"+" "+starthr+"."+startmin+".00");
+            Log.i("inRange","error"+" "+starthr+"."+startmin+".00");
             start = new SimpleDateFormat("HH.mm.ss").parse(starthr+"."+startmin+".00");
             //end = new SimpleDateFormat("HH.mm.ss").parse(stophr+"."+stopmin+".00");
         } catch (ParseException e) {
@@ -131,7 +131,7 @@ public class AlarmReceiver extends BroadcastReceiver {
         }
         try {
             //All your parse Operations
-            //Log.i("inRange","error"+" "+stophr+"."+stopmin+".00");
+            Log.i("inRange","error"+" "+stophr+"."+stopmin+".00");
             // start = new SimpleDateFormat("HH.mm.ss").parse(starthr+"."+startmin+".00");
             end = new SimpleDateFormat("HH.mm.ss").parse(stophr+"."+stopmin+".00");
         } catch (ParseException e) {
@@ -233,7 +233,7 @@ public class AlarmReceiver extends BroadcastReceiver {
         Date current = null;
         try {
             //All your parse Operations
-            //Log.i("current time",currenthr+"."+currentmn+".00");
+            Log.i("current time",currenthr+"."+currentmn+".00");
             current = new SimpleDateFormat("HH.mm.ss").parse(currenthr+"."+currentmn+".00");
         } catch (ParseException e) {
             //Handle exception here, most of the time you will just log it.
@@ -251,15 +251,14 @@ public class AlarmReceiver extends BroadcastReceiver {
             Toast.makeText(context, "I'm running", Toast.LENGTH_SHORT).show();
         }
         else{
-            /*if (manager!= null) {
+            if (manager!= null) {
                 manager.cancel(pendingIntent);
-            }*/
+            }
             Intent alarmIntent = new Intent(context, AlarmReceiver.class);
-
             manager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
             Calendar calendar = Calendar.getInstance();
             calendar.setTimeInMillis(System.currentTimeMillis());
-            SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss.SSS");
+            //SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss.SSS");
             Alarm alarm = mAlarmHelper.getAlarm();
             //Log.i("Day", sdf.format(calendar.getTime()) + " " + calendar.get(Calendar.DAY_OF_WEEK) + " " + alarm.getDay() + " "
             // + calendar.get(Calendar.HOUR_OF_DAY) + " " + calendar.get(Calendar.MINUTE));
@@ -278,12 +277,16 @@ public class AlarmReceiver extends BroadcastReceiver {
             calendar.set(Calendar.HOUR_OF_DAY, starthour);
             calendar.set(Calendar.MINUTE, startmin);
             calendar.set(Calendar.SECOND, 0);
+            long startUpTime = calendar.getTimeInMillis();
+            if (System.currentTimeMillis() > startUpTime) {
+                startUpTime = startUpTime + 24 * 60 * 60 * 1000;
+            }
             Bundle mes = new Bundle();
             mes.putString("key", "act");
             alarmIntent.putExtras(mes);
             //context.sendBroadcast(alarmIntent);
             pendingIntent = PendingIntent.getBroadcast(context, 0, alarmIntent, 0);
-            manager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);
+            manager.setExact(AlarmManager.RTC_WAKEUP, startUpTime, pendingIntent);
             Log.i("start", "set time");
         }
 
