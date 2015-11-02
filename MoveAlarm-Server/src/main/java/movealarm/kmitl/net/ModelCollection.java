@@ -29,6 +29,9 @@ public class ModelCollection {
         } catch (SQLException e) {
             System.out.println("An error has occurred in ModelCollection.find()");
             System.out.println(e);
+        } catch (Exception e) {
+            System.out.println("An error has occurred in ModelCollection.find()");
+            System.out.println(e);
         }
         return null;
     }
@@ -88,7 +91,7 @@ public class ModelCollection {
         valueSet = valueSet.substring(0, valueSet.length() - 2);
 
         try {
-            sqlInquirer.update(model.getTableName(), valueSet, "id", "=", model.getID());
+            sqlInquirer.update(model.getTableName(), valueSet, "id", "=", "" + model.getID());
             return true;
         } catch (SQLException e) {
             System.out.println("An error has occurred in while saving a model name '" + model.getClass().getSimpleName() + "'.");

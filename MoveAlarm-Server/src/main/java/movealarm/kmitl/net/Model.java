@@ -1,13 +1,11 @@
 package movealarm.kmitl.net;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 
 abstract class Model {
     protected static ModelCollection modelCollection = ModelCollection.getInstance();
-    public static String tableName;
+    protected String tableName;
     protected int id;
     protected Date createdDate;
     protected Date modifiedDate;
@@ -34,9 +32,9 @@ abstract class Model {
         return model;
     }
 
-    public String getID()
+    public int getID()
     {
-        return "" + id;
+        return id;
     }
 
     public String getTableName()
@@ -69,12 +67,9 @@ abstract class Model {
     }
 
     public abstract HashMap<String, Object> getValues();
-<<<<<<< 9ddf2a751f07a5287b6f455d82c0d458fdc9710d
-=======
 
     protected void updateModifiedDate()
     {
         modifiedDate = new Date();
     }
->>>>>>> [#33] created the user class with basic functionality.
 }
