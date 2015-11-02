@@ -48,7 +48,7 @@ public class Crypto {
         }
     }
 
-    public Key generateKey()
+    private Key generateKey()
     {
         Key key = new SecretKeySpec(KEYVAL.getBytes(),ALGORITHM);
         return key;
