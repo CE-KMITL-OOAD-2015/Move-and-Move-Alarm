@@ -100,7 +100,7 @@ public class ModelCollection {
         return false;
     }
 
-    public void delete(Model model)
+    public boolean delete(Model model)
     {
         try {
             sqlInquirer.delete(model.getTableName(), "id = '" + model.getID() + "'");
@@ -108,6 +108,8 @@ public class ModelCollection {
         } catch (SQLException e) {
             System.out.println("An error has occurred in while deleting a model name '" + model.getClass().getSimpleName() + "'.");
             System.out.println(e);
+            return false;
         }
+        return true;
     }
 }

@@ -23,6 +23,10 @@ public class Group extends Model{
     public Group()
     {
         this.tableName = "groups";
+        this.requiredFields = new ArrayList<>();
+        this.requiredFields.add("name");
+        this.requiredFields.add("admin_id");
+        members = new ArrayList<>();
         temp_addedUserList = new ArrayList<>();
         temp_removeUserList = new ArrayList<>();
         temp_scoreLogList = new ArrayList<>();
@@ -123,7 +127,10 @@ public class Group extends Model{
         temp.put("score", "'" + score + "'");
         temp.put("amount_member", "'" + amountMember + "'");
         temp.put("admin_id", "'" + admin.getID() + "'");
-        temp.put("modified_date", "'" + sdf.format(modifiedDate) + "'");
+        if(modifiedDate == null)
+            temp.put("modified_date", "'" + null + "'");
+        else
+            temp.put("modified_date", "'" + sdf.format(modifiedDate) + "'");
         return temp;
     }
 
@@ -141,39 +148,29 @@ public class Group extends Model{
 
     public HashMap<String, Object> setAdmin(User user)
     {
-        HashMap<String, Object> status = new HashMap<>();
-        if(admin != null) {
-            status.put("status", false);
-            status.put("description", "The group already has an admin user.");
-            return status;
-        }
+        if(createdDate != null)
+            return createProcessStatus(false, "The group already has an admin user.");
         this.admin = user;
         addMember(user);
+
         updateModifiedDate();
 
-        status.put("status", true);
-        return status;
+        return createProcessStatus(true);
     }
 
     public HashMap<String, Object> setScore(int score)
     {
-        HashMap<String, Object> status = new HashMap<>();
-
-        if(score < 0) {
-            status.put("status", false);
-            status.put("description", "The score cannot be under zero.");
-            return status;
-        }
+        if(score < 0)
+            return createProcessStatus(false, "The score cannot be under zero.");
         this.score = score;
 
         updateModifiedDate();
-        status.put("status", true);
-        return status;
+
+        return createProcessStatus(true);
     }
 
     public HashMap<String, Object> increaseScore(int score, String description)
     {
-        HashMap<String, Object> status = new HashMap<>();
         HashMap<String, Object> temp_scoreLog = new HashMap<>();
         int changedScore = Math.abs(score);
 
@@ -185,21 +182,18 @@ public class Group extends Model{
         temp_scoreLogList.add(temp_scoreLog);
 
         updateModifiedDate();
-        status.put("status", true);
-        return status;
+
+        return createProcessStatus(true);
     }
 
     public HashMap<String, Object> decreaseScore(int score, String description)
     {
-        HashMap<String, Object> status = new HashMap<>();
         HashMap<String, Object> temp_scoreLog = new HashMap<>();
         int changedScore = Math.abs(score);
 
-        if(this.score - changedScore < 0) {
-            status.put("status", false);
-            status.put("description", "The score cannot be under zero.");
-            return status;
-        }
+        if(this.score - changedScore < 0)
+            return createProcessStatus(false, "The score cannot be under zero.");
+
         this.score -= changedScore;
         temp_scoreLog.put("group_id", id);
         temp_scoreLog.put("current_score", this.score);
@@ -208,9 +202,8 @@ public class Group extends Model{
         temp_scoreLogList.add(temp_scoreLog);
 
         updateModifiedDate();
-        status.put("status", false);
 
-        return status;
+        return createProcessStatus(true);
     }
 
     public String getName()
@@ -235,69 +228,56 @@ public class Group extends Model{
 
     public HashMap<String, Object> addMember(User user)
     {
-        HashMap<String, Object> status = new HashMap<>();
         for(User item : temp_addedUserList) {
-            if(item.getID() == user.getID()) {
-                status.put("status", false);
-                status.put("descriptipon", "This user is already added to the temporary added list.");
-                return status;
-            }
+            if(item.getID() == user.getID())
+                return createProcessStatus(false, "This user is already added to the temporary added list.");
         }
 
-        if(User.find(user.id) != null) {
-            status.put("status", false);
-            status.put("descriptipon", "This user is already added to the database.");
-            return status;
-        }
+        if(User.find(user.id) != null)
+            return createProcessStatus(false, "This user is already added to the database.");
 
         temp_addedUserList.add(user);
         updateModifiedDate();
-        status.put("status", true);
 
-        return status;
+        return createProcessStatus(true);
     }
 
     public HashMap<String, Object> removeMember(User user)
     {
-        HashMap<String, Object> status = new HashMap<>();
-
-        if(admin.getID() == user.getID()) {
-            status.put("status", false);
-            status.put("description", "Cannot remove admin user.");
-            return status;
-        }
+        if(admin.getID() == user.getID())
+            return createProcessStatus(false, "Cannot remove admin user.");
 
         for(User item : temp_removeUserList) {
-            if(item.getID() == user.getID()) {
-                status.put("status", false);
-                status.put("descriptipon", "This user is already added to the temporary removed list.");
-                return status;
-            }
+            if(item.getID() == user.getID())
+                return createProcessStatus(false, "This user is already added to the temporary removed list.");
         }
 
-        if(User.find(user.id) == null) {
-            status.put("status", false);
-            status.put("descriptipon", "This user is already removed from the database.");
-            return status;
-        }
+        if(User.find(user.id) == null)
+            return createProcessStatus(false, "This user is already removed from the database.");
 
         temp_removeUserList.add(user);
         updateModifiedDate();
-        status.put("status", true);
 
-        return status;
+        return createProcessStatus(true);
     }
 
     @Override
-    public boolean save()
+    public HashMap<String, Object> save()
     {
+        if(admin == null)
+            return createProcessStatus(false, "The group must have an admin user before saving.");
+
+        HashMap<String, Object> requiredFields = checkRequiredFields();
+        if(requiredFields != null)
+            return requiredFields;
+
         if(createdDate == null) {
             HashMap<String, Object> temp = modelCollection.create(this);
             if(temp == null)
-                return false;
+                return createProcessStatus(false, "Cannot save due to a database error.");
             id = Integer.parseInt("" + temp.get("id"));
             createdDate = (Date) temp.get("created_date");
-            return true;
+            return createProcessStatus(true);
         }
 
         if(temp_addedUserList.size() != 0) {
@@ -309,6 +289,7 @@ public class Group extends Model{
                 } catch (SQLException e) {
                     System.out.println("An error has occurred while adding a member.");
                     e.printStackTrace();
+                    return createProcessStatus(false, "An error has occurred while adding a member.");
                 }
             }
         }
@@ -322,6 +303,7 @@ public class Group extends Model{
                 } catch (SQLException e) {
                     System.out.println("An error has occurred while removing a member.");
                     e.printStackTrace();
+                    return createProcessStatus(false, "An error has occurred while removing a member.");
                 }
             }
         }
@@ -342,6 +324,7 @@ public class Group extends Model{
             } catch (SQLException e) {
                 System.out.println("An error has occurred while adding a score log.");
                 e.printStackTrace();
+                return createProcessStatus(false, "An error has occurred while adding a score log.");
             }
         }
 
@@ -349,14 +332,11 @@ public class Group extends Model{
         temp_removeUserList = null;
         temp_scoreLogList = null;
 
-        return modelCollection.save(this);
+        return createProcessStatus(modelCollection.save(this));
     }
 
     @Override
-    public HashMap<String, Object>
-
-    @Override
-    public void delete()
+    public HashMap<String, Object> delete()
     {
         SQLInquirer sqlInquirer = SQLInquirer.getInstance();
         try {
@@ -366,7 +346,7 @@ public class Group extends Model{
         }
         temp_removeUserList = members;
         save();
-        modelCollection.delete(this);
+        return createProcessStatus(modelCollection.delete(this));
     }
 
     public Date getModifiedDate()

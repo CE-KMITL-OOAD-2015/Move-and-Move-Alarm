@@ -9,8 +9,6 @@ public class MoveAlarmServerApplication {
     public static void main(String[] args) {
         SQLInquirer sqlInquirer = SQLInquirer.getInstance();
         System.out.println("connection : " + sqlInquirer.isConnecting());
-        Group
-        System.out.println(group.getModifiedDate());
         SpringApplication.run(MoveAlarmServerApplication.class, args);
     }
 }

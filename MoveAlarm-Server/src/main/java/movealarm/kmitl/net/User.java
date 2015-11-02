@@ -27,6 +27,12 @@ public class User extends Model{
     public User()
     {
         this.tableName = "user";
+        this.requiredFields = new ArrayList<>();
+        this.requiredFields.add("first_name");
+        this.requiredFields.add("last_name");
+        this.requiredFields.add("user_name");
+        this.requiredFields.add("email");
+        this.requiredFields.add("password");
     }
 
     public static User find(int id)
@@ -123,7 +129,10 @@ public class User extends Model{
         temp.put("facebook_id", "'" + facebookID + "'");
         temp.put("facebook_firstname", "'" + facebookFirstName + "'");
         temp.put("facebook_lastname", "'" + facebookLastName + "'");
-        temp.put("modified_date", "'" + sdf.format(modifiedDate) + "'");
+        if(modifiedDate == null)
+            temp.put("modified_date", "'" + null + "'");
+        else
+            temp.put("modified_date", "'" + sdf.format(modifiedDate) + "'");
         return temp;
     }
 
