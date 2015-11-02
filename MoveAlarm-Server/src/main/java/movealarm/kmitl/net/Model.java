@@ -1,13 +1,13 @@
 package movealarm.kmitl.net;
 
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 
 abstract class Model {
     protected static ModelCollection modelCollection = ModelCollection.getInstance();
-    public static String tableName;
+    protected String tableName;
+    protected ArrayList<String> requiredFields = null;
     protected int id;
     protected Date createdDate;
     protected Date modifiedDate;
@@ -34,9 +34,9 @@ abstract class Model {
         return model;
     }
 
-    public String getID()
+    public int getID()
     {
-        return "" + id;
+        return id;
     }
 
     public String getTableName()
@@ -49,32 +49,71 @@ abstract class Model {
         return createdDate;
     }
 
-    public boolean save()
+    protected HashMap<String, Object> checkRequiredFields()
     {
+        if(requiredFields != null)
+        {
+            HashMap<String, Object> objectValues = getValues();
+            String requiredFieldName = "";
+            for(String fieldName : requiredFields) {
+                if(objectValues.get(fieldName).equals("'null'")) {
+                    requiredFieldName += fieldName + " ";
+                }
+            }
+            if(!requiredFieldName.equals(""))
+                return createProcessStatus(false, "Require: " + requiredFieldName + " before save to the database.");
+        }
+
+        return null;
+    }
+
+    public HashMap<String, Object> save()
+    {
+        HashMap<String, Object> requiredFields = checkRequiredFields();
+        if(requiredFields != null)
+            return requiredFields;
+
         if(createdDate == null) {
             HashMap<String, Object> temp = modelCollection.create(this);
             if(temp == null)
-                return false;
+                return createProcessStatus(false, "Cannot save due to a database error.");
             id = Integer.parseInt("" + temp.get("id"));
             createdDate = (Date) temp.get("created_date");
-            return true;
+            return createProcessStatus(true);
         }
 
-        return modelCollection.save(this);
+        return createProcessStatus(modelCollection.save(this));
     }
 
-    public void delete()
+    public HashMap<String, Object> delete()
     {
-        modelCollection.delete(this);
+        try {
+            this.finalize();
+        } catch (Throwable throwable) {
+            throwable.printStackTrace();
+        }
+        return createProcessStatus(modelCollection.delete(this));
     }
 
     public abstract HashMap<String, Object> getValues();
-<<<<<<< 9ddf2a751f07a5287b6f455d82c0d458fdc9710d
-=======
 
     protected void updateModifiedDate()
     {
         modifiedDate = new Date();
     }
->>>>>>> [#33] created the user class with basic functionality.
+
+    protected HashMap<String, Object> createProcessStatus(boolean status, String description)
+    {
+        HashMap<String, Object> processStatus = new HashMap<>();
+        processStatus.put("description", description);
+        processStatus.put("status", status);
+        return processStatus;
+    }
+
+    protected HashMap<String, Object> createProcessStatus(boolean status)
+    {
+        HashMap<String, Object> processStatus = new HashMap<>();
+        processStatus.put("status", status);
+        return processStatus;
+    }
 }

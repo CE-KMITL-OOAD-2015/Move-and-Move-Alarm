@@ -92,8 +92,8 @@ public class SQLInquirer {
         stmt.executeUpdate("UPDATE " + tableName + " SET " + valueSet + " WHERE " + colName + " " + operator + " " + value);
     }
 
-    public HashMap<String, Object> insert(String tableName, String colNames, String values) throws SQLException {
-        stmt.executeUpdate("INSERT INTO " + tableName + " ( " + colNames + " ) VALUES (" + values + " )");
+    public HashMap<String, Object> insert(String tableName, String colNamesSet, String values) throws SQLException {
+        stmt.executeUpdate("INSERT INTO " + tableName + " ( " + colNamesSet + " ) VALUES (" + values + " )");
         rs = stmt.getGeneratedKeys();
         rs.next();
 
@@ -104,14 +104,14 @@ public class SQLInquirer {
         return temp;
     }
 
-    public void insertMultiple(String tableName, String colNames, String[] valuesSet) throws SQLException {
+    public void insertMultiple(String tableName, String colNamesSet, String[] valuesSet) throws SQLException {
         String values = "";
         for(int i = 0; i < valuesSet.length; i++) {
             values += " (" + valuesSet[i] + " )";
             if(i != valuesSet.length - 1)
                 values += ", ";
         }
-        stmt.executeUpdate("INSERT INTO " + tableName + " ( " + colNames + " ) VALUES " + values);
+        stmt.executeUpdate("INSERT INTO " + tableName + " ( " + colNamesSet + " ) VALUES " + values);
     }
 
     public void delete(String tableName, String conditions) throws SQLException {

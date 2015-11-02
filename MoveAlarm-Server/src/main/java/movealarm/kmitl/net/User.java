@@ -22,18 +22,23 @@ public class User extends Model{
     private String facebookLastName = null;
     private Object profileImage = null;
     private Object coverImage = null;
-    public static User model = null;
     //public static String tableName = "user";
 
     public User()
     {
         this.tableName = "user";
+        this.requiredFields = new ArrayList<>();
+        this.requiredFields.add("first_name");
+        this.requiredFields.add("last_name");
+        this.requiredFields.add("user_name");
+        this.requiredFields.add("email");
+        this.requiredFields.add("password");
     }
 
     public static User find(int id)
     {
         HashMap<String, Object> temp = modelCollection.find("user", id);
-        model = new User();
+        User model = new User();
         model.id = (int) temp.get("id");
         model.createdDate = (Date) temp.get("created_date");
         model.firstName = "" + temp.get("first_name");
@@ -48,7 +53,6 @@ public class User extends Model{
         model.facebookFirstName = "" + temp.get("facebook_firstname");
         model.facebookLastName = "" + temp.get("facebook_lastname");
         model.modifiedDate = (Date) temp.get("modified_date");
-        System.out.println(model.modifiedDate);
         return model;
     }
 
@@ -57,7 +61,7 @@ public class User extends Model{
         ArrayList<HashMap<String, Object>> temp = modelCollection.where("user", colName, operator, value);
         ArrayList<User> collection = new ArrayList<>();
         for(HashMap<String, Object> item : temp) {
-            model = new User();
+            User model = new User();
             model.id = (int) item.get("id");
             model.createdDate = (Date) item.get("created_date");
             model.firstName = (String) item.get("first_name");
@@ -71,6 +75,7 @@ public class User extends Model{
             model.facebookID = (String) item.get("facebook_id");
             model.facebookFirstName = (String) item.get("facebook_firstname");
             model.facebookLastName = (String) item.get("facebook_lastname");
+            model.modifiedDate = (Date) item.get("modified_date");
             collection.add(model);
         }
 
@@ -84,10 +89,10 @@ public class User extends Model{
 
     public static User[] all()
     {
-        ArrayList<HashMap<String, Object>> temp = modelCollection.all(tableName);
+        ArrayList<HashMap<String, Object>> temp = modelCollection.all("user");
         ArrayList<User> collection = new ArrayList<>();
         for(HashMap<String, Object> item : temp) {
-            model = new User();
+            User model = new User();
             model.id = (int) item.get("id");
             model.createdDate = (Date) item.get("created_date");
             model.firstName = (String) item.get("first_name");
@@ -101,6 +106,7 @@ public class User extends Model{
             model.facebookID = (String) item.get("facebook_id");
             model.facebookFirstName = (String) item.get("facebook_firstname");
             model.facebookLastName = (String) item.get("facebook_lastname");
+            model.modifiedDate = (Date) item.get("modified_date");
             collection.add(model);
         }
 
@@ -110,7 +116,7 @@ public class User extends Model{
     @Override
     public HashMap<String, Object> getValues()
     {
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-mm-dd hh:mm:ss");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
         HashMap<String, Object> temp = new HashMap<>();
         temp.put("first_name", "'" + firstName + "'");
         temp.put("last_name", "'" + lastName + "'");
@@ -123,7 +129,10 @@ public class User extends Model{
         temp.put("facebook_id", "'" + facebookID + "'");
         temp.put("facebook_firstname", "'" + facebookFirstName + "'");
         temp.put("facebook_lastname", "'" + facebookLastName + "'");
-        temp.put("modified_date", "'" + sdf.format(modifiedDate) + "'");
+        if(modifiedDate == null)
+            temp.put("modified_date", "'" + null + "'");
+        else
+            temp.put("modified_date", "'" + sdf.format(modifiedDate) + "'");
         return temp;
     }
 
@@ -182,6 +191,7 @@ public class User extends Model{
         if(score < 0)
             return false;
         this.score = score;
+        updateModifiedDate();
         return true;
     }
 
