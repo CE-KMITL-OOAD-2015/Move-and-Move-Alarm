@@ -29,9 +29,6 @@ public class ModelCollection {
         } catch (SQLException e) {
             System.out.println("An error has occurred in ModelCollection.find()");
             System.out.println(e);
-        } catch (Exception e) {
-            System.out.println("An error has occurred in ModelCollection.find()");
-            System.out.println(e);
         }
         return null;
     }
