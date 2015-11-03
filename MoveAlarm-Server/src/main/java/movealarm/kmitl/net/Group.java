@@ -134,16 +134,20 @@ public class Group extends Model{
         return temp;
     }
 
-    public void setName(String name)
+    public HashMap<String, Object> setName(String name)
     {
         this.name = name;
         updateModifiedDate();
+
+        return createProcessStatus(true);
     }
 
-    public void setStatus(String status)
+    public HashMap<String, Object> setStatus(String status)
     {
         this.status = status;
         updateModifiedDate();
+
+        return createProcessStatus(true);
     }
 
     public HashMap<String, Object> setAdmin(User user)
