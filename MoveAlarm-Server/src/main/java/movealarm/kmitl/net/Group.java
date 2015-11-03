@@ -25,7 +25,7 @@ public class Group extends Model{
         this.tableName = "groups";
         this.requiredFields = new ArrayList<>();
         this.requiredFields.add("name");
-        this.requiredFields.add("admin_id");
+        this.requiredFields.add("adminID");
         members = new ArrayList<>();
         temp_addedUserList = new ArrayList<>();
         temp_removeUserList = new ArrayList<>();
@@ -38,17 +38,17 @@ public class Group extends Model{
         Group model = new Group();
         //**attribute mapping process**
         model.id = (int) temp.get("id");
-        model.createdDate = (Date) temp.get("created_date");
+        model.createdDate = (Date) temp.get("createdDate");
         model.name = "" + temp.get("name");
         model.status = "" + temp.get("status");
         model.score = (int) temp.get("score");
-        model.admin = User.find((int) temp.get("admin_id"));
-        model.amountMember = (int) temp.get("amount_member");
-        model.modifiedDate = (Date) temp.get("modified_date");
+        model.admin = User.find((int) temp.get("adminID"));
+        model.amountMember = (int) temp.get("amountMember");
+        model.modifiedDate = (Date) temp.get("modifiedDate");
 
         //**object mapping process**, one group can has many members.
         model.members = new ArrayList<>();
-        ArrayList<HashMap<String, Object>> user_temp = modelCollection.where("user", "group_id", "=", "" + model.id); //create user_temp to catch data from database.
+        ArrayList<HashMap<String, Object>> user_temp = modelCollection.where("user", "groupID", "=", "" + model.id); //create user_temp to catch data from database.
         for(HashMap<String, Object> item : user_temp) {
             User user = User.find((int) item.get("id"));
             model.members.add(user);
@@ -63,16 +63,16 @@ public class Group extends Model{
         for(HashMap<String, Object> item : temp) {
             Group model = new Group();
             model.id = (int) item.get("id");
-            model.createdDate = (Date) item.get("created_date");
+            model.createdDate = (Date) item.get("createdDate");
             model.name = "" + item.get("name");
             model.status = "" + item.get("status");
             model.score = (int) item.get("score");
-            model.admin = User.find((int) item.get("admin_id"));
-            model.amountMember = (int) item.get("amount_member");
-            model.modifiedDate = (Date) item.get("modified_date");
+            model.admin = User.find((int) item.get("adminID"));
+            model.amountMember = (int) item.get("amountMember");
+            model.modifiedDate = (Date) item.get("modifiedDate");
 
             model.members = new ArrayList<>();
-            ArrayList<HashMap<String, Object>> user_temp = modelCollection.where("user", "group_id", "=", "" + model.id); //create user_temp to catch data from database.
+            ArrayList<HashMap<String, Object>> user_temp = modelCollection.where("user", "groupID", "=", "" + model.id); //create user_temp to catch data from database.
             for(HashMap<String, Object> data : user_temp) {
                 User user = User.find((int) data.get("id"));
                 model.members.add(user);
@@ -96,16 +96,16 @@ public class Group extends Model{
         for(HashMap<String, Object> item : temp) {
             Group model = new Group();
             model.id = (int) item.get("id");
-            model.createdDate = (Date) item.get("created_date");
+            model.createdDate = (Date) item.get("createdDate");
             model.name = "" + item.get("name");
             model.status = "" + item.get("status");
             model.score = (int) item.get("score");
-            model.admin = User.find((int) item.get("admin_id"));
-            model.amountMember = (int) item.get("amount_member");
-            model.modifiedDate = (Date) item.get("modified_date");
+            model.admin = User.find((int) item.get("adminID"));
+            model.amountMember = (int) item.get("amountMember");
+            model.modifiedDate = (Date) item.get("modifiedDate");
 
             model.members = new ArrayList<>();
-            ArrayList<HashMap<String, Object>> user_temp = modelCollection.where("user", "group_id", "=", "" + model.id); //create user_temp to catch data from database.
+            ArrayList<HashMap<String, Object>> user_temp = modelCollection.where("user", "groupID", "=", "" + model.id); //create user_temp to catch data from database.
             for(HashMap<String, Object> data : user_temp) {
                 User user = User.find((int) data.get("id"));
                 model.members.add(user);
@@ -122,15 +122,15 @@ public class Group extends Model{
     {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
         HashMap<String, Object> temp = new HashMap<>();
-        temp.put("name", "'" + name + "'");
-        temp.put("status", "'" + status + "'");
-        temp.put("score", "'" + score + "'");
-        temp.put("amount_member", "'" + amountMember + "'");
-        temp.put("admin_id", "'" + admin.getID() + "'");
+        temp.put("name", name);
+        temp.put("status", status);
+        temp.put("score", score);
+        temp.put("amountMember", amountMember);
+        temp.put("adminID", admin.getID());
         if(modifiedDate == null)
-            temp.put("modified_date", "'" + null + "'");
+            temp.put("modifiedDate", null);
         else
-            temp.put("modified_date", "'" + sdf.format(modifiedDate) + "'");
+            temp.put("modifiedDate", sdf.format(modifiedDate));
         return temp;
     }
 
@@ -180,8 +180,8 @@ public class Group extends Model{
 
         this.score += changedScore;
         temp_scoreLog.put("group_id", id);
-        temp_scoreLog.put("current_score", this.score);
-        temp_scoreLog.put("modified_score", changedScore);
+        temp_scoreLog.put("currentScore", this.score);
+        temp_scoreLog.put("modifiedScore", changedScore);
         temp_scoreLog.put("description", description);
         temp_scoreLogList.add(temp_scoreLog);
 
@@ -200,8 +200,8 @@ public class Group extends Model{
 
         this.score -= changedScore;
         temp_scoreLog.put("group_id", id);
-        temp_scoreLog.put("current_score", this.score);
-        temp_scoreLog.put("modified_score", -changedScore);
+        temp_scoreLog.put("currentScore", this.score);
+        temp_scoreLog.put("modifiedScore", -changedScore);
         temp_scoreLog.put("description", description);
         temp_scoreLogList.add(temp_scoreLog);
 
@@ -280,7 +280,7 @@ public class Group extends Model{
             if(temp == null)
                 return createProcessStatus(false, "Cannot save due to a database error.");
             id = Integer.parseInt("" + temp.get("id"));
-            createdDate = (Date) temp.get("created_date");
+            createdDate = (Date) temp.get("createdDate");
             return createProcessStatus(true);
         }
 
@@ -288,7 +288,7 @@ public class Group extends Model{
             SQLInquirer sqlInquirer = SQLInquirer.getInstance();
             for(User user : temp_addedUserList) {
                 try {
-                    sqlInquirer.update("user", "group_id='" + id + "'", "id", "=", "" + user.getID());
+                    sqlInquirer.update("user", "groupID='" + id + "'", "id", "=", "" + user.getID());
                     amountMember++;
                 } catch (SQLException e) {
                     System.out.println("An error has occurred while adding a member.");
@@ -302,7 +302,7 @@ public class Group extends Model{
             SQLInquirer sqlInquirer = SQLInquirer.getInstance();
             for(User user : temp_removeUserList) {
                 try {
-                    sqlInquirer.update("user", "group_id=NULL", "id", "=", "" + user.getID());
+                    sqlInquirer.update("user", "groupID=NULL", "id", "=", "" + user.getID());
                     amountMember--;
                 } catch (SQLException e) {
                     System.out.println("An error has occurred while removing a member.");
@@ -318,10 +318,10 @@ public class Group extends Model{
 
             for(int i = 0; i < temp_scoreLogList.size(); i++) {
                 HashMap<String, Object> item = temp_scoreLogList.get(i);
-                valuesSet[i] = "" + item.get("group_id") + ", " + item.get("current_score") + ", " + item.get("modified_score") + ", '" + item.get("description") + "'";
+                valuesSet[i] = "" + item.get("groupID") + ", " + item.get("currentScore") + ", " + item.get("modifiedScore") + ", '" + item.get("description") + "'";
             }
 
-            String colNameSet = "group_id, current_score, modified_score, description";
+            String colNameSet = "group_id, currentScore, modifiedScore, description";
 
             try {
                 sqlInquirer.insertMultiple("group_score", colNameSet, valuesSet);
@@ -344,7 +344,7 @@ public class Group extends Model{
     {
         SQLInquirer sqlInquirer = SQLInquirer.getInstance();
         try {
-            sqlInquirer.delete("group_score", "group_id = " + id);
+            sqlInquirer.delete("group_score", "groupID = " + id);
         } catch (SQLException e) {
             e.printStackTrace();
         }

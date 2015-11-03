@@ -28,9 +28,9 @@ public class User extends Model{
     {
         this.tableName = "user";
         this.requiredFields = new ArrayList<>();
-        this.requiredFields.add("first_name");
-        this.requiredFields.add("last_name");
-        this.requiredFields.add("user_name");
+        this.requiredFields.add("firstName");
+        this.requiredFields.add("lastName");
+        this.requiredFields.add("userName");
         this.requiredFields.add("email");
         this.requiredFields.add("password");
     }
@@ -38,21 +38,23 @@ public class User extends Model{
     public static User find(int id)
     {
         HashMap<String, Object> temp = modelCollection.find("user", id);
+        if(temp == null)
+            return null;
         User model = new User();
         model.id = (int) temp.get("id");
-        model.createdDate = (Date) temp.get("created_date");
-        model.firstName = "" + temp.get("first_name");
-        model.lastName = "" + temp.get("last_name");
-        model.userName = "" + temp.get("user_name");
+        model.createdDate = (Date) temp.get("createdDate");
+        model.firstName = "" + temp.get("firstName");
+        model.lastName = "" + temp.get("lastName");
+        model.userName = "" + temp.get("userName");
         model.age = (int) temp.get("age");
         model.score = (int) temp.get("score");
         model.gender = (int) temp.get("gender");
         model.email = "" + temp.get("email");
         model.password = "" + temp.get("password");
-        model.facebookID = "" + temp.get("facebook_id");
-        model.facebookFirstName = "" + temp.get("facebook_firstname");
-        model.facebookLastName = "" + temp.get("facebook_lastname");
-        model.modifiedDate = (Date) temp.get("modified_date");
+        model.facebookID = "" + temp.get("facebookID");
+        model.facebookFirstName = "" + temp.get("facebookFirstName");
+        model.facebookLastName = "" + temp.get("facebookLastName");
+        model.modifiedDate = (Date) temp.get("modifiedDate");
         return model;
     }
 
@@ -63,19 +65,19 @@ public class User extends Model{
         for(HashMap<String, Object> item : temp) {
             User model = new User();
             model.id = (int) item.get("id");
-            model.createdDate = (Date) item.get("created_date");
-            model.firstName = (String) item.get("first_name");
-            model.lastName = (String) item.get("last_name");
-            model.userName = (String) item.get("user_name");
+            model.createdDate = (Date) item.get("createdDate");
+            model.firstName = (String) item.get("firstName");
+            model.lastName = (String) item.get("lastName");
+            model.userName = (String) item.get("userName");
             model.age = (int) item.get("age");
             model.score = (int) item.get("score");
             model.gender = (int) item.get("gender");
             model.email = (String) item.get("email");
             model.password = (String) item.get("password");
-            model.facebookID = (String) item.get("facebook_id");
-            model.facebookFirstName = (String) item.get("facebook_firstname");
-            model.facebookLastName = (String) item.get("facebook_lastname");
-            model.modifiedDate = (Date) item.get("modified_date");
+            model.facebookID = (String) item.get("facebookID");
+            model.facebookFirstName = (String) item.get("facebookFirstName");
+            model.facebookLastName = (String) item.get("facebookLastName");
+            model.modifiedDate = (Date) item.get("modifiedDate");
             collection.add(model);
         }
 
@@ -94,19 +96,19 @@ public class User extends Model{
         for(HashMap<String, Object> item : temp) {
             User model = new User();
             model.id = (int) item.get("id");
-            model.createdDate = (Date) item.get("created_date");
-            model.firstName = (String) item.get("first_name");
-            model.lastName = (String) item.get("last_name");
-            model.userName = (String) item.get("user_name");
+            model.createdDate = (Date) item.get("createdDate");
+            model.firstName = (String) item.get("firstName");
+            model.lastName = (String) item.get("lastName");
+            model.userName = (String) item.get("userName");
             model.age = (int) item.get("age");
             model.score = (int) item.get("score");
             model.gender = (int) item.get("gender");
             model.email = (String) item.get("email");
             model.password = (String) item.get("password");
-            model.facebookID = (String) item.get("facebook_id");
-            model.facebookFirstName = (String) item.get("facebook_firstname");
-            model.facebookLastName = (String) item.get("facebook_lastname");
-            model.modifiedDate = (Date) item.get("modified_date");
+            model.facebookID = (String) item.get("facebookID");
+            model.facebookFirstName = (String) item.get("facebookFirstName");
+            model.facebookLastName = (String) item.get("facebookLastName");
+            model.modifiedDate = (Date) item.get("modifiedDate");
             collection.add(model);
         }
 
@@ -118,21 +120,21 @@ public class User extends Model{
     {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
         HashMap<String, Object> temp = new HashMap<>();
-        temp.put("first_name", "'" + firstName + "'");
-        temp.put("last_name", "'" + lastName + "'");
-        temp.put("user_name", "'" + userName + "'");
-        temp.put("age", "'" + age + "'");
-        temp.put("score", "'" + score + "'");
-        temp.put("gender", "'" + gender + "'");
-        temp.put("email", "'" + email + "'");
-        temp.put("password", "'" + password + "'");
-        temp.put("facebook_id", "'" + facebookID + "'");
-        temp.put("facebook_firstname", "'" + facebookFirstName + "'");
-        temp.put("facebook_lastname", "'" + facebookLastName + "'");
+        temp.put("firstName", firstName);
+        temp.put("lastName", lastName);
+        temp.put("userName", userName);
+        temp.put("age", age);
+        temp.put("score", score);
+        temp.put("gender", gender);
+        temp.put("email", email);
+        temp.put("password", password);
+        temp.put("facebookID", facebookID);
+        temp.put("facebookFirstName", facebookFirstName);
+        temp.put("facebookLastName", facebookLastName);
         if(modifiedDate == null)
-            temp.put("modified_date", "'" + null + "'");
+            temp.put("modifiedDate", null);
         else
-            temp.put("modified_date", "'" + sdf.format(modifiedDate) + "'");
+            temp.put("modifiedDate", sdf.format(modifiedDate));
         return temp;
     }
 
