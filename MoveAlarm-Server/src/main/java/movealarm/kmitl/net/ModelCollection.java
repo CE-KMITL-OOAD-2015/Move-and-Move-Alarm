@@ -29,6 +29,9 @@ public class ModelCollection {
         } catch (SQLException e) {
             System.out.println("An error has occurred in ModelCollection.find()");
             System.out.println(e);
+        } catch (IndexOutOfBoundsException e) {
+            System.out.println("An error has occurred in ModelCollection.find()");
+            System.out.println(e);
         }
         return null;
     }
@@ -83,7 +86,10 @@ public class ModelCollection {
         for(Map.Entry<String, Object> data : list.entrySet()) {
             String key = data.getKey();
             Object value = data.getValue();
-            valueSet += key + "=" + value + ", ";
+            if(value.getClass().equals(String.class))
+                valueSet += key + "='" + value + "', ";
+            else
+                valueSet += key + "=" + value + ", ";
         }
         valueSet = valueSet.substring(0, valueSet.length() - 2);
 

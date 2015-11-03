@@ -56,7 +56,7 @@ public class Image extends Model
 
     public static Image[] all()
     {
-        ArrayList<HashMap<String, Object>> img_arr = modelCollection.all(tableName);
+        ArrayList<HashMap<String, Object>> img_arr = modelCollection.all("image");
         ArrayList<Image> collection = new ArrayList<>();
         for(HashMap<String, Object>item : img_arr) {
             model = new Image();
