@@ -11,7 +11,15 @@ public class MoveAlarmServerApplication {
     public static void main(String[] args) {
         SQLInquirer sqlInquirer = SQLInquirer.getInstance();
         System.out.println("connection : " + sqlInquirer.isConnecting());
-        User[] user = User.where("firstName", "=", "Pakin");
-        SpringApplication.run(MoveAlarmServerApplication.class, args);
+        UserController controller = new UserController();
+        User user = new User();
+        user.setUsername("testJSON_5");
+        user.setFirstName("ice");
+        user.setLastName("boon");
+        user.setPassword("757117");
+        //user.setEmail("moobin");
+        String JSON = Converter.getInstance().HashMapToJson(user.getValues());
+        System.out.println(controller.createUser(JSON));
+        //SpringApplication.run(MoveAlarmServerApplication.class, args);
     }
 }
