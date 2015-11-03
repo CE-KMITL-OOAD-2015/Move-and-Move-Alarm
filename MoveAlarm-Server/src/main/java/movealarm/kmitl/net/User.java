@@ -148,26 +148,32 @@ public class User extends Model{
         updateModifiedDate();
     }
 
-    public boolean setUsername(String userName)
+    public void setUsername(String userName)
     {
-        if(!(this.userName == null))
-            return false;
-        //System.out.println(this.password.isEmpty());
         this.userName = userName;
         updateModifiedDate();
-        return true;
     }
 
-    public void setAge(int age)
+    public HashMap<String, Object> setAge(int age)
     {
+        if(age < 1)
+            return createProcessStatus(false, "Age should not be less than 1.");
+
         this.age = age;
         updateModifiedDate();
+
+        return createProcessStatus(true);
     }
 
-    public void setGender(int gender)
+    public HashMap<String, Object> setGender(int gender)
     {
+        if(gender > 1 || gender < 0)
+            return createProcessStatus(false, "Undefined gender.");
+
         this.gender = gender;
         updateModifiedDate();
+
+        return createProcessStatus(true);
     }
 
     public void setEmail(String email)
@@ -176,23 +182,16 @@ public class User extends Model{
         updateModifiedDate();
     }
 
-    public boolean setPassword(String password)
+    public void setPassword(String password)
     {
-        if(!(this.password == null))
-            return false;
-        //System.out.println(this.password.isEmpty());
         this.password = password;
         updateModifiedDate();
-        return true;
     }
 
-    public boolean setScore(int score)
+    public void setScore(int score)
     {
-        if(score < 0)
-            return false;
         this.score = score;
         updateModifiedDate();
-        return true;
     }
 
     public int increaseScore(int score)
@@ -207,12 +206,6 @@ public class User extends Model{
         this.score -= Math.abs(score);
         updateModifiedDate();
         return this.score;
-    }
-
-    public boolean setNewPassword(String oldPassword, String newPassword)
-    {
-        updateModifiedDate();
-        return false;
     }
 
     public void setProfileImage(Object profileImage)
