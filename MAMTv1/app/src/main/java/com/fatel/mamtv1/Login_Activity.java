@@ -228,6 +228,11 @@ public class Login_Activity extends AppCompatActivity {
         //Log.i("loggedin", loginResult + " go UI");
         if (loggedIn && (profile != null)) {
             Intent intent = new Intent(Login_Activity.this, MainActivity.class);
+            intent.putExtra("firstname",profile.getFirstName());
+            intent.putExtra("lastname",profile.getLastName());
+            intent.putExtra("id",profile.getId());
+            //String uri = profile.getProfilePictureUri(100,100).toString();
+            intent.putExtra("propic",profile.getProfilePictureUri(300,300));
             startActivity(intent);
         }
     }
