@@ -7,95 +7,143 @@ import android.provider.BaseColumns;
  */
 public class User {
     private int id;
-    private String name;
-    private String username;
-    private String password;
+    private int idUser;
+    private String firstName;
+    private String lastName;
+    private String userName;
+    private int age;
+    private int score;
+    private int gender;
     private String email;
-    private String facebookid;
-    private String age;
-    private String gender;
-    private int image;
+    private String password;
+    private String facebookID;
+    private String facebookFirstName;
+    private String facebookLastName;
+    //no sure int for image
+    private int profileImage;
+
     public static final String DATABASE_NAME = "fatel_user.db";
     public static final int DATABASE_VERSION = 1;
     public static final String TABLE = "user";
     public class Column{
         public static final String ID = BaseColumns._ID;
-        public static final String NAME = "name";
+        public static final String IDUSER = "iduser";
+        public static final String FIRSTNAME = "firstname";
+        public static final String LASTNAME = "lastname";
         public static final String USERNAME = "username";
-        public static final String PASSWORD = "password";
-        public static final String EMAIL = "email";
-        public static final String FACEBOOKID = "facebookid";
         public static final String AGE = "age";
+        public static final String SCORE = "score";
         public static final String GENDER = "gender";
-        public static final String IMAGE = "image";
+        public static final String EMAIL = "email";
+        public static final String PASSWORD = "password";
+        public static final String FACEBOOKID = "facebookid";
+        public static final String FACEBOOKFIRSTNAME = "facebookfirstname";
+        public static final String FACEBOOKLASTNAME = "facebooklastname";
+        public static final String PROFILEIMAGE = "profileimage";
     }
     public User(){
     }
-    public User(int id, String name, String username, String password, String email,
-                String facebookid, String age, String gender, int image){
+    public User(int id,int idUser,String firstName, String lastName, String username,int age,int score
+            ,int gender,String email, String password, String facebookID, String facebookFirstName,
+                String facebookLastName, int profileImage){
         this.id = id;
-        this.name = name;
-        this.username = username;
-        this.password = password;
-        this.email = email;
-        this.facebookid = facebookid;
+        this.idUser = idUser;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.userName = username;
         this.age = age;
+        this.score = score;
         this.gender = gender;
-        this.image = image;
+        this.email = email;
+        this.password = password;
+        this.facebookID=facebookID;
+        this.facebookFirstName=facebookFirstName;
+        this.facebookLastName=facebookLastName;
+        this.profileImage = profileImage;
     }
 
     public int getId(){
         return id;
     }
-    public String getName(){
-        return name;
+    public int getIdUser(){
+        return idUser;
     }
-    public String getUsername(){
-        return username;
+    public String getFirstName(){
+        return firstName;
     }
-    public String getPassword(){
-        return password;
+    public String getLastName(){
+        return lastName;
+    }
+    public String getUserName(){
+        return userName;
+    }
+    public int getAge(){
+        return age;
+    }
+    public int getScore(){
+        return score;
+    }
+    public int getGender(){
+        return gender;
     }
     public String getEmail(){
         return email;
     }
-    public String getFacebookid(){
-        return facebookid;
+    public String getPassword(){
+        return password;
     }
-    public String getAge(){
-        return age;
+    public String getFacebookID(){
+        return facebookID;
     }
-    public String getGender(){
-        return gender;
+    public String getFacebookFirstName(){
+        return facebookFirstName;
     }
-    public int getImage(){
-        return image;
+    public String getFacebookLastName(){
+        return facebookLastName;
+    }
+    public int getProfileImage(){
+        return profileImage;
     }
     public void setId(int id){
         this.id = id;
     }
-    public void setName(String name){
-        this.name = name;
+    public void setIdUserd(int idUser){
+        this.idUser = idUser;
     }
-    public void setUsername(String username){
-        this.username = username;
+    public void setFirstName(String firstName){
+        this.firstName = firstName;
     }
-    public void setPassword(String password){
-        this.password = password;
+    public void setLastName(String lastName){
+        this.lastName = lastName;
+    }
+    public void setUserName(String userName){
+        this.userName = userName;
+    }
+    public void setAge(int age){
+        this.age = age;
+    }
+    public void setScore(int score){
+        this.score = score;
+    }
+    public void setGender(int gender){
+        this.gender = gender;
     }
     public void setEmail(String email){
         this.email = email;
     }
-    public void setFacebookid(String facebookid){
-        this.facebookid = facebookid;
+    public void setPassword(String password){
+        this.password = password;
     }
-    public void setAge(String age){
-        this.age = age;
+    public void setFacebookID(String facebookID){
+        this.facebookID = facebookID;
     }
-    public void setGender(String gender){
-        this.gender = gender;
+    public  void setFacebookFirstName(String facebookFirstName){
+        this.facebookFirstName = facebookFirstName;
     }
-    public void setImage(int image){
-        this.image = image;
+    public void setFacebookLastName(String facebookLastName){
+        this.facebookLastName = facebookLastName;
+    }
+    public void setProfileImage(int profileImage) {
+        this.profileImage = profileImage;
     }
 }
