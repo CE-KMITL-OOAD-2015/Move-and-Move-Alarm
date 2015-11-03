@@ -162,7 +162,7 @@ public class Login_Activity extends AppCompatActivity {
         }
     }
     public void start(){
-        Intent i = new Intent(getBaseContext(), AlarmReceiver.class);
+        Intent i = new Intent(Login_Activity.this, AlarmReceiver.class);
         Bundle b = new Bundle();
         b.putString("key", "set");
         i.putExtras(b);
