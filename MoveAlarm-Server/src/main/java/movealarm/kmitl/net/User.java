@@ -1,5 +1,6 @@
 package movealarm.kmitl.net;
 
+import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -22,7 +23,7 @@ public class User extends Model{
     private String facebookLastName = null;
     private Object profileImage = null;
     private Object coverImage = null;
-    //public static String tableName = "user";
+    private ArrayList<HashMap<String, Object>> temp_scoreLogList = null;
 
     public User()
     {
@@ -33,6 +34,7 @@ public class User extends Model{
         this.requiredFields.add("userName");
         this.requiredFields.add("email");
         this.requiredFields.add("password");
+        temp_scoreLogList = new ArrayList<>();
     }
 
     public static User find(int id)
@@ -159,23 +161,23 @@ public class User extends Model{
     public HashMap<String, Object> setAge(int age)
     {
         if(age < 1)
-            return createProcessStatus(false, "Age should not be less than 1.");
+            return StatusDescription.createProcessStatus(false, "Age should not be less than 1.");
 
         this.age = age;
         updateModifiedDate();
 
-        return createProcessStatus(true);
+        return StatusDescription.createProcessStatus(true);
     }
 
     public HashMap<String, Object> setGender(int gender)
     {
         if(gender > 1 || gender < 0)
-            return createProcessStatus(false, "Undefined gender.");
+            return StatusDescription.createProcessStatus(false, "Undefined gender.");
 
         this.gender = gender;
         updateModifiedDate();
 
-        return createProcessStatus(true);
+        return StatusDescription.createProcessStatus(true);
     }
 
     public void setEmail(String email)
@@ -196,18 +198,41 @@ public class User extends Model{
         updateModifiedDate();
     }
 
-    public int increaseScore(int score)
+    public HashMap<String, Object> increaseScore(int score, String description)
     {
-        this.score += Math.abs(score);
+        HashMap<String, Object> temp_scoreLog = new HashMap<>();
+        int changedScore = Math.abs(score);
+
+        this.score += changedScore;
+        temp_scoreLog.put("user_id", id);
+        temp_scoreLog.put("currentScore", this.score);
+        temp_scoreLog.put("modifiedScore", changedScore);
+        temp_scoreLog.put("description", description);
+        temp_scoreLogList.add(temp_scoreLog);
+
         updateModifiedDate();
-        return this.score;
+
+        return StatusDescription.createProcessStatus(true);
     }
 
-    public int decreaseScore(int score)
+    public HashMap<String, Object> decreaseScore(int score, String description)
     {
-        this.score -= Math.abs(score);
+        HashMap<String, Object> temp_scoreLog = new HashMap<>();
+        int changedScore = Math.abs(score);
+
+        if(this.score - changedScore < 0)
+            return StatusDescription.createProcessStatus(false, "The score cannot be under zero.");
+
+        this.score -= changedScore;
+        temp_scoreLog.put("user_id", id);
+        temp_scoreLog.put("currentScore", this.score);
+        temp_scoreLog.put("modifiedScore", -changedScore);
+        temp_scoreLog.put("description", description);
+        temp_scoreLogList.add(temp_scoreLog);
+
         updateModifiedDate();
-        return this.score;
+
+        return StatusDescription.createProcessStatus(true);
     }
 
     public void setProfileImage(Object profileImage)
@@ -305,5 +330,57 @@ public class User extends Model{
     public Date getModifiedDate()
     {
         return modifiedDate;
+    }
+
+    @Override
+    public HashMap<String, Object> save()
+    {
+        HashMap<String, Object> requiredFields = checkRequiredFields();
+        if(requiredFields != null)
+            return requiredFields;
+
+        if(createdDate == null) {
+            HashMap<String, Object> temp = modelCollection.create(this);
+            if(temp == null)
+                return StatusDescription.createProcessStatus(false, "Cannot save due to a database error.");
+            id = Integer.parseInt("" + temp.get("id"));
+            createdDate = (Date) temp.get("created_date");
+            return StatusDescription.createProcessStatus(true);
+        }
+
+        if(temp_scoreLogList.size() != 0) {
+            SQLInquirer sqlInquirer = SQLInquirer.getInstance();
+            String[] valuesSet = new String[temp_scoreLogList.size()];
+
+            for(int i = 0; i < temp_scoreLogList.size(); i++) {
+                HashMap<String, Object> item = temp_scoreLogList.get(i);
+                valuesSet[i] = "" + item.get("user_id") + ", " + item.get("currentScore") + ", " + item.get("modifiedScore") + ", '" + item.get("description") + "'";
+            }
+
+            String colNameSet = "user_id, currentScore, modifiedScore, description";
+
+            try {
+                sqlInquirer.insertMultiple("user_score", colNameSet, valuesSet);
+            } catch (SQLException e) {
+                System.out.println("An error has occurred while adding a score log.");
+                e.printStackTrace();
+                return StatusDescription.createProcessStatus(false, "An error has occurred while adding a score log.");
+            }
+        }
+
+        temp_scoreLogList = null;
+        return StatusDescription.createProcessStatus(modelCollection.save(this));
+    }
+
+    @Override
+    public HashMap<String, Object> delete()
+    {
+        SQLInquirer sqlInquirer = SQLInquirer.getInstance();
+        try {
+            sqlInquirer.delete("user_score", "user_ID = " + id);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return StatusDescription.createProcessStatus(modelCollection.delete(this));
     }
 }

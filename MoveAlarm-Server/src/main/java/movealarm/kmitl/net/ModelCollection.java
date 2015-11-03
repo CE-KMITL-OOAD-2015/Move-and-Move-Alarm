@@ -66,10 +66,15 @@ public class ModelCollection {
             String key = data.getKey();
             Object value = data.getValue();
             colNames += key + ",";
-            values += value + ",";
+            if(value == null)
+                values += "NULL, ";
+            else if(value.getClass().equals(String.class))
+                values += "'" + value + "', ";
+            else
+                values += "" + value + ", ";
         }
         colNames = colNames.substring(0, colNames.length() - 1);
-        values = values.substring(0, values.length() - 1);
+        values = values.substring(0, values.length() - 2);
         try {
             return sqlInquirer.insert(model.getTableName(), colNames, values);
         } catch (SQLException e) {
@@ -86,7 +91,9 @@ public class ModelCollection {
         for(Map.Entry<String, Object> data : list.entrySet()) {
             String key = data.getKey();
             Object value = data.getValue();
-            if(value.getClass().equals(String.class))
+            if(value == null)
+                valueSet += key + "=NULL, ";
+            else if(value.getClass().equals(String.class))
                 valueSet += key + "='" + value + "', ";
             else
                 valueSet += key + "=" + value + ", ";
