@@ -56,12 +56,12 @@ abstract class Model {
             HashMap<String, Object> objectValues = getValues();
             String requiredFieldName = "";
             for(String fieldName : requiredFields) {
-                if(objectValues.get(fieldName).equals("'null'")) {
+                if(objectValues.get(fieldName) == null) {
                     requiredFieldName += fieldName + " ";
                 }
             }
             if(!requiredFieldName.equals(""))
-                return createProcessStatus(false, "Require: " + requiredFieldName + " before save to the database.");
+                return StatusDescription.createProcessStatus(false, "Require: " + requiredFieldName + " before save to the database.");
         }
 
         return null;
@@ -76,13 +76,13 @@ abstract class Model {
         if(createdDate == null) {
             HashMap<String, Object> temp = modelCollection.create(this);
             if(temp == null)
-                return createProcessStatus(false, "Cannot save due to a database error.");
+                return StatusDescription.createProcessStatus(false, "Cannot save due to a database error.");
             id = Integer.parseInt("" + temp.get("id"));
             createdDate = (Date) temp.get("created_date");
-            return createProcessStatus(true);
+            return StatusDescription.createProcessStatus(true);
         }
 
-        return createProcessStatus(modelCollection.save(this));
+        return StatusDescription.createProcessStatus(modelCollection.save(this));
     }
 
     public HashMap<String, Object> delete()
@@ -92,7 +92,7 @@ abstract class Model {
         } catch (Throwable throwable) {
             throwable.printStackTrace();
         }
-        return createProcessStatus(modelCollection.delete(this));
+        return StatusDescription.createProcessStatus(modelCollection.delete(this));
     }
 
     public abstract HashMap<String, Object> getValues();
@@ -100,20 +100,5 @@ abstract class Model {
     protected void updateModifiedDate()
     {
         modifiedDate = new Date();
-    }
-
-    protected HashMap<String, Object> createProcessStatus(boolean status, String description)
-    {
-        HashMap<String, Object> processStatus = new HashMap<>();
-        processStatus.put("description", description);
-        processStatus.put("status", status);
-        return processStatus;
-    }
-
-    protected HashMap<String, Object> createProcessStatus(boolean status)
-    {
-        HashMap<String, Object> processStatus = new HashMap<>();
-        processStatus.put("status", status);
-        return processStatus;
     }
 }
