@@ -1,0 +1,22 @@
+<resources>
+    <string name="app_name">TestSQLite</string>
+    <string name="friend_first_name">FirstName</string>
+    <string name="friend_last_name">LastName</string>
+    <string name="friend_tel">Tel</string>
+    <string name="friend_email">Email</string>
+    <string name="friend_description">Description</string>
+
+    <string name="action_delete">Delete</string>
+    <string name="action_edit">Edit</string>
+    <string name="action_add">Add</string>
+
+    <string name="alert_title">Delete this friend?</string>
+    <string name="alert_message">Are you sure to delete this friend?</string>
+
+    <string name="add_data_title">Add this friend?</string>
+    <string name="add_data_message">Are you sure to add this friend?</string>
+
+    <string name="hello_world">Hello world!</string>
+    <string name="action_settings">Settings</string>
+    <string name="title_activity_add_alarm">AddAlarmActivity</string>
+</resources>

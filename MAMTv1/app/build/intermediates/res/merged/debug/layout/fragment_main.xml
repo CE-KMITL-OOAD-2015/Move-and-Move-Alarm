@@ -1,0 +1,79 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent" tools:context="com.fatel.mamtv1.MainFragment">
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/profile_image"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:src="@drawable/test"
+        android:layout_marginLeft="24dp"
+        android:layout_marginTop="40dp"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_marginStart="24dp" />
+    <LinearLayout
+        android:id="@+id/score"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:orientation="horizontal"
+        android:layout_marginTop="40dp"
+        android:layout_below="@id/profile_image">
+         <TextView
+             android:id="@+id/scoreText"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:textSize="30sp"
+             android:textColor="@android:color/black"
+             android:text="Score : " />
+         <TextView
+             android:layout_below="@id/profile_image"
+             android:layout_alignRight="@id/scoreText"
+             android:id="@+id/scoreNum"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:textSize="30sp"
+             android:textColor="@android:color/black"
+             android:text="00"/>
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/nextalarm"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:orientation="horizontal"
+        android:layout_marginTop="20dp"
+        android:layout_below="@id/score">
+        <TextView
+            android:id="@+id/nextalarmText"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="30sp"
+            android:textColor="@android:color/black"
+            android:text="Next Alarm : " />
+        <TextView
+            android:id="@+id/nextalarmNum1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="30sp"
+            android:textColor="@android:color/black"
+            android:text="--"/>
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="30sp"
+            android:textColor="@android:color/black"
+            android:text=" : "/>
+        <TextView
+            android:id="@+id/nextalarmNum2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="30sp"
+            android:textColor="@android:color/black"
+            android:text="--"/>
+    </LinearLayout>
+
+</RelativeLayout>
+<!-- From: file:/D:/Work/Year3%20Term1/OOAD/Move-and-Move-Alarm/Move-and-Move-Alarm/MAMTv1/app/src/main/res/layout/fragment_main.xml -->
