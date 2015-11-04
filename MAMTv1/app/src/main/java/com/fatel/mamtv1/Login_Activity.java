@@ -162,11 +162,12 @@ public class Login_Activity extends AppCompatActivity {
         }
     }
     public void start(){
+        /*
         Intent i = new Intent(getBaseContext(), AlarmReceiver.class);
         Bundle b = new Bundle();
         b.putString("key", "set");
         i.putExtras(b);
-        sendBroadcast(i);
+        sendBroadcast(i);*/
         /*manager = (AlarmManager)getSystemService(Context.ALARM_SERVICE);
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(System.currentTimeMillis());
