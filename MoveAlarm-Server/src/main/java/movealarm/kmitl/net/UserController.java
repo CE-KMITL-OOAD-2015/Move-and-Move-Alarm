@@ -48,13 +48,13 @@ public class UserController {
         endRank = Math.abs(endRank);
         try {
             sqlInquirer.addBatch("SET @rownum := 0");
-            rankList = sqlInquirer.query("SELECT id, rank FROM " +
+            rankList = sqlInquirer.query("SELECT id FROM " +
                     "( SELECT @rownum := @rownum + 1 AS rank, id, score " +
                     "FROM user ORDER BY score DESC ) as result");
         } catch (SQLException e) {
             e.printStackTrace();
             return Converter.getInstance().HashMapToJson(StatusDescription.createProcessStatus(
-                    false, "An error has occurred while connecting to the database."));
+                    false, "An error has occurred while querying data from the database."));
         }
 
         for(int i = startRank - 1; i < rankList.size() - 1; i++) {
@@ -203,5 +203,31 @@ public class UserController {
             return "-1";
         }
         return "" + amount;
+    }
+
+    @RequestMapping("/user/getUserRank")
+    public String getUserRank(@RequestParam(value="JSON", required = true, defaultValue = "0") String JSON)
+    {
+        Converter converter = Converter.getInstance();
+        SQLInquirer sqlInquirer = SQLInquirer.getInstance();
+        ArrayList<HashMap<String, Object>> rankList = new ArrayList<>();
+        HashMap<String, Object> userData = converter.JsonToHashMap(JSON);
+        try {
+            sqlInquirer.addBatch("SET @rownum := 0");
+            rankList = sqlInquirer.query("SELECT id FROM " +
+                    "( SELECT @rownum := @rownum + 1 AS rank, id, score " +
+                    "FROM user ORDER BY score DESC ) as result");
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return Converter.getInstance().HashMapToJson(StatusDescription.createProcessStatus(
+                    false, "An error has occurred while querying data from the database."));
+        }
+
+        for(int i = 0; i < rankList.size(); i++) {
+            int id = (int) Double.parseDouble("" + userData.get("id"));
+            if(id == Integer.parseInt("" + rankList.get(i).get("id")))
+                return "" + ++i;
+        }
+        return "" + -1;
     }
 }

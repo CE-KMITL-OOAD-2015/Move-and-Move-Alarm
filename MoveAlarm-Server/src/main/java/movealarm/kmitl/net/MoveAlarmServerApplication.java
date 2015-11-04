@@ -10,7 +10,7 @@ public class MoveAlarmServerApplication {
 
     public static void main(String[] args) {
         SQLInquirer sqlInquirer = SQLInquirer.getInstance();
-        System.out.println("connection : " + sqlInquirer.isConnecting());
+        System.out.println("database connection : " + ((sqlInquirer.isConnecting()) ? "connected" : "not connected"));
         SpringApplication.run(MoveAlarmServerApplication.class, args);
     }
 }
