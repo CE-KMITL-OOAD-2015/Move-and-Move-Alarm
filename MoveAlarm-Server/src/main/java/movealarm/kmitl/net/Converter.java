@@ -46,10 +46,10 @@ public class Converter {
         return arrayOfMap;
     }
 
-    public String HashMapArrayToJSON(HashMap<String, Object>[] arrayOfMap)
+    public String HashMapArrayToJSON(HashMap<String, Object>[] arrayOfMap, String key)
     {
         HashMap<String, Object> container = new HashMap<>();
-        container.put("users", arrayOfMap);
+        container.put(key, arrayOfMap);
         return HashMapToJson(container);
     }
 }

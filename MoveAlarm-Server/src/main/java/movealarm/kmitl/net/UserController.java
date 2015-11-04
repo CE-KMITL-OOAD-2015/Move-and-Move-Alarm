@@ -4,6 +4,8 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
+import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 @RestController
@@ -31,7 +33,40 @@ public class UserController {
             return converter.HashMapToJson(StatusDescription.createProcessStatus(false, "Not found the required users."));
 
         HashMap<String, Object>[] tempMap = converter.ModelArrayToHashMapArray(users);
-        return converter.HashMapArrayToJSON(tempMap);
+        return converter.HashMapArrayToJSON(tempMap, "users");
+    }
+
+    @RequestMapping("/user/findByRank")
+    public String findByRank(@RequestParam(value="startRank", required = true, defaultValue = "0") int startRank,
+                             @RequestParam(value="endRank", required = true, defaultValue = "0") int endRank)
+    {
+        SQLInquirer sqlInquirer = SQLInquirer.getInstance();
+        ArrayList<HashMap<String, Object>> rankList = new ArrayList<>();
+        ArrayList<HashMap<String, Object>> userValuesList = new ArrayList<>();
+        Converter converter = Converter.getInstance();
+        startRank = Math.abs(startRank);
+        endRank = Math.abs(endRank);
+        try {
+            sqlInquirer.addBatch("SET @rownum := 0");
+            rankList = sqlInquirer.query("SELECT id, rank FROM " +
+                    "( SELECT @rownum := @rownum + 1 AS rank, id, score " +
+                    "FROM user ORDER BY score DESC ) as result");
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return Converter.getInstance().HashMapToJson(StatusDescription.createProcessStatus(
+                    false, "An error has occurred while connecting to the database."));
+        }
+
+        for(int i = startRank - 1; i < rankList.size() - 1; i++) {
+            HashMap<String, Object> item = rankList.get(i);
+            HashMap<String, Object> usersData = User.find(Integer.parseInt("" + item.get("id"))).getValues();
+            usersData.put("rank", startRank);
+            userValuesList.add(usersData);
+            startRank++;
+        }
+
+        HashMap<String, Object>[] usersDataArray = userValuesList.toArray(new HashMap[userValuesList.size()]);
+        return converter.HashMapArrayToJSON(usersDataArray, "users");
     }
 
     @RequestMapping("/user/getAllUsers")
@@ -44,7 +79,7 @@ public class UserController {
             return converter.HashMapToJson(StatusDescription.createProcessStatus(false, "Not found the required users."));
 
         HashMap<String, Object>[] tempMap = converter.ModelArrayToHashMapArray(users);
-        return converter.HashMapArrayToJSON(tempMap);
+        return converter.HashMapArrayToJSON(tempMap, "users");
     }
 
     @RequestMapping("/user/createUser")
@@ -153,5 +188,20 @@ public class UserController {
             return converter.HashMapToJson(StatusDescription.createProcessStatus(false, "This user does not exist."));
 
         return converter.HashMapToJson(user.delete());
+    }
+
+    @RequestMapping("/user/countAllUsers")
+    public String countAllUsers()
+    {
+        SQLInquirer sqlInquirer = SQLInquirer.getInstance();
+        int amount = 0;
+        try {
+            HashMap<String, Object> data = sqlInquirer.query("SELECT COUNT(id) AS amount FROM user").get(0);
+            amount = Integer.parseInt("" + data.get("amount"));
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return "-1";
+        }
+        return "" + amount;
     }
 }

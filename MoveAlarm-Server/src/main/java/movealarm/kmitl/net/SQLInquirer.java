@@ -44,6 +44,10 @@ public class SQLInquirer {
         orderBy = "";
     }
 
+    public void addBatch(String batchCommand) throws SQLException {
+        stmt.addBatch(batchCommand);
+    }
+
     public boolean isOrderBy()
     {
         return (orderBy.equals("ORDER BY ")) ? false : true;
