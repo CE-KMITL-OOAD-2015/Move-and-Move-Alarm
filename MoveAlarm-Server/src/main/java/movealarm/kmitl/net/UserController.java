@@ -97,8 +97,8 @@ public class UserController {
         try {
             user.setFirstName("" + userValues.get("firstName"));
             user.setLastName("" + userValues.get("lastName"));
-            user.setGender((int) userValues.get("gender"));
-            user.setAge((int) userValues.get("age"));
+            user.setGender(((Double) userValues.get("gender")).intValue());
+            user.setAge(((Double) userValues.get("age")).intValue());
             user.setFacebookID("" + userValues.get("facebookID"));
             user.setFacebookFirstName("" + userValues.get("facebookFirstName"));
             user.setFacebookLastName("" + userValues.get("facebookLastName"));
@@ -139,5 +139,19 @@ public class UserController {
         user.setPassword(newPassword);
 
         return converter.HashMapToJson(user.save());
+    }
+
+    @RequestMapping("/user/delete")
+    public String delete(@RequestParam(value="JSON", required = true, defaultValue = "") String JSON)
+    {
+        Converter converter = Converter.getInstance();
+        HashMap<String, Object> userValues = converter.JsonToHashMap(JSON);
+
+        User user = User.find(((Double) userValues.get("id")).intValue());
+
+        if(user == null)
+            return converter.HashMapToJson(StatusDescription.createProcessStatus(false, "This user does not exist."));
+
+        return converter.HashMapToJson(user.delete());
     }
 }
