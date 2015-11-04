@@ -11,10 +11,12 @@ import android.widget.Toast;
 
 public class Create_Account_Activity extends AppCompatActivity {
 
+    UserManage mUserManage;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.create__account_layout);
+        mUserManage = new UserManage();
     }
 
     @Override
@@ -63,6 +65,7 @@ public class Create_Account_Activity extends AppCompatActivity {
         {
             Intent intent = new Intent(this,MainActivity.class);
             //mManager.registerUser(username.getText().toString(), password.getText().toString()); ลงทะเบียน username กับ password ลงฐานข้อมูลก่อนไปหน้า main
+            mUserManage.createNewUser(username.getText().toString(),password.getText().toString(),this);
             Toast.makeText(this, "Create Successful", Toast.LENGTH_SHORT).show();
             startActivity(intent);
         }

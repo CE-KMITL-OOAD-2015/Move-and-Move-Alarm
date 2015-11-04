@@ -6,7 +6,7 @@ public class UserManage {
 
     private User currentUser = null;
     private static UserManage instance = null;
-    private UserManage(){
+    public UserManage(){
 
     }
     public static UserManage getInstance() {
@@ -26,14 +26,14 @@ public class UserManage {
     }
     public void loginUser(String username,String password,Context context){
         int idUser = findUser(username,password);
-        User user=User.find(idUser, context);
-        if(user!=null){
-            currentUser=user;
-        }
-        else {
+//        User user=User.find(idUser, context);
+//        if(user!=null){
+//            currentUser=user;
+//        }
+//        else {
             currentUser = new User(idUser, username, password);
             currentUser.save(context);
-        }
+//        }
     }
     public void loginFBUser(){
 
@@ -50,4 +50,9 @@ public class UserManage {
 
     }
 
+    public boolean checkUser(String username,String password)
+    {
+        //เช็คว่าใน server มีข้อมูลของ username นี้ password นี้ รึป่าว ถ้าไม่มีก้ไม่อนุญาตให้เข้า ถ้ามีก้อนุญาต
+        return true;
+    }
 }
