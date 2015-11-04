@@ -280,6 +280,11 @@ public class User extends Model{
         return age;
     }
 
+    public int getScore()
+    {
+        return score;
+    }
+
     public int getGender()
     {
         return gender;
@@ -295,6 +300,10 @@ public class User extends Model{
             default:
                 return "undefined";
         }
+    }
+
+    public String getPassword() {
+        return password;
     }
 
     public String getEmail()

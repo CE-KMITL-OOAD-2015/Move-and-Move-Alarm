@@ -2,6 +2,7 @@ package movealarm.kmitl.net;
 
 import com.google.gson.Gson;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 /**
@@ -31,5 +32,24 @@ public class Converter {
             jToH = new Converter();
         }
         return jToH;
+    }
+
+    public HashMap<String, Object>[] ModelArrayToHashMapArray(Model[] models)
+    {
+        ArrayList<HashMap<String, Object>> mapList = new ArrayList<>();
+
+        for(int i = 0; i < models.length; i++)
+            mapList.add(models[i].getValues());
+
+        HashMap<String, Object>[] arrayOfMap = mapList.toArray((new HashMap[mapList.size()]));
+
+        return arrayOfMap;
+    }
+
+    public String HashMapArrayToJSON(HashMap<String, Object>[] arrayOfMap, String key)
+    {
+        HashMap<String, Object> container = new HashMap<>();
+        container.put(key, arrayOfMap);
+        return HashMapToJson(container);
     }
 }
