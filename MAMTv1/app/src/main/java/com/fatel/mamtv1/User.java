@@ -1,5 +1,6 @@
 package com.fatel.mamtv1;
 
+import android.content.Context;
 import android.provider.BaseColumns;
 
 /**
@@ -43,10 +44,10 @@ public class User {
     }
     public User(){
     }
-    public User(int id,int idUser,String firstName, String lastName, String username,int age,int score
+    public User(int idUser,String firstName, String lastName, String username,int age,int score
             ,int gender,String email, String password, String facebookID, String facebookFirstName,
                 String facebookLastName, int profileImage){
-        this.id = id;
+        this.id=-1;
         this.idUser = idUser;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -60,6 +61,36 @@ public class User {
         this.facebookFirstName=facebookFirstName;
         this.facebookLastName=facebookLastName;
         this.profileImage = profileImage;
+    }
+    public User(int id,int idUser,String firstName, String lastName, String username,int age,int score
+            ,int gender,String email, String password, String facebookID, String facebookFirstName,
+                String facebookLastName, int profileImage){
+        this.id=id;
+        this.idUser = idUser;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.userName = username;
+        this.age = age;
+        this.score = score;
+        this.gender = gender;
+        this.email = email;
+        this.password = password;
+        this.facebookID=facebookID;
+        this.facebookFirstName=facebookFirstName;
+        this.facebookLastName=facebookLastName;
+        this.profileImage = profileImage;
+    }
+    public void save (Context context){
+
+        UserHelper userHelper = new UserHelper(context);
+        if(this.id != -1)
+            this.id = userHelper.addUser(this);
+        else
+            userHelper.updateUser(this);
+    }
+    public static User find(int idUser,Context context){
+        UserHelper userHelper = new UserHelper(context);
+        return userHelper.getUser(idUser);
     }
 
     public int getId(){
@@ -107,7 +138,7 @@ public class User {
     public void setId(int id){
         this.id = id;
     }
-    public void setIdUserd(int idUser){
+    public void setIdUser(int idUser){
         this.idUser = idUser;
     }
     public void setFirstName(String firstName){
