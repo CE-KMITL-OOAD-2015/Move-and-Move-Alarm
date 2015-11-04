@@ -24,7 +24,7 @@ public class UserHelper extends SQLiteOpenHelper {
         //not sure %s int for image
         String CREATE_USER_TABLE = String.format("CREATE TABLE %s " +
                         "(%s INTEGER PRIMARY KEY  AUTOINCREMENT,%s INTEGER, %s TEXT, %s TEXT, %s TEXT, %s INTEGER" +
-                        ",%s INTEGER,%s INTEGER, %s TEXT, %s TEXT,%s TEXT,%s TEXT,%s TEXT,%s TEXT)",
+                        ",%s INTEGER,%s INTEGER, %s TEXT, %s TEXT,%s TEXT,%s TEXT,%s TEXT,%s INTEGER)",
                 User.TABLE,
                 User.Column.ID,
                 User.Column.IDUSER,
@@ -65,7 +65,7 @@ public class UserHelper extends SQLiteOpenHelper {
         values.put(User.Column.FACEBOOKID, user.getFacebookID());
         values.put(User.Column.FACEBOOKFIRSTNAME, user.getFacebookFirstName());
         values.put(User.Column.FACEBOOKLASTNAME, user.getFacebookLastName());
-        values.put(User.Column.PROFILEIMAGE,String.valueOf(user.getProfileImage()));
+        values.put(User.Column.PROFILEIMAGE,user.getProfileImage());
         long id = sqLiteDatabase.insert(User.TABLE, null, values);
         sqLiteDatabase.close();
         return ((int)id);
@@ -85,7 +85,7 @@ public class UserHelper extends SQLiteOpenHelper {
         values.put(User.Column.FACEBOOKID, user.getFacebookID());
         values.put(User.Column.FACEBOOKFIRSTNAME, user.getFacebookFirstName());
         values.put(User.Column.FACEBOOKLASTNAME, user.getFacebookLastName());
-        values.put(User.Column.PROFILEIMAGE, String.valueOf(user.getProfileImage()));
+        values.put(User.Column.PROFILEIMAGE, user.getProfileImage());
         int row = sqLiteDatabase.update(User.TABLE,
                 values,
                 User.Column.ID + " = ? ",
@@ -117,8 +117,8 @@ public class UserHelper extends SQLiteOpenHelper {
         if (cursor != null) {
             cursor.moveToFirst();
             user = new User(cursor.getInt(0), cursor.getInt(1),
-                    cursor.getString(2), cursor.getString(3), cursor.getString(4), Integer.parseInt(cursor.getString(5)),
-                    Integer.parseInt(cursor.getString(6)), Integer.parseInt(cursor.getString(7)), cursor.getString(8),
+                    cursor.getString(2), cursor.getString(3), cursor.getString(4), cursor.getInt(5),
+                    cursor.getInt(6), cursor.getInt(7), cursor.getString(8),
                     cursor.getString(9), cursor.getString(10), cursor.getString(11), cursor.getString(12), cursor.getInt(13));
 
             cursor.close();
