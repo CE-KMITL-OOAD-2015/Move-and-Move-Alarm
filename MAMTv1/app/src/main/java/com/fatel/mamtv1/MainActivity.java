@@ -4,6 +4,9 @@ import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.net.Uri;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
@@ -16,29 +19,61 @@ import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.facebook.Profile;
 import com.facebook.login.LoginManager;
+import com.facebook.login.widget.ProfilePictureView;
+import com.squareup.picasso.Picasso;
+
+import java.io.BufferedInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLConnection;
+
+import de.hdodenhof.circleimageview.CircleImageView;
+
 
 public class MainActivity extends AppCompatActivity {
 
     private DrawerLayout mDrawerLayout;
     private ActionBarDrawerToggle mDrawerToggle;
     private TextView header;
+    private TextView user;
+    CircleImageView profilepic;
+    String firstName;
+    String lastName;
+    public String id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-       // Intent alarmIntent = new Intent(MainActivity.this, AlarmReceiver.class);
+        Bundle bundle = getIntent().getExtras();
+        if (bundle != null) {
+            firstName = bundle.getString("firstname");
+            lastName = bundle.getString("lastname");
+            id = bundle.getString("id");
+        }
+        header = (TextView) findViewById(R.id.profile);
+        user = (TextView) findViewById(R.id.username);
+        user.setText(firstName);
+        profilepic = (CircleImageView) findViewById(R.id.profile_image);
+        Picasso.with(this).load("https://graph.facebook.com/" + id + "/picture?type=large").into(profilepic);
+        Bundle passimg = new Bundle();
+        passimg.putString("id",id);
+        // Intent alarmIntent = new Intent(MainActivity.this, AlarmReceiver.class);
         //pendingIntent = PendingIntent.getBroadcast(MainActivity.this, 0, alarmIntent, 0);
         FragmentTransaction tx = getSupportFragmentManager().beginTransaction();
-        tx.replace(R.id.container, new MainFragment());
+        MainFragment fragobj = new MainFragment();
+        fragobj.setArguments(passimg);
+        tx.replace(R.id.container, fragobj);
         tx.commit();
         NavigationView nvDrawer = (NavigationView) findViewById(R.id.nvView);
         setupDrawerContent(nvDrawer);
-
-        header = (TextView) findViewById(R.id.profile);
         header.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -76,6 +111,7 @@ public class MainActivity extends AppCompatActivity {
         mDrawerToggle.syncState();
 
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -169,4 +205,19 @@ public class MainActivity extends AppCompatActivity {
         // Sync the toggle state after onRestoreInstanceState has occurred.
         mDrawerToggle.syncState();
     }
+//    public void previewCapturedImage(CircleImageView pic,String id) {
+//        try {
+//            pic.setVisibility(View.VISIBLE);
+//            URL url = new URL("https://graph.facebook.com/" + id + "/picture?type=large");
+//            new LoadImageTask(url).execute(pic);
+//
+//        } catch (NullPointerException e) {
+//            e.printStackTrace();
+//        }catch (MalformedURLException e){
+//            Log.i("xx", "mal");
+//        }catch (IOException e){
+//            Log.i("xx", "io");
+//        }
+//    }
+
 }
