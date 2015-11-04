@@ -4,9 +4,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map;
 
 @RestController
 public class UserController {
@@ -80,6 +78,66 @@ public class UserController {
         catch (Exception e) {
 
         }
+        return converter.HashMapToJson(user.save());
+    }
+
+    @RequestMapping("/user/updateUser")
+    public String updateUser(@RequestParam(value="JSON", required = true, defaultValue = "") String JSON)
+    {
+        Converter converter = Converter.getInstance();
+        HashMap<String, Object> userValues = converter.JsonToHashMap(JSON);
+
+        User user = User.find(((Double) userValues.get("id")).intValue());
+
+        if(user == null)
+            return converter.HashMapToJson(StatusDescription.createProcessStatus(false, "This user does not exist."));
+
+        user.setEmail((String) userValues.get("email"));
+
+        try {
+            user.setFirstName("" + userValues.get("firstName"));
+            user.setLastName("" + userValues.get("lastName"));
+            user.setGender((int) userValues.get("gender"));
+            user.setAge((int) userValues.get("age"));
+            user.setFacebookID("" + userValues.get("facebookID"));
+            user.setFacebookFirstName("" + userValues.get("facebookFirstName"));
+            user.setFacebookLastName("" + userValues.get("facebookLastName"));
+        }
+        catch (Exception e) {
+
+        }
+        return converter.HashMapToJson(user.save());
+    }
+
+    @RequestMapping("/user/changePassword")
+    public String changePassword(@RequestParam(value="JSON", required = true, defaultValue = "") String JSON)
+    {
+        Converter converter = Converter.getInstance();
+        HashMap<String, Object> userValues = converter.JsonToHashMap(JSON);
+        Crypto crypto = Crypto.getInstance();
+
+        User user = User.find(((Double) userValues.get("id")).intValue());
+
+        if(user == null)
+            return converter.HashMapToJson(StatusDescription.createProcessStatus(false, "This user does not exist."));
+
+        String currentPassword = crypto.decryption(user.getPassword());
+        String oldPassword = "" + userValues.get("oldPassword");
+        String newPassword = "" + userValues.get("newPassword");
+        String confirmPassword = "" + userValues.get("confirmPassword");
+
+        if(!currentPassword.equals(oldPassword))
+            return converter.HashMapToJson(StatusDescription.createProcessStatus(false, "Current password incorrect."));
+
+        if(newPassword.length() < 6)
+            return converter.HashMapToJson(StatusDescription.createProcessStatus(false, "Password should not be less than 6 letters."));
+
+        if(!newPassword.equals(confirmPassword))
+            return converter.HashMapToJson(StatusDescription.createProcessStatus(false, "Password and confirm password mismatch."));
+
+        newPassword = crypto.encryption(newPassword);
+        user.setPassword(newPassword);
+
         return converter.HashMapToJson(user.save());
     }
 }
