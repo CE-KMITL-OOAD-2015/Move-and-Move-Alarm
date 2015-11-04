@@ -275,4 +275,20 @@ public class UserController {
             return converter.HashMapToJson(user.save());
         return converter.HashMapToJson(StatusDescription.createProcessStatus(false, "Cannot reset score."));
     }
+
+    @RequestMapping("/user/verifyPassword")
+    public String verifyPassword(@RequestParam(value="JSON", required = true, defaultValue = "0") String JSON)
+    {
+        Converter converter = Converter.getInstance();
+        HashMap<String, Object> data = converter.JsonToHashMap(JSON);
+        HashMap<String, Object> userData = converter.JsonToHashMap("" + data.get("user"));
+        User user = User.find(((Double) userData.get("id")).intValue());
+        if(user == null)
+            return converter.HashMapToJson(StatusDescription.createProcessStatus(false, "User does not exist."));
+
+        if(Crypto.getInstance().decryption(user.getPassword()).equals(data.get("password")))
+            return converter.HashMapToJson(StatusDescription.createProcessStatus(true));
+
+        return converter.HashMapToJson(StatusDescription.createProcessStatus(false, "Password mismatch."));
+    }
 }
