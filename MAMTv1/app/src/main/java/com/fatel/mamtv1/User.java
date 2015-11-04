@@ -44,23 +44,11 @@ public class User {
     }
     public User(){
     }
-    public User(int idUser,String firstName, String lastName, String username,int age,int score
-            ,int gender,String email, String password, String facebookID, String facebookFirstName,
-                String facebookLastName, int profileImage){
+    public User(int idUser, String username,String password){
         this.id=-1;
         this.idUser = idUser;
-        this.firstName = firstName;
-        this.lastName = lastName;
         this.userName = username;
-        this.age = age;
-        this.score = score;
-        this.gender = gender;
-        this.email = email;
         this.password = password;
-        this.facebookID=facebookID;
-        this.facebookFirstName=facebookFirstName;
-        this.facebookLastName=facebookLastName;
-        this.profileImage = profileImage;
     }
     public User(int id,int idUser,String firstName, String lastName, String username,int age,int score
             ,int gender,String email, String password, String facebookID, String facebookFirstName,
