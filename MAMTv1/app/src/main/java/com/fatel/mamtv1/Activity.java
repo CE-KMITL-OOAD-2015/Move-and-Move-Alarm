@@ -146,7 +146,7 @@ public class Activity extends AppCompatActivity {
                 //set frq
                 Intent i = new Intent(getBaseContext(), AlarmReceiver.class);
                 Bundle b = new Bundle();
-                b.putString("key", "recount");
+                b.putString("key", "first");
                 i.putExtras(b);
                 sendBroadcast(i);
             }

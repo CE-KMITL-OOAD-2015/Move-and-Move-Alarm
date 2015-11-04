@@ -58,7 +58,6 @@ public class actAlarm extends AppCompatActivity {
         startActivity(i1);
         //sendBroadcast(i1);
         Intent i = new Intent(getBaseContext(), AlarmReceiver.class);
-
         Bundle b = new Bundle();
         b.putString("key", "first");
         i.putExtras(b);
