@@ -24,7 +24,7 @@ public class UserHelper extends SQLiteOpenHelper {
         //not sure %s int for image
         String CREATE_USER_TABLE = String.format("CREATE TABLE %s " +
                         "(%s INTEGER PRIMARY KEY  AUTOINCREMENT,%s INTEGER, %s TEXT, %s TEXT, %s TEXT, %s INTEGER" +
-                        ",%s INTEGER,%s INTEGER, %s TEXT, %s TEXT,%s TEXT,%s TEXT,%s TEXT,%s INTEGER)",
+                        ",%s INTEGER,%s INTEGER, %s TEXT, %s TEXT,%s TEXT,%s TEXT,%s INTEGER)",
                 User.TABLE,
                 User.Column.ID,
                 User.Column.IDUSER,
@@ -35,7 +35,6 @@ public class UserHelper extends SQLiteOpenHelper {
                 User.Column.SCORE,
                 User.Column.GENDER,
                 User.Column.EMAIL,
-                User.Column.PASSWORD,
                 User.Column.FACEBOOKID,
                 User.Column.FACEBOOKFIRSTNAME,
                 User.Column.FACEBOOKLASTNAME,
@@ -61,7 +60,6 @@ public class UserHelper extends SQLiteOpenHelper {
         values.put(User.Column.SCORE, user.getScore());
         values.put(User.Column.GENDER,user.getGender());
         values.put(User.Column.EMAIL, user.getEmail());
-        values.put(User.Column.PASSWORD, user.getPassword());
         values.put(User.Column.FACEBOOKID, user.getFacebookID());
         values.put(User.Column.FACEBOOKFIRSTNAME, user.getFacebookFirstName());
         values.put(User.Column.FACEBOOKLASTNAME, user.getFacebookLastName());
@@ -81,7 +79,6 @@ public class UserHelper extends SQLiteOpenHelper {
         values.put(User.Column.SCORE, user.getScore());
         values.put(User.Column.GENDER,user.getGender());
         values.put(User.Column.EMAIL, user.getEmail());
-        values.put(User.Column.PASSWORD, user.getPassword());
         values.put(User.Column.FACEBOOKID, user.getFacebookID());
         values.put(User.Column.FACEBOOKFIRSTNAME, user.getFacebookFirstName());
         values.put(User.Column.FACEBOOKLASTNAME, user.getFacebookLastName());
@@ -108,21 +105,23 @@ public class UserHelper extends SQLiteOpenHelper {
         Cursor cursor = db.query(User.TABLE, new String[]{User.Column.ID,
                         User.Column.IDUSER, User.Column.FIRSTNAME, User.Column.LASTNAME,
                         User.Column.USERNAME, User.Column.AGE, User.Column.SCORE,
-                        User.Column.GENDER, User.Column.EMAIL, User.Column.PASSWORD,
+                        User.Column.GENDER, User.Column.EMAIL,
                         User.Column.FACEBOOKID, User.Column.FACEBOOKFIRSTNAME, User.Column.FACEBOOKLASTNAME,
                         User.Column.PROFILEIMAGE
-                }, User.Column.ID + " = ? ",
+                }, User.Column.IDUSER + " = ? ",
                 new String[]{String.valueOf(idUser)}, null, null, null, null);
         User user=null;
         if (cursor != null) {
             cursor.moveToFirst();
-            user = new User(cursor.getInt(0), cursor.getInt(1),
+        }
+        user = new User(cursor.getInt(0), cursor.getInt(1),
                     cursor.getString(2), cursor.getString(3), cursor.getString(4), cursor.getInt(5),
                     cursor.getInt(6), cursor.getInt(7), cursor.getString(8),
-                    cursor.getString(9), cursor.getString(10), cursor.getString(11), cursor.getString(12), cursor.getInt(13));
+                    cursor.getString(9), cursor.getString(10), cursor.getString(11), cursor.getInt(12));
 
-            cursor.close();
-        }
+
+
+        cursor.close();
         db.close();
         return user;
     }

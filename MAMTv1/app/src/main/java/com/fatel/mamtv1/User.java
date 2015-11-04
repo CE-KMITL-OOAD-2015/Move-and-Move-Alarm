@@ -16,14 +16,12 @@ public class User {
     private int score;
     private int gender;
     private String email;
-    private String password;
     private String facebookID;
     private String facebookFirstName;
     private String facebookLastName;
     //no sure int for image
     private int profileImage;
 
-    public static final String DATABASE_NAME = "fatel_user.db";
     public static final int DATABASE_VERSION = 1;
     public static final String TABLE = "user";
     public class Column{
@@ -36,7 +34,6 @@ public class User {
         public static final String SCORE = "score";
         public static final String GENDER = "gender";
         public static final String EMAIL = "email";
-        public static final String PASSWORD = "password";
         public static final String FACEBOOKID = "facebookid";
         public static final String FACEBOOKFIRSTNAME = "facebookfirstname";
         public static final String FACEBOOKLASTNAME = "facebooklastname";
@@ -44,14 +41,13 @@ public class User {
     }
     public User(){
     }
-    public User(int idUser, String username,String password){
+    public User(int idUser, String username){
         this.id=-1;
         this.idUser = idUser;
         this.userName = username;
-        this.password = password;
     }
     public User(int id,int idUser,String firstName, String lastName, String username,int age,int score
-            ,int gender,String email, String password, String facebookID, String facebookFirstName,
+            ,int gender,String email, String facebookID, String facebookFirstName,
                 String facebookLastName, int profileImage){
         this.id=id;
         this.idUser = idUser;
@@ -62,7 +58,6 @@ public class User {
         this.score = score;
         this.gender = gender;
         this.email = email;
-        this.password = password;
         this.facebookID=facebookID;
         this.facebookFirstName=facebookFirstName;
         this.facebookLastName=facebookLastName;
@@ -108,9 +103,6 @@ public class User {
     public String getEmail(){
         return email;
     }
-    public String getPassword(){
-        return password;
-    }
     public String getFacebookID(){
         return facebookID;
     }
@@ -149,9 +141,6 @@ public class User {
     }
     public void setEmail(String email){
         this.email = email;
-    }
-    public void setPassword(String password){
-        this.password = password;
     }
     public void setFacebookID(String facebookID){
         this.facebookID = facebookID;

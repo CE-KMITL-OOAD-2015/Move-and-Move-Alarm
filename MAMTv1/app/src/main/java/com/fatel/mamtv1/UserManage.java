@@ -18,20 +18,20 @@ public class UserManage {
 
     public void createNewUser(String username,String password,Context context) {
         int idUser = addNewUser(username, password);
-        currentUser = new User(idUser, username, password);
+        currentUser = new User(idUser, username);
         currentUser.save(context);
     }
     public void createFBUser(){
 
     }
-    public void loginUser(String username,String password,Context context){
+    public void loginUser (String username,String password,Context context){
         int idUser = findUser(username,password);
         User user=User.find(idUser, context);
         if(user!=null){
             currentUser=user;
         }
         else {
-            currentUser = new User(idUser, username, password);
+            currentUser = new User(idUser, username);
             currentUser.save(context);
         }
     }
