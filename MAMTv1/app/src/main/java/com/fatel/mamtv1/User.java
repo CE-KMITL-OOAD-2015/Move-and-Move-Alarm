@@ -46,6 +46,12 @@ public class User {
         this.idUser = idUser;
         this.userName = username;
     }
+    public User(int idUser,String facebookID,String facebookFirstName){
+        this.id=-1;
+        this.idUser = idUser;
+        this.facebookID = facebookID;
+        this.facebookFirstName = facebookFirstName;
+    }
     public User(int id,int idUser,String firstName, String lastName, String username,int age,int score
             ,int gender,String email, String facebookID, String facebookFirstName,
                 String facebookLastName, int profileImage){

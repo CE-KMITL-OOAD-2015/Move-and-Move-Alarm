@@ -21,11 +21,13 @@ public class UserManage {
         currentUser = new User(idUser, username);
         currentUser.save(context);
     }
-    public void createFBUser(){
-
+    public void createFBUser(String facebookID,String facebookFirstName,Context context){
+        int idUser = addNewUserFB(facebookID, facebookFirstName);
+        currentUser = new User(idUser,facebookID,facebookFirstName);
+        currentUser.save(context);
     }
     public void loginUser (String username,String password,Context context){
-        int idUser = findUser(username,password);
+        int idUser = findUser(username, password);
         User user=User.find(idUser, context);
         if(user!=null){
             currentUser=user;
@@ -35,8 +37,16 @@ public class UserManage {
             currentUser.save(context);
         }
     }
-    public void loginFBUser(){
-
+    public void loginFBUser(String facebookID,String facebookFirstName,Context context){
+        int idUser = findUserFB(facebookID, facebookFirstName);
+        User user=User.find(idUser, context);
+        if(user!=null){
+            currentUser=user;
+        }
+        else {
+            currentUser = new User(idUser,facebookID,facebookFirstName);
+            currentUser.save(context);
+        }
     }
 
     private int addNewUser(String username,String password){
@@ -48,6 +58,12 @@ public class UserManage {
 
         return 0;
 
+    }
+    private int addNewUserFB(String facebookID,String facebookFirstName){
+        return 0;
+    }
+    private int findUserFB(String facebookID,String facebookFirstName){
+        return 0;
     }
 
 }
