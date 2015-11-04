@@ -49,9 +49,9 @@ public class SQLInquirer {
         return (orderBy.equals("ORDER BY ")) ? false : true;
     }
 
-    public ArrayList<HashMap<String, Object>> all(String tableName) throws SQLException {
+    public ArrayList<HashMap<String, Object>> query(String sqlCommand) throws SQLException {
         ArrayList<HashMap<String, Object>> collection = new ArrayList<>();
-        rs = stmt.executeQuery("SELECT * FROM " + tableName);
+        rs = stmt.executeQuery(sqlCommand);
         ResultSetMetaData metaData = rs.getMetaData();
         while(rs.next()) {
             HashMap<String, Object> temp = new HashMap<>();
@@ -62,18 +62,15 @@ public class SQLInquirer {
         return collection;
     }
 
+    public ArrayList<HashMap<String, Object>> all(String tableName) throws SQLException {
+        String sqlCommand = "SELECT * FROM " + tableName;
+        return query(sqlCommand);
+    }
+
     public ArrayList<HashMap<String, Object>> where(String sqlCommand) throws SQLException {
-        ArrayList<HashMap<String, Object>> collection = new ArrayList<>();
         if(isOrderBy())
             sqlCommand += " " + orderBy + " " + orderType;
-        rs = stmt.executeQuery(sqlCommand);
-        ResultSetMetaData metaData = rs.getMetaData();
-        while(rs.next()) {
-            HashMap<String, Object> temp = new HashMap<>();
-            for(int i = 1; i <= metaData.getColumnCount(); i++)
-                temp.put(metaData.getColumnName(i), rs.getObject(i));
-            collection.add(temp);
-        }
+        ArrayList<HashMap<String, Object>> collection = query(sqlCommand);
         resetOrderBy();
         return collection;
     }
