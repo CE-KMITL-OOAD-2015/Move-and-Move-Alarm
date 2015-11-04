@@ -230,4 +230,49 @@ public class UserController {
         }
         return "" + -1;
     }
+
+    @RequestMapping("/user/increaseScore")
+    public String increaseScore(@RequestParam(value="JSON", required = true, defaultValue = "0") String JSON)
+    {
+        Converter converter = Converter.getInstance();
+        HashMap<String, Object> data = converter.JsonToHashMap(JSON);
+        HashMap<String, Object> userData = converter.JsonToHashMap("" + data.get("user"));
+        User user = User.find(((Double) userData.get("id")).intValue());
+        if(user == null)
+            return converter.HashMapToJson(StatusDescription.createProcessStatus(false, "User does not exist."));
+        HashMap<String, Object> processStatus = user.increaseScore((int) Double.parseDouble("" + data.get("score")), "" + data.get("description"));
+        if((boolean) processStatus.get("status"))
+            return converter.HashMapToJson(user.save());
+        return converter.HashMapToJson(StatusDescription.createProcessStatus(false, "Cannot increase score."));
+    }
+
+    @RequestMapping("/user/decreaseScore")
+    public String decreaseScore(@RequestParam(value="JSON", required = true, defaultValue = "0") String JSON)
+    {
+        Converter converter = Converter.getInstance();
+        HashMap<String, Object> data = converter.JsonToHashMap(JSON);
+        HashMap<String, Object> userData = converter.JsonToHashMap("" + data.get("user"));
+        User user = User.find(((Double) userData.get("id")).intValue());
+        if(user == null)
+            return converter.HashMapToJson(StatusDescription.createProcessStatus(false, "User does not exist."));
+        HashMap<String, Object> processStatus = user.decreaseScore((int) Double.parseDouble("" + data.get("score")), "" + data.get("description"));
+        if((boolean) processStatus.get("status"))
+            return converter.HashMapToJson(user.save());
+        return converter.HashMapToJson(StatusDescription.createProcessStatus(false, "Cannot decrease score."));
+    }
+
+    @RequestMapping("/user/resetScore")
+    public String resetScore(@RequestParam(value="JSON", required = true, defaultValue = "0") String JSON)
+    {
+        Converter converter = Converter.getInstance();
+        HashMap<String, Object> data = converter.JsonToHashMap(JSON);
+        HashMap<String, Object> userData = converter.JsonToHashMap("" + data.get("user"));
+        User user = User.find(((Double) userData.get("id")).intValue());
+        if(user == null)
+            return converter.HashMapToJson(StatusDescription.createProcessStatus(false, "User does not exist."));
+        HashMap<String, Object> processStatus = user.decreaseScore(-user.getScore(), "" + data.get("description"));
+        if((boolean) processStatus.get("status"))
+            return converter.HashMapToJson(user.save());
+        return converter.HashMapToJson(StatusDescription.createProcessStatus(false, "Cannot reset score."));
+    }
 }

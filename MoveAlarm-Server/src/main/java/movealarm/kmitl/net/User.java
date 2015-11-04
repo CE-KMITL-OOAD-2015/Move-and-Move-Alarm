@@ -280,6 +280,11 @@ public class User extends Model{
         return age;
     }
 
+    public int getScore()
+    {
+        return score;
+    }
+
     public int getGender()
     {
         return gender;
