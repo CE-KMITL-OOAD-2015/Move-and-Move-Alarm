@@ -32,12 +32,15 @@ public class LoadImageTask extends AsyncTask<CircleImageView, Void, Bitmap> {
     }
     @Override
     protected void onPostExecute(Bitmap result) {
-        im.setImageBitmap(result);
+        Log.i("xx","suc?");
+        bitmap = result;
+        im.setImageBitmap(bitmap);
     }
     private Bitmap download_Image(String url) {
         Bitmap bmp =null;
         try{
             URL ulrn = new URL(url);
+            Log.i("xx",url);
             HttpURLConnection con = (HttpURLConnection)ulrn.openConnection();
             InputStream is = con.getInputStream();
             bmp = BitmapFactory.decodeStream(is);

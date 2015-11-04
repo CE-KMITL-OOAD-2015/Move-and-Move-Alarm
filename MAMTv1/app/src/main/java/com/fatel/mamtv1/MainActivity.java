@@ -25,6 +25,7 @@ import android.widget.TextView;
 import com.facebook.Profile;
 import com.facebook.login.LoginManager;
 import com.facebook.login.widget.ProfilePictureView;
+import com.squareup.picasso.Picasso;
 
 import java.io.BufferedInputStream;
 import java.io.IOException;
@@ -45,8 +46,7 @@ public class MainActivity extends AppCompatActivity {
     CircleImageView profilepic;
     String firstName;
     String lastName;
-    String id;
-    Uri propic = null;
+    public String id;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -57,23 +57,23 @@ public class MainActivity extends AppCompatActivity {
             firstName = bundle.getString("firstname");
             lastName = bundle.getString("lastname");
             id = bundle.getString("id");
-            propic = getIntent().getParcelableExtra("propic");
         }
-
-        // Intent alarmIntent = new Intent(MainActivity.this, AlarmReceiver.class);
-        //pendingIntent = PendingIntent.getBroadcast(MainActivity.this, 0, alarmIntent, 0);
-        FragmentTransaction tx = getSupportFragmentManager().beginTransaction();
-        tx.replace(R.id.container, new MainFragment());
-        tx.commit();
-        NavigationView nvDrawer = (NavigationView) findViewById(R.id.nvView);
-        setupDrawerContent(nvDrawer);
-
         header = (TextView) findViewById(R.id.profile);
         user = (TextView) findViewById(R.id.username);
         user.setText(firstName);
         profilepic = (CircleImageView) findViewById(R.id.profile_image);
-        previewCapturedImage();
-        //profilepic.setImageURI(propic);
+        Picasso.with(this).load("https://graph.facebook.com/" + id + "/picture?type=large").into(profilepic);
+        Bundle passimg = new Bundle();
+        passimg.putString("id",id);
+        // Intent alarmIntent = new Intent(MainActivity.this, AlarmReceiver.class);
+        //pendingIntent = PendingIntent.getBroadcast(MainActivity.this, 0, alarmIntent, 0);
+        FragmentTransaction tx = getSupportFragmentManager().beginTransaction();
+        MainFragment fragobj = new MainFragment();
+        fragobj.setArguments(passimg);
+        tx.replace(R.id.container, fragobj);
+        tx.commit();
+        NavigationView nvDrawer = (NavigationView) findViewById(R.id.nvView);
+        setupDrawerContent(nvDrawer);
         header.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -205,33 +205,19 @@ public class MainActivity extends AppCompatActivity {
         // Sync the toggle state after onRestoreInstanceState has occurred.
         mDrawerToggle.syncState();
     }
-    private void previewCapturedImage() {
-        try {
-            // hide video preview
-            //videoPreview.setVisibility(View.GONE);
-
-            profilepic.setVisibility(View.VISIBLE);
-
-            // bimatp factory
-            BitmapFactory.Options options = new BitmapFactory.Options();
-
-            // downsizing image as it throws OutOfMemory Exception for larger
-            // images
-
-                URL url = new URL("https://graph.facebook.com/" + id + "/picture?type=large");
-            new LoadImageTask(url).execute(profilepic);
-            //InputStream input = (InputStream)url.getContent();
-                options.inSampleSize = 8;
-            Log.i("xx", propic.toString());
-            //final Bitmap bitmap = BitmapFactory.decodeStream(url.openConnection().getInputStream());
-            //profilepic.setImageBitmap(bitmap);
-        } catch (NullPointerException e) {
-            e.printStackTrace();
-        }catch (MalformedURLException e){
-            Log.i("xx", "mal");
-        }catch (IOException e){
-            Log.i("xx", "io");
-        }
-    }
+//    public void previewCapturedImage(CircleImageView pic,String id) {
+//        try {
+//            pic.setVisibility(View.VISIBLE);
+//            URL url = new URL("https://graph.facebook.com/" + id + "/picture?type=large");
+//            new LoadImageTask(url).execute(pic);
+//
+//        } catch (NullPointerException e) {
+//            e.printStackTrace();
+//        }catch (MalformedURLException e){
+//            Log.i("xx", "mal");
+//        }catch (IOException e){
+//            Log.i("xx", "io");
+//        }
+//    }
 
 }
