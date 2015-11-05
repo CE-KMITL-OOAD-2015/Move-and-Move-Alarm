@@ -23,9 +23,8 @@ public class Group extends Model{
     public Group()
     {
         this.tableName = "groups";
-        this.requiredFields = new ArrayList<>();
-        this.requiredFields.add("name");
-        this.requiredFields.add("adminID");
+        this.addRequiredField("name");
+        this.addRequiredField("adminID");
         members = new ArrayList<>();
         temp_addedUserList = new ArrayList<>();
         temp_removeUserList = new ArrayList<>();
@@ -134,6 +133,23 @@ public class Group extends Model{
         return temp;
     }
 
+    @Override
+    public HashMap<String, Object> getGeneralValues()
+    {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        HashMap<String, Object> temp = new HashMap<>();
+        Converter converter = Converter.getInstance();
+        User[] arrayOfMembers = members.toArray(new User[members.size()]);
+        temp.put("id", id);
+        temp.put("name", name);
+        temp.put("status", status);
+        temp.put("score", score);
+        temp.put("members", converter.ModelArrayToHashMapArray(arrayOfMembers));
+        temp.put("amountMember", amountMember);
+        temp.put("admin", admin.getGeneralValues());
+        return temp;
+    }
+
     public HashMap<String, Object> setName(String name)
     {
         this.name = name;
@@ -232,6 +248,9 @@ public class Group extends Model{
 
     public HashMap<String, Object> addMember(User user)
     {
+        if(amountMember > 10)
+            return StatusDescription.createProcessStatus(false, "Cannot join because of the group has reached the maximum members limit now.");
+
         for(User item : temp_addedUserList) {
             if(item.getID() == user.getID())
                 return StatusDescription.createProcessStatus(false, "This user is already added to the temporary added list.");

@@ -39,7 +39,7 @@ public class Converter {
         ArrayList<HashMap<String, Object>> mapList = new ArrayList<>();
 
         for(int i = 0; i < models.length; i++)
-            mapList.add(models[i].getValues());
+            mapList.add(models[i].getGeneralValues());
 
         HashMap<String, Object>[] arrayOfMap = mapList.toArray((new HashMap[mapList.size()]));
 

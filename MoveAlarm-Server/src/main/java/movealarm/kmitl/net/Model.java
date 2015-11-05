@@ -97,6 +97,15 @@ abstract class Model {
 
     public abstract HashMap<String, Object> getValues();
 
+    public abstract HashMap<String, Object> getGeneralValues();
+
+    protected void addRequiredField(String fieldName)
+    {
+        if(requiredFields == null)
+            requiredFields = new ArrayList<>();
+        requiredFields.add(fieldName);
+    }
+
     protected void updateModifiedDate()
     {
         modifiedDate = new Date();
