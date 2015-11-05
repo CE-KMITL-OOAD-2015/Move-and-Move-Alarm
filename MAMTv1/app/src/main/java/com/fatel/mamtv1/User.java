@@ -165,4 +165,7 @@ public class User {
     public void setProfileImage(int profileImage) {
         this.profileImage = profileImage;
     }
+    public void addScore(int score){
+        this.score+=score;
+    }
 }

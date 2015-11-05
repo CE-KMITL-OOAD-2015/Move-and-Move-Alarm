@@ -30,7 +30,7 @@ public class UserManage {
     public void loginUser (String username,String password,Context context){
         int idUser = findUser(username, password);
         User user=User.find(idUser, context);
-        Log.i("User", "funh get iduser:" + idUser+" id: "+user.getId()+" u:"+user.getUserName());
+        Log.i("User", "funh get iduser:" + idUser + " id: " + user.getId() + " u:" + user.getUserName());
         if(user!=null){
             currentUser=user;
         }
@@ -73,6 +73,18 @@ public class UserManage {
 
     public int checkUser(String username,String password) {
         return 1;
+    }
+
+    public void addScore(int score,Context context){
+        if(currentUser!=null){
+            currentUser.addScore(score);
+            currentUser.save(context);
+            updateUser();
+        }
+    }
+
+    private void updateUser(){
+        //update currentuser to server
     }
 
 }
