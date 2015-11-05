@@ -128,7 +128,14 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case R.id.nav_logout_fragment:
                 fragmentClass = null;
-                LoginManager.getInstance().logOut();
+                if(UserManage.getInstance().mauser == 1) {
+                    UserManage.getInstance().logoutUser();
+                    UserManage.getInstance().mauser = 0;
+                }
+                else if(UserManage.getInstance().mauser == 2) {
+                    LoginManager.getInstance().logOut();
+                    UserManage.getInstance().mauser = 0;
+                }
                 mDrawerLayout.closeDrawers();
                 Intent intent = new Intent(this, Intro_Activity.class);
                 startActivity(intent);

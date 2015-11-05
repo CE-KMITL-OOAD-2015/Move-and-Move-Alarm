@@ -4,7 +4,7 @@ import android.content.Context;
 import android.util.Log;
 
 public class UserManage {
-
+    public int mauser;
     private User currentUser = null;
     private static UserManage instance = null;
     private UserManage(){

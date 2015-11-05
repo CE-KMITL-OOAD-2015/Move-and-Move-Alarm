@@ -67,10 +67,8 @@ public class Create_Account_Activity extends AppCompatActivity {
             Intent intent = new Intent(this,MainActivity.class);
             //mManager.registerUser(username.getText().toString(), password.getText().toString()); ลงทะเบียน username กับ password ลงฐานข้อมูลก่อนไปหน้า main
             mUserManage.createNewUser(username.getText().toString(),password.getText().toString(),this);
-<<<<<<< HEAD
-=======
+            mUserManage.mauser = 1;
             Log.i("User", "funh createuser ");
->>>>>>> 4347ad587bfb99db38f1585b4276abfc6ea4c803
             Toast.makeText(this, "Create Successful", Toast.LENGTH_SHORT).show();
             startActivity(intent);
         }

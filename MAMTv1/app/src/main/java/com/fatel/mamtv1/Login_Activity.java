@@ -152,6 +152,7 @@ public class Login_Activity extends AppCompatActivity {
         }
         else if (isSuccess==1/*ifSuccess ใช้เช็คว่า username กับ password ตรงกับฐานข้อมูลรึเปล่า*/) {
             mUserManage.loginUser(username.getText().toString(),password.getText().toString(),this);
+            mUserManage.mauser = 1;
             Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
             // ดูว่ามีการตั้งค่าเวลาหรือเปล่า
@@ -228,9 +229,10 @@ public class Login_Activity extends AppCompatActivity {
     {
         boolean loggedIn = AccessToken.getCurrentAccessToken() != null;
         Profile profile = Profile.getCurrentProfile();
-        mUserManage.loginFBUser(profile.getId(),profile.getFirstName(),this);
         //Log.i("loggedin", loginResult + " go UI");
         if (loggedIn && (profile != null)) {
+            mUserManage.loginFBUser(profile.getId(),profile.getFirstName(),this);
+            mUserManage.mauser = 2;
             Intent intent = new Intent(Login_Activity.this, MainActivity.class);
             startActivity(intent);
         }
