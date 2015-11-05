@@ -11,10 +11,12 @@ public class Image extends Model
 {
     private String name = null;
     private int imgData = 0;
+    private String description = null;
 
     public Image() {
         this.tableName = "image";
         this.requiredFields = new ArrayList<>();
+        this.requiredFields.add("name");
         this.requiredFields.add("imgData");
     }
 
@@ -27,6 +29,7 @@ public class Image extends Model
         Image model = new Image();
         model.name = (String)img_map.get("name");
         model.imgData = (int)img_map.get("imgData");
+        model.description = (String)img_map.get("description");
         model.modifiedDate = (Date)img_map.get("modified_date");
         return model;
     }
@@ -39,6 +42,7 @@ public class Image extends Model
             Image model = new Image();
             model.name = (String)item.get("name");
             model.imgData = (int)item.get("imgData");
+            model.description = (String)item.get("description");
             model.modifiedDate = (Date)item.get("modified_date");
             collection.add(model);
         }
@@ -58,18 +62,20 @@ public class Image extends Model
             Image model = new Image();
             model.name = (String)item.get("name");
             model.imgData = (int)item.get("imgData");
+            model.description = (String)item.get("description");
             model.modifiedDate = (Date)item.get("modified_date");
             collection.add(model);
         }
         return collection.toArray(new Image[collection.size()]);
     }
 
-    public HashMap<String, Object> changeImage(String name,int imgData)
+    public HashMap<String, Object> changeImage(String name,int imgData,String description)
     {
         setName(name);
         setImgData(imgData);
+        setDescription(description);
         updateModifiedDate();
-        return StatusDescription.createProcessStatus(modelCollection.save(this));
+        return save();
     }
 
     public HashMap<String,Object> getValues()
@@ -93,6 +99,12 @@ public class Image extends Model
         updateModifiedDate();
     }
 
+    public void setDescription(String description)
+    {
+        this.description = description;
+        updateModifiedDate();
+    }
+
     public String getName()
     {
         return this.name;
@@ -101,6 +113,10 @@ public class Image extends Model
     public int getImgData()
     {
         return this.imgData;
+    }
+
+    public String getDescription() {
+        return this.description;
     }
 
     public Date getModifiedDate()
