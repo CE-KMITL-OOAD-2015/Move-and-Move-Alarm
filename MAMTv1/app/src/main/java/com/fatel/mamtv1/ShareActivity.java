@@ -1,6 +1,7 @@
 package com.fatel.mamtv1;
 
 import android.app.AlertDialog;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
@@ -95,6 +96,8 @@ public class ShareActivity extends AppCompatActivity {
                 public void onClick (View v){
                     //showPickPictureDialog();
                     performPublish(PendingAction.POST_PICTURE);
+                    Intent intent = new Intent(ShareActivity.this, MainActivity.class);
+                    startActivity(intent);
                 }
             });
 
