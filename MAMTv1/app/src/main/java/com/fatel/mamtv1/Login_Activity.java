@@ -151,28 +151,13 @@ public class Login_Activity extends AppCompatActivity {
             Toast toast = Toast.makeText(this, "Please enter Password", Toast.LENGTH_SHORT);
             toast.show();
         }
-<<<<<<< HEAD
         else if (isSuccess==1/*ifSuccess ใช้เช็คว่า username กับ password ตรงกับฐานข้อมูลรึเปล่า*/) {
             mUserManage.loginUser(username.getText().toString(),password.getText().toString(),this);
             mUserManage.mauser = 1;
-=======
-        else if (true/*ifSuccess ใช้เช็คว่า username กับ password ตรงกับฐานข้อมูลรึเปล่า*/) {
 
-            Log.i("Login", "can go 1");
-            //HttpConnector conn = new HttpConnector(this);
-            //conn.getDataFromServer("http://www.google.com", Request.Method.GET);
-
-            //Log.i("status",""+conn.isDownloadedComplete());
-            //Log.i("data",conn.getData());
-           //
-           // Log.i("Login","can go 2");
-            //startActivity(intent);
-
-            //Log.i("Login", "can go 3");
-           // conn.getDataFromServer("http://www.google.com",1);
             HttpConnector request = new HttpConnector(this);
             request.getrequest();
->>>>>>> front-end
+
             Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
             // ดูว่ามีการตั้งค่าเวลาหรือเปล่า
