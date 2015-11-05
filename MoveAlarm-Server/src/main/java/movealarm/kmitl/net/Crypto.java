@@ -1,11 +1,9 @@
 package movealarm.kmitl.net;
 
-import sun.misc.BASE64Decoder;
-import sun.misc.BASE64Encoder;
-
 import javax.crypto.Cipher;
 import javax.crypto.spec.SecretKeySpec;
 import java.security.Key;
+import java.util.Base64;
 
 /**
  * Created by oat90 on 2/11/2558.
@@ -13,7 +11,7 @@ import java.security.Key;
 
 
 public class Crypto {
-    private final String ALGORITHM = "AES";
+   private final String ALGORITHM = "AES";
     private final String KEYVAL = "1Hbfh667adfDEJ78";
     public static Crypto crypto = null;
 
@@ -24,7 +22,7 @@ public class Crypto {
             Cipher cipher = Cipher.getInstance(ALGORITHM);
             cipher.init(Cipher.ENCRYPT_MODE, key);
             byte[] encVal = cipher.doFinal(value.getBytes());
-            String encryptedData = new BASE64Encoder().encode(encVal);
+            String encryptedData = new String(Base64.getEncoder().encode(encVal));
             return encryptedData;
       }
       catch (Exception e) {
@@ -38,7 +36,7 @@ public class Crypto {
             Key key = generateKey();
             Cipher cipher = Cipher.getInstance(ALGORITHM);
             cipher.init(Cipher.DECRYPT_MODE, key);
-            byte[] decodedData = new BASE64Decoder().decodeBuffer(encryptedData);
+            byte[] decodedData =  Base64.getDecoder().decode(encryptedData);
             byte[] decVal = cipher.doFinal(decodedData);
             String decryptedData = new String(decVal);
             return decryptedData;
