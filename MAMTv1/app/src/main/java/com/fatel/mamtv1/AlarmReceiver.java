@@ -172,8 +172,8 @@ public class AlarmReceiver extends BroadcastReceiver {
             AlarmManager manager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
             Alarm alarm = mAlarmHelper.getAlarm();
             int frequency = Integer.parseInt(alarm.getFrq());
-            int interval = 60*1000*frequency;
-            //int interval = 60*1000/10;
+            //int interval = 60*1000*frequency;
+            int interval = 60*1000/10;
             Bundle mes = new Bundle();
             mes.putString("key", "act");
             alarmIntent.putExtras(mes);
