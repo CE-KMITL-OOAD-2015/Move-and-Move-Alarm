@@ -18,6 +18,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 
+import com.android.volley.Request;
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
@@ -149,12 +150,27 @@ public class Login_Activity extends AppCompatActivity {
             toast.show();
         }
         else if (true/*ifSuccess ใช้เช็คว่า username กับ password ตรงกับฐานข้อมูลรึเปล่า*/) {
+
+            Log.i("Login", "can go 1");
+            //HttpConnector conn = new HttpConnector(this);
+            //conn.getDataFromServer("http://www.google.com", Request.Method.GET);
+
+            //Log.i("status",""+conn.isDownloadedComplete());
+            //Log.i("data",conn.getData());
+           //
+           // Log.i("Login","can go 2");
+            //startActivity(intent);
+
+            //Log.i("Login", "can go 3");
+           // conn.getDataFromServer("http://www.google.com",1);
+            HttpConnector request = new HttpConnector(this);
+            request.getrequest();
             Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
             // ดูว่ามีการตั้งค่าเวลาหรือเปล่า
-            if(mAlarmHelper.checkdata()==1){
+            /*if(mAlarmHelper.checkdata()==1){
                 start();
-            }
+            }*/
         }
         else{
             Toast toast = Toast.makeText(this, "Username or Password incorrect.", Toast.LENGTH_SHORT);
@@ -163,6 +179,7 @@ public class Login_Activity extends AppCompatActivity {
     }
     public void start(){
         /*
+
         Intent i = new Intent(getBaseContext(), AlarmReceiver.class);
         Bundle b = new Bundle();
         b.putString("key", "set");
