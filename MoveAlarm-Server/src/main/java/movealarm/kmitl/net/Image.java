@@ -9,26 +9,22 @@ import java.util.HashMap;
  */
 public class Image extends Model
 {
-    private String name;
-    private int imgData;
-    private static Image model = null;
+    private String name = null;
+    private int imgData = 0;
 
-    public Image(String name,int imgData)
-    {
-        this.tableName = "image";
-        this.name = name;
-        this.imgData = imgData;
-    }
     public Image() {
         this.tableName = "image";
-        this.name = null;
-        this.imgData = 0;
+        this.requiredFields = new ArrayList<>();
+        this.requiredFields.add("imgData");
     }
 
     public static Model find(int id)
     {
         HashMap<String,Object> img_map = modelCollection.find("image",id);
-        model = new Image();
+        if(img_map == null) {
+            return null;
+        }
+        Image model = new Image();
         model.name = (String)img_map.get("name");
         model.imgData = (int)img_map.get("imgData");
         model.modifiedDate = (Date)img_map.get("modified_date");
@@ -40,7 +36,7 @@ public class Image extends Model
         ArrayList<HashMap<String, Object>> img_arr = modelCollection.where("image", colName, operator, value);
         ArrayList<Image> collection = new ArrayList<>();
         for(HashMap<String, Object> item : img_arr) {
-            model = new Image();
+            Image model = new Image();
             model.name = (String)item.get("name");
             model.imgData = (int)item.get("imgData");
             model.modifiedDate = (Date)item.get("modified_date");
@@ -59,7 +55,7 @@ public class Image extends Model
         ArrayList<HashMap<String, Object>> img_arr = modelCollection.all("image");
         ArrayList<Image> collection = new ArrayList<>();
         for(HashMap<String, Object>item : img_arr) {
-            model = new Image();
+            Image model = new Image();
             model.name = (String)item.get("name");
             model.imgData = (int)item.get("imgData");
             model.modifiedDate = (Date)item.get("modified_date");
@@ -68,11 +64,12 @@ public class Image extends Model
         return collection.toArray(new Image[collection.size()]);
     }
 
-    public void changeImage(String name,int imgData)
+    public HashMap<String, Object> changeImage(String name,int imgData)
     {
         setName(name);
         setImgData(imgData);
         updateModifiedDate();
+        return StatusDescription.createProcessStatus(modelCollection.save(this));
     }
 
     public HashMap<String,Object> getValues()
@@ -111,9 +108,33 @@ public class Image extends Model
         return modifiedDate;
     }
 
+<<<<<<< aa9ec6c019a05932189a2a8b31eb100e009eadcf
     public HashMap<String, Object> getGeneralValues()
     {
         return new HashMap<>();
     }
 
+=======
+    @Override
+    public HashMap<String, Object> save()
+    {
+        HashMap<String, Object> requireFields = checkRequiredFields();
+        if(requireFields != null) {
+            return requireFields;
+        }
+        if(createdDate == null) {
+            HashMap<String, Object> temp = modelCollection.create(this);
+            if(temp == null) {
+                return StatusDescription.createProcessStatus(false,"Cannot save due to database error.");
+            }
+        }
+        return StatusDescription.createProcessStatus(modelCollection.save(this));
+    }
+
+    @Override
+    public HashMap<String, Object> delete()
+    {
+        return StatusDescription.createProcessStatus(modelCollection.delete(this));
+    }
+>>>>>>> [#34]Continued implementing image model.
 }
