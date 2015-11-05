@@ -28,18 +28,18 @@ public class AlarmReceiver extends BroadcastReceiver {
             Log.i("null","temp null");
         }
         else{
-            Log.i("!null",temp);
+            Log.i("temp",temp);
         }
-        if(manager == null){
+        /*if(manager == null){
             Log.i("null","manager null");
         }else{
             Log.i("!null","manager");
-        }
+        }*/
         if(checkday()){
             //choose day
             Log.i("Day", "true");
             //bug
-            if(checkstarttime()&&!temp.equalsIgnoreCase("first")){
+            if(checkstarttime()&&(temp==null||!temp.equalsIgnoreCase("first"))){
                 //bug
                     if (manager!= null) {
                        manager.cancel(pendingIntent);
@@ -51,7 +51,7 @@ public class AlarmReceiver extends BroadcastReceiver {
                     context.startActivity(i);
                     Toast.makeText(context, "I'm running", Toast.LENGTH_SHORT).show();
             }
-            else if(inRange(timenow())||checkstarttime()){
+            else if(inRange(timenow())) {
                 Log.i("range", "true");
                 setfrq(context,temp);
             }
@@ -139,6 +139,9 @@ public class AlarmReceiver extends BroadcastReceiver {
             e.printStackTrace();
         }
         Log.i("cross day",end.before(start)+"");
+        if(checkstarttime()){
+            return true;
+        }
         if(end.before(start)){
 
             return now.after(start)|| now.before(end);
@@ -148,7 +151,11 @@ public class AlarmReceiver extends BroadcastReceiver {
         }
     }
     public void setfrq(Context context,String massage){
-        if(massage!=null&&massage.equalsIgnoreCase("act")){
+        if(massage==null)
+            Log.d("message","null");
+        else
+            Log.d("message",massage);
+        if(massage==null||massage.equalsIgnoreCase("act")){
             Intent i = new Intent(context, actAlarm.class);
             Log.i("AlarmReceiver", "CanJump");
             i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -243,7 +250,7 @@ public class AlarmReceiver extends BroadcastReceiver {
         return current;
     }
     public void setnextstart(Context context,String message){
-        if(message!=null&&message.equalsIgnoreCase("act")&&checkday()){
+        if((message==null||message.equalsIgnoreCase("act"))&&checkday()){
             Intent i = new Intent(context, actAlarm.class);
             Log.i("AlarmReceiver", "CanJump");
             i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

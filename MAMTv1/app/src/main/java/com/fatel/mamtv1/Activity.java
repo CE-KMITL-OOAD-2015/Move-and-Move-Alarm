@@ -135,7 +135,7 @@ public class Activity extends AppCompatActivity {
                 txtA.setText("Activity Time done!");
 
                 //go to main
-                Intent i1 = new Intent(Activity.this, MainActivity.class);
+                Intent i1 = new Intent(Activity.this, PreShareActivity.class);
                // Bundle b1 = new Bundle();
                 //b1.putExtra("key", "main");
                 //i1.putExtra("key", "main");
@@ -146,7 +146,7 @@ public class Activity extends AppCompatActivity {
                 //set frq
                 Intent i = new Intent(getBaseContext(), AlarmReceiver.class);
                 Bundle b = new Bundle();
-                b.putString("key", "recount");
+                b.putString("key", "first");
                 i.putExtras(b);
                 sendBroadcast(i);
             }

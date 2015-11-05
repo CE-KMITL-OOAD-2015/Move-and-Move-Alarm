@@ -18,6 +18,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 
+import com.android.volley.Request;
 import com.facebook.AccessToken;
 import com.facebook.CallbackManager;
 import com.facebook.FacebookCallback;
@@ -150,15 +151,34 @@ public class Login_Activity extends AppCompatActivity {
             Toast toast = Toast.makeText(this, "Please enter Password", Toast.LENGTH_SHORT);
             toast.show();
         }
+<<<<<<< HEAD
         else if (isSuccess==1/*ifSuccess ใช้เช็คว่า username กับ password ตรงกับฐานข้อมูลรึเปล่า*/) {
             mUserManage.loginUser(username.getText().toString(),password.getText().toString(),this);
             mUserManage.mauser = 1;
+=======
+        else if (true/*ifSuccess ใช้เช็คว่า username กับ password ตรงกับฐานข้อมูลรึเปล่า*/) {
+
+            Log.i("Login", "can go 1");
+            //HttpConnector conn = new HttpConnector(this);
+            //conn.getDataFromServer("http://www.google.com", Request.Method.GET);
+
+            //Log.i("status",""+conn.isDownloadedComplete());
+            //Log.i("data",conn.getData());
+           //
+           // Log.i("Login","can go 2");
+            //startActivity(intent);
+
+            //Log.i("Login", "can go 3");
+           // conn.getDataFromServer("http://www.google.com",1);
+            HttpConnector request = new HttpConnector(this);
+            request.getrequest();
+>>>>>>> front-end
             Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
             // ดูว่ามีการตั้งค่าเวลาหรือเปล่า
-            if(mAlarmHelper.checkdata()==1){
+            /*if(mAlarmHelper.checkdata()==1){
                 start();
-            }
+            }*/
         }
         else{
             Toast toast = Toast.makeText(this, "Username or Password incorrect.", Toast.LENGTH_SHORT);
@@ -166,11 +186,13 @@ public class Login_Activity extends AppCompatActivity {
         }
     }
     public void start(){
+        /*
+
         Intent i = new Intent(getBaseContext(), AlarmReceiver.class);
         Bundle b = new Bundle();
         b.putString("key", "set");
         i.putExtras(b);
-        sendBroadcast(i);
+        sendBroadcast(i);*/
         /*manager = (AlarmManager)getSystemService(Context.ALARM_SERVICE);
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(System.currentTimeMillis());
@@ -234,6 +256,11 @@ public class Login_Activity extends AppCompatActivity {
             mUserManage.loginFBUser(profile.getId(),profile.getFirstName(),this);
             mUserManage.mauser = 2;
             Intent intent = new Intent(Login_Activity.this, MainActivity.class);
+            intent.putExtra("firstname",profile.getFirstName());
+            intent.putExtra("lastname",profile.getLastName());
+            intent.putExtra("id",profile.getId());
+            //String uri = profile.getProfilePictureUri(100,100).toString();
+            intent.putExtra("propic",profile.getProfilePictureUri(300,300));
             startActivity(intent);
         }
     }
