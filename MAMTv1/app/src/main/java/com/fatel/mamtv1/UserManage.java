@@ -66,4 +66,8 @@ public class UserManage {
         return 0;
     }
 
+    public int checkUser(String username,String password) {
+        return 1;
+    }
+
 }

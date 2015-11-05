@@ -36,6 +36,7 @@ public class Login_Activity extends AppCompatActivity {
     private PendingIntent pendingIntent;
     private AlarmManager manager;
     private DBAlarmHelper mAlarmHelper;
+    UserManage mUserManage;
     CallbackManager callbackManager;
     ProfileTracker profileTracker;
     @Override
@@ -98,6 +99,7 @@ public class Login_Activity extends AppCompatActivity {
             }
         };
         mAlarmHelper = new DBAlarmHelper(this);
+        mUserManage = UserManage.getInstance();
     }
 
     @Override
@@ -136,7 +138,7 @@ public class Login_Activity extends AppCompatActivity {
         username = (EditText)findViewById(R.id.enter_username);
         password = (EditText)findViewById(R.id.enter_password);
 
-       // boolean isSuccess = mManager.checkLoginValidate(username.getText().toString(), password.getText().toString());
+        int isSuccess = mUserManage.checkUser(username.getText().toString(), password.getText().toString());
 
         if(username.getText().toString().equals(""))
         {
@@ -148,7 +150,8 @@ public class Login_Activity extends AppCompatActivity {
             Toast toast = Toast.makeText(this, "Please enter Password", Toast.LENGTH_SHORT);
             toast.show();
         }
-        else if (true/*ifSuccess ใช้เช็คว่า username กับ password ตรงกับฐานข้อมูลรึเปล่า*/) {
+        else if (isSuccess==1/*ifSuccess ใช้เช็คว่า username กับ password ตรงกับฐานข้อมูลรึเปล่า*/) {
+            mUserManage.loginUser(username.getText().toString(),password.getText().toString(),this);
             Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
             // ดูว่ามีการตั้งค่าเวลาหรือเปล่า
@@ -225,6 +228,7 @@ public class Login_Activity extends AppCompatActivity {
     {
         boolean loggedIn = AccessToken.getCurrentAccessToken() != null;
         Profile profile = Profile.getCurrentProfile();
+        mUserManage.loginFBUser(profile.getId(),profile.getFirstName(),this);
         //Log.i("loggedin", loginResult + " go UI");
         if (loggedIn && (profile != null)) {
             Intent intent = new Intent(Login_Activity.this, MainActivity.class);
