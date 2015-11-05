@@ -135,7 +135,7 @@ public class Activity extends AppCompatActivity {
                 txtA.setText("Activity Time done!");
 
                 //go to main
-                Intent i1 = new Intent(Activity.this, MainActivity.class);
+                Intent i1 = new Intent(Activity.this, PreShareActivity.class);
                // Bundle b1 = new Bundle();
                 //b1.putExtra("key", "main");
                 //i1.putExtra("key", "main");
