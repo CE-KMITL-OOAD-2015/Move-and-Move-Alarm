@@ -38,7 +38,7 @@ public class Image extends Model
 
     public static Image[] where(String colName,String operator,String value)
     {
-        ArrayList<HashMap<String, Object>> img_arr = modelCollection.where("image", colName, operator, value);
+        ArrayList<HashMap<String, Object>> img_arr = modelCollection.where("image",colName,operator,value);
         ArrayList<Image> collection = new ArrayList<>();
         for(HashMap<String, Object> item : img_arr) {
             Image model = new Image();
@@ -54,7 +54,7 @@ public class Image extends Model
 
     public static Image[] where(String colName, String operator, String value,String extraCondition)
     {
-        return where(colName, operator, value + " " + extraCondition);
+        return where(colName,  operator, value + " " + extraCondition);
     }
 
     public static Image[] all()
@@ -147,11 +147,6 @@ public class Image extends Model
     public Date getModifiedDate()
     {
         return modifiedDate;
-    }
-
-    public HashMap<String, Object> getGeneralValues()
-    {
-        return new HashMap<>();
     }
 
     @Override
