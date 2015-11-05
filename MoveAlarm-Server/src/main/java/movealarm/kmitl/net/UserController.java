@@ -148,18 +148,19 @@ public class UserController {
     public String changePassword(@RequestParam(value="JSON", required = true, defaultValue = "") String JSON)
     {
         Converter converter = Converter.getInstance();
-        HashMap<String, Object> userValues = converter.JsonToHashMap(JSON);
+        HashMap<String, Object> data = converter.JsonToHashMap(JSON);
+        HashMap<String, Object> userData = converter.JsonToHashMap("" + data.get("user"));
         Crypto crypto = Crypto.getInstance();
 
-        User user = User.find(((Double) userValues.get("id")).intValue());
+        User user = User.find(((Double) userData.get("id")).intValue());
 
         if(user == null)
             return converter.HashMapToJson(StatusDescription.createProcessStatus(false, "This user does not exist."));
 
         String currentPassword = crypto.decryption(user.getPassword());
-        String oldPassword = "" + userValues.get("oldPassword");
-        String newPassword = "" + userValues.get("newPassword");
-        String confirmPassword = "" + userValues.get("confirmPassword");
+        String oldPassword = "" + data.get("oldPassword");
+        String newPassword = "" + data.get("newPassword");
+        String confirmPassword = "" + data.get("confirmPassword");
 
         if(!currentPassword.equals(oldPassword))
             return converter.HashMapToJson(StatusDescription.createProcessStatus(false, "Current password incorrect."));
@@ -276,19 +277,23 @@ public class UserController {
         return converter.HashMapToJson(StatusDescription.createProcessStatus(false, "Cannot reset score."));
     }
 
-    @RequestMapping("/user/verifyPassword")
-    public String verifyPassword(@RequestParam(value="JSON", required = true, defaultValue = "0") String JSON)
+    @RequestMapping("/user/login")
+    public String login(@RequestParam(value="userName", required = true, defaultValue = "0") String userName,
+                        @RequestParam(value="password", required = true, defaultValue = "0") String password)
     {
         Converter converter = Converter.getInstance();
-        HashMap<String, Object> data = converter.JsonToHashMap(JSON);
-        HashMap<String, Object> userData = converter.JsonToHashMap("" + data.get("user"));
-        User user = User.find(((Double) userData.get("id")).intValue());
-        if(user == null)
-            return converter.HashMapToJson(StatusDescription.createProcessStatus(false, "User does not exist."));
+        User user = null;
+        String currentPassword = "";
+        try {
+            user = User.where("userName", "=", userName)[0];
+            currentPassword = Crypto.getInstance().decryption(user.getPassword());
+        } catch (NullPointerException e) {
+            e.printStackTrace();
+        }
 
-        if(Crypto.getInstance().decryption(user.getPassword()).equals(data.get("password")))
-            return converter.HashMapToJson(StatusDescription.createProcessStatus(true));
+        if(user == null || !currentPassword.equals(password))
+            return converter.HashMapToJson(StatusDescription.createProcessStatus(false, "User does not exist or password is incorrect."));
 
-        return converter.HashMapToJson(StatusDescription.createProcessStatus(false, "Password mismatch."));
+        return converter.HashMapToJson(StatusDescription.createProcessStatus(true));
     }
 }
