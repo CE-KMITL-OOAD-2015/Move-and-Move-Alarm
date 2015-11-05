@@ -47,6 +47,7 @@ public class MainActivity extends AppCompatActivity {
     String firstName;
     String lastName;
     public String id;
+    Bundle passimg;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -60,16 +61,19 @@ public class MainActivity extends AppCompatActivity {
         }
         header = (TextView) findViewById(R.id.profile);
         user = (TextView) findViewById(R.id.username);
-        user.setText(firstName);
-        profilepic = (CircleImageView) findViewById(R.id.profile_image);
-        Picasso.with(this).load("https://graph.facebook.com/" + id + "/picture?type=large").into(profilepic);
-        Bundle passimg = new Bundle();
-        passimg.putString("id",id);
+        if(bundle !=null) {
+            user.setText(firstName);
+            profilepic = (CircleImageView) findViewById(R.id.profile_image);
+            Picasso.with(this).load("https://graph.facebook.com/" + id + "/picture?type=large").into(profilepic);
+            passimg = new Bundle();
+            passimg.putString("id", id);
+        }
         // Intent alarmIntent = new Intent(MainActivity.this, AlarmReceiver.class);
         //pendingIntent = PendingIntent.getBroadcast(MainActivity.this, 0, alarmIntent, 0);
         FragmentTransaction tx = getSupportFragmentManager().beginTransaction();
         MainFragment fragobj = new MainFragment();
-        fragobj.setArguments(passimg);
+        if(bundle !=null)
+            fragobj.setArguments(passimg);
         tx.replace(R.id.container, fragobj);
         tx.commit();
         NavigationView nvDrawer = (NavigationView) findViewById(R.id.nvView);

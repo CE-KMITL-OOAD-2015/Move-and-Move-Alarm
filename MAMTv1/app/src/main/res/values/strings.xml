@@ -14,5 +14,7 @@
     <string name="title_activity_intro_">Intro_Activity</string>
     <string name="title_activity_login_">Login_Activity</string>
     <string name="title_activity_create__account_">Create_Account_Activity</string>
+    <string name="title_activity_shared">Share_Activity</string>
     <string name="facebook_app_id">536873643131521</string>
+    <string name="title_activity_pre">PreActivity</string>
 </resources>
