@@ -28,6 +28,7 @@ public class Image extends Model
             return null;
         }
         Image model = new Image();
+        model.id = (int)img_map.get("id");
         model.name = (String)img_map.get("name");
         model.imgData = (int)img_map.get("imgData");
         model.description = (String)img_map.get("description");
@@ -41,6 +42,7 @@ public class Image extends Model
         ArrayList<Image> collection = new ArrayList<>();
         for(HashMap<String, Object> item : img_arr) {
             Image model = new Image();
+            model.id = (int)item.get("id");
             model.name = (String)item.get("name");
             model.imgData = (int)item.get("imgData");
             model.description = (String)item.get("description");
@@ -61,6 +63,7 @@ public class Image extends Model
         ArrayList<Image> collection = new ArrayList<>();
         for(HashMap<String, Object>item : img_arr) {
             Image model = new Image();
+            model.id = (int)item.get("id");
             model.name = (String)item.get("name");
             model.imgData = (int)item.get("imgData");
             model.description = (String)item.get("description");
