@@ -34,8 +34,8 @@ public class actAlarm extends AppCompatActivity {
         v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
         Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_RINGTONE);
         m = MediaPlayer.create(this,notification);
-        m.reset();
-        m = MediaPlayer.create(this,notification);
+       // m.reset();
+        //m = MediaPlayer.create(this,notification);
         m.setLooping(true);
         m.start();
         v.vibrate(pattern, 0);
@@ -68,7 +68,7 @@ public class actAlarm extends AppCompatActivity {
         Intent intent = new Intent(this, Activity.class);
         startActivity(intent);
         v.cancel();
-        m.stop();
+        m.reset();
     }
 
     public void linkHome(View view){
@@ -84,7 +84,7 @@ public class actAlarm extends AppCompatActivity {
         i.putExtras(b);
         sendBroadcast(i);
         v.cancel();
-        m.stop();
+        m.reset();
         //AlarmManager manager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
         //int interval = 60*1000*1;
         //PendingIntent pendingIntent = PendingIntent.getBroadcast(actAlarm.this, 0, i, 0);
