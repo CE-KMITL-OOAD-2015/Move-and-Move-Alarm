@@ -117,7 +117,7 @@ public class HttpConnector{
 // add the request object to the queue to be executed
 
         //HttpConnector.getInstance().addToRequestQueue(req);
-        final String URL = "https://www.google.co.th/?gws_rd=cr,ssl&ei=bxw7Vo6KJuPMmwW4hrzoBg";
+        final String URL = "http://203.151.92.196:8080/user/findByID?id=6";
         StringRequest req = new StringRequest(Request.Method.GET,URL, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -126,7 +126,8 @@ public class HttpConnector{
                 calendar.setTimeInMillis(System.currentTimeMillis());
                 Log.i("success", dateFormat.format(calendar.getTime()));
                 VolleyLog.v("Response:%n %s", response);
-                Log.i("success",response);
+                String firstName = "" + Converter.getInstance().JsonToHashMap(response).get("firstName");
+                Log.i("success",firstName);
             }
         }, new Response.ErrorListener() {
             @Override
