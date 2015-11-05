@@ -18,7 +18,7 @@ public class UserController {
         User user = User.find(id);
         if(user == null)
             return converter.HashMapToJson(StatusDescription.createProcessStatus(false, "Not found the required user."));
-        return converter.HashMapToJson(user.getValues());
+        return converter.HashMapToJson(user.getGeneralValues());
     }
 
     @RequestMapping("/user/findByWhere")
@@ -59,7 +59,7 @@ public class UserController {
 
         for(int i = startRank - 1; i < rankList.size() - 1; i++) {
             HashMap<String, Object> item = rankList.get(i);
-            HashMap<String, Object> usersData = User.find(Integer.parseInt("" + item.get("id"))).getValues();
+            HashMap<String, Object> usersData = User.find(Integer.parseInt("" + item.get("id"))).getGeneralValues();
             usersData.put("rank", startRank);
             userValuesList.add(usersData);
             startRank++;

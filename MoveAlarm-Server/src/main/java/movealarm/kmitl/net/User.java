@@ -29,11 +29,11 @@ public class User extends Model{
     {
         this.tableName = "user";
         this.requiredFields = new ArrayList<>();
-        this.requiredFields.add("firstName");
-        this.requiredFields.add("lastName");
-        this.requiredFields.add("userName");
-        this.requiredFields.add("email");
-        this.requiredFields.add("password");
+        this.addRequiredField("firstName");
+        this.addRequiredField("lastName");
+        this.addRequiredField("userName");
+        this.addRequiredField("email");
+        this.addRequiredField("password");
         temp_scoreLogList = new ArrayList<>();
     }
 
@@ -137,6 +137,25 @@ public class User extends Model{
             temp.put("modifiedDate", null);
         else
             temp.put("modifiedDate", sdf.format(modifiedDate));
+        return temp;
+    }
+
+    @Override
+    public HashMap<String, Object> getGeneralValues()
+    {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        HashMap<String, Object> temp = new HashMap<>();
+        temp.put("id", id);
+        temp.put("firstName", firstName);
+        temp.put("lastName", lastName);
+        temp.put("userName", userName);
+        temp.put("age", age);
+        temp.put("score", score);
+        temp.put("gender", gender);
+        temp.put("email", email);
+        temp.put("facebookID", facebookID);
+        temp.put("facebookFirstName", facebookFirstName);
+        temp.put("facebookLastName", facebookLastName);
         return temp;
     }
 
