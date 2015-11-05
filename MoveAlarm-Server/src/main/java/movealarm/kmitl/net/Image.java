@@ -1,5 +1,6 @@
 package movealarm.kmitl.net;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -80,10 +81,31 @@ public class Image extends Model
 
     public HashMap<String,Object> getValues()
     {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
         HashMap<String,Object> img_map = new HashMap<>();
-        img_map.put("name", this.name);
-        img_map.put("imgData", this.imgData);
-        img_map.put("modified_date", this.modifiedDate);
+        img_map.put("name",this.name);
+        img_map.put("imgData",this.imgData);
+        if(this.modifiedDate == null) {
+            img_map.put("modified_date",null);
+        }
+        else {
+            img_map.put("modified_date",sdf.format(this.modifiedDate));
+        }
+        return img_map;
+    }
+
+    @Override
+    public HashMap<String, Object> getGeneralValue() {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        HashMap<String,Object> img_map = new HashMap<>();
+        img_map.put("name",this.name);
+        img_map.put("imgData",this.imgData);
+        if(this.modifiedDate == null) {
+            img_map.put("modified_date",null);
+        }
+        else {
+            img_map.put("modified_date",sdf.format(this.modifiedDate));
+        }
         return img_map;
     }
 
@@ -124,13 +146,11 @@ public class Image extends Model
         return modifiedDate;
     }
 
-<<<<<<< aa9ec6c019a05932189a2a8b31eb100e009eadcf
     public HashMap<String, Object> getGeneralValues()
     {
         return new HashMap<>();
     }
 
-=======
     @Override
     public HashMap<String, Object> save()
     {
@@ -152,5 +172,4 @@ public class Image extends Model
     {
         return StatusDescription.createProcessStatus(modelCollection.delete(this));
     }
->>>>>>> [#34]Continued implementing image model.
 }
