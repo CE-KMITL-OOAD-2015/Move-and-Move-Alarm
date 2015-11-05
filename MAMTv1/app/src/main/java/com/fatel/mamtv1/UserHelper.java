@@ -66,6 +66,7 @@ public class UserHelper extends SQLiteOpenHelper {
         values.put(User.Column.PROFILEIMAGE,user.getProfileImage());
         long id = sqLiteDatabase.insert(User.TABLE, null, values);
         sqLiteDatabase.close();
+        Log.i(TAG,"funh adduser id :"+id+" user:"+user.getUserName()+" iduser:"+user.getIdUser());
         return ((int)id);
     }
     public void updateUser(User user){
@@ -113,7 +114,7 @@ public class UserHelper extends SQLiteOpenHelper {
         User user=null;
         if (cursor != null) {
             cursor.moveToFirst();
-        }
+
         user = new User(cursor.getInt(0), cursor.getInt(1),
                 cursor.getString(2), cursor.getString(3), cursor.getString(4), cursor.getInt(5),
                 cursor.getInt(6), cursor.getInt(7), cursor.getString(8),
@@ -121,7 +122,7 @@ public class UserHelper extends SQLiteOpenHelper {
 
 
 
-        cursor.close();
+        cursor.close();}
         db.close();
         return user;
     }

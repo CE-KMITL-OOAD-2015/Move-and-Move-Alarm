@@ -2,6 +2,7 @@ package com.fatel.mamtv1;
 
 import android.content.Context;
 import android.provider.BaseColumns;
+import android.util.Log;
 
 /**
  * Created by Monthon on 3/11/2558.
@@ -72,10 +73,14 @@ public class User {
     public void save (Context context){
 
         UserHelper userHelper = new UserHelper(context);
-        if(this.id != -1)
+        if(this.id == -1) {
             this.id = userHelper.addUser(this);
-        else
+            Log.i("User", "funh savenew :" + id);
+        }
+        else {
             userHelper.updateUser(this);
+            Log.i("User", "funh saveold :" + id);
+        }
     }
     public static User find(int idUser,Context context){
         UserHelper userHelper = new UserHelper(context);
