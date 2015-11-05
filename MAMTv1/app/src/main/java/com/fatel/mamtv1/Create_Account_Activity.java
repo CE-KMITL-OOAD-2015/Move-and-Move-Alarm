@@ -16,7 +16,7 @@ public class Create_Account_Activity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.create__account_layout);
-        mUserManage = new UserManage();
+        mUserManage = UserManage.getInstance();
     }
 
     @Override
