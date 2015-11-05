@@ -144,11 +144,6 @@ public class Activity extends AppCompatActivity {
                 //startActivity(intent);
 
                 //set frq
-                Intent i = new Intent(getBaseContext(), AlarmReceiver.class);
-                Bundle b = new Bundle();
-                b.putString("key", "first");
-                i.putExtras(b);
-                sendBroadcast(i);
             }
         }.start();
 
