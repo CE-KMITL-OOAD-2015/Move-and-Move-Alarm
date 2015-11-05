@@ -1,6 +1,8 @@
 package com.fatel.mamtv1;
 
+import android.content.Context;
 import android.provider.BaseColumns;
+import android.util.Log;
 
 /**
  * Created by Monthon on 3/11/2558.
@@ -15,14 +17,12 @@ public class User {
     private int score;
     private int gender;
     private String email;
-    private String password;
     private String facebookID;
     private String facebookFirstName;
     private String facebookLastName;
     //no sure int for image
     private int profileImage;
 
-    public static final String DATABASE_NAME = "fatel_user.db";
     public static final int DATABASE_VERSION = 1;
     public static final String TABLE = "user";
     public class Column{
@@ -35,7 +35,6 @@ public class User {
         public static final String SCORE = "score";
         public static final String GENDER = "gender";
         public static final String EMAIL = "email";
-        public static final String PASSWORD = "password";
         public static final String FACEBOOKID = "facebookid";
         public static final String FACEBOOKFIRSTNAME = "facebookfirstname";
         public static final String FACEBOOKLASTNAME = "facebooklastname";
@@ -43,10 +42,21 @@ public class User {
     }
     public User(){
     }
+    public User(int idUser, String username){
+        this.id=-1;
+        this.idUser = idUser;
+        this.userName = username;
+    }
+    public User(int idUser,String facebookID,String facebookFirstName){
+        this.id=-1;
+        this.idUser = idUser;
+        this.facebookID = facebookID;
+        this.facebookFirstName = facebookFirstName;
+    }
     public User(int id,int idUser,String firstName, String lastName, String username,int age,int score
-            ,int gender,String email, String password, String facebookID, String facebookFirstName,
+            ,int gender,String email, String facebookID, String facebookFirstName,
                 String facebookLastName, int profileImage){
-        this.id = id;
+        this.id=id;
         this.idUser = idUser;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -55,11 +65,26 @@ public class User {
         this.score = score;
         this.gender = gender;
         this.email = email;
-        this.password = password;
         this.facebookID=facebookID;
         this.facebookFirstName=facebookFirstName;
         this.facebookLastName=facebookLastName;
         this.profileImage = profileImage;
+    }
+    public void save (Context context){
+
+        UserHelper userHelper = new UserHelper(context);
+        if(this.id == -1) {
+            this.id = userHelper.addUser(this);
+            Log.i("User", "funh savenew :" + id);
+        }
+        else {
+            userHelper.updateUser(this);
+            Log.i("User", "funh saveold :" + id);
+        }
+    }
+    public static User find(int idUser,Context context){
+        UserHelper userHelper = new UserHelper(context);
+        return userHelper.getUser(idUser);
     }
 
     public int getId(){
@@ -89,9 +114,6 @@ public class User {
     public String getEmail(){
         return email;
     }
-    public String getPassword(){
-        return password;
-    }
     public String getFacebookID(){
         return facebookID;
     }
@@ -107,7 +129,7 @@ public class User {
     public void setId(int id){
         this.id = id;
     }
-    public void setIdUserd(int idUser){
+    public void setIdUser(int idUser){
         this.idUser = idUser;
     }
     public void setFirstName(String firstName){
@@ -130,9 +152,6 @@ public class User {
     }
     public void setEmail(String email){
         this.email = email;
-    }
-    public void setPassword(String password){
-        this.password = password;
     }
     public void setFacebookID(String facebookID){
         this.facebookID = facebookID;

@@ -37,6 +37,7 @@ public class Login_Activity extends AppCompatActivity {
     private PendingIntent pendingIntent;
     private AlarmManager manager;
     private DBAlarmHelper mAlarmHelper;
+    UserManage mUserManage;
     CallbackManager callbackManager;
     ProfileTracker profileTracker;
     @Override
@@ -99,6 +100,7 @@ public class Login_Activity extends AppCompatActivity {
             }
         };
         mAlarmHelper = new DBAlarmHelper(this);
+        mUserManage = UserManage.getInstance();
     }
 
     @Override
@@ -137,7 +139,7 @@ public class Login_Activity extends AppCompatActivity {
         username = (EditText)findViewById(R.id.enter_username);
         password = (EditText)findViewById(R.id.enter_password);
 
-       // boolean isSuccess = mManager.checkLoginValidate(username.getText().toString(), password.getText().toString());
+        int isSuccess = mUserManage.checkUser(username.getText().toString(), password.getText().toString());
 
         if(username.getText().toString().equals(""))
         {
@@ -149,6 +151,11 @@ public class Login_Activity extends AppCompatActivity {
             Toast toast = Toast.makeText(this, "Please enter Password", Toast.LENGTH_SHORT);
             toast.show();
         }
+<<<<<<< HEAD
+        else if (isSuccess==1/*ifSuccess ใช้เช็คว่า username กับ password ตรงกับฐานข้อมูลรึเปล่า*/) {
+            mUserManage.loginUser(username.getText().toString(),password.getText().toString(),this);
+            mUserManage.mauser = 1;
+=======
         else if (true/*ifSuccess ใช้เช็คว่า username กับ password ตรงกับฐานข้อมูลรึเปล่า*/) {
 
             Log.i("Login", "can go 1");
@@ -165,6 +172,7 @@ public class Login_Activity extends AppCompatActivity {
            // conn.getDataFromServer("http://www.google.com",1);
             HttpConnector request = new HttpConnector(this);
             request.getrequest();
+>>>>>>> front-end
             Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
             // ดูว่ามีการตั้งค่าเวลาหรือเปล่า
@@ -245,6 +253,8 @@ public class Login_Activity extends AppCompatActivity {
         Profile profile = Profile.getCurrentProfile();
         //Log.i("loggedin", loginResult + " go UI");
         if (loggedIn && (profile != null)) {
+            mUserManage.loginFBUser(profile.getId(),profile.getFirstName(),this);
+            mUserManage.mauser = 2;
             Intent intent = new Intent(Login_Activity.this, MainActivity.class);
             intent.putExtra("firstname",profile.getFirstName());
             intent.putExtra("lastname",profile.getLastName());
