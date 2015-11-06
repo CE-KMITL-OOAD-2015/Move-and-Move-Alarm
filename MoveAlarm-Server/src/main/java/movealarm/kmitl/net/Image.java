@@ -154,9 +154,4 @@ public class Image extends Model
         return modifiedDate;
     }
 
-    @Override
-    public HashMap<String, Object> delete()
-    {
-        return StatusDescription.createProcessStatus(modelCollection.delete(this));
-    }
 }
