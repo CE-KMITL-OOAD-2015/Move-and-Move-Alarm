@@ -52,4 +52,39 @@ public class Converter {
         container.put(key, arrayOfMap);
         return HashMapToJson(container);
     }
+
+    public String toString(Object value)
+    {
+        if(value != null) {
+            return value.toString();
+        }
+        else {
+            return null;
+        }
+    }
+
+    public int toInt(Object value)
+    {
+        try {
+            String temp = "" + value.toString();
+            Double temp2 = Double.parseDouble(temp);
+            return temp2.intValue();
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            return -1;
+        }
+    }
+
+    public double toDouble(Object value) {
+        try {
+            String temp = "" + value.toString();
+            Double temp2 = Double.parseDouble(temp);
+            return temp2.doubleValue();
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            return -1;
+        }
+    }
 }
