@@ -18,7 +18,11 @@ public class UserController {
         User user = User.find(id);
         if(user == null)
             return converter.HashMapToJson(StatusDescription.createProcessStatus(false, "Not found the required user."));
-        return converter.HashMapToJson(user.getGeneralValues());
+
+        HashMap<String, Object> JSON = StatusDescription.createProcessStatus(true);
+        JSON.put("user", user.getGeneralValues());
+
+        return converter.HashMapToJson(JSON);
     }
 
     @RequestMapping("/user/findByWhere")
@@ -33,7 +37,10 @@ public class UserController {
             return converter.HashMapToJson(StatusDescription.createProcessStatus(false, "Not found the required users."));
 
         HashMap<String, Object>[] tempMap = converter.ModelArrayToHashMapArray(users);
-        return converter.HashMapArrayToJSON(tempMap, "users");
+
+        HashMap<String, Object> JSON = StatusDescription.createProcessStatus(true);
+        JSON.put("users", tempMap);
+        return converter.HashMapToJson(JSON);
     }
 
     @RequestMapping("/user/findByRank")
@@ -45,7 +52,6 @@ public class UserController {
         ArrayList<HashMap<String, Object>> userValuesList = new ArrayList<>();
         Converter converter = Converter.getInstance();
         startRank = Math.abs(startRank);
-        endRank = Math.abs(endRank);
         try {
             sqlInquirer.addBatch("SET @rownum := 0");
             rankList = sqlInquirer.query("SELECT id FROM " +
@@ -57,7 +63,9 @@ public class UserController {
                     false, "An error has occurred while querying data from the database."));
         }
 
-        for(int i = startRank - 1; i < rankList.size() - 1; i++) {
+        endRank = (Math.abs(endRank) > rankList.size()) ? rankList.size() : Math.abs(endRank);
+
+        for(int i = startRank - 1; i < endRank; i++) {
             HashMap<String, Object> item = rankList.get(i);
             HashMap<String, Object> usersData = User.find(Integer.parseInt("" + item.get("id"))).getGeneralValues();
             usersData.put("rank", startRank);
@@ -66,7 +74,11 @@ public class UserController {
         }
 
         HashMap<String, Object>[] usersDataArray = userValuesList.toArray(new HashMap[userValuesList.size()]);
-        return converter.HashMapArrayToJSON(usersDataArray, "users");
+
+        HashMap<String, Object> JSON = StatusDescription.createProcessStatus(true);
+        JSON.put("users", usersDataArray);
+
+        return converter.HashMapToJson(JSON);
     }
 
     @RequestMapping("/user/getAllUsers")
@@ -79,7 +91,11 @@ public class UserController {
             return converter.HashMapToJson(StatusDescription.createProcessStatus(false, "Not found the required users."));
 
         HashMap<String, Object>[] tempMap = converter.ModelArrayToHashMapArray(users);
-        return converter.HashMapArrayToJSON(tempMap, "users");
+
+        HashMap<String, Object> JSON = StatusDescription.createProcessStatus(true);
+        JSON.put("users", tempMap);
+
+        return converter.HashMapToJson(JSON);
     }
 
     @RequestMapping("/user/createUser")
@@ -259,7 +275,7 @@ public class UserController {
         HashMap<String, Object> processStatus = user.decreaseScore((int) Double.parseDouble("" + data.get("score")), "" + data.get("description"));
         if((boolean) processStatus.get("status"))
             return converter.HashMapToJson(user.save());
-        return converter.HashMapToJson(StatusDescription.createProcessStatus(false, "Cannot decrease score."));
+        return converter.HashMapToJson(StatusDescription.createProcessStatus(false, "Cannot decrease score due to internal server error."));
     }
 
     @RequestMapping("/user/resetScore")
@@ -274,7 +290,7 @@ public class UserController {
         HashMap<String, Object> processStatus = user.decreaseScore(-user.getScore(), "" + data.get("description"));
         if((boolean) processStatus.get("status"))
             return converter.HashMapToJson(user.save());
-        return converter.HashMapToJson(StatusDescription.createProcessStatus(false, "Cannot reset score."));
+        return converter.HashMapToJson(StatusDescription.createProcessStatus(false, "Cannot reset score due to internal server error."));
     }
 
     @RequestMapping("/user/login")
@@ -294,6 +310,10 @@ public class UserController {
         if(user == null || !currentPassword.equals(password))
             return converter.HashMapToJson(StatusDescription.createProcessStatus(false, "User does not exist or password is incorrect."));
 
-        return converter.HashMapToJson(StatusDescription.createProcessStatus(true));
+        HashMap<String, Object> JSON = StatusDescription.createProcessStatus(true);
+        JSON.put("user", user.getGeneralValues());
+
+        return converter.HashMapToJson(JSON);
     }
+
 }
