@@ -103,4 +103,9 @@ public class DBAlarmHelper extends SQLiteOpenHelper{
         db.close();
         return alarm;
     }
+    public void deleteSetAlarm(String id){
+        sqLiteDatabase = this.getWritableDatabase();
+        sqLiteDatabase.delete(Alarm.TABLE,Alarm.Column.ID+" = "+id,null);
+        sqLiteDatabase.close();
+    }
 }
