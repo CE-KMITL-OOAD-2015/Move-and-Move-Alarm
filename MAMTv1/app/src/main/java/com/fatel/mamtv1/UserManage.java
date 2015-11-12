@@ -145,7 +145,6 @@ public class UserManage {
         //update currentuser to server
     }
 
-    // get set
     public void addScore(int score,Context context){
         if(currentUser!=null){
             currentUser.addScore(score);
