@@ -9,6 +9,7 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
@@ -44,6 +45,7 @@ public class MainActivity extends AppCompatActivity {
     private TextView header;
     private TextView user;
     CircleImageView profilepic;
+    CircleImageView profilepic2;
     String firstName;
     String lastName;
     public String id;
@@ -59,12 +61,14 @@ public class MainActivity extends AppCompatActivity {
             lastName = bundle.getString("lastname");
             id = bundle.getString("id");
         }
+        profilepic = (CircleImageView) findViewById(R.id.profile_image);
+        profilepic2 = (CircleImageView) findViewById(R.id.profile_image_f);
         header = (TextView) findViewById(R.id.profile);
         user = (TextView) findViewById(R.id.username);
         if(bundle !=null) {
             user.setText(firstName);
-            profilepic = (CircleImageView) findViewById(R.id.profile_image);
             Picasso.with(this).load("https://graph.facebook.com/" + id + "/picture?type=large").into(profilepic);
+            Picasso.with(this).load("https://graph.facebook.com/" + id + "/picture?type=large").into(profilepic2);
             passimg = new Bundle();
             passimg.putString("id", id);
         }
@@ -157,11 +161,12 @@ public class MainActivity extends AppCompatActivity {
         // Create a new fragment and specify the planet to show based on
         // position
         Fragment fragment = null;
-
+        profilepic2.setVisibility(View.GONE);
         Class fragmentClass;
         switch (menuItem.getItemId()) {
             case R.id.nav_home_fragment:
                 fragmentClass = MainFragment.class;
+                profilepic2.setVisibility(View.VISIBLE);
                 break;
             case R.id.nav_alarm_fragment:
                 fragmentClass = AlarmFragment.class;
