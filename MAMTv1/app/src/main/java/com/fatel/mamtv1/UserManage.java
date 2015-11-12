@@ -74,7 +74,9 @@ public class UserManage {
     public int checkUser(String username,String password) {
         return 1;
     }
-
+    private void updateUser(){
+        //update currentuser to server
+    }
     public void addScore(int score,Context context){
         if(currentUser!=null){
             currentUser.addScore(score);
@@ -82,9 +84,97 @@ public class UserManage {
             updateUser();
         }
     }
-
-    private void updateUser(){
-        //update currentuser to server
+    public void setFirstName(String firstName,Context context){
+        if(currentUser!=null){
+            currentUser.setFirstName(firstName);
+            currentUser.save(context);
+            updateUser();
+        }
     }
+    public void setLastName(String lastName,Context context){
+        if(currentUser!=null){
+            currentUser.setLastName(lastName);
+            currentUser.save(context);
+            updateUser();
+        }
+    }
+    public void setAge(int age,Context context){
+        if(currentUser!=null){
+            currentUser.setAge(age);
+            currentUser.save(context);
+            updateUser();
+        }
+    }
+    public void setGender(int gender,Context context){
+        if(currentUser!=null){
+            currentUser.setGender(gender);
+            currentUser.save(context);
+            updateUser();
+        }
+    }
+    public void setEmail(String email,Context context){
+        if(currentUser!=null){
+            currentUser.setEmail(email);
+            currentUser.save(context);
+            updateUser();
+        }
+    }
+    public void setFacebookID(String facebookID,Context context){
+        if(currentUser!=null){
+            currentUser.setFacebookID(facebookID);
+            currentUser.save(context);
+            updateUser();
+        }
+    }
+    public  void setFacebookFirstName(String facebookFirstName,Context context){
+        if(currentUser!=null){
+            currentUser.setFacebookFirstName(facebookFirstName);
+            currentUser.save(context);
+            updateUser();
+        }
+    }
+    public void setFacebookLastName(String facebookLastName,Context context){
+        if(currentUser!=null){
+            currentUser.setFacebookLastName(facebookLastName);
+            currentUser.save(context);
+            updateUser();
+        }
+    }
+    public void setProfileImage(int profileImage,Context context) {
+        if(currentUser!=null){
+            currentUser.setProfileImage(profileImage);
+            currentUser.save(context);
+            updateUser();
+        }
+    }
+
+    public String getCurrentFirstName (){
+        return currentUser.getFirstName();
+    }
+    public String getCurrentLastName (){
+        return currentUser.getLastName();
+    }
+    public int getCurrentProfileImage(){
+        return currentUser.getProfileImage();
+    }
+    public int getCurrentAge(){
+        return currentUser.getAge();
+    }
+    public int getCurrentScore(){
+        return currentUser.getScore();
+    }
+    public int getCurrentGender() {
+        return currentUser.getGender();
+    }
+    public String getCurrentEmail(){
+        return currentUser.getEmail();
+    }
+    public String getCurrentFacebookFirstName(){
+        return currentUser.getFacebookFirstName();
+    }
+    public String getCurrentFacebookLastName(){
+        return currentUser.getFacebookLastName();
+    }
+
 
 }
