@@ -11,10 +11,13 @@ import java.util.HashMap;
 @RestController
 public class UserController {
 
+    Converter converter = Converter.getInstance();
+    SQLInquirer sqlInquirer = SQLInquirer.getInstance();
+    Crypto crypto = Crypto.getInstance();
+    
     @RequestMapping("/user/findByID")
     public String findByID(@RequestParam(value="id", required = true, defaultValue = "0") int id)
     {
-        Converter converter = Converter.getInstance();
         User user = User.find(id);
         if(user == null)
             return converter.HashMapToJson(StatusDescription.createProcessStatus(false, "Not found the required user."));
@@ -30,7 +33,6 @@ public class UserController {
                         @RequestParam(value="operator", required = true, defaultValue = "") String operator,
                         @RequestParam(value="value", required = true, defaultValue = "") String value)
     {
-        Converter converter = Converter.getInstance();
         User[] users = User.where(columnName, operator, value);
 
         if(users == null)
@@ -47,10 +49,9 @@ public class UserController {
     public String findByRank(@RequestParam(value="startRank", required = true, defaultValue = "0") int startRank,
                              @RequestParam(value="endRank", required = true, defaultValue = "0") int endRank)
     {
-        SQLInquirer sqlInquirer = SQLInquirer.getInstance();
         ArrayList<HashMap<String, Object>> rankList = new ArrayList<>();
         ArrayList<HashMap<String, Object>> userValuesList = new ArrayList<>();
-        Converter converter = Converter.getInstance();
+        
         startRank = Math.abs(startRank);
         try {
             sqlInquirer.addBatch("SET @rownum := 0");
@@ -67,7 +68,7 @@ public class UserController {
 
         for(int i = startRank - 1; i < endRank; i++) {
             HashMap<String, Object> item = rankList.get(i);
-            HashMap<String, Object> usersData = User.find(Integer.parseInt("" + item.get("id"))).getGeneralValues();
+            HashMap<String, Object> usersData = User.find(converter.toInt(item.get("id"))).getGeneralValues();
             usersData.put("rank", startRank);
             userValuesList.add(usersData);
             startRank++;
@@ -84,7 +85,6 @@ public class UserController {
     @RequestMapping("/user/getAllUsers")
     public String all()
     {
-        Converter converter = Converter.getInstance();
         User[] users = User.all();
 
         if(users == null)
@@ -101,30 +101,28 @@ public class UserController {
     @RequestMapping("/user/createUser")
     public String createUser(@RequestParam(value="JSON", required = true, defaultValue = "") String JSON)
     {
-        Converter converter = Converter.getInstance();
         HashMap<String, Object> userValues = converter.JsonToHashMap(JSON);
-
-        User[] username_match = User.where("userName", "=", "" + userValues.get("userName"));
+        User[] username_match = User.where("userName", "=", converter.toString(userValues.get("userName")));
 
         if(username_match.length > 0)
             return converter.HashMapToJson(StatusDescription.createProcessStatus(false, "This user name is already used by other user."));
 
-        if(("" + userValues.get("password")).length() < 6)
+        if((converter.toString(userValues.get("password"))).length() < 6)
             return converter.HashMapToJson(StatusDescription.createProcessStatus(false, "Password should not be less than 6 letters."));
         
         User user = new User();
-        user.setUsername((String) userValues.get("userName"));
-        user.setEmail((String) userValues.get("email"));
-        user.setPassword(Crypto.getInstance().encryption((String) userValues.get("password")));
+        user.setUsername(converter.toString(userValues.get("userName")));
+        user.setEmail(converter.toString(userValues.get("email")));
+        user.setPassword(Crypto.getInstance().encryption(converter.toString(userValues.get("password"))));
 
         try {
-            user.setFirstName("" + userValues.get("firstName"));
-            user.setLastName("" + userValues.get("lastName"));
-            user.setGender((int) userValues.get("gender"));
-            user.setAge((int) userValues.get("age"));
-            user.setFacebookID("" + userValues.get("facebookID"));
-            user.setFacebookFirstName("" + userValues.get("facebookFirstName"));
-            user.setFacebookLastName("" + userValues.get("facebookLastName"));
+            user.setFirstName(converter.toString(userValues.get("firstName")));
+            user.setLastName(converter.toString(userValues.get("lastName")));
+            user.setGender(converter.toInt(userValues.get("gender")));
+            user.setAge(converter.toInt(userValues.get("age")));
+            user.setFacebookID(converter.toString(userValues.get("facebookID")));
+            user.setFacebookFirstName(converter.toString(userValues.get("facebookFirstName")));
+            user.setFacebookLastName(converter.toString(userValues.get("facebookLastName")));
         }
         catch (Exception e) {
 
@@ -135,24 +133,22 @@ public class UserController {
     @RequestMapping("/user/updateUser")
     public String updateUser(@RequestParam(value="JSON", required = true, defaultValue = "") String JSON)
     {
-        Converter converter = Converter.getInstance();
         HashMap<String, Object> userValues = converter.JsonToHashMap(JSON);
-
         User user = User.find(((Double) userValues.get("id")).intValue());
 
         if(user == null)
             return converter.HashMapToJson(StatusDescription.createProcessStatus(false, "This user does not exist."));
 
-        user.setEmail((String) userValues.get("email"));
+        user.setEmail(converter.toString(userValues.get("email")));
 
         try {
-            user.setFirstName("" + userValues.get("firstName"));
-            user.setLastName("" + userValues.get("lastName"));
-            user.setGender(((Double) userValues.get("gender")).intValue());
-            user.setAge(((Double) userValues.get("age")).intValue());
-            user.setFacebookID("" + userValues.get("facebookID"));
-            user.setFacebookFirstName("" + userValues.get("facebookFirstName"));
-            user.setFacebookLastName("" + userValues.get("facebookLastName"));
+            user.setFirstName(converter.toString(userValues.get("firstName")));
+            user.setLastName(converter.toString(userValues.get("lastName")));
+            user.setGender(converter.toInt(userValues.get("gender")));
+            user.setAge(converter.toInt(userValues.get("age")));
+            user.setFacebookID(converter.toString(userValues.get("facebookID")));
+            user.setFacebookFirstName(converter.toString(userValues.get("facebookFirstName")));
+            user.setFacebookLastName(converter.toString(userValues.get("facebookLastName")));
         }
         catch (Exception e) {
 
@@ -163,12 +159,10 @@ public class UserController {
     @RequestMapping("/user/changePassword")
     public String changePassword(@RequestParam(value="JSON", required = true, defaultValue = "") String JSON)
     {
-        Converter converter = Converter.getInstance();
         HashMap<String, Object> data = converter.JsonToHashMap(JSON);
-        HashMap<String, Object> userData = converter.JsonToHashMap("" + data.get("user"));
-        Crypto crypto = Crypto.getInstance();
+        HashMap<String, Object> userData = converter.JsonToHashMap(converter.toString(data.get("user")));
 
-        User user = User.find(((Double) userData.get("id")).intValue());
+        User user = User.find(converter.toInt(userData.get("id")));
 
         if(user == null)
             return converter.HashMapToJson(StatusDescription.createProcessStatus(false, "This user does not exist."));
@@ -196,10 +190,8 @@ public class UserController {
     @RequestMapping("/user/delete")
     public String delete(@RequestParam(value="JSON", required = true, defaultValue = "") String JSON)
     {
-        Converter converter = Converter.getInstance();
         HashMap<String, Object> userValues = converter.JsonToHashMap(JSON);
-
-        User user = User.find(((Double) userValues.get("id")).intValue());
+        User user = User.find(converter.toInt(userValues.get("id")));
 
         if(user == null)
             return converter.HashMapToJson(StatusDescription.createProcessStatus(false, "This user does not exist."));
@@ -210,11 +202,10 @@ public class UserController {
     @RequestMapping("/user/countAllUsers")
     public String countAllUsers()
     {
-        SQLInquirer sqlInquirer = SQLInquirer.getInstance();
         int amount = 0;
         try {
             HashMap<String, Object> data = sqlInquirer.query("SELECT COUNT(id) AS amount FROM user").get(0);
-            amount = Integer.parseInt("" + data.get("amount"));
+            amount = converter.toInt(data.get("amount"));
         } catch (SQLException e) {
             e.printStackTrace();
             return "-1";
@@ -225,8 +216,6 @@ public class UserController {
     @RequestMapping("/user/getUserRank")
     public String getUserRank(@RequestParam(value="JSON", required = true, defaultValue = "0") String JSON)
     {
-        Converter converter = Converter.getInstance();
-        SQLInquirer sqlInquirer = SQLInquirer.getInstance();
         ArrayList<HashMap<String, Object>> rankList = new ArrayList<>();
         HashMap<String, Object> userData = converter.JsonToHashMap(JSON);
         try {
@@ -241,8 +230,8 @@ public class UserController {
         }
 
         for(int i = 0; i < rankList.size(); i++) {
-            int id = (int) Double.parseDouble("" + userData.get("id"));
-            if(id == Integer.parseInt("" + rankList.get(i).get("id")))
+            int id = converter.toInt(userData.get("id"));
+            if(id == converter.toInt(rankList.get(i).get("id")))
                 return "" + ++i;
         }
         return "" + -1;
@@ -251,13 +240,12 @@ public class UserController {
     @RequestMapping("/user/increaseScore")
     public String increaseScore(@RequestParam(value="JSON", required = true, defaultValue = "0") String JSON)
     {
-        Converter converter = Converter.getInstance();
         HashMap<String, Object> data = converter.JsonToHashMap(JSON);
-        HashMap<String, Object> userData = converter.JsonToHashMap("" + data.get("user"));
-        User user = User.find(((Double) userData.get("id")).intValue());
+        HashMap<String, Object> userData = converter.JsonToHashMap(converter.toString(data.get("user")));
+        User user = User.find(converter.toInt(userData.get("id")));
         if(user == null)
             return converter.HashMapToJson(StatusDescription.createProcessStatus(false, "User does not exist."));
-        HashMap<String, Object> processStatus = user.increaseScore((int) Double.parseDouble("" + data.get("score")), "" + data.get("description"));
+        HashMap<String, Object> processStatus = user.increaseScore(converter.toInt(data.get("score")), converter.toString(data.get("description")));
         if((boolean) processStatus.get("status"))
             return converter.HashMapToJson(user.save());
         return converter.HashMapToJson(StatusDescription.createProcessStatus(false, "Cannot increase score."));
@@ -266,13 +254,12 @@ public class UserController {
     @RequestMapping("/user/decreaseScore")
     public String decreaseScore(@RequestParam(value="JSON", required = true, defaultValue = "0") String JSON)
     {
-        Converter converter = Converter.getInstance();
         HashMap<String, Object> data = converter.JsonToHashMap(JSON);
-        HashMap<String, Object> userData = converter.JsonToHashMap("" + data.get("user"));
-        User user = User.find(((Double) userData.get("id")).intValue());
+        HashMap<String, Object> userData = converter.JsonToHashMap(converter.toString(data.get("user")));
+        User user = User.find(converter.toInt(userData.get("id")));
         if(user == null)
             return converter.HashMapToJson(StatusDescription.createProcessStatus(false, "User does not exist."));
-        HashMap<String, Object> processStatus = user.decreaseScore((int) Double.parseDouble("" + data.get("score")), "" + data.get("description"));
+        HashMap<String, Object> processStatus = user.decreaseScore(converter.toInt(data.get("score")), converter.toString(data.get("description")));
         if((boolean) processStatus.get("status"))
             return converter.HashMapToJson(user.save());
         return converter.HashMapToJson(StatusDescription.createProcessStatus(false, "Cannot decrease score due to internal server error."));
@@ -281,13 +268,12 @@ public class UserController {
     @RequestMapping("/user/resetScore")
     public String resetScore(@RequestParam(value="JSON", required = true, defaultValue = "0") String JSON)
     {
-        Converter converter = Converter.getInstance();
         HashMap<String, Object> data = converter.JsonToHashMap(JSON);
-        HashMap<String, Object> userData = converter.JsonToHashMap("" + data.get("user"));
-        User user = User.find(((Double) userData.get("id")).intValue());
+        HashMap<String, Object> userData = converter.JsonToHashMap(converter.toString(data.get("user")));
+        User user = User.find(converter.toInt(userData.get("id")));
         if(user == null)
             return converter.HashMapToJson(StatusDescription.createProcessStatus(false, "User does not exist."));
-        HashMap<String, Object> processStatus = user.decreaseScore(-user.getScore(), "" + data.get("description"));
+        HashMap<String, Object> processStatus = user.decreaseScore(-user.getScore(), converter.toString(data.get("description")));
         if((boolean) processStatus.get("status"))
             return converter.HashMapToJson(user.save());
         return converter.HashMapToJson(StatusDescription.createProcessStatus(false, "Cannot reset score due to internal server error."));
@@ -297,7 +283,6 @@ public class UserController {
     public String login(@RequestParam(value="userName", required = true, defaultValue = "0") String userName,
                         @RequestParam(value="password", required = true, defaultValue = "0") String password)
     {
-        Converter converter = Converter.getInstance();
         User user = null;
         String currentPassword = "";
         try {

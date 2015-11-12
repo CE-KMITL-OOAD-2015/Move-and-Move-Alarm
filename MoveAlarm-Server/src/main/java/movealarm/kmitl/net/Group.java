@@ -246,6 +246,11 @@ public class Group extends Model{
         return admin;
     }
 
+    public int getScore()
+    {
+        return score;
+    }
+
     public HashMap<String, Object> addMember(User user)
     {
         if(amountMember > 10)
