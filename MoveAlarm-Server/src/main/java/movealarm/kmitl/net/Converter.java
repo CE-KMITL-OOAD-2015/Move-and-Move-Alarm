@@ -87,4 +87,13 @@ public class Converter {
             return -1;
         }
     }
+
+    public ArrayList<HashMap<String, Object>> toHashmapArrayList(HashMap<String, Object> map)
+    {
+        ArrayList<HashMap<String, Object>> temp_map = new ArrayList<>();
+        for(String key : map.keySet()) {
+            temp_map = (ArrayList<HashMap<String, Object>>)map.get(key);
+        }
+        return temp_map;
+    }
 }
