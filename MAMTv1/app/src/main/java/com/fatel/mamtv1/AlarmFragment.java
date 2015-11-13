@@ -7,6 +7,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -14,6 +15,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.Spinner;
+import android.widget.Toast;
 
 
 /**
@@ -54,7 +56,7 @@ public class AlarmFragment extends android.support.v4.app.Fragment {
         View view = inflater.inflate(R.layout.fragment_alarm, container, false);
 
         mAlarmHelper = new DBAlarmHelper(getActivity());
-
+Log.i("xx",mAlarmHelper.checkdata()+"");
         mStartHr = createSpinner(12, R.id.start_hr,true,view,mAlarmHelper,true);
         mStartMin = createSpinner(60, R.id.start_min,false,view,mAlarmHelper,true);
         mFinishHr = createSpinner(12, R.id.fin_hr, true, view,mAlarmHelper,false);
@@ -139,6 +141,7 @@ public class AlarmFragment extends android.support.v4.app.Fragment {
 
                 //keep data
                     Alarm alarm = new Alarm();
+                    alarm.setId(1);
                     alarm.setStarthr(mStartHr.getSelectedItem().toString());
                     alarm.setStartmin(mStartMin.getSelectedItem().toString());
                     alarm.setStophr(mFinishHr.getSelectedItem().toString());
@@ -155,11 +158,12 @@ public class AlarmFragment extends android.support.v4.app.Fragment {
                 Intent mServiceIntent = new Intent(getActivity(), AlarmReceiver.class);
                 pendingIntent = PendingIntent.getBroadcast(getActivity(),0,mServiceIntent,0);
                 start();
-                FragmentTransaction tx = getFragmentManager().beginTransaction();
-                tx.setCustomAnimations(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
-                tx.replace(R.id.container, new MainFragment());
-                tx.addToBackStack(null);
-                tx.commit();
+//                FragmentTransaction tx = getFragmentManager().beginTransaction();
+//                tx.setCustomAnimations(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+//                tx.replace(R.id.container, new MainFragment());
+//                tx.addToBackStack(null);
+                Toast.makeText(getActivity(), "SetAlarm Successful", Toast.LENGTH_SHORT).show();
+//                tx.commit();
             }
         });
         return view;
