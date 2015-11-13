@@ -16,13 +16,13 @@ public class Converter {
         gson = new Gson();
     }
 
-    public HashMap<String,Object> JsonToHashMap(String json) {
+    public HashMap<String,Object> JSONToHashMap(String json) {
         HashMap<String,Object> map = new HashMap<>();
         map = gson.fromJson(json,map.getClass());
         return map;
     }
 
-    public String HashMapToJson(HashMap<String,Object> map) {
+    public String HashMapToJSON(HashMap<String, Object> map) {
         return gson.toJson(map);
     }
 
@@ -50,7 +50,7 @@ public class Converter {
     {
         HashMap<String, Object> container = new HashMap<>();
         container.put(key, arrayOfMap);
-        return HashMapToJson(container);
+        return HashMapToJSON(container);
     }
 
     public String toString(Object value)
@@ -88,7 +88,7 @@ public class Converter {
         }
     }
 
-    public ArrayList<HashMap<String, Object>> toHashmapArrayList(HashMap<String, Object> map)
+    public ArrayList<HashMap<String, Object>> toHashMapArrayList(HashMap<String, Object> map)
     {
         ArrayList<HashMap<String, Object>> temp_map = new ArrayList<>();
         for(String key : map.keySet()) {

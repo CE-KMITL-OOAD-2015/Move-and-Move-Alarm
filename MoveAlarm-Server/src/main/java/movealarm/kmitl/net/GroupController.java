@@ -17,17 +17,17 @@ public class GroupController {
     @RequestMapping("/group/createGroup")
     public String createGroup(@RequestParam(value = "JSON", required = true, defaultValue = "0")String JSON)
     {
-        HashMap<String, Object> data = converter.JsonToHashMap(JSON);
-        HashMap<String, Object> userData = converter.JsonToHashMap(converter.toString(data.get("admin")));
+        HashMap<String, Object> data = converter.JSONToHashMap(JSON);
+        HashMap<String, Object> userData = converter.JSONToHashMap(converter.toString(data.get("admin")));
 
         Group[] groupName_match = Group.where("name", "=", converter.toString(data.get("name")));
 
         if(groupName_match.length > 0)
-            return converter.HashMapToJson(StatusDescription.createProcessStatus(false, "This group name already exists."));
+            return converter.HashMapToJSON(StatusDescription.createProcessStatus(false, "This group name already exists."));
 
         User user = User.find(converter.toInt(userData.get("id")));
         if(user == null)
-            return converter.HashMapToJson(StatusDescription.createProcessStatus(false, "The group must have at least 1 user."));
+            return converter.HashMapToJSON(StatusDescription.createProcessStatus(false, "The group must have at least 1 user."));
 
         Group group = new Group();
         group.setName(converter.toString(data.get("name")));
@@ -36,10 +36,10 @@ public class GroupController {
         if((boolean) group.save().get("status")) {
             HashMap<String, Object> temp = StatusDescription.createProcessStatus(true);
             temp.put("group", group.getGeneralValues());
-            return converter.HashMapToJson(temp);
+            return converter.HashMapToJSON(temp);
         }
 
-        return converter.HashMapToJson(StatusDescription.createProcessStatus(false, "An error has occurred due to an internal server error."));
+        return converter.HashMapToJSON(StatusDescription.createProcessStatus(false, "An error has occurred due to an internal server error."));
     }
 
     @RequestMapping("/group/findByID")
@@ -47,11 +47,11 @@ public class GroupController {
     {
         Group group = Group.find(id);
         if(group == null)
-            return converter.HashMapToJson(StatusDescription.createProcessStatus(false, "Not found the required user."));
+            return converter.HashMapToJSON(StatusDescription.createProcessStatus(false, "Not found the required user."));
 
         HashMap<String, Object> JSON = StatusDescription.createProcessStatus(true);
         JSON.put("group", group.getGeneralValues());
-        return converter.HashMapToJson(JSON);
+        return converter.HashMapToJSON(JSON);
     }
 
     @RequestMapping("/group/findByWhere")
@@ -62,13 +62,13 @@ public class GroupController {
         Group[] groups = Group.where(columnName, operator, value);
 
         if(groups == null)
-            return converter.HashMapToJson(StatusDescription.createProcessStatus(false, "Not found the required users."));
+            return converter.HashMapToJSON(StatusDescription.createProcessStatus(false, "Not found the required users."));
 
         HashMap<String, Object>[] tempMap = converter.ModelArrayToHashMapArray(groups);
 
         HashMap<String, Object> JSON = StatusDescription.createProcessStatus(true);
         JSON.put("groups", tempMap);
-        return converter.HashMapToJson(JSON);
+        return converter.HashMapToJSON(JSON);
     }
 
     @RequestMapping("/group/findByRank")
@@ -86,7 +86,7 @@ public class GroupController {
                     "FROM groups ORDER BY score DESC ) as result");
         } catch (SQLException e) {
             e.printStackTrace();
-            return Converter.getInstance().HashMapToJson(StatusDescription.createProcessStatus(
+            return Converter.getInstance().HashMapToJSON(StatusDescription.createProcessStatus(
                     false, "An error has occurred while querying data from the database."));
         }
 
@@ -105,14 +105,14 @@ public class GroupController {
         HashMap<String, Object> JSON = StatusDescription.createProcessStatus(true);
         JSON.put("groups", groupsDataArray);
 
-        return converter.HashMapToJson(JSON);
+        return converter.HashMapToJSON(JSON);
     }
 
     @RequestMapping("/group/getGroupRank")
     public String getGroupRank(@RequestParam(value="JSON", required = true, defaultValue = "0") String JSON)
     {
         ArrayList<HashMap<String, Object>> rankList = new ArrayList<>();
-        HashMap<String, Object> groupData = converter.JsonToHashMap(JSON);
+        HashMap<String, Object> groupData = converter.JSONToHashMap(JSON);
         try {
             sqlInquirer.addBatch("SET @rownum := 0");
             rankList = sqlInquirer.query("SELECT id FROM " +
@@ -120,7 +120,7 @@ public class GroupController {
                     "FROM groups ORDER BY score DESC ) as result");
         } catch (SQLException e) {
             e.printStackTrace();
-            return Converter.getInstance().HashMapToJson(StatusDescription.createProcessStatus(
+            return Converter.getInstance().HashMapToJSON(StatusDescription.createProcessStatus(
                     false, "An error has occurred while querying data from the database."));
         }
 
@@ -138,135 +138,135 @@ public class GroupController {
         Group[] groups = Group.all();
 
         if(groups == null)
-            return converter.HashMapToJson(StatusDescription.createProcessStatus(false, "Not found the required users."));
+            return converter.HashMapToJSON(StatusDescription.createProcessStatus(false, "Not found the required users."));
 
         HashMap<String, Object>[] tempMap = converter.ModelArrayToHashMapArray(groups);
 
         HashMap<String, Object> JSON = StatusDescription.createProcessStatus(true);
         JSON.put("groups", tempMap);
 
-        return converter.HashMapToJson(JSON);
+        return converter.HashMapToJSON(JSON);
     }
 
     @RequestMapping("/group/updateGroup")
     public String updateUser(@RequestParam(value="JSON", required = true, defaultValue = "") String JSON)
     {
-        HashMap<String, Object> groupData = converter.JsonToHashMap(JSON);
+        HashMap<String, Object> groupData = converter.JSONToHashMap(JSON);
         Group group = Group.find(converter.toInt(groupData.get("id")));
 
         if(group == null)
-            return converter.HashMapToJson(StatusDescription.createProcessStatus(false, "This group does not exist."));
+            return converter.HashMapToJSON(StatusDescription.createProcessStatus(false, "This group does not exist."));
 
         group.setStatus(converter.toString(groupData.get("status")));
 
-        return converter.HashMapToJson(group.save());
+        return converter.HashMapToJSON(group.save());
     }
 
     @RequestMapping("/group/deleteMember")
     public String deleteMember(@RequestParam(value="JSON", required = true, defaultValue = "") String JSON)
     {
-        HashMap<String, Object> data = converter.JsonToHashMap(JSON);
-        HashMap<String, Object> groupData = converter.JsonToHashMap(converter.toString(data.get("group")));
-        HashMap<String, Object> memberData = converter.JsonToHashMap(converter.toString(data.get("member")));
+        HashMap<String, Object> data = converter.JSONToHashMap(JSON);
+        HashMap<String, Object> groupData = converter.JSONToHashMap(converter.toString(data.get("group")));
+        HashMap<String, Object> memberData = converter.JSONToHashMap(converter.toString(data.get("member")));
 
         Group group = Group.find(converter.toInt(groupData.get("id")));
         User user = User.find(converter.toInt(memberData.get("id")));
 
         if(group == null)
-            return converter.HashMapToJson(StatusDescription.createProcessStatus(false, "This group does not exist."));
+            return converter.HashMapToJSON(StatusDescription.createProcessStatus(false, "This group does not exist."));
 
         if(user == null)
-            return converter.HashMapToJson(StatusDescription.createProcessStatus(false, "This user does not exist."));
+            return converter.HashMapToJSON(StatusDescription.createProcessStatus(false, "This user does not exist."));
 
         if((boolean) group.addMember(user).get("status"))
-            return converter.HashMapToJson(group.save());
+            return converter.HashMapToJSON(group.save());
 
-        return converter.HashMapToJson(StatusDescription.createProcessStatus(false, "An error has occurred due to internal server error."));
+        return converter.HashMapToJSON(StatusDescription.createProcessStatus(false, "An error has occurred due to internal server error."));
     }
 
     @RequestMapping("/group/addMember")
     public String addMember(@RequestParam(value="JSON", required = true, defaultValue = "") String JSON)
     {
-        HashMap<String, Object> data = converter.JsonToHashMap(JSON);
-        HashMap<String, Object> groupData = converter.JsonToHashMap(converter.toString(data.get("group")));
-        HashMap<String, Object> memberData = converter.JsonToHashMap(converter.toString(data.get("member")));
+        HashMap<String, Object> data = converter.JSONToHashMap(JSON);
+        HashMap<String, Object> groupData = converter.JSONToHashMap(converter.toString(data.get("group")));
+        HashMap<String, Object> memberData = converter.JSONToHashMap(converter.toString(data.get("member")));
 
         Group group = Group.find(converter.toInt(groupData.get("id")));
         User user = User.find(converter.toInt(memberData.get("id")));
 
         if(group == null)
-            return converter.HashMapToJson(StatusDescription.createProcessStatus(false, "This group does not exist."));
+            return converter.HashMapToJSON(StatusDescription.createProcessStatus(false, "This group does not exist."));
 
         if(user == null)
-            return converter.HashMapToJson(StatusDescription.createProcessStatus(false, "This user does not exist."));
+            return converter.HashMapToJSON(StatusDescription.createProcessStatus(false, "This user does not exist."));
 
         if((boolean) group.addMember(user).get("status"))
-            return converter.HashMapToJson(group.save());
+            return converter.HashMapToJSON(group.save());
 
-        return converter.HashMapToJson(StatusDescription.createProcessStatus(false, "An error has occurred due to internal server error."));
+        return converter.HashMapToJSON(StatusDescription.createProcessStatus(false, "An error has occurred due to internal server error."));
     }
 
     @RequestMapping("/group/delete")
     public String delete(@RequestParam(value="JSON", required = true, defaultValue = "") String JSON)
     {
-        HashMap<String, Object> groupValues = converter.JsonToHashMap(JSON);
+        HashMap<String, Object> groupValues = converter.JSONToHashMap(JSON);
         Group group = Group.find(converter.toInt(groupValues.get("id")));
 
         if(group == null)
-            return converter.HashMapToJson(StatusDescription.createProcessStatus(false, "This group does not exist."));
+            return converter.HashMapToJSON(StatusDescription.createProcessStatus(false, "This group does not exist."));
 
-        return converter.HashMapToJson(group.delete());
+        return converter.HashMapToJSON(group.delete());
     }
 
     @RequestMapping("/group/increaseScore")
     public String increaseScore(@RequestParam(value="JSON", required = true, defaultValue = "0") String JSON)
     {
-        HashMap<String, Object> data = converter.JsonToHashMap(JSON);
-        HashMap<String, Object> groupData = converter.JsonToHashMap(converter.toString(data.get("group")));
+        HashMap<String, Object> data = converter.JSONToHashMap(JSON);
+        HashMap<String, Object> groupData = converter.JSONToHashMap(converter.toString(data.get("group")));
 
         Group group = Group.find(converter.toInt(groupData.get("id")));
         if(group == null)
-            return converter.HashMapToJson(StatusDescription.createProcessStatus(false, "This group does not exist."));
+            return converter.HashMapToJSON(StatusDescription.createProcessStatus(false, "This group does not exist."));
 
         HashMap<String, Object> processStatus = group.increaseScore(converter.toInt(data.get("score")), converter.toString(data.get("description")));
         if((boolean) processStatus.get("status"))
-            return converter.HashMapToJson(group.save());
+            return converter.HashMapToJSON(group.save());
 
-        return converter.HashMapToJson(StatusDescription.createProcessStatus(false, "Cannot increase score."));
+        return converter.HashMapToJSON(StatusDescription.createProcessStatus(false, "Cannot increase score."));
     }
 
     @RequestMapping("/group/decreaseScore")
     public String decreaseScore(@RequestParam(value="JSON", required = true, defaultValue = "0") String JSON)
     {
-        HashMap<String, Object> data = converter.JsonToHashMap(JSON);
-        HashMap<String, Object> groupData = converter.JsonToHashMap(converter.toString(data.get("group")));
+        HashMap<String, Object> data = converter.JSONToHashMap(JSON);
+        HashMap<String, Object> groupData = converter.JSONToHashMap(converter.toString(data.get("group")));
 
         Group group = Group.find(converter.toInt(groupData.get("id")));
         if(group == null)
-            return converter.HashMapToJson(StatusDescription.createProcessStatus(false, "This group does not exist."));
+            return converter.HashMapToJSON(StatusDescription.createProcessStatus(false, "This group does not exist."));
 
         HashMap<String, Object> processStatus = group.decreaseScore(converter.toInt(data.get("score")), converter.toString(data.get("description")));
         if((boolean) processStatus.get("status"))
-            return converter.HashMapToJson(group.save());
+            return converter.HashMapToJSON(group.save());
         
-        return converter.HashMapToJson(StatusDescription.createProcessStatus(false, "Cannot decrease score due to internal server error."));
+        return converter.HashMapToJSON(StatusDescription.createProcessStatus(false, "Cannot decrease score due to internal server error."));
     }
 
     @RequestMapping("/group/resetScore")
     public String resetScore(@RequestParam(value="JSON", required = true, defaultValue = "0") String JSON)
     {
-        HashMap<String, Object> data = converter.JsonToHashMap(JSON);
-        HashMap<String, Object> groupData = converter.JsonToHashMap(converter.toString(data.get("group")));
+        HashMap<String, Object> data = converter.JSONToHashMap(JSON);
+        HashMap<String, Object> groupData = converter.JSONToHashMap(converter.toString(data.get("group")));
 
         Group group = Group.find(converter.toInt(groupData.get("id")));
         if(group == null)
-            return converter.HashMapToJson(StatusDescription.createProcessStatus(false, "This group does not exist."));
+            return converter.HashMapToJSON(StatusDescription.createProcessStatus(false, "This group does not exist."));
 
         HashMap<String, Object> processStatus = group.decreaseScore(-group.getScore(), converter.toString(data.get("description")));
         if((boolean) processStatus.get("status"))
-            return converter.HashMapToJson(group.save());
+            return converter.HashMapToJSON(group.save());
 
-        return converter.HashMapToJson(StatusDescription.createProcessStatus(false, "Cannot reset score due to internal server error."));
+        return converter.HashMapToJSON(StatusDescription.createProcessStatus(false, "Cannot reset score due to internal server error."));
     }
 }
 

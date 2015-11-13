@@ -20,12 +20,12 @@ public class UserController {
     {
         User user = User.find(id);
         if(user == null)
-            return converter.HashMapToJson(StatusDescription.createProcessStatus(false, "Not found the required user."));
+            return converter.HashMapToJSON(StatusDescription.createProcessStatus(false, "Not found the required user."));
 
         HashMap<String, Object> JSON = StatusDescription.createProcessStatus(true);
         JSON.put("user", user.getGeneralValues());
 
-        return converter.HashMapToJson(JSON);
+        return converter.HashMapToJSON(JSON);
     }
 
     @RequestMapping("/user/findByWhere")
@@ -36,13 +36,13 @@ public class UserController {
         User[] users = User.where(columnName, operator, value);
 
         if(users == null)
-            return converter.HashMapToJson(StatusDescription.createProcessStatus(false, "Not found the required users."));
+            return converter.HashMapToJSON(StatusDescription.createProcessStatus(false, "Not found the required users."));
 
         HashMap<String, Object>[] tempMap = converter.ModelArrayToHashMapArray(users);
 
         HashMap<String, Object> JSON = StatusDescription.createProcessStatus(true);
         JSON.put("users", tempMap);
-        return converter.HashMapToJson(JSON);
+        return converter.HashMapToJSON(JSON);
     }
 
     @RequestMapping("/user/findByRank")
@@ -60,7 +60,7 @@ public class UserController {
                     "FROM user ORDER BY score DESC ) as result");
         } catch (SQLException e) {
             e.printStackTrace();
-            return Converter.getInstance().HashMapToJson(StatusDescription.createProcessStatus(
+            return Converter.getInstance().HashMapToJSON(StatusDescription.createProcessStatus(
                     false, "An error has occurred while querying data from the database."));
         }
 
@@ -79,7 +79,7 @@ public class UserController {
         HashMap<String, Object> JSON = StatusDescription.createProcessStatus(true);
         JSON.put("users", usersDataArray);
 
-        return converter.HashMapToJson(JSON);
+        return converter.HashMapToJSON(JSON);
     }
 
     @RequestMapping("/user/getAllUsers")
@@ -88,27 +88,27 @@ public class UserController {
         User[] users = User.all();
 
         if(users == null)
-            return converter.HashMapToJson(StatusDescription.createProcessStatus(false, "Not found the required users."));
+            return converter.HashMapToJSON(StatusDescription.createProcessStatus(false, "Not found the required users."));
 
         HashMap<String, Object>[] tempMap = converter.ModelArrayToHashMapArray(users);
 
         HashMap<String, Object> JSON = StatusDescription.createProcessStatus(true);
         JSON.put("users", tempMap);
 
-        return converter.HashMapToJson(JSON);
+        return converter.HashMapToJSON(JSON);
     }
 
     @RequestMapping("/user/createUser")
     public String createUser(@RequestParam(value="JSON", required = true, defaultValue = "") String JSON)
     {
-        HashMap<String, Object> userValues = converter.JsonToHashMap(JSON);
+        HashMap<String, Object> userValues = converter.JSONToHashMap(JSON);
         User[] username_match = User.where("userName", "=", converter.toString(userValues.get("userName")));
 
         if(username_match.length > 0)
-            return converter.HashMapToJson(StatusDescription.createProcessStatus(false, "This user name is already used by other user."));
+            return converter.HashMapToJSON(StatusDescription.createProcessStatus(false, "This user name is already used by other user."));
 
         if((converter.toString(userValues.get("password"))).length() < 6)
-            return converter.HashMapToJson(StatusDescription.createProcessStatus(false, "Password should not be less than 6 letters."));
+            return converter.HashMapToJSON(StatusDescription.createProcessStatus(false, "Password should not be less than 6 letters."));
         
         User user = new User();
         user.setUsername(converter.toString(userValues.get("userName")));
@@ -127,17 +127,17 @@ public class UserController {
         catch (Exception e) {
 
         }
-        return converter.HashMapToJson(user.save());
+        return converter.HashMapToJSON(user.save());
     }
 
     @RequestMapping("/user/updateUser")
     public String updateUser(@RequestParam(value="JSON", required = true, defaultValue = "") String JSON)
     {
-        HashMap<String, Object> userValues = converter.JsonToHashMap(JSON);
+        HashMap<String, Object> userValues = converter.JSONToHashMap(JSON);
         User user = User.find(((Double) userValues.get("id")).intValue());
 
         if(user == null)
-            return converter.HashMapToJson(StatusDescription.createProcessStatus(false, "This user does not exist."));
+            return converter.HashMapToJSON(StatusDescription.createProcessStatus(false, "This user does not exist."));
 
         user.setEmail(converter.toString(userValues.get("email")));
 
@@ -153,19 +153,19 @@ public class UserController {
         catch (Exception e) {
 
         }
-        return converter.HashMapToJson(user.save());
+        return converter.HashMapToJSON(user.save());
     }
 
     @RequestMapping("/user/changePassword")
     public String changePassword(@RequestParam(value="JSON", required = true, defaultValue = "") String JSON)
     {
-        HashMap<String, Object> data = converter.JsonToHashMap(JSON);
-        HashMap<String, Object> userData = converter.JsonToHashMap(converter.toString(data.get("user")));
+        HashMap<String, Object> data = converter.JSONToHashMap(JSON);
+        HashMap<String, Object> userData = converter.JSONToHashMap(converter.toString(data.get("user")));
 
         User user = User.find(converter.toInt(userData.get("id")));
 
         if(user == null)
-            return converter.HashMapToJson(StatusDescription.createProcessStatus(false, "This user does not exist."));
+            return converter.HashMapToJSON(StatusDescription.createProcessStatus(false, "This user does not exist."));
 
         String currentPassword = crypto.decryption(user.getPassword());
         String oldPassword = "" + data.get("oldPassword");
@@ -173,30 +173,30 @@ public class UserController {
         String confirmPassword = "" + data.get("confirmPassword");
 
         if(!currentPassword.equals(oldPassword))
-            return converter.HashMapToJson(StatusDescription.createProcessStatus(false, "Current password incorrect."));
+            return converter.HashMapToJSON(StatusDescription.createProcessStatus(false, "Current password incorrect."));
 
         if(newPassword.length() < 6)
-            return converter.HashMapToJson(StatusDescription.createProcessStatus(false, "Password should not be less than 6 letters."));
+            return converter.HashMapToJSON(StatusDescription.createProcessStatus(false, "Password should not be less than 6 letters."));
 
         if(!newPassword.equals(confirmPassword))
-            return converter.HashMapToJson(StatusDescription.createProcessStatus(false, "Password and confirm password mismatch."));
+            return converter.HashMapToJSON(StatusDescription.createProcessStatus(false, "Password and confirm password mismatch."));
 
         newPassword = crypto.encryption(newPassword);
         user.setPassword(newPassword);
 
-        return converter.HashMapToJson(user.save());
+        return converter.HashMapToJSON(user.save());
     }
 
     @RequestMapping("/user/delete")
     public String delete(@RequestParam(value="JSON", required = true, defaultValue = "") String JSON)
     {
-        HashMap<String, Object> userValues = converter.JsonToHashMap(JSON);
+        HashMap<String, Object> userValues = converter.JSONToHashMap(JSON);
         User user = User.find(converter.toInt(userValues.get("id")));
 
         if(user == null)
-            return converter.HashMapToJson(StatusDescription.createProcessStatus(false, "This user does not exist."));
+            return converter.HashMapToJSON(StatusDescription.createProcessStatus(false, "This user does not exist."));
 
-        return converter.HashMapToJson(user.delete());
+        return converter.HashMapToJSON(user.delete());
     }
 
     @RequestMapping("/user/countAllUsers")
@@ -217,7 +217,7 @@ public class UserController {
     public String getUserRank(@RequestParam(value="JSON", required = true, defaultValue = "0") String JSON)
     {
         ArrayList<HashMap<String, Object>> rankList = new ArrayList<>();
-        HashMap<String, Object> userData = converter.JsonToHashMap(JSON);
+        HashMap<String, Object> userData = converter.JSONToHashMap(JSON);
         try {
             sqlInquirer.addBatch("SET @rownum := 0");
             rankList = sqlInquirer.query("SELECT id FROM " +
@@ -225,7 +225,7 @@ public class UserController {
                     "FROM user ORDER BY score DESC ) as result");
         } catch (SQLException e) {
             e.printStackTrace();
-            return Converter.getInstance().HashMapToJson(StatusDescription.createProcessStatus(
+            return Converter.getInstance().HashMapToJSON(StatusDescription.createProcessStatus(
                     false, "An error has occurred while querying data from the database."));
         }
 
@@ -240,43 +240,43 @@ public class UserController {
     @RequestMapping("/user/increaseScore")
     public String increaseScore(@RequestParam(value="JSON", required = true, defaultValue = "0") String JSON)
     {
-        HashMap<String, Object> data = converter.JsonToHashMap(JSON);
-        HashMap<String, Object> userData = converter.JsonToHashMap(converter.toString(data.get("user")));
+        HashMap<String, Object> data = converter.JSONToHashMap(JSON);
+        HashMap<String, Object> userData = converter.JSONToHashMap(converter.toString(data.get("user")));
         User user = User.find(converter.toInt(userData.get("id")));
         if(user == null)
-            return converter.HashMapToJson(StatusDescription.createProcessStatus(false, "User does not exist."));
+            return converter.HashMapToJSON(StatusDescription.createProcessStatus(false, "User does not exist."));
         HashMap<String, Object> processStatus = user.increaseScore(converter.toInt(data.get("score")), converter.toString(data.get("description")));
         if((boolean) processStatus.get("status"))
-            return converter.HashMapToJson(user.save());
-        return converter.HashMapToJson(StatusDescription.createProcessStatus(false, "Cannot increase score."));
+            return converter.HashMapToJSON(user.save());
+        return converter.HashMapToJSON(StatusDescription.createProcessStatus(false, "Cannot increase score."));
     }
 
     @RequestMapping("/user/decreaseScore")
     public String decreaseScore(@RequestParam(value="JSON", required = true, defaultValue = "0") String JSON)
     {
-        HashMap<String, Object> data = converter.JsonToHashMap(JSON);
-        HashMap<String, Object> userData = converter.JsonToHashMap(converter.toString(data.get("user")));
+        HashMap<String, Object> data = converter.JSONToHashMap(JSON);
+        HashMap<String, Object> userData = converter.JSONToHashMap(converter.toString(data.get("user")));
         User user = User.find(converter.toInt(userData.get("id")));
         if(user == null)
-            return converter.HashMapToJson(StatusDescription.createProcessStatus(false, "User does not exist."));
+            return converter.HashMapToJSON(StatusDescription.createProcessStatus(false, "User does not exist."));
         HashMap<String, Object> processStatus = user.decreaseScore(converter.toInt(data.get("score")), converter.toString(data.get("description")));
         if((boolean) processStatus.get("status"))
-            return converter.HashMapToJson(user.save());
-        return converter.HashMapToJson(StatusDescription.createProcessStatus(false, "Cannot decrease score due to internal server error."));
+            return converter.HashMapToJSON(user.save());
+        return converter.HashMapToJSON(StatusDescription.createProcessStatus(false, "Cannot decrease score due to internal server error."));
     }
 
     @RequestMapping("/user/resetScore")
     public String resetScore(@RequestParam(value="JSON", required = true, defaultValue = "0") String JSON)
     {
-        HashMap<String, Object> data = converter.JsonToHashMap(JSON);
-        HashMap<String, Object> userData = converter.JsonToHashMap(converter.toString(data.get("user")));
+        HashMap<String, Object> data = converter.JSONToHashMap(JSON);
+        HashMap<String, Object> userData = converter.JSONToHashMap(converter.toString(data.get("user")));
         User user = User.find(converter.toInt(userData.get("id")));
         if(user == null)
-            return converter.HashMapToJson(StatusDescription.createProcessStatus(false, "User does not exist."));
+            return converter.HashMapToJSON(StatusDescription.createProcessStatus(false, "User does not exist."));
         HashMap<String, Object> processStatus = user.decreaseScore(-user.getScore(), converter.toString(data.get("description")));
         if((boolean) processStatus.get("status"))
-            return converter.HashMapToJson(user.save());
-        return converter.HashMapToJson(StatusDescription.createProcessStatus(false, "Cannot reset score due to internal server error."));
+            return converter.HashMapToJSON(user.save());
+        return converter.HashMapToJSON(StatusDescription.createProcessStatus(false, "Cannot reset score due to internal server error."));
     }
 
     @RequestMapping("/user/login")
@@ -293,12 +293,12 @@ public class UserController {
         }
 
         if(user == null || !currentPassword.equals(password))
-            return converter.HashMapToJson(StatusDescription.createProcessStatus(false, "User does not exist or password is incorrect."));
+            return converter.HashMapToJSON(StatusDescription.createProcessStatus(false, "User does not exist or password is incorrect."));
 
         HashMap<String, Object> JSON = StatusDescription.createProcessStatus(true);
         JSON.put("user", user.getGeneralValues());
 
-        return converter.HashMapToJson(JSON);
+        return converter.HashMapToJSON(JSON);
     }
 
 }
