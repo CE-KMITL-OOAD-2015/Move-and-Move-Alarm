@@ -5,7 +5,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.sql.SQLException;
 import java.util.HashMap;
 
  @RestController
@@ -16,7 +15,7 @@ import java.util.HashMap;
      @RequestMapping("/test/serverConnection")
      public String testServerConnection()
      {
-         return converter.HashMapToJson(StatusDescription.createProcessStatus(true, "connected."));
+         return converter.HashMapToJSON(StatusDescription.createProcessStatus(true, "connected."));
      }
 
      @RequestMapping("/test/databaseServerConnection")
@@ -24,9 +23,9 @@ import java.util.HashMap;
      {
          sqlInquirer.startConnection();
          if(sqlInquirer.isConnecting())
-            return converter.HashMapToJson(StatusDescription.createProcessStatus(true, "connected."));
+            return converter.HashMapToJSON(StatusDescription.createProcessStatus(true, "connected."));
 
-         return converter.HashMapToJson(StatusDescription.createProcessStatus(false, "Cannot connect to the database server."));
+         return converter.HashMapToJSON(StatusDescription.createProcessStatus(false, "Cannot connect to the database server."));
      }
 
      @RequestMapping("/test/passParameter")
@@ -35,10 +34,10 @@ import java.util.HashMap;
          if(param.length() > 0 && !param.equals("Server cannot receive any value.")) {
              HashMap<String, Object> JSON = StatusDescription.createProcessStatus(true);
              JSON.put("param", param);
-             return converter.HashMapToJson(JSON);
+             return converter.HashMapToJSON(JSON);
          }
 
-         return converter.HashMapToJson(StatusDescription.createProcessStatus(false, "Server cannot receive any value."));
+         return converter.HashMapToJSON(StatusDescription.createProcessStatus(false, "Server cannot receive any value."));
      }
 
      @RequestMapping("/test/queryingData")
@@ -54,9 +53,9 @@ import java.util.HashMap;
          if(temp != null) {
              HashMap<String, Object> JSON = StatusDescription.createProcessStatus(true);
              JSON.put("data", temp);
-             return converter.HashMapToJson(JSON);
+             return converter.HashMapToJSON(JSON);
          }
 
-         return converter.HashMapToJson(StatusDescription.createProcessStatus(false, "An error has occurred while querying data from the database."));
+         return converter.HashMapToJSON(StatusDescription.createProcessStatus(false, "An error has occurred while querying data from the database."));
      }
 }
