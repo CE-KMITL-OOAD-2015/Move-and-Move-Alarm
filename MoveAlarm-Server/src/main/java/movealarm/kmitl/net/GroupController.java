@@ -276,5 +276,10 @@ public class GroupController {
 
         return converter.HashMapToJSON(StatusDescription.createProcessStatus(false, "Cannot reset score due to internal server error."));
     }
+
+    public void changeDatabaseInquirer(DatabaseInterface databaseInquirer)
+    {
+        this.databaseInquirer = databaseInquirer;
+    }
 }
 
