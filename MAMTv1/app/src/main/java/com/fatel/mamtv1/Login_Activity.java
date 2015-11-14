@@ -149,6 +149,11 @@ public class Login_Activity extends AppCompatActivity {
             Toast toast = Toast.makeText(this, "Please enter Password", Toast.LENGTH_SHORT);
             toast.show();
         }
+        else if((username.getText().toString().length()<6) || (password.getText().toString().length()<6))
+        {
+            Toast toast = Toast.makeText(this, "Please enter Username and Password at least 6 characters", Toast.LENGTH_SHORT);
+            toast.show();
+        }
         else if (isSuccess==1/*ifSuccess ใช้เช็คว่า username กับ password ตรงกับฐานข้อมูลรึเปล่า*/) {
             UserManage.getInstance().loginUser(username.getText().toString(), password.getText().toString(), this);
             UserManage.getInstance().mauser = 1;

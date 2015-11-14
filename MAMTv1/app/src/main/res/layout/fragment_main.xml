@@ -27,6 +27,7 @@
              android:textColor="@android:color/black"
              android:text="00"/>
     </LinearLayout>
+
     <LinearLayout
         android:id="@+id/nextalarm"
         android:layout_width="wrap_content"
