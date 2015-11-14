@@ -365,4 +365,7 @@ public class AlarmFragment extends android.support.v4.app.Fragment {
             return false;
         }
     }*/
+    public void setTextAlarm(Alarm alarm){
+
+    }
 }

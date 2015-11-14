@@ -7,10 +7,13 @@
         android:id="@+id/score"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
         android:orientation="horizontal"
-        android:layout_marginTop="40dp"
-        android:layout_centerVertical="true">
+        android:layout_marginTop="97dp"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginRight="39dp"
+        android:layout_marginEnd="39dp">
          <TextView
              android:id="@+id/scoreText"
              android:layout_width="wrap_content"
@@ -31,37 +34,100 @@
         android:id="@+id/nextalarm"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_centerHorizontal="true"
         android:orientation="horizontal"
-        android:layout_marginTop="20dp"
-        android:layout_below="@id/score">
+        android:layout_below="@+id/score"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="35dp">
         <TextView
             android:id="@+id/nextalarmText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="30sp"
             android:textColor="@android:color/black"
-            android:text="Next Alarm : " />
+            android:text="Start time"
+            android:layout_marginTop="35dp" />
         <TextView
             android:id="@+id/nextalarmNum1"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="30sp"
             android:textColor="@android:color/black"
-            android:text="--"/>
+            android:text="--"
+            android:layout_marginTop="35dp"
+            android:layout_marginLeft="5dp" />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="30sp"
             android:textColor="@android:color/black"
-            android:text=" : "/>
+            android:text=" : "
+            android:layout_marginTop="35dp"
+            android:layout_marginLeft="5dp" />
         <TextView
             android:id="@+id/nextalarmNum2"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textSize="30sp"
             android:textColor="@android:color/black"
-            android:text="--"/>
+            android:text="--"
+            android:layout_marginTop="35dp"
+            android:layout_marginLeft="5dp" />
     </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/linearLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="10dp"
+        android:layout_below="@+id/nextalarm"
+        android:layout_centerHorizontal="true">
+
+        <TextView
+            android:id="@+id/textView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="30sp"
+            android:textColor="@android:color/black"
+            android:text="Stop time"
+            android:layout_marginTop="10dp" />
+
+        <TextView
+            android:id="@+id/textView2"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="30sp"
+            android:textColor="@android:color/black"
+            android:text="--"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="5dp" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="30sp"
+            android:textColor="@android:color/black"
+            android:text=" : "
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="5dp" />
+
+        <TextView
+            android:id="@+id/textView3"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="30sp"
+            android:textColor="@android:color/black"
+            android:text="--"
+            android:layout_marginTop="10dp"
+            android:layout_marginLeft="5dp" />
+    </LinearLayout>
+
+    <AnalogClock
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/analogClock"
+        android:layout_below="@+id/linearLayout"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="25dp" />
 
 </RelativeLayout>
