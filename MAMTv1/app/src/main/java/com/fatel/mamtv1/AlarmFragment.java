@@ -14,6 +14,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 
 /**
@@ -365,7 +366,5 @@ public class AlarmFragment extends android.support.v4.app.Fragment {
             return false;
         }
     }*/
-    public void setTextAlarm(Alarm alarm){
 
-    }
 }

@@ -34,6 +34,7 @@ import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.Calendar;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -55,12 +56,14 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
             firstName = bundle.getString("firstname");
             lastName = bundle.getString("lastname");
             id = bundle.getString("id");
         }
+
         profilepic = (CircleImageView) findViewById(R.id.profile_image);
         profilepic2 = (CircleImageView) findViewById(R.id.profile_image_f);
         header = (TextView) findViewById(R.id.profile);
@@ -235,5 +238,4 @@ public class MainActivity extends AppCompatActivity {
 //            Log.i("xx", "io");
 //        }
 //    }
-
 }
