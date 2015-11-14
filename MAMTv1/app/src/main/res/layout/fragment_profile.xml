@@ -1,6 +1,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent" tools:context="com.fatel.mamtv1.ProfileFragment">
+
    <!-- android:background="@drawable/profilebg"-->
     <de.hdodenhof.circleimageview.CircleImageView
         xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -11,6 +12,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="40dp"/>
     <LinearLayout
+
     android:id="@+id/proname"
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"

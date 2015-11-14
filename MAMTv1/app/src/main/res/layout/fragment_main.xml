@@ -1,6 +1,7 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
     android:layout_height="match_parent" tools:context="com.fatel.mamtv1.MainFragment">
+
     <!--android:background="@drawable/bgmain"-->
     <de.hdodenhof.circleimageview.CircleImageView
         xmlns:app="http://schemas.android.com/apk/res-auto"
@@ -13,6 +14,7 @@
         android:layout_alignParentStart="true"
         android:layout_marginStart="24dp"
         android:src="@drawable/test" />
+
     <LinearLayout
         android:id="@+id/score"
         android:layout_width="wrap_content"
@@ -45,16 +47,19 @@
         android:id="@+id/nextalarm"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+
         android:layout_below="@id/score"
         android:orientation="horizontal"
         android:layout_alignParentLeft="true"
         android:layout_alignParentStart="true"
         android:layout_marginTop="70dp"
         android:layout_marginLeft="30dp">
+
         <TextView
             android:id="@+id/nextalarmText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+
             android:textSize="15sp"
             android:textColor="@android:color/black"
             android:text="Start" />
@@ -77,6 +82,7 @@
             android:id="@+id/startmin"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+
             android:textSize="15sp"
             android:textColor="@android:color/black"
             android:text="--"
@@ -164,5 +170,8 @@
         android:layout_below="@id/daycurrent"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="20dp"/>
+
+
+
 
 </RelativeLayout>

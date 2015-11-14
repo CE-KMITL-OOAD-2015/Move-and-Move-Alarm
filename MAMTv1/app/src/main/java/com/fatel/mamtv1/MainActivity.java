@@ -48,29 +48,35 @@ public class MainActivity extends AppCompatActivity {
     private TextView header;
     private TextView user;
     CircleImageView profilepic;
+    CircleImageView profilepic2;
     String firstName;
     String lastName;
     public String id;
     Bundle passimg;
     DBAlarmHelper mAlarmHelper;
     private HistoryHelper mhistoryHelper;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
         Cache.getInstance().putData("MainActivityContext", this);
+
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
             firstName = bundle.getString("firstname");
             lastName = bundle.getString("lastname");
             id = bundle.getString("id");
         }
+
         profilepic = (CircleImageView) findViewById(R.id.profile_image);
+
         header = (TextView) findViewById(R.id.profile);
         user = (TextView) findViewById(R.id.username);
         if (bundle != null) {
             user.setText(firstName);
+
             passimg = new Bundle();
             passimg.putString("id", id);
         }
@@ -170,10 +176,12 @@ public class MainActivity extends AppCompatActivity {
         // Create a new fragment and specify the planet to show based on
         // position
         Fragment fragment = null;
+
         Class fragmentClass;
         switch (menuItem.getItemId()) {
             case R.id.nav_home_fragment:
                 fragmentClass = MainFragment.class;
+                profilepic2.setVisibility(View.VISIBLE);
                 break;
             case R.id.nav_alarm_fragment:
                 fragmentClass = AlarmFragment.class;
@@ -196,16 +204,19 @@ public class MainActivity extends AppCompatActivity {
             case R.id.nav_group_fragment:
                 fragmentClass = GroupFragment.class;
                 break;
+
             case R.id.nav_logout_fragment:
                 fragmentClass = null;
-
                 mAlarmHelper =  new DBAlarmHelper(this);
-                if(UserManage.getInstance(this).getCurrentFacebookFirstName()==null) {
+                if(UserManage.getInstance(this).mauser == 1) {
                     UserManage.getInstance(this).logoutUser(this);
+                    UserManage.getInstance(this).mauser = 0;
                 }
-                else if(UserManage.getInstance(this).getCurrentFacebookFirstName()!=null) {
-                    UserManage.getInstance(this).logoutUser(this);
+                else if(UserManage.getInstance(this).mauser == 2) {
                     LoginManager.getInstance().logOut();
+                    UserManage.getInstance(this).logoutUser(this);
+                    UserManage.getInstance(this).mauser = 0;
+
                 }
                 mAlarmHelper.deleteSetAlarm("1");
                 mDrawerLayout.closeDrawers();
@@ -313,6 +324,7 @@ public class MainActivity extends AppCompatActivity {
     public void linkJoinGroup(View view)
     {
         Intent intent = new Intent(this, JoinGroupActivity.class);
+
         startActivity(intent);
     }
 }

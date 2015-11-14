@@ -244,6 +244,7 @@ public class Login_Activity extends AppCompatActivity {
         if (loggedIn && (profile != null)) {
             UserManage.getInstance(this).createFBUser(profile.getId(), profile.getFirstName(), this);
             UserManage.getInstance(this).loginFBUser(profile.getId(), profile.getFirstName(),this);
+
             Intent intent = new Intent(Login_Activity.this, MainActivity.class);
             intent.putExtra("firstname",profile.getFirstName());
             intent.putExtra("lastname",profile.getLastName());

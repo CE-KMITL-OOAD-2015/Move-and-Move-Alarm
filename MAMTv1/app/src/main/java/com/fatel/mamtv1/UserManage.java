@@ -26,14 +26,16 @@ public class UserManage {
             User user = User.checkLogin(context);
             if(user!=null){
                 currentUser = user;
-                Log.i("User", "funh loginuser!=null :"+currentUser.getUserName());
+
             }
         }
         return instance;
     }
 
     public void createNewUser(String username,String password,Context context) {
+
         int idUser = addNewUser(username, password,context);
+
         currentUser = new User(idUser, username); Log.i("User", "funh createnewuser :" + idUser);
         currentUser.setLogin(1);
         currentUser.save(context); Log.i("User", "funh save :" + idUser);
@@ -74,7 +76,7 @@ public class UserManage {
         currentUser.setLogin(0);
         currentUser.save(context);
         currentUser=null;
-        Log.i("User", "funh looutuser :" + currentUser);
+
     }
     public boolean checkCurrentLogin(Context context){
         User user = User.checkLogin(context);
@@ -86,9 +88,7 @@ public class UserManage {
 
     }
     // server
-    public int checkUser(String username,String password) {
-        return 1;
-    }
+
 
     private int addNewUser(String username,String password,Context context){
         Cache.getInstance().putData("SignUpContext", this);
@@ -141,8 +141,12 @@ public class UserManage {
     private int findUserFB(String facebookID,String facebookFirstName){
         return 0;
     }
-    private void updateUser(){
-        //update currentuser to server
+
+
+
+    public int checkUser(String username,String password) {
+        return 1;
+
     }
 
     public void addScore(int score,Context context){
@@ -151,6 +155,10 @@ public class UserManage {
             currentUser.save(context);
             updateUser();
         }
+    }
+
+    private void updateUser(){
+        //update currentuser to server
     }
     public void setFirstName(String firstName,Context context){
         if(currentUser!=null){
