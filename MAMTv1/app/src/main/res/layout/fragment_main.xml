@@ -30,140 +30,129 @@
              android:textColor="@android:color/black"
              android:text="00"/>
     </LinearLayout>
-
     <LinearLayout
         android:id="@+id/nextalarm"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_below="@id/score"
         android:orientation="horizontal"
-        android:layout_alignBottom="@+id/linearLayout"
         android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true">
+        android:layout_alignParentStart="true"
+        android:layout_marginTop="70dp"
+        android:layout_marginLeft="30dp">
         <TextView
             android:id="@+id/nextalarmText"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="25sp"
+            android:textSize="15sp"
             android:textColor="@android:color/black"
-            android:text="Start"
-            android:layout_marginTop="35dp" />
+            android:text="Start" />
         <TextView
             android:id="@+id/starthr"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="25sp"
+            android:textSize="15sp"
             android:textColor="@android:color/black"
             android:text="--"
-            android:layout_marginTop="35dp"
             android:layout_marginLeft="5dp" />
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="25sp"
+            android:textSize="15sp"
             android:textColor="@android:color/black"
             android:text=" : "
-            android:layout_marginTop="35dp"
             android:layout_marginLeft="5dp" />
         <TextView
             android:id="@+id/startmin"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="25sp"
+            android:textSize="15sp"
             android:textColor="@android:color/black"
             android:text="--"
-            android:layout_marginTop="35dp"
-            android:layout_marginLeft="5dp" />
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="20dp"/>
+        <TextView
+            android:id="@+id/intervalstart"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="15sp"
+            android:textColor="@android:color/black"
+            android:text="am"
+            android:layout_marginLeft="5dp"/>
     </LinearLayout>
+    <TextView
+        android:id="@+id/daycurrent"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:textColor="@android:color/black"
+        android:text="day"
+        android:layout_marginTop="35dp"
+        android:layout_below="@id/nextalarm"
+        android:layout_centerHorizontal="true" />
+
 
     <LinearLayout
         android:id="@+id/linearLayout"
+        android:layout_below="@id/score"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:orientation="horizontal"
-        android:layout_alignTop="@+id/intervalstop"
-        android:layout_alignLeft="@+id/score"
-        android:layout_alignStart="@+id/score">
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginTop="70dp"
+        android:layout_marginRight="30dp">
 
         <TextView
             android:id="@+id/textView"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="25sp"
+            android:textSize="15sp"
             android:textColor="@android:color/black"
-            android:text="Stop"
-            android:layout_above="@+id/analogClock"
-            android:layout_toLeftOf="@+id/linearLayout"
-            android:layout_toStartOf="@+id/linearLayout" />
+            android:text="Stop" />
 
         <TextView
             android:id="@+id/hrstop"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="25sp"
+            android:textSize="15sp"
             android:textColor="@android:color/black"
             android:text="--"
-            android:layout_marginTop="10dp"
             android:layout_marginLeft="5dp" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="25sp"
+            android:textSize="15sp"
             android:textColor="@android:color/black"
             android:text=" : "
-            android:layout_marginTop="10dp"
             android:layout_marginLeft="5dp" />
 
         <TextView
             android:id="@+id/minstop"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="25sp"
+            android:textSize="15sp"
             android:textColor="@android:color/black"
             android:text="--"
-            android:layout_marginTop="10dp"
-            android:layout_marginLeft="5dp" />
+            android:layout_marginLeft="5dp"
+            android:layout_marginRight="20dp"/>
+        <TextView
+            android:id="@+id/intervalstop"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="15sp"
+            android:textColor="@android:color/black"
+            android:text="am"
+            />
     </LinearLayout>
 
     <AnalogClock
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:id="@+id/analogClock"
-        android:layout_below="@+id/linearLayout"
+        android:layout_below="@id/daycurrent"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="25dp" />
-
-    <TextView
-        android:id="@+id/daycurrent"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="30sp"
-        android:textColor="@android:color/black"
-        android:text="day"
-        android:layout_marginTop="70dp"
-        android:layout_below="@+id/score"
-        android:layout_centerHorizontal="true" />
-
-    <TextView
-        android:id="@+id/intervalstart"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="25sp"
-        android:textColor="@android:color/black"
-        android:text="am"
-        android:layout_above="@+id/analogClock"
-        android:layout_toLeftOf="@+id/daycurrent"
-        android:layout_toStartOf="@+id/daycurrent" />
-
-    <TextView
-        android:id="@+id/intervalstop"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textSize="25sp"
-        android:textColor="@android:color/black"
-        android:text="am"
-        android:layout_centerVertical="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_marginTop="20dp"/>
 
 </RelativeLayout>

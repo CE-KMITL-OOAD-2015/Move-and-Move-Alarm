@@ -38,8 +38,6 @@ public class MainFragment extends android.support.v4.app.Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_main, container, false);
-<<<<<<< HEAD
-=======
         setDay(view);
         mAlarmHelper = new DBAlarmHelper(getActivity());
         setTextAlarm(view,mAlarmHelper);
@@ -52,7 +50,6 @@ public class MainFragment extends android.support.v4.app.Fragment {
 //        Log.i("xx", propic.toString());
 //        propic.setVisibility(View.VISIBLE);
 //        Log.i("xx", "do?");
->>>>>>> feature/Clock
 //        Glide.with(this).load("https://graph.facebook.com/" + id + "/picture?type=large").into(propic);
         return view;
     }

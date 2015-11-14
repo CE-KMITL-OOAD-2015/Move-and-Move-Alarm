@@ -53,6 +53,7 @@ public class MainActivity extends AppCompatActivity {
     public String id;
     Bundle passimg;
     DBAlarmHelper mAlarmHelper;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -70,7 +71,7 @@ public class MainActivity extends AppCompatActivity {
         profilepic2.setVisibility(View.VISIBLE);
         header = (TextView) findViewById(R.id.profile);
         user = (TextView) findViewById(R.id.username);
-        if(bundle !=null) {
+        if (bundle != null) {
             user.setText(firstName);
             Picasso.with(this).load("https://graph.facebook.com/" + id + "/picture?type=large").into(profilepic);
             Picasso.with(this).load("https://graph.facebook.com/" + id + "/picture?type=large").into(profilepic2);
@@ -81,7 +82,7 @@ public class MainActivity extends AppCompatActivity {
         //pendingIntent = PendingIntent.getBroadcast(MainActivity.this, 0, alarmIntent, 0);
         FragmentTransaction tx = getSupportFragmentManager().beginTransaction();
         MainFragment fragobj = new MainFragment();
-        if(bundle !=null)
+        if (bundle != null)
             fragobj.setArguments(passimg);
         tx.replace(R.id.container, fragobj);
         tx.commit();
@@ -181,12 +182,11 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case R.id.nav_logout_fragment:
                 fragmentClass = null;
-                mAlarmHelper =  new DBAlarmHelper(this);
-                if(UserManage.getInstance().mauser == 1) {
+                mAlarmHelper = new DBAlarmHelper(this);
+                if (UserManage.getInstance().mauser == 1) {
                     UserManage.getInstance().logoutUser();
                     UserManage.getInstance().mauser = 0;
-                }
-                else if(UserManage.getInstance().mauser == 2) {
+                } else if (UserManage.getInstance().mauser == 2) {
                     LoginManager.getInstance().logOut();
                     UserManage.getInstance().logoutUser();
                     UserManage.getInstance().mauser = 0;
@@ -208,7 +208,7 @@ public class MainActivity extends AppCompatActivity {
         } catch (Exception e) {
             e.printStackTrace();
         }
-        if(fragmentClass!=null) {
+        if (fragmentClass != null) {
             // Insert the fragment by replacing any existing fragment
             FragmentManager fragmentManager = getSupportFragmentManager();//getActivity()
             FragmentTransaction tx = fragmentManager.beginTransaction();
@@ -246,62 +246,58 @@ public class MainActivity extends AppCompatActivity {
 //            Log.i("xx", "io");
 //        }
 //    }
-<<<<<<< HEAD
 
-    public void linkPosture1(View view)
-    {
+    public void linkPosture1(View view) {
         Intent intent = new Intent(this, PostureActivity.class);
-        intent.putExtra("value",0);
+        intent.putExtra("value", 0);
         startActivity(intent);
     }
-    public void linkPosture2(View view)
-    {
+
+    public void linkPosture2(View view) {
         Intent intent = new Intent(this, PostureActivity.class);
-        intent.putExtra("value",1);
+        intent.putExtra("value", 1);
         startActivity(intent);
     }
-    public void linkPosture3(View view)
-    {
+
+    public void linkPosture3(View view) {
         Intent intent = new Intent(this, PostureActivity.class);
-        intent.putExtra("value",2);
+        intent.putExtra("value", 2);
         startActivity(intent);
     }
-    public void linkPosture4(View view)
-    {
+
+    public void linkPosture4(View view) {
         Intent intent = new Intent(this, PostureActivity.class);
-        intent.putExtra("value",3);
+        intent.putExtra("value", 3);
         startActivity(intent);
     }
-    public void linkPosture5(View view)
-    {
+
+    public void linkPosture5(View view) {
         Intent intent = new Intent(this, PostureActivity.class);
-        intent.putExtra("value",4);
+        intent.putExtra("value", 4);
         startActivity(intent);
     }
-    public void linkPosture6(View view)
-    {
+
+    public void linkPosture6(View view) {
         Intent intent = new Intent(this, PostureActivity.class);
-        intent.putExtra("value",5);
+        intent.putExtra("value", 5);
         startActivity(intent);
     }
-    public void linkPosture7(View view)
-    {
+
+    public void linkPosture7(View view) {
         Intent intent = new Intent(this, PostureActivity.class);
-        intent.putExtra("value",6);
+        intent.putExtra("value", 6);
         startActivity(intent);
     }
-    public void linkPosture8(View view)
-    {
+
+    public void linkPosture8(View view) {
         Intent intent = new Intent(this, PostureActivity.class);
-        intent.putExtra("value",7);
+        intent.putExtra("value", 7);
         startActivity(intent);
     }
-    public void linkPosture9(View view)
-    {
+
+    public void linkPosture9(View view) {
         Intent intent = new Intent(this, PostureActivity.class);
-        intent.putExtra("value",8);
+        intent.putExtra("value", 8);
         startActivity(intent);
     }
-=======
->>>>>>> feature/Clock
 }
