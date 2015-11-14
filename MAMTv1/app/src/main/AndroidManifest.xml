@@ -14,9 +14,9 @@
     // for store
     <uses-permission android:name="android.permission.RECORD_AUDIO" />
     // for record video
-    <uses-permission android:name="android.permission.VIBRATE"/>
+    <uses-permission android:name="android.permission.VIBRATE" />
     //Vibrate devite
-    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     //Ringtone
     <application
         android:allowBackup="true"
@@ -67,6 +67,14 @@
             android:label="@string/title_activity_shared" >
         </activity>
         <activity
+            android:name=".PreShareActivity"
+            android:label="@string/title_activity_pre" >
+        </activity>
+        <activity
+            android:name=".PostureActivity"
+            android:label="@string/title_activity_posture" >
+        </activity>
+        <activity
             android:name="com.facebook.FacebookActivity"
             android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
             android:label="@string/app_name"
@@ -81,10 +89,7 @@
             android:name="com.facebook.sdk.ApplicationId"
             android:value="@string/facebook_app_id" />
 
-        <activity
-            android:name=".PreShareActivity"
-            android:label="@string/title_activity_pre" >
-        </activity>
+
     </application>
 
 </manifest>

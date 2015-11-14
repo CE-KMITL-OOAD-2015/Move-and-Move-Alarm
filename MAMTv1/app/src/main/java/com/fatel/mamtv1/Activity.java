@@ -63,7 +63,7 @@ public class Activity extends AppCompatActivity {
 
         context=getApplicationContext();
         if(ImageCollection.size()==0){
-            ImageCollection.initial();
+            ImageCollection.initial(context);
         }
 
         Log.i("Activity","can go +1");

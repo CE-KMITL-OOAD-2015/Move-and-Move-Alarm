@@ -173,6 +173,9 @@ public class MainActivity extends AppCompatActivity {
             case R.id.nav_alarm_fragment:
                 fragmentClass = AlarmFragment.class;
                 break;
+            case R.id.nav_posture_fragment:
+                fragmentClass = ChoosePostureFragment.class;
+                break;
             case R.id.nav_logout_fragment:
                 fragmentClass = null;
                 mAlarmHelper =  new DBAlarmHelper(this);
@@ -241,4 +244,58 @@ public class MainActivity extends AppCompatActivity {
 //        }
 //    }
 
+    public void linkPosture1(View view)
+    {
+        Intent intent = new Intent(this, PostureActivity.class);
+        intent.putExtra("value",0);
+        startActivity(intent);
+    }
+    public void linkPosture2(View view)
+    {
+        Intent intent = new Intent(this, PostureActivity.class);
+        intent.putExtra("value",1);
+        startActivity(intent);
+    }
+    public void linkPosture3(View view)
+    {
+        Intent intent = new Intent(this, PostureActivity.class);
+        intent.putExtra("value",2);
+        startActivity(intent);
+    }
+    public void linkPosture4(View view)
+    {
+        Intent intent = new Intent(this, PostureActivity.class);
+        intent.putExtra("value",3);
+        startActivity(intent);
+    }
+    public void linkPosture5(View view)
+    {
+        Intent intent = new Intent(this, PostureActivity.class);
+        intent.putExtra("value",4);
+        startActivity(intent);
+    }
+    public void linkPosture6(View view)
+    {
+        Intent intent = new Intent(this, PostureActivity.class);
+        intent.putExtra("value",5);
+        startActivity(intent);
+    }
+    public void linkPosture7(View view)
+    {
+        Intent intent = new Intent(this, PostureActivity.class);
+        intent.putExtra("value",6);
+        startActivity(intent);
+    }
+    public void linkPosture8(View view)
+    {
+        Intent intent = new Intent(this, PostureActivity.class);
+        intent.putExtra("value",7);
+        startActivity(intent);
+    }
+    public void linkPosture9(View view)
+    {
+        Intent intent = new Intent(this, PostureActivity.class);
+        intent.putExtra("value",8);
+        startActivity(intent);
+    }
 }

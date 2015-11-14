@@ -17,4 +17,5 @@
     <string name="title_activity_shared">Share_Activity</string>
     <string name="facebook_app_id">536873643131521</string>
     <string name="title_activity_pre">PreActivity</string>
+    <string name="title_activity_posture">PostureActivity</string>
 </resources>
