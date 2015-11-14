@@ -6,7 +6,7 @@ import android.provider.BaseColumns;
  * Created by Monthon on 12/10/2558.
  */
 public class Alarm {
-    private int id;
+    private int id ;
     private String starthr;
     private String startmin;
     private String stophr;

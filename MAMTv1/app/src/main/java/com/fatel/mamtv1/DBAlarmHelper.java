@@ -19,8 +19,8 @@ public class DBAlarmHelper extends SQLiteOpenHelper{
     @Override
     public void onCreate(SQLiteDatabase db){
         String CREATE_ALRAM_TABLE = String.format("CREATE TABLE %s " +
-                        "(%s INTEGER PRIMARY KEY  AUTOINCREMENT, %s TEXT, %s TEXT, %s TEXT, %s TEXT, " +
-                        "%s TEXT,%s TEXT,%s TEXT,%s TEXT)",
+                        "(%s INTEGER, %s TEXT, %s TEXT, %s TEXT, %s TEXT, " +
+                        "%s TEXT,%s TEXT,%s TEXT,%s TEXT)", //PRIMARY KEY  AUTOINCREMENT
                 Alarm.TABLE,
                 Alarm.Column.ID,
                 Alarm.Column.START_HR,
@@ -38,13 +38,13 @@ public class DBAlarmHelper extends SQLiteOpenHelper{
     public void onUpgrade(SQLiteDatabase db,int oldVersion,int newVersion){
         String DROP_ALRAM_TABLE = "DROP TABLE IF EXISTS"+ Alarm.TABLE;
         db.execSQL(DROP_ALRAM_TABLE);
-        Log.i(TAG,"Upgrade Database from "+oldVersion+" to "+newVersion);
+        Log.i(TAG, "Upgrade Database from " + oldVersion + " to " + newVersion);
         onCreate(db);
     }
     public void addAlarm(Alarm alarm) {
         sqLiteDatabase = this.getWritableDatabase();
         ContentValues values = new ContentValues();
-        //values.put(Friend.Column.ID, friend.getId());
+        values.put(Alarm.Column.ID, alarm.getId());
         values.put(Alarm.Column.START_HR, alarm.getStarthr());
         values.put(Alarm.Column.START_MIN, alarm.getStartmin());
         values.put(Alarm.Column.STOP_HR, alarm.getStophr());
@@ -79,9 +79,10 @@ public class DBAlarmHelper extends SQLiteOpenHelper{
         sqLiteDatabase = this.getReadableDatabase();
         Cursor cursor = sqLiteDatabase.query
                 (Alarm.TABLE, null, null, null, null, null, null);
-        if (cursor.moveToFirst()) {
+        if (cursor.moveToFirst()){
             temp = 1;
         }
+
         sqLiteDatabase.close();
         Log.d("temp", temp + "");
         return temp;

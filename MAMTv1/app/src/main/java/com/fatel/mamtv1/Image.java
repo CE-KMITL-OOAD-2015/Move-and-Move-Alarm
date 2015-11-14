@@ -1,4 +1,5 @@
 package com.fatel.mamtv1;
+import android.content.Context;
 import android.provider.BaseColumns;
 import android.util.Log;
 
@@ -19,9 +20,9 @@ public class Image {
         public static final String DESCRIPTION = "description";
     }
 
-    public Image (int id,int image,String description){
+    public Image (int id,int image,String description,Context context){
         this.id=id;
-        helper=new ImageHelper(Activity.context );
+        helper=new ImageHelper(context);//Activity.context );
         if (!(helper.hasImage(id))) helper.saveImage(id, image, description);
     }
 

@@ -37,7 +37,6 @@ public class Login_Activity extends AppCompatActivity {
     private PendingIntent pendingIntent;
     private AlarmManager manager;
     private DBAlarmHelper mAlarmHelper;
-    UserManage mUserManage;
     CallbackManager callbackManager;
     ProfileTracker profileTracker;
     @Override
@@ -100,7 +99,6 @@ public class Login_Activity extends AppCompatActivity {
             }
         };
         mAlarmHelper = new DBAlarmHelper(this);
-        mUserManage = UserManage.getInstance();
     }
 
     @Override
@@ -139,7 +137,7 @@ public class Login_Activity extends AppCompatActivity {
         username = (EditText)findViewById(R.id.enter_username);
         password = (EditText)findViewById(R.id.enter_password);
 
-        int isSuccess = mUserManage.checkUser(username.getText().toString(), password.getText().toString());
+        int isSuccess = UserManage.getInstance().checkUser(username.getText().toString(), password.getText().toString());
 
         if(username.getText().toString().equals(""))
         {
@@ -151,14 +149,20 @@ public class Login_Activity extends AppCompatActivity {
             Toast toast = Toast.makeText(this, "Please enter Password", Toast.LENGTH_SHORT);
             toast.show();
         }
+        else if((username.getText().toString().length()<6) || (password.getText().toString().length()<6))
+        {
+            Toast toast = Toast.makeText(this, "Please enter Username and Password at least 6 characters", Toast.LENGTH_SHORT);
+            toast.show();
+        }
         else if (isSuccess==1/*ifSuccess ใช้เช็คว่า username กับ password ตรงกับฐานข้อมูลรึเปล่า*/) {
-            mUserManage.loginUser(username.getText().toString(),password.getText().toString(),this);
-            mUserManage.mauser = 1;
+            UserManage.getInstance().loginUser(username.getText().toString(), password.getText().toString(), this);
+            UserManage.getInstance().mauser = 1;
 
             HttpConnector request = new HttpConnector(this);
             request.getrequest();
 
             Intent intent = new Intent(this, MainActivity.class);
+            Toast.makeText(this, "Hello "+username.getText().toString(), Toast.LENGTH_SHORT).show();
             startActivity(intent);
             // ดูว่ามีการตั้งค่าเวลาหรือเปล่า
             /*if(mAlarmHelper.checkdata()==1){
@@ -238,14 +242,16 @@ public class Login_Activity extends AppCompatActivity {
         Profile profile = Profile.getCurrentProfile();
         //Log.i("loggedin", loginResult + " go UI");
         if (loggedIn && (profile != null)) {
-            mUserManage.loginFBUser(profile.getId(),profile.getFirstName(),this);
-            mUserManage.mauser = 2;
+            UserManage.getInstance().createFBUser(profile.getId(), profile.getFirstName(), this);
+            UserManage.getInstance().loginFBUser(profile.getId(), profile.getFirstName(),this);
+            UserManage.getInstance().mauser = 2;
             Intent intent = new Intent(Login_Activity.this, MainActivity.class);
             intent.putExtra("firstname",profile.getFirstName());
             intent.putExtra("lastname",profile.getLastName());
             intent.putExtra("id",profile.getId());
             //String uri = profile.getProfilePictureUri(100,100).toString();
             intent.putExtra("propic",profile.getProfilePictureUri(300,300));
+            Toast.makeText(this, "Hello "+profile.getFirstName(), Toast.LENGTH_SHORT).show();
             startActivity(intent);
         }
     }

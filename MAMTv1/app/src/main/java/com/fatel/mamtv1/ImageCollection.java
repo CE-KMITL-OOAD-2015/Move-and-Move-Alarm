@@ -1,5 +1,6 @@
 package com.fatel.mamtv1;
 
+import android.content.Context;
 import android.util.Log;
 
 import java.util.ArrayList;
@@ -13,23 +14,23 @@ public class ImageCollection {
     private static int count=1;
     //private ImageHelper helper = new ImageHelper();
 
-    public static void addImage(int image,String description){
-        Image img = new Image(count,image,description);
+    public static void addImage(int image,String description,Context context){
+        Image img = new Image(count,image,description,context);
         imageCollection.add(img);
         count++;
 
     }
 
-    public static void initial (){
-        addImage(R.drawable.ex1, "บริหารกล้ามเนื้อคอ");
-        addImage(R.drawable.ex2,"ยืดกล้ามเนื้อแขน");
-        addImage(R.drawable.ex3,"บริหารกล้ามเนื้อคอ");
-        addImage(R.drawable.ex4,"บริหารกล้ามเนื้อคอ");
-        addImage(R.drawable.ex5,"ยืดกล้ามเนื้อขา");
-        addImage(R.drawable.ex6,"บริหารข้อเท้า");
-        addImage(R.drawable.ex7,"ยืดกล้ามเนื้อขา");
-        addImage(R.drawable.ex8, "ยืดกล้ามเนื้อส่วนแขน");
-        addImage(R.drawable.ex9,"ยืดกล้ามเนื้อส่วนแขน");
+    public static void initial (Context context){
+        addImage(R.drawable.ex1, "บริหารกล้ามเนื้อคอ",context);
+        addImage(R.drawable.ex2,"ยืดกล้ามเนื้อแขน",context);
+        addImage(R.drawable.ex3,"บริหารกล้ามเนื้อคอ",context);
+        addImage(R.drawable.ex4,"บริหารกล้ามเนื้อคอ",context);
+        addImage(R.drawable.ex5,"ยืดกล้ามเนื้อขา",context);
+        addImage(R.drawable.ex6,"บริหารข้อเท้า",context);
+        addImage(R.drawable.ex7,"ยืดกล้ามเนื้อขา",context);
+        addImage(R.drawable.ex8, "ยืดกล้ามเนื้อส่วนแขน",context);
+        addImage(R.drawable.ex9,"ยืดกล้ามเนื้อส่วนแขน",context);
 
     }
     public static int size(){

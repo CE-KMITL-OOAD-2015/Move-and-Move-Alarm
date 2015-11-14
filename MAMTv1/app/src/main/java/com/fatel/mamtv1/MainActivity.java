@@ -21,6 +21,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.facebook.Profile;
@@ -50,7 +51,7 @@ public class MainActivity extends AppCompatActivity {
     String lastName;
     public String id;
     Bundle passimg;
-
+    DBAlarmHelper mAlarmHelper;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -63,6 +64,7 @@ public class MainActivity extends AppCompatActivity {
         }
         profilepic = (CircleImageView) findViewById(R.id.profile_image);
         profilepic2 = (CircleImageView) findViewById(R.id.profile_image_f);
+        profilepic2.setVisibility(View.VISIBLE);
         header = (TextView) findViewById(R.id.profile);
         user = (TextView) findViewById(R.id.username);
         if(bundle !=null) {
@@ -86,7 +88,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Fragment fragment = null;
-
+                profilepic2.setVisibility(View.VISIBLE);
                 Class fragmentClass;
                 fragmentClass = ProfileFragment.class;
                 try {
@@ -171,16 +173,22 @@ public class MainActivity extends AppCompatActivity {
             case R.id.nav_alarm_fragment:
                 fragmentClass = AlarmFragment.class;
                 break;
+            case R.id.nav_posture_fragment:
+                fragmentClass = ChoosePostureFragment.class;
+                break;
             case R.id.nav_logout_fragment:
                 fragmentClass = null;
+                mAlarmHelper =  new DBAlarmHelper(this);
                 if(UserManage.getInstance().mauser == 1) {
                     UserManage.getInstance().logoutUser();
                     UserManage.getInstance().mauser = 0;
                 }
                 else if(UserManage.getInstance().mauser == 2) {
                     LoginManager.getInstance().logOut();
+                    UserManage.getInstance().logoutUser();
                     UserManage.getInstance().mauser = 0;
                 }
+                mAlarmHelper.deleteSetAlarm("1");
                 mDrawerLayout.closeDrawers();
                 Intent intent = new Intent(this, Intro_Activity.class);
                 startActivity(intent);
@@ -206,7 +214,7 @@ public class MainActivity extends AppCompatActivity {
             tx.replace(R.id.container, fragment).commit();
 
             // Highlight the selected item, update the title, and close the drawer
-            menuItem.setChecked(true);
+            //menuItem.setChecked(true);
             if (menuItem.getTitle().equals("Home"))
                 setTitle("Move Alarm");
             else
@@ -236,4 +244,58 @@ public class MainActivity extends AppCompatActivity {
 //        }
 //    }
 
+    public void linkPosture1(View view)
+    {
+        Intent intent = new Intent(this, PostureActivity.class);
+        intent.putExtra("value",0);
+        startActivity(intent);
+    }
+    public void linkPosture2(View view)
+    {
+        Intent intent = new Intent(this, PostureActivity.class);
+        intent.putExtra("value",1);
+        startActivity(intent);
+    }
+    public void linkPosture3(View view)
+    {
+        Intent intent = new Intent(this, PostureActivity.class);
+        intent.putExtra("value",2);
+        startActivity(intent);
+    }
+    public void linkPosture4(View view)
+    {
+        Intent intent = new Intent(this, PostureActivity.class);
+        intent.putExtra("value",3);
+        startActivity(intent);
+    }
+    public void linkPosture5(View view)
+    {
+        Intent intent = new Intent(this, PostureActivity.class);
+        intent.putExtra("value",4);
+        startActivity(intent);
+    }
+    public void linkPosture6(View view)
+    {
+        Intent intent = new Intent(this, PostureActivity.class);
+        intent.putExtra("value",5);
+        startActivity(intent);
+    }
+    public void linkPosture7(View view)
+    {
+        Intent intent = new Intent(this, PostureActivity.class);
+        intent.putExtra("value",6);
+        startActivity(intent);
+    }
+    public void linkPosture8(View view)
+    {
+        Intent intent = new Intent(this, PostureActivity.class);
+        intent.putExtra("value",7);
+        startActivity(intent);
+    }
+    public void linkPosture9(View view)
+    {
+        Intent intent = new Intent(this, PostureActivity.class);
+        intent.putExtra("value",8);
+        startActivity(intent);
+    }
 }

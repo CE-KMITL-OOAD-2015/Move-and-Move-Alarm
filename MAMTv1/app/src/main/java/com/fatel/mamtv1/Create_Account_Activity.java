@@ -51,14 +51,14 @@ public class Create_Account_Activity extends AppCompatActivity {
         password = (EditText)findViewById(R.id.enter_password);
         rePassword = (EditText)findViewById(R.id.enter_repassword);
 
-        if(username.getText().toString().equals(""))
+        if(username.getText().toString().equals("") || password.getText().toString().equals(""))
         {
-            Toast toast = Toast.makeText(this, "Please enter Username or Password", Toast.LENGTH_SHORT);
+            Toast toast = Toast.makeText(this, "Please enter Username and Password", Toast.LENGTH_SHORT);
             toast.show();
         }
-        if(password.getText().toString().equals(""))
+        else if((username.getText().toString().length()<6) || (password.getText().toString().length()<6))
         {
-            Toast toast = Toast.makeText(this, "Please enter Password", Toast.LENGTH_SHORT);
+            Toast toast = Toast.makeText(this, "Please enter Username and Password at least 6 characters", Toast.LENGTH_SHORT);
             toast.show();
         }
 
