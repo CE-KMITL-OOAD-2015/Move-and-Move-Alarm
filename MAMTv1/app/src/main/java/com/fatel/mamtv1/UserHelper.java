@@ -5,6 +5,7 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
+import android.renderscript.Sampler;
 import android.util.Log;
 
 import java.sql.Blob;
@@ -24,7 +25,7 @@ public class UserHelper extends SQLiteOpenHelper {
         //not sure %s int for image
         String CREATE_USER_TABLE = String.format("CREATE TABLE %s " +
                         "(%s INTEGER PRIMARY KEY  AUTOINCREMENT,%s INTEGER, %s TEXT, %s TEXT, %s TEXT, %s INTEGER" +
-                        ",%s INTEGER,%s INTEGER, %s TEXT, %s TEXT,%s TEXT,%s TEXT,%s INTEGER)",
+                        ",%s INTEGER,%s INTEGER, %s TEXT, %s TEXT,%s TEXT,%s TEXT,%s INTEGER,%s INTEGER)",
                 User.TABLE,
                 User.Column.ID,
                 User.Column.IDUSER,
@@ -38,7 +39,8 @@ public class UserHelper extends SQLiteOpenHelper {
                 User.Column.FACEBOOKID,
                 User.Column.FACEBOOKFIRSTNAME,
                 User.Column.FACEBOOKLASTNAME,
-                User.Column.PROFILEIMAGE);
+                User.Column.PROFILEIMAGE,
+                User.Column.LOGIN);
         Log.i(TAG, CREATE_USER_TABLE);
         db.execSQL(CREATE_USER_TABLE);
     }
@@ -64,6 +66,7 @@ public class UserHelper extends SQLiteOpenHelper {
         values.put(User.Column.FACEBOOKFIRSTNAME, user.getFacebookFirstName());
         values.put(User.Column.FACEBOOKLASTNAME, user.getFacebookLastName());
         values.put(User.Column.PROFILEIMAGE,user.getProfileImage());
+        values.put(User.Column.LOGIN, user.getLogin());
         long id = sqLiteDatabase.insert(User.TABLE, null, values);
         sqLiteDatabase.close();
         Log.i(TAG,"funh adduser id :"+id+" user:"+user.getUserName()+" iduser:"+user.getIdUser());
@@ -84,6 +87,7 @@ public class UserHelper extends SQLiteOpenHelper {
         values.put(User.Column.FACEBOOKFIRSTNAME, user.getFacebookFirstName());
         values.put(User.Column.FACEBOOKLASTNAME, user.getFacebookLastName());
         values.put(User.Column.PROFILEIMAGE, user.getProfileImage());
+        values.put(User.Column.LOGIN, user.getLogin());
         int row = sqLiteDatabase.update(User.TABLE,
                 values,
                 User.Column.ID + " = ? ",
@@ -108,22 +112,69 @@ public class UserHelper extends SQLiteOpenHelper {
                         User.Column.USERNAME, User.Column.AGE, User.Column.SCORE,
                         User.Column.GENDER, User.Column.EMAIL,
                         User.Column.FACEBOOKID, User.Column.FACEBOOKFIRSTNAME, User.Column.FACEBOOKLASTNAME,
-                        User.Column.PROFILEIMAGE
+                        User.Column.PROFILEIMAGE, User.Column.LOGIN
                 }, User.Column.IDUSER + " = ? ",
                 new String[]{String.valueOf(idUser)}, null, null, null, null);
         User user=null;
+        Log.i("User", "funh getUser :" + idUser +" ,"+cursor);
+        boolean check=false;
         if (cursor != null) {
-            cursor.moveToFirst();
+            check = cursor.moveToFirst();
+        }
+        if(check){
 
         user = new User(cursor.getInt(0), cursor.getInt(1),
                 cursor.getString(2), cursor.getString(3), cursor.getString(4), cursor.getInt(5),
                 cursor.getInt(6), cursor.getInt(7), cursor.getString(8),
-                cursor.getString(9), cursor.getString(10), cursor.getString(11), cursor.getInt(12));
+                cursor.getString(9), cursor.getString(10), cursor.getString(11), cursor.getInt(12), cursor.getInt(13));
 
 
 
-        cursor.close();}
+        cursor.close();
+        }
         db.close();
         return user;
+    }
+    public User checkLoginUser(){
+
+        SQLiteDatabase db = this.getReadableDatabase();
+        Cursor cursor = db.query(User.TABLE, new String[]{User.Column.ID,
+                        User.Column.IDUSER, User.Column.FIRSTNAME, User.Column.LASTNAME,
+                        User.Column.USERNAME, User.Column.AGE, User.Column.SCORE,
+                        User.Column.GENDER, User.Column.EMAIL,
+                        User.Column.FACEBOOKID, User.Column.FACEBOOKFIRSTNAME, User.Column.FACEBOOKLASTNAME,
+                        User.Column.PROFILEIMAGE, User.Column.LOGIN
+                }, User.Column.LOGIN + " = ? ",
+                new String[]{String.valueOf(1)}, null, null, null, null);
+
+
+        User user=null;
+        boolean check=false;
+        if (cursor != null) {
+            check = cursor.moveToFirst();
+        }
+        if(check){
+            user = new User(cursor.getInt(0), cursor.getInt(1),
+                    cursor.getString(2), cursor.getString(3), cursor.getString(4), cursor.getInt(5),
+                    cursor.getInt(6), cursor.getInt(7), cursor.getString(8),
+                    cursor.getString(9), cursor.getString(10), cursor.getString(11), cursor.getInt(12), cursor.getInt(13));
+
+
+
+            cursor.close();
+        }
+        db.close();
+        return user;
+
+    }
+    public void deleteUser(int id) {
+
+        sqLiteDatabase = this.getWritableDatabase();
+
+    sqLiteDatabase.delete(User.TABLE, User.Column.ID + " = ? ",
+            new String[] { String.valueOf(id) });
+      //  sqLiteDatabase.delete(User.TABLE, User.Column.ID + " = " + id, null);
+
+        sqLiteDatabase.close();
     }
 }

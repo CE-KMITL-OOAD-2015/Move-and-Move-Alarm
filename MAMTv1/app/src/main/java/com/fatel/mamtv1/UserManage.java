@@ -5,26 +5,32 @@ import android.util.Log;
 
 public class UserManage {
     public int mauser;
-    private User currentUser = null;
+    private static User currentUser = null;
     private static UserManage instance = null;
     private UserManage(){
 
     }
-    public static UserManage getInstance() {
+    public static UserManage getInstance(Context context) {
         if (instance == null) {
             instance = new UserManage();
+            User user = User.checkLogin(context);
+            if(user!=null){
+                currentUser = user;
+            }
         }
         return instance;
     }
 
     public void createNewUser(String username,String password,Context context) {
         int idUser = addNewUser(username, password);
-        currentUser = new User(idUser, username); Log.i("User", "funh createnewuser :"+idUser);
+        currentUser = new User(idUser, username); Log.i("User", "funh createnewuser :" + idUser);
+        currentUser.setLogin(1);
         currentUser.save(context); Log.i("User", "funh save :" + idUser);
     }
     public void createFBUser(String facebookID,String facebookFirstName,Context context){
         int idUser = addNewUserFB(facebookID, facebookFirstName);
         currentUser = new User(idUser,facebookID,facebookFirstName);
+        currentUser.setLogin(1);
         currentUser.save(context);
     }
     public void loginUser (String username,String password,Context context){
@@ -36,8 +42,9 @@ public class UserManage {
         }
         else {
             currentUser = new User(idUser, username);
-            currentUser.save(context);
         }
+        currentUser.setLogin(1);
+        currentUser.save(context);
     }
     public void loginFBUser(String facebookID,String facebookFirstName,Context context){
         int idUser = findUserFB(facebookID, facebookFirstName);
@@ -47,11 +54,16 @@ public class UserManage {
         }
         else {
             currentUser = new User(idUser,facebookID,facebookFirstName);
-            currentUser.save(context);
+
         }
+        currentUser.setLogin(1);
+        currentUser.save(context);
     }
-    public void logoutUser(){
+    public void logoutUser(Context context){
+        currentUser.setLogin(0);
+        currentUser.save(context);
         currentUser=null;
+
     }
 
     private int addNewUser(String username,String password){
@@ -74,15 +86,17 @@ public class UserManage {
     public int checkUser(String username,String password) {
         return 1;
     }
-    private void updateUser(){
-        //update currentuser to server
-    }
+
     public void addScore(int score,Context context){
         if(currentUser!=null){
             currentUser.addScore(score);
             currentUser.save(context);
             updateUser();
         }
+    }
+
+    private void updateUser(){
+        //update currentuser to server
     }
     public void setFirstName(String firstName,Context context){
         if(currentUser!=null){

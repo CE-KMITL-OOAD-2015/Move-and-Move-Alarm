@@ -30,6 +30,7 @@
              android:textColor="@android:color/black"
              android:text="00"/>
     </LinearLayout>
+
     <LinearLayout
         android:id="@+id/nextalarm"
         android:layout_width="wrap_content"
@@ -127,7 +128,6 @@
             android:textColor="@android:color/black"
             android:text=" : "
             android:layout_marginLeft="5dp" />
-
         <TextView
             android:id="@+id/minstop"
             android:layout_width="wrap_content"
