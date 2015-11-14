@@ -12,7 +12,7 @@ import java.util.HashMap;
 public class GroupController {
 
     Converter converter = Converter.getInstance();
-    SQLInquirer sqlInquirer = SQLInquirer.getInstance();
+    DatabaseInterface databaseInquirer = SQLInquirer.getInstance();
 
     @RequestMapping("/group/createGroup")
     public String createGroup(@RequestParam(value = "JSON", required = true, defaultValue = "0")String JSON)
@@ -80,11 +80,15 @@ public class GroupController {
 
         startRank = Math.abs(startRank);
         try {
-            sqlInquirer.addBatch("SET @rownum := 0");
-            rankList = sqlInquirer.query("SELECT id FROM " +
+            databaseInquirer.addBatch("SET @rownum := 0");
+            rankList = databaseInquirer.query("SELECT id FROM " +
                     "( SELECT @rownum := @rownum + 1 AS rank, id, score " +
                     "FROM groups ORDER BY score DESC ) as result");
         } catch (SQLException e) {
+            e.printStackTrace();
+            return Converter.getInstance().HashMapToJSON(StatusDescription.createProcessStatus(
+                    false, "An error has occurred while querying data from the database."));
+        } catch (Exception e) {
             e.printStackTrace();
             return Converter.getInstance().HashMapToJSON(StatusDescription.createProcessStatus(
                     false, "An error has occurred while querying data from the database."));
@@ -114,11 +118,15 @@ public class GroupController {
         ArrayList<HashMap<String, Object>> rankList = new ArrayList<>();
         HashMap<String, Object> groupData = converter.JSONToHashMap(JSON);
         try {
-            sqlInquirer.addBatch("SET @rownum := 0");
-            rankList = sqlInquirer.query("SELECT id FROM " +
+            databaseInquirer.addBatch("SET @rownum := 0");
+            rankList = databaseInquirer.query("SELECT id FROM " +
                     "( SELECT @rownum := @rownum + 1 AS rank, id, score " +
                     "FROM groups ORDER BY score DESC ) as result");
         } catch (SQLException e) {
+            e.printStackTrace();
+            return Converter.getInstance().HashMapToJSON(StatusDescription.createProcessStatus(
+                    false, "An error has occurred while querying data from the database."));
+        } catch (Exception e) {
             e.printStackTrace();
             return Converter.getInstance().HashMapToJSON(StatusDescription.createProcessStatus(
                     false, "An error has occurred while querying data from the database."));
@@ -267,6 +275,11 @@ public class GroupController {
             return converter.HashMapToJSON(group.save());
 
         return converter.HashMapToJSON(StatusDescription.createProcessStatus(false, "Cannot reset score due to internal server error."));
+    }
+
+    public void changeDatabaseInquirer(DatabaseInterface databaseInquirer)
+    {
+        this.databaseInquirer = databaseInquirer;
     }
 }
 

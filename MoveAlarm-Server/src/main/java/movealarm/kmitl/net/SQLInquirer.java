@@ -4,15 +4,13 @@ import java.sql.*;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-public class SQLInquirer {
+public class SQLInquirer implements DatabaseInterface {
 
     public static SQLInquirer sqlInquirer = null;
     private Connection connector;
     private Statement stmt;
     private ResultSet rs;
     private boolean connectionStatus = false;
-    private String orderBy = "";
-    private String orderType = "";
 
     private SQLInquirer()
     {
@@ -26,31 +24,9 @@ public class SQLInquirer {
         return sqlInquirer;
     }
 
-    public void orderByDESC(String colNames)
-    {
-        orderBy = "ORDER BY " + colNames;
-        orderType = "DESC";
-    }
-
-    public void orderByASC(String colNames)
-    {
-        orderBy = "ORDER BY " + colNames;
-        orderType = "ASC";
-    }
-
-    public void resetOrderBy()
-    {
-        orderBy = "ORDER BY ";
-        orderBy = "";
-    }
-
+    @Override
     public void addBatch(String batchCommand) throws SQLException {
         stmt.addBatch(batchCommand);
-    }
-
-    public boolean isOrderBy()
-    {
-        return (orderBy.equals("ORDER BY ")) ? false : true;
     }
 
     public ArrayList<HashMap<String, Object>> query(String sqlCommand) throws SQLException {
@@ -72,29 +48,26 @@ public class SQLInquirer {
     }
 
     public ArrayList<HashMap<String, Object>> where(String sqlCommand) throws SQLException {
-        if(isOrderBy())
-            sqlCommand += " " + orderBy + " " + orderType;
         ArrayList<HashMap<String, Object>> collection = query(sqlCommand);
-        resetOrderBy();
         return collection;
     }
 
-    public ArrayList<HashMap<String, Object>> where(String tableName, String colName, String operator, String value, String extraConditions) throws SQLException {
-        String sqlCommand = "SELECT * FROM " + tableName + " WHERE " + colName + " " + operator + " " + value + " " + extraConditions;
+    public ArrayList<HashMap<String, Object>> where(String tableName, String columnName, String operator, String value, String extraConditions) throws SQLException {
+        String sqlCommand = "SELECT * FROM " + tableName + " WHERE " + columnName + " " + operator + " " + value + " " + extraConditions;
         return where(sqlCommand);
     }
 
-    public ArrayList<HashMap<String, Object>> where(String tableName, String colName, String operator, String value) throws SQLException {
-        String sqlCommand = "SELECT * FROM " + tableName + " WHERE " + colName + " " + operator + " '" + value + "'";
+    public ArrayList<HashMap<String, Object>> where(String tableName, String columnName, String operator, String value) throws SQLException {
+        String sqlCommand = "SELECT * FROM " + tableName + " WHERE " + columnName + " " + operator + " '" + value + "'";
         return where(sqlCommand);
     }
 
-    public void update(String tableName, String valueSet, String colName, String operator, String value) throws SQLException {
-        stmt.executeUpdate("UPDATE " + tableName + " SET " + valueSet + " WHERE " + colName + " " + operator + " " + value);
+    public void update(String tableName, String valueSet, String columnName, String operator, String value) throws SQLException {
+        stmt.executeUpdate("UPDATE " + tableName + " SET " + valueSet + " WHERE " + columnName + " " + operator + " " + value);
     }
 
-    public HashMap<String, Object> insert(String tableName, String colNamesSet, String values) throws SQLException {
-        stmt.executeUpdate("INSERT INTO " + tableName + " ( " + colNamesSet + " ) VALUES (" + values + " )");
+    public HashMap<String, Object> insert(String tableName, String columnNamesSet, String values) throws SQLException {
+        stmt.executeUpdate("INSERT INTO " + tableName + " ( " + columnNamesSet + " ) VALUES (" + values + " )");
         rs = stmt.getGeneratedKeys();
         rs.next();
 
@@ -105,14 +78,14 @@ public class SQLInquirer {
         return temp;
     }
 
-    public void insertMultiple(String tableName, String colNamesSet, String[] valuesSet) throws SQLException {
+    public void insertMultiple(String tableName, String columnNamesSet, String[] valuesSet) throws SQLException {
         String values = "";
         for(int i = 0; i < valuesSet.length; i++) {
             values += " (" + valuesSet[i] + " )";
             if(i != valuesSet.length - 1)
                 values += ", ";
         }
-        stmt.executeUpdate("INSERT INTO " + tableName + " ( " + colNamesSet + " ) VALUES " + values);
+        stmt.executeUpdate("INSERT INTO " + tableName + " ( " + columnNamesSet + " ) VALUES " + values);
     }
 
     public void delete(String tableName, String conditions) throws SQLException {

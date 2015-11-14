@@ -5,7 +5,7 @@ import java.util.Date;
 import java.util.HashMap;
 
 abstract class Model {
-    protected static ModelCollection modelCollection = ModelCollection.getInstance();
+    protected static ModelCollection modelCollection = ModelCollection.getInstance(SQLInquirer.getInstance());
     protected String tableName;
     protected ArrayList<String> requiredFields = null;
     protected int id;

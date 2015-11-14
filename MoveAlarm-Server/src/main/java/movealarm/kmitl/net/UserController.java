@@ -4,7 +4,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -12,7 +11,7 @@ import java.util.HashMap;
 public class UserController {
 
     Converter converter = Converter.getInstance();
-    SQLInquirer sqlInquirer = SQLInquirer.getInstance();
+    DatabaseInterface databaseInquirer = SQLInquirer.getInstance();
     Crypto crypto = Crypto.getInstance();
     
     @RequestMapping("/user/findByID")
@@ -54,13 +53,13 @@ public class UserController {
         
         startRank = Math.abs(startRank);
         try {
-            sqlInquirer.addBatch("SET @rownum := 0");
-            rankList = sqlInquirer.query("SELECT id FROM " +
+            databaseInquirer.addBatch("SET @rownum := 0");
+            rankList = databaseInquirer.query("SELECT id FROM " +
                     "( SELECT @rownum := @rownum + 1 AS rank, id, score " +
                     "FROM user ORDER BY score DESC ) as result");
-        } catch (SQLException e) {
+        } catch (Exception e) {
             e.printStackTrace();
-            return Converter.getInstance().HashMapToJSON(StatusDescription.createProcessStatus(
+            return converter.HashMapToJSON(StatusDescription.createProcessStatus(
                     false, "An error has occurred while querying data from the database."));
         }
 
@@ -204,9 +203,9 @@ public class UserController {
     {
         int amount = 0;
         try {
-            HashMap<String, Object> data = sqlInquirer.query("SELECT COUNT(id) AS amount FROM user").get(0);
+            HashMap<String, Object> data = databaseInquirer.query("SELECT COUNT(id) AS amount FROM user").get(0);
             amount = converter.toInt(data.get("amount"));
-        } catch (SQLException e) {
+        } catch (Exception e) {
             e.printStackTrace();
             return "-1";
         }
@@ -219,13 +218,13 @@ public class UserController {
         ArrayList<HashMap<String, Object>> rankList = new ArrayList<>();
         HashMap<String, Object> userData = converter.JSONToHashMap(JSON);
         try {
-            sqlInquirer.addBatch("SET @rownum := 0");
-            rankList = sqlInquirer.query("SELECT id FROM " +
+            databaseInquirer.addBatch("SET @rownum := 0");
+            rankList = databaseInquirer.query("SELECT id FROM " +
                     "( SELECT @rownum := @rownum + 1 AS rank, id, score " +
                     "FROM user ORDER BY score DESC ) as result");
-        } catch (SQLException e) {
+        } catch (Exception e) {
             e.printStackTrace();
-            return Converter.getInstance().HashMapToJSON(StatusDescription.createProcessStatus(
+            return converter.HashMapToJSON(StatusDescription.createProcessStatus(
                     false, "An error has occurred while querying data from the database."));
         }
 
@@ -301,4 +300,8 @@ public class UserController {
         return converter.HashMapToJSON(JSON);
     }
 
+    public void changeDatabaseInquirer(DatabaseInterface databaseInquirer)
+    {
+        this.databaseInquirer = databaseInquirer;
+    }
 }
