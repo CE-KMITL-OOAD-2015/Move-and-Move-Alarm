@@ -58,6 +58,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        Cache.getInstance().putData("MainActivityContext", this);
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
             firstName = bundle.getString("firstname");

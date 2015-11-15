@@ -1,8 +1,12 @@
 package com.fatel.mamtv1;
 
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * Created by oat90 on 25/10/2558.
@@ -15,21 +19,72 @@ public class Converter {
         gson = new Gson();
     }
 
-    public HashMap<String,Object> JsonToHashMap(String json) {
-        HashMap<String,Object> map = new HashMap<>();
-        map = gson.fromJson(json,map.getClass());
-        return map;
-    }
-
-    public String HashMapToJson(HashMap<String,Object> map) {
-        return gson.toJson(map);
-    }
-
     public static Converter getInstance()
     {
         if(jToH == null) {
             jToH = new Converter();
         }
         return jToH;
+    }
+
+    public HashMap<String,Object> JSONToHashMap(String json) {
+        HashMap<String,Object> map = new HashMap<>();
+        map = gson.fromJson(json,map.getClass()); //convert from JSON to HashMap
+        return map;
+    }
+
+    public String HashMapToJSON(HashMap<String, Object> map) {
+        return gson.toJson(map); //convert HashMap to JSON
+    }
+
+    public String HashMapArrayToJSON(HashMap<String, Object>[] arrayOfMap, String key)
+    {
+        HashMap<String, Object> container = new HashMap<>();
+        container.put(key, arrayOfMap);
+        return HashMapToJSON(container);
+    }
+
+    public String toString(Object value)
+    {
+        if(value != null) {
+            return value.toString();
+        }
+        else {
+            return "null";
+        }
+    }
+
+    public int toInt(Object value)
+    {
+        try {
+            String temp = "" + value.toString();
+            Double temp2 = Double.parseDouble(temp);
+            return temp2.intValue();
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            return -1;
+        }
+    }
+
+    public double toDouble(Object value) {
+        try {
+            String temp = "" + value.toString();
+            Double temp2 = Double.parseDouble(temp);
+            return temp2.doubleValue();
+        }
+        catch (Exception e) {
+            e.printStackTrace();
+            return -1;
+        }
+    }
+
+    public ArrayList<HashMap<String, Object>> toHashMapArrayList(Object JSON)
+    {
+        Type listType = new TypeToken<List<HashMap<String, String>>>(){}.getType();
+        List<HashMap<String, Object>> listOfCountry = gson.fromJson(JSON.toString(), listType);
+        ArrayList<HashMap<String, Object>> temp = new ArrayList<>(listOfCountry.size());
+        temp.addAll(listOfCountry);
+        return temp;
     }
 }
