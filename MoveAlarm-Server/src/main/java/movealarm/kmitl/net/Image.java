@@ -14,9 +14,10 @@ public class Image extends Model
     private int imageData = 0;
     private String description = null;
 
-    private Image() { //set constructor to private to use singleton design pattern
-        this.tableName = "image"; //set table name in the database
-        addRequiredField("name"); //add required fields, so the object cannot be saved if required fields are not filled
+    public Image() {
+        this.tableName = "image";
+        this.requiredFields = new ArrayList<>();
+        addRequiredField("name");
         addRequiredField("imageData");
     }
 
@@ -26,7 +27,7 @@ public class Image extends Model
         if(img_map == null) { //if found nothing, return null
             return null;
         }
-        
+
         Image model = new Image(); //create new model and set its values
         model.createdDate = (Date)img_map.get("createdDate");
         model.id = (int)img_map.get("id");
@@ -86,7 +87,7 @@ public class Image extends Model
         setimageData(imageData);
         setDescription(description);
         updateModifiedDate();
-        return save();
+        return StatusDescription.createProcessStatus(modelCollection.save(this));
     }
 
     public HashMap<String,Object> getValues() //return all fields of model inform of HashMap
