@@ -186,6 +186,9 @@ public class MainActivity extends AppCompatActivity {
                 Intent intent2 = new Intent(this, ScoreboardActivity.class);
                 startActivity(intent2);
                 break;
+            case R.id.nav_help_fragment:
+                fragmentClass = HelpFragment.class;
+                break;
             case R.id.nav_logout_fragment:
                 fragmentClass = null;
 
