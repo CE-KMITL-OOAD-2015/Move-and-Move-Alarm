@@ -20,18 +20,10 @@
         android:visibility="gone" />
 
 
-    <EditText
-        android:id="@+id/caption"
-        android:layout_width="fill_parent"
-        android:layout_height="150dp"
-        android:textSize="15dp"
-        android:hint="Write a caption..."
-        android:layout_marginTop="300dp"/>
-
     <LinearLayout android:id="@+id/btn_block"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/caption"
+        android:layout_alignParentBottom="true"
         android:orientation="horizontal">
 
         <Button
