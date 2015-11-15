@@ -15,7 +15,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class UserManage {
-    public int mauser;
     private static User currentUser = null;
     private static UserManage instance = null;
     private UserManage(){

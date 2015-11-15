@@ -183,14 +183,12 @@ public class MainActivity extends AppCompatActivity {
                 fragmentClass = null;
 
                 mAlarmHelper =  new DBAlarmHelper(this);
-                if(UserManage.getInstance(this).mauser == 1) {
+                if(UserManage.getInstance(this).getCurrentFacebookFirstName()==null) {
                     UserManage.getInstance(this).logoutUser(this);
-                    UserManage.getInstance(this).mauser = 0;
                 }
-                else if(UserManage.getInstance(this).mauser == 2) {
-                    LoginManager.getInstance().logOut();
+                else if(UserManage.getInstance(this).getCurrentFacebookFirstName()!=null) {
                     UserManage.getInstance(this).logoutUser(this);
-                    UserManage.getInstance(this).mauser = 0;
+                    LoginManager.getInstance().logOut();
                 }
                 mAlarmHelper.deleteSetAlarm("1");
                 mDrawerLayout.closeDrawers();

@@ -158,7 +158,6 @@ public class Login_Activity extends AppCompatActivity {
         }
         else if (isSuccess==1/*ifSuccess ใช้เช็คว่า username กับ password ตรงกับฐานข้อมูลรึเปล่า*/) {
             UserManage.getInstance(this).loginUser(username.getText().toString(), password.getText().toString(), this);
-            UserManage.getInstance(this).mauser = 1;
 
             HttpConnector request = HttpConnector.getInstance(this);
 
@@ -245,7 +244,6 @@ public class Login_Activity extends AppCompatActivity {
         if (loggedIn && (profile != null)) {
             UserManage.getInstance(this).createFBUser(profile.getId(), profile.getFirstName(), this);
             UserManage.getInstance(this).loginFBUser(profile.getId(), profile.getFirstName(),this);
-            UserManage.getInstance(this).mauser = 2;
             Intent intent = new Intent(Login_Activity.this, MainActivity.class);
             intent.putExtra("firstname",profile.getFirstName());
             intent.putExtra("lastname",profile.getLastName());
