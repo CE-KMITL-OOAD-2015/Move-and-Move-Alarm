@@ -26,7 +26,6 @@ public class UserManage {
             User user = User.checkLogin(context);
             if(user!=null){
                 currentUser = user;
-
             }
         }
         return instance;
@@ -76,7 +75,7 @@ public class UserManage {
         currentUser.setLogin(0);
         currentUser.save(context);
         currentUser=null;
-
+        Log.i("User", "funh looutuser :" + currentUser);
     }
     public boolean checkCurrentLogin(Context context){
         User user = User.checkLogin(context);
@@ -87,6 +86,7 @@ public class UserManage {
         return false;
 
     }
+
     // server
 
 
@@ -146,19 +146,21 @@ public class UserManage {
 
     public int checkUser(String username,String password) {
         return 1;
+    }
+
+
+    private void updateUser(){
+        //update currentuser to server
 
     }
 
+    // get set
     public void addScore(int score,Context context){
         if(currentUser!=null){
             currentUser.addScore(score);
             currentUser.save(context);
             updateUser();
         }
-    }
-
-    private void updateUser(){
-        //update currentuser to server
     }
     public void setFirstName(String firstName,Context context){
         if(currentUser!=null){
