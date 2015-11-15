@@ -4,22 +4,22 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 
-public class UserActivityProgress extends Model {
+public class GroupActivityProgress extends Model {
     private int numberOfAccept = 0;
     private int numberOfCancel = 0;
     private int cancelActivity = 0;
-    private User user;
+    private Group group;
     private Date date;
 
-    public UserActivityProgress()
+    public GroupActivityProgress()
     {
-        this.tableName = "userActivity_progress";
+        this.tableName = "groupActivity_progress";
 
         this.addRequiredField("numberOfAccept");
         this.addRequiredField("numberOfCancel");
         this.addRequiredField("cancelActivity");
         this.addRequiredField("date");
-        this.addRequiredField("userID");
+        this.addRequiredField("groupID");
     }
 
     @Override
@@ -31,7 +31,7 @@ public class UserActivityProgress extends Model {
         temp.put("numberOfAccept", numberOfAccept);
         temp.put("numberOfCancel", numberOfCancel);
         temp.put("cancelActivity", cancelActivity);
-        temp.put("userID", user.getID());
+        temp.put("groupID", group.getID());
         temp.put("date", sdf.format(date));
 
         return temp;
@@ -46,7 +46,7 @@ public class UserActivityProgress extends Model {
         temp.put("numberOfAccept", numberOfAccept);
         temp.put("numberOfCancel", numberOfCancel);
         temp.put("cancelActivity", cancelActivity);
-        temp.put("user", user);
+        temp.put("group", group);
         temp.put("date", sdf.format(date));
 
         return temp;
@@ -70,9 +70,9 @@ public class UserActivityProgress extends Model {
         updateModifiedDate();
     }
 
-    public void setUser(User user)
+    public void setGroup(Group group)
     {
-        this.user = user;
+        this.group = group;
         updateModifiedDate();
     }
 
