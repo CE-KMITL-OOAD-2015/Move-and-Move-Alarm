@@ -51,6 +51,8 @@ public class Create_Account_Activity extends AppCompatActivity {
         password = (EditText)findViewById(R.id.enter_password);
         rePassword = (EditText)findViewById(R.id.enter_repassword);
 
+        Cache.getInstance().putData("CreateAccountContext", this);
+
         if(username.getText().toString().equals("") || password.getText().toString().equals(""))
         {
             Toast toast = Toast.makeText(this, "Please enter Username and Password", Toast.LENGTH_SHORT);
@@ -64,12 +66,19 @@ public class Create_Account_Activity extends AppCompatActivity {
 
         else if(password.getText().toString().equals(rePassword.getText().toString()))
         {
-            Intent intent = new Intent(this,MainActivity.class);
+           // Intent intent = new Intent(this,MainActivity.class);
             //mManager.registerUser(username.getText().toString(), password.getText().toString()); ลงทะเบียน username กับ password ลงฐานข้อมูลก่อนไปหน้า main
             mUserManage.createNewUser(username.getText().toString(),password.getText().toString(),this);
+<<<<<<< HEAD
             Log.i("User", "funh createuser ");
             Toast.makeText(this, "Create Successful", Toast.LENGTH_SHORT).show();
             startActivity(intent);
+=======
+            mUserManage.mauser = 1;
+           // Log.i("User", "funh createuser ");
+           // Toast.makeText(this, "Create Successful", Toast.LENGTH_SHORT).show();
+            //startActivity(intent);
+>>>>>>> addnewuser server
         }
         else {
             Toast toast = Toast.makeText(this, "Password not match", Toast.LENGTH_SHORT);

@@ -1,5 +1,7 @@
 package com.fatel.mamtv1;
 
+import android.util.Log;
+
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -44,13 +46,23 @@ public class Converter {
         return HashMapToJSON(container);
     }
 
+
+    public ArrayList<HashMap<String, Object>> toHashMapArrayList(Object JSON)
+    {
+        Type listType = new TypeToken<List<HashMap<String, String>>>(){}.getType();
+        List<HashMap<String, Object>> listOfCountry = gson.fromJson(JSON.toString(), listType);
+        ArrayList<HashMap<String, Object>> temp = new ArrayList<>(listOfCountry.size());
+        temp.addAll(listOfCountry);
+        return temp;
+    }
+
     public String toString(Object value)
     {
         if(value != null) {
             return value.toString();
         }
         else {
-            return "null";
+            return null;
         }
     }
 
@@ -62,7 +74,7 @@ public class Converter {
             return temp2.intValue();
         }
         catch (Exception e) {
-            e.printStackTrace();
+            Log.i("conversion error", e.toString());
             return -1;
         }
     }
@@ -77,14 +89,5 @@ public class Converter {
             e.printStackTrace();
             return -1;
         }
-    }
-
-    public ArrayList<HashMap<String, Object>> toHashMapArrayList(Object JSON)
-    {
-        Type listType = new TypeToken<List<HashMap<String, String>>>(){}.getType();
-        List<HashMap<String, Object>> listOfCountry = gson.fromJson(JSON.toString(), listType);
-        ArrayList<HashMap<String, Object>> temp = new ArrayList<>(listOfCountry.size());
-        temp.addAll(listOfCountry);
-        return temp;
     }
 }

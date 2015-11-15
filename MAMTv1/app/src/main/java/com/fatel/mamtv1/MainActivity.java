@@ -61,7 +61,11 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+<<<<<<< HEAD
         Cache.getInstance().putData("MainActivityContext", this);
+=======
+        Log.i("User ID", "" + UserManage.getInstance(this).getCurrentUser().getIdUser());
+>>>>>>> addnewuser server
 
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {

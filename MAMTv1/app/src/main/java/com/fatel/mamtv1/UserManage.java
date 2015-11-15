@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -13,6 +14,7 @@ import com.android.volley.toolbox.StringRequest;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 public class UserManage {
     private static User currentUser = null;
@@ -30,14 +32,23 @@ public class UserManage {
         }
         return instance;
     }
+    public User getCurrentUser(){
+        return currentUser;
+    }
+    public  void setCurrentUser(User user){
+       currentUser= user;
+    }
 
     public void createNewUser(String username,String password,Context context) {
 
-        int idUser = addNewUser(username, password,context);
+        addNewUser(username, password, context);
+        //อันที่เรียก createn
+        //int idUser = Integer.parseInt((Cache.getInstance().getData("idUser")).toString());
+        //Log.i("User", "funh createnewuser :" + idUser);
+        //currentUser = new User(idUser, username);
+        //currentUser.setLogin(1);
+        //currentUser.save(context); Log.i("User", "funh save :" + idUser);
 
-        currentUser = new User(idUser, username); Log.i("User", "funh createnewuser :" + idUser);
-        currentUser.setLogin(1);
-        currentUser.save(context); Log.i("User", "funh save :" + idUser);
     }
     public void createFBUser(String facebookID,String facebookFirstName,Context context){
         int idUser = addNewUserFB(facebookID, facebookFirstName);
@@ -49,6 +60,7 @@ public class UserManage {
         int idUser = findUser(username, password);
         User user=User.find(idUser, context);
         Log.i("User", "funh get iduser:" + idUser + " id: " + user.getId() + " u:" + user.getUserName());
+
         if(user!=null){
             currentUser=user;
         }
@@ -82,7 +94,7 @@ public class UserManage {
         if(user!=null){
             return true;
         }
-        
+
         return false;
 
     }
@@ -90,44 +102,70 @@ public class UserManage {
     // server
 
 
-    private int addNewUser(String username,String password,Context context){
-        Cache.getInstance().putData("SignUpContext", this);
+    private void addNewUser(String username,String password, final Context context){
+
         String url = "http://203.151.92.196:8080/user/createUser";
         final String un = username;
         final String pw = password;
-        final int idUser;
         /////////////edit
-       /* StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() { //create new request
+        Log.i("User", "funh addnewuser :"+un+pw );
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() { //create new request
             @Override
             public void onResponse(String s) { //when the results have come
-                Log.i("volley", s); //throw the result to the console.
-                HashMap<String, Object> userData = Converter.getInstance().JsonToHashMap(s); //convert the result into HashMap format
-                idUser = Integer.parseInt(userData.get("id").toString());
+                if (s!=null) {
+                    Converter converter = Converter.getInstance();
+                    Context context = (Context) Cache.getInstance().getData("CreateAccountContext");
+                    Log.i("volley", s); //throw the result to the console.
+                    HashMap<String, Object> data = converter.JSONToHashMap(s);
+                    HashMap<String, Object> userData = converter.JSONToHashMap(converter.toString(data.get("user")));
 
+                    if((boolean) data.get("status")) {
+                        int idUser = converter.toInt(userData.get("id"));
+                        String username = converter.toString(data.get("userName"));
+                        Log.i("User", "funh createnewuser :" + idUser);
+                        User currentUser = new User(idUser, username);
+                        currentUser.setLogin(1);
+                        currentUser.save(context); Log.i("User", "funh save :" + idUser);
+                        UserManage.getInstance(context).setCurrentUser(currentUser);
+                        context.startActivity(new Intent(context, MainActivity.class));
+                    }
+                    else {
+                        Toast toast = Toast.makeText(context, converter.toString(data.get("description")), Toast.LENGTH_SHORT);
+                        toast.show();
+                    }
+                }
+                else
+                    Log.i("volley", "s==null");
+                HashMap<String, Object> userData = Converter.getInstance().JSONToHashMap(s); //convert the result into HashMap format
+                Cache.getInstance().putData("idUser", userData.get("id"));
+                Log.i("User", "funh addnewuser :" + userData.get("id"));
             }
         }, new Response.ErrorListener() { //create error listener to catch when the error has occurred
             @Override
             public void onErrorResponse(VolleyError volleyError) { //when the error that the server cannot handle by itself has occurred
                 Log.i("volley error", volleyError.toString()); //show the error
+                Log.i("User", "funh addnewuser :" +volleyError.toString());
+
             }
         }) {
             @Override //override the send parameters to server manually by POST method
             protected Map<String, String> getParams() throws AuthFailureError {
-                HashMap<String, String> user = new HashMap<>(); //create HashMap to keep all the values in one place to be 1 object
+                HashMap<String, Object> user = new HashMap<>(); //create HashMap to keep all the values in one place to be 1 object
                 user.put("userName", un);
                 user.put("password", pw);
                 Map<String, String> JSON = new HashMap<>(); //create HashMap again to keep the above user object
                 Log.i("info", user.toString());
-                JSON.put("JSON", Converter.getInstance().HashMapToJson(user)); //the API receive the values in one parameter name JSON
+                JSON.put("JSON", Converter.getInstance().HashMapToJSON(user)); //the API receive the values in one parameter name JSON
                 return JSON; //send the value name JSON to the server
             }
         }; //end of request's details
+        Log.i("User", "funh addnewuser http:");
         HttpConnector.getInstance(context).addToRequestQueue(stringRequest); //add the request to HTTPConnector, the class will respond the request automatically at separated thread
-*/
-        //////////////end
+
+        //////////////end ตรงนั้นไม่รู้ เปิดคลาสที่เรียก method หน่อย
 
 
-        return 0;
+
 
     }
     private int findUser(String username,String password){
