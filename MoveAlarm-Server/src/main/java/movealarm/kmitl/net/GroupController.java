@@ -85,10 +85,6 @@ public class GroupController {
             e.printStackTrace();
             return Converter.getInstance().HashMapToJSON(StatusDescription.createProcessStatus(
                     false, "An error has occurred while querying data from the database."));
-        } catch (Exception e) {
-            e.printStackTrace();
-            return Converter.getInstance().HashMapToJSON(StatusDescription.createProcessStatus(
-                    false, "An error has occurred while querying data from the database."));
         }
 
         endRank = (Math.abs(endRank) > rankList.size()) ? rankList.size() : Math.abs(endRank); //if received endRank is more than query data, assign max rank to endRank
@@ -119,10 +115,6 @@ public class GroupController {
             rankList = databaseInquirer.query("SELECT id FROM " +
                     "( SELECT @rownum := @rownum + 1 AS rank, id, score " +
                     "FROM groups ORDER BY score DESC ) as result"); //query rank
-        } catch (Exception e) {
-            e.printStackTrace();
-            return Converter.getInstance().HashMapToJSON(StatusDescription.createProcessStatus(
-                    false, "An error has occurred while querying data from the database."));
         } catch (Exception e) {
             e.printStackTrace();
             return Converter.getInstance().HashMapToJSON(StatusDescription.createProcessStatus(
