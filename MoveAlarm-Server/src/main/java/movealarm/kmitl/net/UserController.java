@@ -151,7 +151,13 @@ public class UserController {
             //do nothing
         }
 
-        return converter.HashMapToJSON(user.save());
+        HashMap<String, Object> response = user.save();
+        if((boolean) response.get("status")) {
+            response.put("user", user.getGeneralValues());
+            return converter.HashMapToJSON(response);
+        }
+
+        return converter.HashMapToJSON(response);
     }
 
     @RequestMapping("/user/updateUser")

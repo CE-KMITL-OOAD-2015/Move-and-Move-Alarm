@@ -24,16 +24,18 @@ public class User extends Model{
     private Object profileImage = null;
     private Object coverImage = null;
     private ArrayList<HashMap<String, Object>> temp_scoreLogList = null;
+    private ArrayList<HashMap<String, Object>> temp_activityLogList = null;
 
     public User()
     {
         this.tableName = "user"; //table name of user data in the database
-        this.addRequiredField("firstName"); //add required fields that must be filled before saving
-        this.addRequiredField("lastName");
+        //this.addRequiredField("firstName"); //add required fields that must be filled before saving
+        //this.addRequiredField("lastName");
         this.addRequiredField("userName");
-        this.addRequiredField("email");
+        //this.addRequiredField("email");
         this.addRequiredField("password");
         temp_scoreLogList = new ArrayList<>();
+        temp_activityLogList = new ArrayList<>();
     }
 
     public static User find(int id)

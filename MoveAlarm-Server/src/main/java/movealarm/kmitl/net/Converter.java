@@ -1,9 +1,12 @@
 package movealarm.kmitl.net;
 
 import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * Created by oat90 on 25/10/2558.
@@ -95,5 +98,14 @@ public class Converter {
             temp_map = (ArrayList<HashMap<String, Object>>)map.get(key);
         }
         return temp_map;
+    }
+
+    public ArrayList<HashMap<String, Object>> JSONtoHashMapArrayList(Object JSON)
+    {
+        Type listType = new TypeToken<List<HashMap<String, String>>>(){}.getType();
+        List<HashMap<String, Object>> listOfCountry = gson.fromJson(JSON.toString(), listType);
+        ArrayList<HashMap<String, Object>> temp = new ArrayList<>(listOfCountry.size());
+        temp.addAll(listOfCountry);
+        return temp;
     }
 }
