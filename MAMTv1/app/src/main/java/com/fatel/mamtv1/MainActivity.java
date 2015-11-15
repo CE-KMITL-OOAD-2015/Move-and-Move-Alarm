@@ -189,6 +189,9 @@ public class MainActivity extends AppCompatActivity {
             case R.id.nav_help_fragment:
                 fragmentClass = HelpFragment.class;
                 break;
+            case R.id.nav_about_fragment:
+                fragmentClass = AboutFragment.class;
+                break;
             case R.id.nav_logout_fragment:
                 fragmentClass = null;
 
