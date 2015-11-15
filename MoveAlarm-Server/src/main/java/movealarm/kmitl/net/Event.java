@@ -122,6 +122,12 @@ public class Event extends Model{
         updateModifiedDate();
     }
 
+    public void setPostures(ArrayList<Posture> postures)
+    {
+        this.postures = postures;
+        updateModifiedDate();
+    }
+
     public Date getTime()
     {
         return this.time;
