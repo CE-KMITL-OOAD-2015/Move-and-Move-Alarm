@@ -27,9 +27,8 @@ public class User extends Model{
 
     public User()
     {
-        this.tableName = "user";
-        this.requiredFields = new ArrayList<>();
-        this.addRequiredField("firstName");
+        this.tableName = "user"; //table name of user data in the database
+        this.addRequiredField("firstName"); //add required fields that must be filled before saving
         this.addRequiredField("lastName");
         this.addRequiredField("userName");
         this.addRequiredField("email");
@@ -39,11 +38,12 @@ public class User extends Model{
 
     public static User find(int id)
     {
-        HashMap<String, Object> temp = modelCollection.find("user", id);
-        if(temp == null)
+        HashMap<String, Object> temp = modelCollection.find("user", id); //query data from the database
+        if(temp == null) //if no data
             return null;
-        User model = new User();
-        model.id = (int) temp.get("id");
+
+        User model = new User(); //create model
+        model.id = (int) temp.get("id"); //mapping fields process
         model.createdDate = (Date) temp.get("createdDate");
         model.firstName = "" + temp.get("firstName");
         model.lastName = "" + temp.get("lastName");
@@ -62,9 +62,10 @@ public class User extends Model{
 
     public static User[] where(String colName, String operator, String value)
     {
-        ArrayList<HashMap<String, Object>> temp = modelCollection.where("user", colName, operator, value);
+        ArrayList<HashMap<String, Object>> temp = modelCollection.where("user", colName, operator, value); //query data
         ArrayList<User> collection = new ArrayList<>();
-        for(HashMap<String, Object> item : temp) {
+
+        for(HashMap<String, Object> item : temp) { //mapping values
             User model = new User();
             model.id = (int) item.get("id");
             model.createdDate = (Date) item.get("createdDate");
@@ -83,19 +84,20 @@ public class User extends Model{
             collection.add(model);
         }
 
-        return  collection.toArray(new User[collection.size()]);
+        return  collection.toArray(new User[collection.size()]); //convert to normal array and return
     }
 
     public static User[] where(String colName, String operator, String value, String extraCondition)
     {
-        return where(colName, operator, value + " " + extraCondition);
+        return where(colName, operator, value + " " + extraCondition); //where with extra condition
     }
 
     public static User[] all()
     {
-        ArrayList<HashMap<String, Object>> temp = modelCollection.all("user");
+        ArrayList<HashMap<String, Object>> temp = modelCollection.all("user"); //quey data
         ArrayList<User> collection = new ArrayList<>();
-        for(HashMap<String, Object> item : temp) {
+
+        for(HashMap<String, Object> item : temp) { //mapping values
             User model = new User();
             model.id = (int) item.get("id");
             model.createdDate = (Date) item.get("createdDate");
@@ -114,11 +116,11 @@ public class User extends Model{
             collection.add(model);
         }
 
-        return  collection.toArray(new User[collection.size()]);
+        return  collection.toArray(new User[collection.size()]); //convert to normal array and return
     }
 
     @Override
-    public HashMap<String, Object> getValues()
+    public HashMap<String, Object> getValues() //get all values from model
     {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
         HashMap<String, Object> temp = new HashMap<>();
@@ -141,7 +143,7 @@ public class User extends Model{
     }
 
     @Override
-    public HashMap<String, Object> getGeneralValues()
+    public HashMap<String, Object> getGeneralValues() //get only common values
     {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
         HashMap<String, Object> temp = new HashMap<>();
@@ -151,7 +153,7 @@ public class User extends Model{
         temp.put("userName", userName);
         temp.put("age", age);
         temp.put("score", score);
-        temp.put("gender", gender);
+        temp.put("gender", getGenderDefinition());
         temp.put("email", email);
         temp.put("facebookID", facebookID);
         temp.put("facebookFirstName", facebookFirstName);
@@ -179,7 +181,7 @@ public class User extends Model{
 
     public HashMap<String, Object> setAge(int age)
     {
-        if(age < 1)
+        if(age < 1) //prevent from improper value
             return StatusDescription.createProcessStatus(false, "Age should not be less than 1.");
 
         this.age = age;
@@ -188,9 +190,9 @@ public class User extends Model{
         return StatusDescription.createProcessStatus(true);
     }
 
-    public HashMap<String, Object> setGender(int gender)
+    public HashMap<String, Object> setGender(int gender) // 0 = female, 1 = male
     {
-        if(gender > 1 || gender < 0)
+        if(gender > 1 || gender < 0) //gender must be 0 or 1
             return StatusDescription.createProcessStatus(false, "Undefined gender.");
 
         this.gender = gender;
@@ -217,35 +219,35 @@ public class User extends Model{
         updateModifiedDate();
     }
 
-    public HashMap<String, Object> increaseScore(int score, String description)
-    {
+    public HashMap<String, Object> increaseScore(int score, String description) //this method will create score log and put into temporary log list
+    { //score log will not be inserted to the database until method save is called
         HashMap<String, Object> temp_scoreLog = new HashMap<>();
-        int changedScore = Math.abs(score);
+        int changeScore = Math.abs(score); //prevent from improper integer
 
-        this.score += changedScore;
-        temp_scoreLog.put("user_id", id);
-        temp_scoreLog.put("currentScore", this.score);
-        temp_scoreLog.put("modifiedScore", changedScore);
+        this.score += changeScore;
+        temp_scoreLog.put("id", id);
+        temp_scoreLog.put("currentScore", this.score); //a score after save
+        temp_scoreLog.put("modifiedScore", changeScore);
         temp_scoreLog.put("description", description);
-        temp_scoreLogList.add(temp_scoreLog);
+        temp_scoreLogList.add(temp_scoreLog); //add to temp
 
         updateModifiedDate();
 
         return StatusDescription.createProcessStatus(true);
     }
 
-    public HashMap<String, Object> decreaseScore(int score, String description)
+    public HashMap<String, Object> decreaseScore(int score, String description) //like increaseScore method but decrease
     {
         HashMap<String, Object> temp_scoreLog = new HashMap<>();
-        int changedScore = Math.abs(score);
+        int changeScore = Math.abs(score);
 
-        if(this.score - changedScore < 0)
+        if(this.score - changeScore < 0)
             return StatusDescription.createProcessStatus(false, "The score cannot be under zero.");
 
-        this.score -= changedScore;
-        temp_scoreLog.put("user_id", id);
+        this.score -= changeScore;
+        temp_scoreLog.put("id", id);
         temp_scoreLog.put("currentScore", this.score);
-        temp_scoreLog.put("modifiedScore", -changedScore);
+        temp_scoreLog.put("modifiedScore", -changeScore);
         temp_scoreLog.put("description", description);
         temp_scoreLogList.add(temp_scoreLog);
 
@@ -309,7 +311,7 @@ public class User extends Model{
         return gender;
     }
 
-    public String getGenderDefinition()
+    public String getGenderDefinition() //definition of gender number
     {
         switch (gender) {
             case 0:
@@ -376,25 +378,9 @@ public class User extends Model{
             return StatusDescription.createProcessStatus(true);
         }
 
-        if(temp_scoreLogList.size() != 0) {
-            SQLInquirer sqlInquirer = SQLInquirer.getInstance();
-            String[] valuesSet = new String[temp_scoreLogList.size()];
-
-            for(int i = 0; i < temp_scoreLogList.size(); i++) {
-                HashMap<String, Object> item = temp_scoreLogList.get(i);
-                valuesSet[i] = "" + item.get("user_id") + ", " + item.get("currentScore") + ", " + item.get("modifiedScore") + ", '" + item.get("description") + "'";
-            }
-
-            String colNameSet = "user_id, currentScore, modifiedScore, description";
-
-            try {
-                sqlInquirer.insertMultiple("user_score", colNameSet, valuesSet);
-            } catch (SQLException e) {
-                System.out.println("An error has occurred while adding a score log.");
-                e.printStackTrace();
-                return StatusDescription.createProcessStatus(false, "An error has occurred while adding a score log.");
-            }
-        }
+        HashMap<String, Object> addScoreLogStatus = addScoreLogToDatabase(); //add score log to database
+        if(addScoreLogStatus != null) //if an error has occurred while adding score logs to the database
+            return addScoreLogStatus; //break saving process and return error description
 
         temp_scoreLogList = null;
         return StatusDescription.createProcessStatus(modelCollection.save(this));
@@ -403,12 +389,32 @@ public class User extends Model{
     @Override
     public HashMap<String, Object> delete()
     {
-        SQLInquirer sqlInquirer = SQLInquirer.getInstance();
-        try {
-            sqlInquirer.delete("user_score", "user_ID = " + id);
-        } catch (SQLException e) {
-            e.printStackTrace();
+        if(modelCollection.manualDeleteData("user_score", "user_ID = " + id)) //if deleting is success
+            return StatusDescription.createProcessStatus(modelCollection.delete(this));
+
+        return StatusDescription.createProcessStatus(false, "An error has occurred while deleting data.");
+    }
+
+    public HashMap<String, Object> addScoreLogToDatabase()
+    {
+        if(temp_scoreLogList.size() != 0) { //if temporary list is not empty
+            String[] valuesSet = new String[temp_scoreLogList.size()]; //create array to keep a set of values of each score log
+
+            for(int i = 0; i < temp_scoreLogList.size(); i++) {
+                HashMap<String, Object> item = temp_scoreLogList.get(i);
+                valuesSet[i] = "" + item.get("id") + ", " + item.get("currentScore") + ", " + item.get("modifiedScore") + ", '" + item.get("description") + "'"; //concat string
+            }
+
+            String colNameSet = "user_id, currentScore, modifiedScore, description"; //set of column name of values
+
+            if(!modelCollection.manualInsertDataMultiple("user_score", colNameSet, valuesSet)) { //if inserting data to the database is error
+                System.out.println("An error has occurred while adding a score log.");
+                return StatusDescription.createProcessStatus(false, "An error has occurred while adding a score log.");
+            }
+
+            temp_scoreLogList = null; //clear temp score log list
         }
-        return StatusDescription.createProcessStatus(modelCollection.delete(this));
+
+        return null;
     }
 }

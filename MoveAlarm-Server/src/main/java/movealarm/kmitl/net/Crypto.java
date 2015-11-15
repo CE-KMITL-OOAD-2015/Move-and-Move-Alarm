@@ -11,9 +11,9 @@ import java.util.Base64;
 
 
 public class Crypto {
-   private final String ALGORITHM = "AES";
-    private final String KEYVAL = "1Hbfh667adfDEJ78";
-    public static Crypto crypto = null;
+   private final String ALGORITHM = "AES"; //type of algorithm
+    private final String KEYVAL = "1Hbfh667adfDEJ78"; //master key for ker generation
+    public static Crypto instance = null;
 
     public String encryption(String value)
     {
@@ -54,9 +54,9 @@ public class Crypto {
 
     public static Crypto getInstance()
     {
-        if(crypto == null) {
-            crypto = new Crypto();
+        if(instance == null) {
+            instance = new Crypto();
         }
-        return crypto;
+        return instance;
     }
 }
