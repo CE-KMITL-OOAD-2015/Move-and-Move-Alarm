@@ -13,6 +13,7 @@ public interface DatabaseInterface
     public ArrayList<HashMap<String, Object>> all(String tableName) throws Exception;
     public void update(String tableName, String valueSet, String columnName, String operator, String value) throws Exception;
     public HashMap<String, Object> insert(String tableName, String columnNamesSet, String values) throws Exception;
+    public void insertMultiple(String tableName, String columnNamesSet, String[] valuesSet) throws Exception;
     public void delete(String tableName, String conditions) throws Exception;
     public boolean startConnection();
     public boolean isConnecting();

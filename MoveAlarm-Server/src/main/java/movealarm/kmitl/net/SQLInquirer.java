@@ -8,11 +8,11 @@ public class SQLInquirer implements DatabaseInterface {
 
     public static SQLInquirer sqlInquirer = null;
     private Connection connector;
-    private Statement stmt;
-    private ResultSet rs;
+    private Statement statement;
+    private ResultSet resultSet;
     private boolean connectionStatus = false;
 
-    private SQLInquirer()
+    private SQLInquirer() //make constructor private to use singleton design pattern
     {
         connectionStatus = startConnection();
     }
@@ -26,29 +26,32 @@ public class SQLInquirer implements DatabaseInterface {
 
     @Override
     public void addBatch(String batchCommand) throws SQLException {
-        stmt.addBatch(batchCommand);
+        statement.addBatch(batchCommand); //pre-query command
     }
 
     public ArrayList<HashMap<String, Object>> query(String sqlCommand) throws SQLException {
-        ArrayList<HashMap<String, Object>> collection = new ArrayList<>();
-        rs = stmt.executeQuery(sqlCommand);
-        ResultSetMetaData metaData = rs.getMetaData();
-        while(rs.next()) {
-            HashMap<String, Object> temp = new HashMap<>();
+        ArrayList<HashMap<String, Object>> collection = new ArrayList<>(); //create ArrayList to keep the data
+
+        resultSet = statement.executeQuery(sqlCommand); //query data and keep to resultSet
+        ResultSetMetaData metaData = resultSet.getMetaData(); //get meta data of query results such as column name, data type
+        while(resultSet.next()) {
+            HashMap<String, Object> temp = new HashMap<>(); //create new HashMap to keep each row of table
             for(int i = 1; i <= metaData.getColumnCount(); i++)
-                temp.put(metaData.getColumnName(i), rs.getObject(i));
-            collection.add(temp);
+                temp.put(metaData.getColumnName(i), resultSet.getObject(i));
+
+            collection.add(temp); //one row one HashMap
         }
+
         return collection;
     }
 
     public ArrayList<HashMap<String, Object>> all(String tableName) throws SQLException {
-        String sqlCommand = "SELECT * FROM " + tableName;
+        String sqlCommand = "SELECT * FROM " + tableName; //get all values
         return query(sqlCommand);
     }
 
     public ArrayList<HashMap<String, Object>> where(String sqlCommand) throws SQLException {
-        ArrayList<HashMap<String, Object>> collection = query(sqlCommand);
+        ArrayList<HashMap<String, Object>> collection = query(sqlCommand); //fill command manually
         return collection;
     }
 
@@ -62,17 +65,17 @@ public class SQLInquirer implements DatabaseInterface {
         return where(sqlCommand);
     }
 
-    public void update(String tableName, String valueSet, String columnName, String operator, String value) throws SQLException {
-        stmt.executeUpdate("UPDATE " + tableName + " SET " + valueSet + " WHERE " + columnName + " " + operator + " " + value);
+    public void update(String tableName, String valueSet, String columnName, String operator, String value) throws SQLException { //update or edit data
+        statement.executeUpdate("UPDATE " + tableName + " SET " + valueSet + " WHERE " + columnName + " " + operator + " " + value);
     }
 
     public HashMap<String, Object> insert(String tableName, String columnNamesSet, String values) throws SQLException {
-        stmt.executeUpdate("INSERT INTO " + tableName + " ( " + columnNamesSet + " ) VALUES (" + values + " )");
-        rs = stmt.getGeneratedKeys();
-        rs.next();
+        statement.executeUpdate("INSERT INTO " + tableName + " ( " + columnNamesSet + " ) VALUES (" + values + " )");
+        resultSet = statement.getGeneratedKeys();
+        resultSet.next();
 
-        String id = "" + rs.getLong(1);
-        HashMap<String, Object>temp = new HashMap<>();
+        String id = "" + resultSet.getLong(1); //get id from row
+        HashMap<String, Object>temp = new HashMap<>(); //a model that is just created and saved need an id and created date
         temp.put("id", id);
         temp.put("created_date", where(tableName, "id", "=", id).get(0).get("created_date"));
         return temp;
@@ -85,25 +88,25 @@ public class SQLInquirer implements DatabaseInterface {
             if(i != valuesSet.length - 1)
                 values += ", ";
         }
-        stmt.executeUpdate("INSERT INTO " + tableName + " ( " + columnNamesSet + " ) VALUES " + values);
+        statement.executeUpdate("INSERT INTO " + tableName + " ( " + columnNamesSet + " ) VALUES " + values);
     }
 
     public void delete(String tableName, String conditions) throws SQLException {
-        stmt.executeUpdate("DELETE FROM " + tableName + " WHERE " + conditions);
+        statement.executeUpdate("DELETE FROM " + tableName + " WHERE " + conditions);
     }
 
     public boolean startConnection()
     {
         try{
-            Class.forName("org.mariadb.jdbc.Driver");
+            Class.forName("org.mariadb.jdbc.Driver"); //cast class
             connector =  DriverManager.getConnection("jdbc:mariadb://203.151.92.198/MoveAlarm" +
-                    "?user=oat&password=123454322&charset=utf-8");
-            if(connector != null){
-                stmt = connector.createStatement();
+                    "?user=MoveAlarmServer&password=pepayoo!&charesultSetet=utf-8"); //database server connection
+
+            if(connector != null){ //if connector can connect to database server
+                statement = connector.createStatement(); //create statement to use to query data
                 return true;
-            } else {
+            } else
                 return false;
-            }
         } catch (ClassNotFoundException e) {
             return false;
         } catch (SQLException e) {
@@ -120,8 +123,8 @@ public class SQLInquirer implements DatabaseInterface {
     {
         try {
             connector.close();
-            stmt.close();
-            rs.close();
+            statement.close();
+            resultSet.close();
             connectionStatus = false;
         } catch (SQLException e) {
             e.printStackTrace();

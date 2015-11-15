@@ -10,28 +10,28 @@ import java.util.HashMap;
  */
 public class Converter {
     private Gson gson;
-    public static Converter jToH = null;
+    public static Converter instance = null;
 
-    public Converter() {
+    private Converter() { //make constructor as private to implement the class with singleton design pattern
         gson = new Gson();
+    }
+
+    public static Converter getInstance() //other classes must use this method to get the object
+    {
+        if(instance == null) {
+            instance = new Converter();
+        }
+        return instance;
     }
 
     public HashMap<String,Object> JSONToHashMap(String json) {
         HashMap<String,Object> map = new HashMap<>();
-        map = gson.fromJson(json,map.getClass());
+        map = gson.fromJson(json,map.getClass()); //convert from JSON to HashMap
         return map;
     }
 
     public String HashMapToJSON(HashMap<String, Object> map) {
-        return gson.toJson(map);
-    }
-
-    public static Converter getInstance()
-    {
-        if(jToH == null) {
-            jToH = new Converter();
-        }
-        return jToH;
+        return gson.toJson(map); //convert HashMap to JSON
     }
 
     public HashMap<String, Object>[] ModelArrayToHashMapArray(Model[] models)
@@ -41,7 +41,7 @@ public class Converter {
         for(int i = 0; i < models.length; i++)
             mapList.add(models[i].getGeneralValues());
 
-        HashMap<String, Object>[] arrayOfMap = mapList.toArray((new HashMap[mapList.size()]));
+        HashMap<String, Object>[] arrayOfMap = mapList.toArray((new HashMap[mapList.size()])); //convert ArrayList to normal array
 
         return arrayOfMap;
     }
