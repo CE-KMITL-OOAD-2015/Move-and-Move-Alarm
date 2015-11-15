@@ -10,7 +10,6 @@ import java.util.*;
  */
 public class EventController {
     private Event dailyEvent = null;
-    private boolean enableEvent = false;
 
     public EventController()
     {
@@ -51,10 +50,6 @@ public class EventController {
         this.dailyEvent.setTime(date);
     }
 
-    public void enableEvent(boolean en)
-    {
-        this.enableEvent = en;
-    }
 
     public String getEventDetail()
     {
