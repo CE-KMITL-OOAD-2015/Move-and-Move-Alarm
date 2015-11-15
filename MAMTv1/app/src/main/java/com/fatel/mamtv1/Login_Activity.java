@@ -160,8 +160,7 @@ public class Login_Activity extends AppCompatActivity {
             UserManage.getInstance(this).loginUser(username.getText().toString(), password.getText().toString(), this);
             UserManage.getInstance(this).mauser = 1;
 
-            HttpConnector request = new HttpConnector(this);
-            request.getrequest();
+            HttpConnector request = HttpConnector.getInstance(this);
 
             Intent intent = new Intent(this, MainActivity.class);
             Toast.makeText(this, "Hello "+username.getText().toString(), Toast.LENGTH_SHORT).show();

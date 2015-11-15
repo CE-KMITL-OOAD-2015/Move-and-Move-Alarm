@@ -1,7 +1,18 @@
 package com.fatel.mamtv1;
 
 import android.content.Context;
+import android.content.Intent;
 import android.util.Log;
+import android.view.View;
+
+import com.android.volley.AuthFailureError;
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+
+import java.util.HashMap;
+import java.util.Map;
 
 public class UserManage {
     public int mauser;
@@ -16,13 +27,14 @@ public class UserManage {
             User user = User.checkLogin(context);
             if(user!=null){
                 currentUser = user;
+                Log.i("User", "funh loginuser!=null :"+currentUser.getUserName());
             }
         }
         return instance;
     }
 
     public void createNewUser(String username,String password,Context context) {
-        int idUser = addNewUser(username, password);
+        int idUser = addNewUser(username, password,context);
         currentUser = new User(idUser, username); Log.i("User", "funh createnewuser :" + idUser);
         currentUser.setLogin(1);
         currentUser.save(context); Log.i("User", "funh save :" + idUser);
@@ -63,10 +75,58 @@ public class UserManage {
         currentUser.setLogin(0);
         currentUser.save(context);
         currentUser=null;
+        Log.i("User", "funh looutuser :" + currentUser);
+    }
+    public boolean checkCurrentLogin(Context context){
+        User user = User.checkLogin(context);
+        if(user!=null){
+            return true;
+        }
+        
+        return false;
 
     }
+    // server
+    public int checkUser(String username,String password) {
+        return 1;
+    }
 
-    private int addNewUser(String username,String password){
+    private int addNewUser(String username,String password,Context context){
+        Cache.getInstance().putData("SignUpContext", this);
+        String url = "http://203.151.92.196:8080/user/createUser";
+        final String un = username;
+        final String pw = password;
+        final int idUser;
+        /////////////edit
+       /* StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() { //create new request
+            @Override
+            public void onResponse(String s) { //when the results have come
+                Log.i("volley", s); //throw the result to the console.
+                HashMap<String, Object> userData = Converter.getInstance().JsonToHashMap(s); //convert the result into HashMap format
+                idUser = Integer.parseInt(userData.get("id").toString());
+
+            }
+        }, new Response.ErrorListener() { //create error listener to catch when the error has occurred
+            @Override
+            public void onErrorResponse(VolleyError volleyError) { //when the error that the server cannot handle by itself has occurred
+                Log.i("volley error", volleyError.toString()); //show the error
+            }
+        }) {
+            @Override //override the send parameters to server manually by POST method
+            protected Map<String, String> getParams() throws AuthFailureError {
+                HashMap<String, String> user = new HashMap<>(); //create HashMap to keep all the values in one place to be 1 object
+                user.put("userName", un);
+                user.put("password", pw);
+                Map<String, String> JSON = new HashMap<>(); //create HashMap again to keep the above user object
+                Log.i("info", user.toString());
+                JSON.put("JSON", Converter.getInstance().HashMapToJson(user)); //the API receive the values in one parameter name JSON
+                return JSON; //send the value name JSON to the server
+            }
+        }; //end of request's details
+        HttpConnector.getInstance(context).addToRequestQueue(stringRequest); //add the request to HTTPConnector, the class will respond the request automatically at separated thread
+*/
+        //////////////end
+
 
         return 0;
 
@@ -82,21 +142,17 @@ public class UserManage {
     private int findUserFB(String facebookID,String facebookFirstName){
         return 0;
     }
-
-    public int checkUser(String username,String password) {
-        return 1;
+    private void updateUser(){
+        //update currentuser to server
     }
 
+    // get set
     public void addScore(int score,Context context){
         if(currentUser!=null){
             currentUser.addScore(score);
             currentUser.save(context);
             updateUser();
         }
-    }
-
-    private void updateUser(){
-        //update currentuser to server
     }
     public void setFirstName(String firstName,Context context){
         if(currentUser!=null){
