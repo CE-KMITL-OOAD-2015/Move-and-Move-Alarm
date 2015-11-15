@@ -83,6 +83,10 @@
             android:label="@string/title_activity_posture"
             android:screenOrientation="portrait">
         </activity>
+        <activity android:name=".ScoreboardActivity"
+            android:label="@string/title_activity_scoreboard"
+            >
+        </activity>
         <activity
             android:name="com.facebook.FacebookActivity"
             android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
@@ -100,5 +104,4 @@
 
 
     </application>
-
 </manifest>

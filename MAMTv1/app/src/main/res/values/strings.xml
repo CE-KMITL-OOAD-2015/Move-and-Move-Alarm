@@ -18,4 +18,5 @@
     <string name="facebook_app_id">536873643131521</string>
     <string name="title_activity_pre">PreActivity</string>
     <string name="title_activity_posture">PostureActivity</string>
+    <string name="title_activity_scoreboard">ScoreboardActivity</string>
 </resources>
