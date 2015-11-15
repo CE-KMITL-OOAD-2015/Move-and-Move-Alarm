@@ -53,7 +53,6 @@ public class MainActivity extends AppCompatActivity {
     public String id;
     Bundle passimg;
     DBAlarmHelper mAlarmHelper;
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -182,14 +181,14 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case R.id.nav_logout_fragment:
                 fragmentClass = null;
-                mAlarmHelper = new DBAlarmHelper(this);
-                if (UserManage.getInstance().mauser == 1) {
-                    UserManage.getInstance().logoutUser();
-                    UserManage.getInstance().mauser = 0;
-                } else if (UserManage.getInstance().mauser == 2) {
+
+                mAlarmHelper =  new DBAlarmHelper(this);
+                if(UserManage.getInstance(this).getCurrentFacebookFirstName()==null) {
+                    UserManage.getInstance(this).logoutUser(this);
+                }
+                else if(UserManage.getInstance(this).getCurrentFacebookFirstName()!=null) {
+                    UserManage.getInstance(this).logoutUser(this);
                     LoginManager.getInstance().logOut();
-                    UserManage.getInstance().logoutUser();
-                    UserManage.getInstance().mauser = 0;
                 }
                 mAlarmHelper.deleteSetAlarm("1");
                 mDrawerLayout.closeDrawers();
@@ -298,6 +297,5 @@ public class MainActivity extends AppCompatActivity {
     public void linkPosture9(View view) {
         Intent intent = new Intent(this, PostureActivity.class);
         intent.putExtra("value", 8);
-        startActivity(intent);
     }
 }

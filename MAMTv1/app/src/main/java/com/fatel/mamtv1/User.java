@@ -20,8 +20,8 @@ public class User {
     private String facebookID;
     private String facebookFirstName;
     private String facebookLastName;
-    //no sure int for image
     private int profileImage;
+    private int login;
 
     public static final int DATABASE_VERSION = 1;
     public static final String TABLE = "user";
@@ -39,23 +39,28 @@ public class User {
         public static final String FACEBOOKFIRSTNAME = "facebookfirstname";
         public static final String FACEBOOKLASTNAME = "facebooklastname";
         public static final String PROFILEIMAGE = "profileimage";
+        public static final String LOGIN = "login";
     }
     public User(){
     }
     public User(int idUser, String username){
         this.id=-1;
+        this.score=0;
+        this.login=0;
         this.idUser = idUser;
         this.userName = username;
     }
     public User(int idUser,String facebookID,String facebookFirstName){
         this.id=-1;
+        this.score=0;
+        this.login=0;
         this.idUser = idUser;
         this.facebookID = facebookID;
         this.facebookFirstName = facebookFirstName;
     }
     public User(int id,int idUser,String firstName, String lastName, String username,int age,int score
             ,int gender,String email, String facebookID, String facebookFirstName,
-                String facebookLastName, int profileImage){
+                String facebookLastName, int profileImage,int login){
         this.id=id;
         this.idUser = idUser;
         this.firstName = firstName;
@@ -69,6 +74,7 @@ public class User {
         this.facebookFirstName=facebookFirstName;
         this.facebookLastName=facebookLastName;
         this.profileImage = profileImage;
+        this.login=login;
     }
     public void save (Context context){
 
@@ -85,6 +91,10 @@ public class User {
     public static User find(int idUser,Context context){
         UserHelper userHelper = new UserHelper(context);
         return userHelper.getUser(idUser);
+    }
+    public static User checkLogin(Context context){
+        UserHelper userHelper = new UserHelper(context);
+        return userHelper.checkLoginUser();
     }
 
     public int getId(){
@@ -126,6 +136,7 @@ public class User {
     public int getProfileImage(){
         return profileImage;
     }
+    public int getLogin(){ return login; }
     public void setId(int id){
         this.id = id;
     }
@@ -167,5 +178,9 @@ public class User {
     }
     public void addScore(int score){
         this.score+=score;
+    }
+
+    public void setLogin(int login) {
+        this.login = login;
     }
 }

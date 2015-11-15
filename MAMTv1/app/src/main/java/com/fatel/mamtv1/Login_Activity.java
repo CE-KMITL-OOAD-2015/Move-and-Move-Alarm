@@ -139,7 +139,7 @@ public class Login_Activity extends AppCompatActivity {
         username = (EditText)findViewById(R.id.enter_username);
         password = (EditText)findViewById(R.id.enter_password);
 
-        int isSuccess = UserManage.getInstance().checkUser(username.getText().toString(), password.getText().toString());
+        int isSuccess = UserManage.getInstance(this).checkUser(username.getText().toString(), password.getText().toString());
 
         if(username.getText().toString().equals(""))
         {
@@ -157,11 +157,9 @@ public class Login_Activity extends AppCompatActivity {
             toast.show();
         }
         else if (isSuccess==1/*ifSuccess ใช้เช็คว่า username กับ password ตรงกับฐานข้อมูลรึเปล่า*/) {
-            UserManage.getInstance().loginUser(username.getText().toString(), password.getText().toString(), this);
-            UserManage.getInstance().mauser = 1;
+            UserManage.getInstance(this).loginUser(username.getText().toString(), password.getText().toString(), this);
 
-            HttpConnector request = new HttpConnector(this);
-            request.getrequest();
+            HttpConnector request = HttpConnector.getInstance(this);
 
             Intent intent = new Intent(this, MainActivity.class);
             Toast.makeText(this, "Hello "+username.getText().toString(), Toast.LENGTH_SHORT).show();
@@ -244,9 +242,8 @@ public class Login_Activity extends AppCompatActivity {
         Profile profile = Profile.getCurrentProfile();
         //Log.i("loggedin", loginResult + " go UI");
         if (loggedIn && (profile != null)) {
-            UserManage.getInstance().createFBUser(profile.getId(), profile.getFirstName(), this);
-            UserManage.getInstance().loginFBUser(profile.getId(), profile.getFirstName(),this);
-            UserManage.getInstance().mauser = 2;
+            UserManage.getInstance(this).createFBUser(profile.getId(), profile.getFirstName(), this);
+            UserManage.getInstance(this).loginFBUser(profile.getId(), profile.getFirstName(),this);
             Intent intent = new Intent(Login_Activity.this, MainActivity.class);
             intent.putExtra("firstname",profile.getFirstName());
             intent.putExtra("lastname",profile.getLastName());

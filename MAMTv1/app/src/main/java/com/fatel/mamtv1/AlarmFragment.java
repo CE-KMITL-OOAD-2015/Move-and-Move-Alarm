@@ -19,7 +19,6 @@ import android.widget.Toast;
 import android.widget.TextView;
 
 
-
 /**
  * A simple {@link Fragment} subclass.
  */
