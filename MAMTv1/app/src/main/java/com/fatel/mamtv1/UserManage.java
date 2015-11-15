@@ -17,6 +17,7 @@ import java.util.Map;
 import java.util.Objects;
 
 public class UserManage {
+
     private static User currentUser = null;
     private static UserManage instance = null;
     private UserManage(){

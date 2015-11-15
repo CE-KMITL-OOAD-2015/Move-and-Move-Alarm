@@ -61,11 +61,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-<<<<<<< HEAD
         Cache.getInstance().putData("MainActivityContext", this);
-=======
-        Log.i("User ID", "" + UserManage.getInstance(this).getCurrentUser().getIdUser());
->>>>>>> addnewuser server
+
+
 
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
@@ -212,16 +210,10 @@ public class MainActivity extends AppCompatActivity {
             case R.id.nav_logout_fragment:
                 fragmentClass = null;
                 mAlarmHelper =  new DBAlarmHelper(this);
-                if(UserManage.getInstance(this).mauser == 1) {
-                    UserManage.getInstance(this).logoutUser(this);
-                    UserManage.getInstance(this).mauser = 0;
-                }
-                else if(UserManage.getInstance(this).mauser == 2) {
+
                     LoginManager.getInstance().logOut();
                     UserManage.getInstance(this).logoutUser(this);
-                    UserManage.getInstance(this).mauser = 0;
 
-                }
                 mAlarmHelper.deleteSetAlarm("1");
                 mDrawerLayout.closeDrawers();
                 Intent intent = new Intent(this, Intro_Activity.class);
@@ -263,7 +255,6 @@ public class MainActivity extends AppCompatActivity {
         // Sync the toggle state after onRestoreInstanceState has occurred.
         mDrawerToggle.syncState();
     }
-
 
     public void linkPosture1(View view) {
         Intent intent = new Intent(this, PostureActivity.class);
@@ -330,5 +321,6 @@ public class MainActivity extends AppCompatActivity {
         Intent intent = new Intent(this, JoinGroupActivity.class);
 
         startActivity(intent);
+
     }
 }
