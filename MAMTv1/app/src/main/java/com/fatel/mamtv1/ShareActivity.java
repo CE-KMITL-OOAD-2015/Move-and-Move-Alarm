@@ -84,8 +84,8 @@ public class ShareActivity extends AppCompatActivity {
 
 
             //add for editText บ่ได้ใช้ คิดว่าจะตัด caption ทิ้ง
-            EditText myCaption = (EditText)findViewById(R.id.caption);
-            String myCap = myCaption.getText().toString();
+//            EditText myCaption = (EditText)findViewById(R.id.caption);
+//            String myCap = myCaption.getText().toString();
 
 
             //add for activity_share facebook

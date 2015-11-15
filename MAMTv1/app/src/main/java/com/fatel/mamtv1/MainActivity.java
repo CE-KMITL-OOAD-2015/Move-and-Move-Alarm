@@ -58,6 +58,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        Cache.getInstance().putData("MainActivityContext", this);
         Bundle bundle = getIntent().getExtras();
         if (bundle != null) {
             firstName = bundle.getString("firstname");
@@ -178,6 +179,12 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case R.id.nav_posture_fragment:
                 fragmentClass = ChoosePostureFragment.class;
+                break;
+            case R.id.nav_lboard_fragment:
+                fragmentClass = null;
+                mDrawerLayout.closeDrawers();
+                Intent intent2 = new Intent(this, ScoreboardActivity.class);
+                startActivity(intent2);
                 break;
             case R.id.nav_logout_fragment:
                 fragmentClass = null;
