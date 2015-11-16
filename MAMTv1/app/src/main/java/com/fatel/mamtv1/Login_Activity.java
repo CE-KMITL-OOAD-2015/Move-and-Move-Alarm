@@ -140,7 +140,6 @@ public class Login_Activity extends AppCompatActivity {
         password = (EditText)findViewById(R.id.enter_password);
         Cache.getInstance().putData("loginContext", this);
 
-        int isSuccess = UserManage.getInstance(this).checkUser(username.getText().toString(), password.getText().toString());
 
         if(username.getText().toString().equals(""))
         {
@@ -157,7 +156,7 @@ public class Login_Activity extends AppCompatActivity {
             Toast toast = Toast.makeText(this, "Please enter Username and Password at least 6 characters", Toast.LENGTH_SHORT);
             toast.show();
         }
-        else if (isSuccess==1/*ifSuccess ใช้เช็คว่า username กับ password ตรงกับฐานข้อมูลรึเปล่า*/) {
+        else {
             UserManage.getInstance(this).loginUser(username.getText().toString(), password.getText().toString(), this);
 <<<<<<< HEAD
 =======
@@ -166,7 +165,7 @@ public class Login_Activity extends AppCompatActivity {
 >>>>>>> login wrong
 
 
-            Intent intent = new Intent(this, MainActivity.class);
+            //Intent intent = new Intent(this, MainActivity.class);
             //Toast.makeText(this, "Hello "+username.getText().toString(), Toast.LENGTH_SHORT).show();
             //startActivity(intent);
             // ดูว่ามีการตั้งค่าเวลาหรือเปล่า
@@ -174,10 +173,7 @@ public class Login_Activity extends AppCompatActivity {
                 start();
             }*/
        }
-        else{
-            Toast toast = Toast.makeText(this, "Username or Password incorrect.", Toast.LENGTH_SHORT);
-            toast.show();
-        }
+
     }
     public void start(){
         /*
@@ -244,23 +240,31 @@ public class Login_Activity extends AppCompatActivity {
     public void linkWithFB()
     {
         boolean loggedIn = AccessToken.getCurrentAccessToken() != null;
-        Profile profile = Profile.getCurrentProfile();
+        Profile profile = Profile.getCurrentProfile();Log.i("User", "loginfb");
         //Log.i("loggedin", loginResult + " go UI");
+
+        Cache.getInstance().putData("loginFBContext", this);
         if (loggedIn && (profile != null)) {
+<<<<<<< HEAD
             UserManage.getInstance(this).createFBUser(profile.getId(), profile.getFirstName(), this);
             UserManage.getInstance(this).loginFBUser(profile.getId(), profile.getFirstName(),this);
 <<<<<<< HEAD
 
 =======
 >>>>>>> login wrong
+=======
+            Log.i("User", "loginfb");
+            UserManage.getInstance(this).loginFBUser(profile.getId(), profile.getFirstName(), this);
+            UserManage.getInstance(this).setFacebookLastName(profile.getLastName(), this);
+>>>>>>> login fb server
             Intent intent = new Intent(Login_Activity.this, MainActivity.class);
-            intent.putExtra("firstname",profile.getFirstName());
-            intent.putExtra("lastname",profile.getLastName());
+            intent.putExtra("firstname", profile.getFirstName());
+            intent.putExtra("lastname", profile.getLastName());
             intent.putExtra("id",profile.getId());
             //String uri = profile.getProfilePictureUri(100,100).toString();
             intent.putExtra("propic",profile.getProfilePictureUri(300,300));
             Toast.makeText(this, "Hello "+profile.getFirstName(), Toast.LENGTH_SHORT).show();
-            startActivity(intent);
+            //startActivity(intent);
         }
     }
 
