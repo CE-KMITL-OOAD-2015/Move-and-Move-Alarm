@@ -5,7 +5,9 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fillViewport="true"
-        tools:context="com.fatel.mamtv1.ChoosePostureFragment">
+        tools:context="com.fatel.mamtv1.ChoosePostureFragment"
+        >
+        <!--android:background="@drawable/blankbg"-->
     <Button
         android:id="@+id/post1"
         android:text="Posture #1"

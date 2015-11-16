@@ -9,9 +9,8 @@
     tools:context="com.fatel.mamtv1.ShareActivity"
     android:weightSum="1"
 
-    android:orientation="vertical"
-    >
-
+    android:orientation="vertical">
+<!--android:background="@drawable/sharebg"-->
 
     <ImageView
         android:id="@+id/imgNxtPreview"
