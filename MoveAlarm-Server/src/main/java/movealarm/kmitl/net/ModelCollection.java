@@ -1,85 +1,86 @@
 package movealarm.kmitl.net;
 
-import javax.swing.text.TabableView;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
-/**
- * Created by Moobi on 16-Oct-15.
- */
 public class ModelCollection {
     public static ModelCollection modelCollection = null;
-    private SQLInquirer sqlInquirer = SQLInquirer.getInstance();
+    private DatabaseInterface databaseInquirer;
 
-    private ModelCollection() { }
+    private ModelCollection(DatabaseInterface databaseInquirer)
+    {
+        this.databaseInquirer = databaseInquirer;
+    }
 
-    public static ModelCollection getInstance()
+    public static ModelCollection getInstance(DatabaseInterface databaseInquirer)
     {
         if(modelCollection == null)
-            modelCollection = new ModelCollection();
+            modelCollection = new ModelCollection(databaseInquirer);
         return modelCollection;
     }
 
-    public HashMap<String, Object> find(String tableName, int id)
+    public HashMap<String, Object> find(String tableName, int id) //find method will query data by an id, each id is unique so find method will return only 1 object
     {
         try {
-            return sqlInquirer.where(tableName,"id", "=", "" +id).get(0);
-        } catch (SQLException e) {
+            return databaseInquirer.where(tableName,"id", "=", "" +id).get(0);
+        } catch (Exception e) {
             System.out.println("An error has occurred in ModelCollection.find()");
             System.out.println(e);
-        } catch (IndexOutOfBoundsException e) {
-            System.out.println("An error has occurred in ModelCollection.find()");
-            System.out.println(e);
+            databaseInquirer.startConnection();
         }
         return null;
     }
 
-    public ArrayList<HashMap<String, Object>> all(String tableName)
+    public ArrayList<HashMap<String, Object>> all(String tableName) //return all model
     {
         try {
-            return sqlInquirer.all(tableName);
-        } catch (SQLException e) {
+            return databaseInquirer.all(tableName);
+        } catch (Exception e) {
             System.out.println("An error has occurred in ModelCollection.all()");
             System.out.println(e);
+            databaseInquirer.startConnection();
         }
         return null;
     }
 
-    public ArrayList<HashMap<String, Object>> where(String tableName, String colName, String operator, String value)
+    public ArrayList<HashMap<String, Object>> where(String tableName, String columnName, String operator, String value) //pass values method
     {
         try {
-            return sqlInquirer.where(tableName, colName, operator, value);
-        } catch (SQLException e) {
+            return databaseInquirer.where(tableName, columnName, operator, value);
+        } catch (Exception e) {
             System.out.println("An error has occurred in ModelCollection.where()");
             System.out.println(e);
+            databaseInquirer.startConnection();
         }
         return null;
     }
 
     public HashMap<String, Object> create(Model model)
     {
-        String colNames = "", values = "";
-        HashMap<String, Object> list = model.getValues();
-        for(Map.Entry<String, Object> data : list.entrySet()) {
-            String key = data.getKey();
-            Object value = data.getValue();
-            colNames += key + ",";
-            if(value == null)
+        String columnsName = "", values = "";
+        HashMap<String, Object> list = model.getValues(); //get all fields from model
+        for(Map.Entry<String, Object> data : list.entrySet()) { //get set of key and value from HashMap
+            String key = data.getKey(); //get column name from key
+            Object value = data.getValue(); //get value of column in each row
+            columnsName += key + ","; //create set of column name
+            if(value == null) //if value of field is null
                 values += "NULL, ";
-            else if(value.getClass().equals(String.class))
+            else if(value.getClass().equals(String.class)) //if value is string type
                 values += "'" + value + "', ";
-            else
+            else //if value is numeric
                 values += "" + value + ", ";
         }
-        colNames = colNames.substring(0, colNames.length() - 1);
-        values = values.substring(0, values.length() - 2);
+
+        columnsName = columnsName.substring(0, columnsName.length() - 1); //remove unused quote or period
+        values = values.substring(0, values.length() - 2); //remove unused quote or period
+
         try {
-            return sqlInquirer.insert(model.getTableName(), colNames, values);
-        } catch (SQLException e) {
+            return databaseInquirer.insert(model.getTableName(), columnsName, values); //insert data to the database
+        } catch (Exception e) {
             System.out.println("An error has occurred in while creating a model name '" + model.getClass().getSimpleName() + "'.");
             System.out.println(e);
+            databaseInquirer.startConnection();
         }
         return null;
     }
@@ -87,25 +88,27 @@ public class ModelCollection {
     public boolean save(Model model)
     {
         String valueSet = "";
-        HashMap<String, Object> list = model.getValues();
+        HashMap<String, Object> list = model.getValues(); //get all fields from model
         for(Map.Entry<String, Object> data : list.entrySet()) {
-            String key = data.getKey();
-            Object value = data.getValue();
-            if(value == null)
+            String key = data.getKey(); //get column name
+            Object value = data.getValue(); //get value of column
+            if(value == null) //if value of field is null
                 valueSet += key + "=NULL, ";
-            else if(value.getClass().equals(String.class))
+            else if(value.getClass().equals(String.class)) //if value is string type
                 valueSet += key + "='" + value + "', ";
-            else
+            else //if value is numeric
                 valueSet += key + "=" + value + ", ";
         }
-        valueSet = valueSet.substring(0, valueSet.length() - 2);
+
+        valueSet = valueSet.substring(0, valueSet.length() - 2); //remove unused quote or period
 
         try {
-            sqlInquirer.update(model.getTableName(), valueSet, "id", "=", "" + model.getID());
+            databaseInquirer.update(model.getTableName(), valueSet, "id", "=", "" + model.getID()); //update data to the database
             return true;
-        } catch (SQLException e) {
+        } catch (Exception e) {
             System.out.println("An error has occurred in while saving a model name '" + model.getClass().getSimpleName() + "'.");
             System.out.println(e);
+            databaseInquirer.startConnection();
         }
         return false;
     }
@@ -113,13 +116,50 @@ public class ModelCollection {
     public boolean delete(Model model)
     {
         try {
-            sqlInquirer.delete(model.getTableName(), "id = '" + model.getID() + "'");
+            databaseInquirer.delete(model.getTableName(), "id = '" + model.getID() + "'"); //delete data on the database
             model = null;
-        } catch (SQLException e) {
+        } catch (Exception e) {
             System.out.println("An error has occurred in while deleting a model name '" + model.getClass().getSimpleName() + "'.");
             System.out.println(e);
+            databaseInquirer.startConnection();
             return false;
         }
         return true;
+    }
+
+    public boolean manualEditData(String tableName, String valueSet, String columnName, String operator, String value)
+    {
+        try {
+            databaseInquirer.update(tableName, valueSet, columnName, operator, value);
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("An error has occurred while updating data.");
+            databaseInquirer.startConnection();
+            return false;
+        }
+    }
+
+    public boolean manualInsertDataMultiple(String tableName, String columnNameSet, String[] valuesSet)
+    {
+        try {
+            databaseInquirer.insertMultiple(tableName, columnNameSet, valuesSet);
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            System.out.println("An error has occurred while inserting data.");
+            return false;
+        }
+    }
+
+    public boolean manualDeleteData(String tableName, String conditions)
+    {
+        try {
+            databaseInquirer.delete(tableName, conditions);
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
     }
 }

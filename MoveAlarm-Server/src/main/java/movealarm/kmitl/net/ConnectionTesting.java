@@ -5,104 +5,57 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import java.sql.SQLException;
 import java.util.ArrayList;
-import java.sql.SQLException;
 import java.util.HashMap;
 
  @RestController
  public class ConnectionTesting {
      private SQLInquirer sqlInquirer = SQLInquirer.getInstance();
-     private Converter jtoH = Converter.getInstance();
+     private Converter converter = Converter.getInstance();
 
-     @RequestMapping("/test/server_connection")
-     public String testConnection()
+     @RequestMapping("/test/serverConnection")
+     public String testServerConnection()
      {
-         return "Connection success!";
+         return converter.HashMapToJSON(StatusDescription.createProcessStatus(true, "connected."));
      }
 
-     @RequestMapping("/test/pass_parameter")
-     public String testPassParameter(@RequestParam(value="param", required = true, defaultValue = "Server cannot recieve any value." +
-             "Please check your sending process.") String param)
+     @RequestMapping("/test/databaseServerConnection")
+     public String testDatabaseServerConnection()
      {
-         return "Your pass value: " + param;
+         sqlInquirer.startConnection(); //always re-start database connection when this method is called to make sure that service server can create new connection to database server
+         if(sqlInquirer.isConnecting()) //check connection status
+            return converter.HashMapToJSON(StatusDescription.createProcessStatus(true, "connected.")); //respond inform of JSON
+
+         return converter.HashMapToJSON(StatusDescription.createProcessStatus(false, "Cannot connect to the database server."));
      }
 
-     @RequestMapping("/test/querying")
-     public String testQuerying()
+     @RequestMapping("/test/passParameter")
+     public String testPassParameter(@RequestParam(value="param", required = true, defaultValue = "Server cannot receive any value.") String param)
+     {
+         if(param.length() > 0 && !param.equals("Server cannot receive any value.")) { //if received parameter is not null and not equals to default value
+             HashMap<String, Object> JSON = StatusDescription.createProcessStatus(true); //create response object
+             JSON.put("param", param); //put the received parameter
+             return converter.HashMapToJSON(JSON); //return inform of JSON
+         }
+
+         return converter.HashMapToJSON(StatusDescription.createProcessStatus(false, "Server cannot receive any value."));
+     }
+
+     @RequestMapping("/test/queryingData")
+     public String testQuerying() //test if an API server can queries data from the database server
      {
          ArrayList<HashMap<String, Object>> temp = null;
          try {
-             sqlInquirer.orderByASC("id");
-             temp = sqlInquirer.where("testTable", "var2", "=", "8988");
+             temp = sqlInquirer.where("testTable", "var2", "=", "8988"); //query predefined data
          } catch (SQLException e) {
              e.printStackTrace();
          }
-         return "id: " + temp.get(0).get("id") + " value: " + temp.get(0).get("var2") + "<br>id: " +
-                 temp.get(1).get("id") + " value: " + temp.get(1).get("var2");
-     }
 
-     @RequestMapping("/test/update_data")
-     public void testUpdate()
-     {
-         try {
-             sqlInquirer.update("testTable", "var2='5555'", "id", ">", "5");
-         } catch (SQLException e) {
-             e.printStackTrace();
+         if(temp != null) { //if data != null
+             HashMap<String, Object> JSON = StatusDescription.createProcessStatus(true); //create response object
+             JSON.put("data", temp); //put the data
+             return converter.HashMapToJSON(JSON); //return inform of JSON
          }
-     }
 
-     @RequestMapping("/test/insert_data")
-     public void testInsert()
-     {
-         try {
-             sqlInquirer.insert("testTable", "var2", "6666");
-         } catch (SQLException e) {
-             e.printStackTrace();
-         }
-     }
-
-     @RequestMapping("/test/delete_data")
-     public void testDelete()
-     {
-         try {
-             sqlInquirer.delete("testTable", "var2='6666' OR var2='5555'");
-         } catch (SQLException e) {
-             e.printStackTrace();
-         }
-     }
-
-     @RequestMapping("/test/insert_multiple")
-     public void testInsertMultiple()
-     {
-         String[] values = {"6666", "4444", "8988"};
-         try {
-             sqlInquirer.insertMultiple("testTable", "var2", values);
-         } catch (SQLException e) {
-             e.printStackTrace();
-         }
-     }
-
-     @RequestMapping("/test/database_connection")
-     public boolean testConDB() {
-         return sqlInquirer.isConnecting();
-     }
-
-     @RequestMapping("/test/jsontohashmap")
-      public String testJsonToHashMap()
-     {
-         /*String json = "{\n" +
-                 "  NAME:\"Albert Attard\",\n" +
-                 "  P_LANGUAGE:\"Java\",\n" +
-                 "  LOCATION:\"Malta\"\n" +
-                 "}";*/
-         HashMap<String,Object> map = jtoH.JsonToHashMap(testHashMapToJson());
-         return map.get("friend").toString();
-     }
-
-     @RequestMapping("/test/hashmaptojson")
-     public String testHashMapToJson()
-     {
-         HashMap<String,Object> map = new HashMap<>();
-         map.put("name","oat");
-         return jtoH.HashMapToJson(map);
+         return converter.HashMapToJSON(StatusDescription.createProcessStatus(false, "An error has occurred while querying data from the database."));
      }
 }
