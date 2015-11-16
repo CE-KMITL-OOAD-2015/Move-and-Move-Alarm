@@ -62,20 +62,6 @@ public class UserManage {
         currentUser.save(context);
     }
     public void loginUser (String username,String password, final Context context){
-        /*int idUser = findUser(username, password);
-
-        if((User.find(idUser, context))!= null){
-            User user=User.find(idUser, context);
-            currentUser=user;
-            Log.i("User", " get iduser:" + idUser + " id: " + user.getId() + " u:" + user.getUserName());
-        }
-        else {
-            currentUser = new User(idUser, username);
-        }
-        currentUser.setLogin(1);
-        currentUser.save(context);
-        */
-        ///////
 
         String url = "http://203.151.92.196:8080/user/login"; //url of login API
         final String un = username;
@@ -87,10 +73,12 @@ public class UserManage {
                         Converter converter = Converter.getInstance();
                         Context context = (Context) Cache.getInstance().getData("loginContext");
                         HashMap<String, Object> data = converter.JSONToHashMap(response); //convert JSON to HashMap format
-                        HashMap<String, Object> userData = converter.JSONToHashMap(converter.toString(data.get("user")));
-                        Log.i("volley", userData.toString()); //throw the message to the console.
-                        Log.i("User", "login");
+
+
                         if((boolean) data.get("status")) {
+                            HashMap<String, Object> userData = converter.JSONToHashMap(converter.toString(data.get("user")));
+                            Log.i("volley", userData.toString()); //throw the message to the console.
+                            Log.i("User", "login");
                             int idUser = converter.toInt(userData.get("id"));
                             String username = converter.toString(userData.get("userName"));
                             Log.i("User", "login :" + idUser);
@@ -115,15 +103,16 @@ public class UserManage {
                             UserManage.getInstance(context).getCurrentUser().setFacebookLastName(converter.toString(userData.get("facebookLastName ")));
                             UserManage.getInstance(context).getCurrentUser().setLogin(1);
                             UserManage.getInstance(context).getCurrentUser().save(context);
-                            Log.i("User", "login user fb id:" + converter.toString(userData.get("facebookID")));
 
-                                    context.startActivity(new Intent(context, MainActivity.class));
+                            Toast toast = Toast.makeText(context, "Hello "+username, Toast.LENGTH_SHORT);
+                            toast.show();
+                            context.startActivity(new Intent(context, MainActivity.class));
                         }
                         else {
                             Toast toast = Toast.makeText(context, converter.toString(data.get("description")), Toast.LENGTH_SHORT);
                             toast.show();
                         }
-                        Log.i("User", "login user id:" + currentUser.getId()+" iduser:"+currentUser.getIdUser()+"username:"+currentUser.getUserName()+"fbid:"+currentUser.getFacebookID());
+
 
 
                     }
@@ -217,6 +206,7 @@ public class UserManage {
                 /*HashMap<String, Object> userData = Converter.getInstance().JsonToHashMap(s); //convert the result into HashMap format
                 Cache.getInstance().putData("idUser", userData.get("id"));
                 Log.i("User", "addnewuser :" + userData.get("id"));*/
+
             }
         }, new Response.ErrorListener() { //create error listener to catch when the error has occurred
             @Override

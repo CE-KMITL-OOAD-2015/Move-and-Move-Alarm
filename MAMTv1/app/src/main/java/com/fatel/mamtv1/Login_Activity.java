@@ -159,16 +159,21 @@ public class Login_Activity extends AppCompatActivity {
         }
         else if (isSuccess==1/*ifSuccess ใช้เช็คว่า username กับ password ตรงกับฐานข้อมูลรึเปล่า*/) {
             UserManage.getInstance(this).loginUser(username.getText().toString(), password.getText().toString(), this);
+<<<<<<< HEAD
+=======
+
+            //HttpConnector request = HttpConnector.getInstance(this);
+>>>>>>> login wrong
 
 
             Intent intent = new Intent(this, MainActivity.class);
-            Toast.makeText(this, "Hello "+username.getText().toString(), Toast.LENGTH_SHORT).show();
-            startActivity(intent);
+            //Toast.makeText(this, "Hello "+username.getText().toString(), Toast.LENGTH_SHORT).show();
+            //startActivity(intent);
             // ดูว่ามีการตั้งค่าเวลาหรือเปล่า
             /*if(mAlarmHelper.checkdata()==1){
                 start();
             }*/
-        }
+       }
         else{
             Toast toast = Toast.makeText(this, "Username or Password incorrect.", Toast.LENGTH_SHORT);
             toast.show();
@@ -244,7 +249,10 @@ public class Login_Activity extends AppCompatActivity {
         if (loggedIn && (profile != null)) {
             UserManage.getInstance(this).createFBUser(profile.getId(), profile.getFirstName(), this);
             UserManage.getInstance(this).loginFBUser(profile.getId(), profile.getFirstName(),this);
+<<<<<<< HEAD
 
+=======
+>>>>>>> login wrong
             Intent intent = new Intent(Login_Activity.this, MainActivity.class);
             intent.putExtra("firstname",profile.getFirstName());
             intent.putExtra("lastname",profile.getLastName());

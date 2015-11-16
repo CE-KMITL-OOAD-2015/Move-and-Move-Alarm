@@ -72,15 +72,10 @@ public class Create_Account_Activity extends AppCompatActivity {
             mUserManage.createNewUser(username.getText().toString(),password.getText().toString(),this);
 
 
-            Log.i("User", "funh createuser ");
+           // Log.i("User", "funh createuser ");
             Toast.makeText(this, "Create Successful", Toast.LENGTH_SHORT).show();
-           // startActivity(intent);
+            //startActivity(intent);intent);
 
-
-        }
-        else {
-            Toast toast = Toast.makeText(this, "Password not match", Toast.LENGTH_SHORT);
-            toast.show();
         }
     }
 }
