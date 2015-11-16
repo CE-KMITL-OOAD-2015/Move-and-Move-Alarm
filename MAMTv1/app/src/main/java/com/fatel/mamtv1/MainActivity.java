@@ -122,7 +122,6 @@ public class MainActivity extends AppCompatActivity {
 
         //history
         mhistoryHelper = new HistoryHelper(this);
-        boolean check = false;
         History history = mhistoryHelper.getHistoryUser(UserManage.getInstance(this).getCurrentIdUser());
         if(history==null){
             history = new History(UserManage.getInstance(this).getCurrentIdUser());

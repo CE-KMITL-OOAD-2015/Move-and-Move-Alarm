@@ -134,6 +134,7 @@ public class Activity extends AppCompatActivity {
             public void onFinish() {
                 txtA.setText("Activity Time done!");
 
+                //history
                 //go to main
                 Intent i1 = new Intent(Activity.this, PreShareActivity.class);
                // Bundle b1 = new Bundle();
@@ -191,6 +192,16 @@ public class Activity extends AppCompatActivity {
 
     public void linkHome(View view)
     {
+        //history
+        HistoryHelper mhistoryHelper = new HistoryHelper(this);
+        History history = mhistoryHelper.getHistoryUser(UserManage.getInstance(this).getCurrentIdUser());
+        history.subaccept(1);
+        history.addcancel(1);
+        history.save(this);
+        Log.i("historycancel", UserManage.getInstance(this).getCurrentIdUser() + "");
+        Log.i("historycancel", history.getCancelActivity() + "");
+        Log.i("historycancel", history.gettotal() + "");
+
         Intent i1 = new Intent(Activity.this, MainActivity.class);
         // Bundle b1 = new Bundle();
         //b1.putExtra("key", "main");
