@@ -2,6 +2,7 @@ package com.fatel.mamtv1;
 
 
 import android.app.AlarmManager;
+import android.content.Context;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
@@ -28,6 +29,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
  */
 public class MainFragment extends android.support.v4.app.Fragment {
     private DBAlarmHelper mAlarmHelper;
+    CircleImageView propic;
     public MainFragment() {
         // Required empty public constructor
     }
@@ -46,11 +48,11 @@ public class MainFragment extends android.support.v4.app.Fragment {
             id = getArguments().getString("id");
         }
 
-//        propic = (CircleImageView)view.findViewById(R.id.profile_image_f);
-//        Log.i("xx", propic.toString());
-//        propic.setVisibility(View.VISIBLE);
-//        Log.i("xx", "do?");
-//        Glide.with(this).load("https://graph.facebook.com/" + id + "/picture?type=large").into(propic);
+        propic = (CircleImageView)view.findViewById(R.id.profile_image_f);
+        Log.i("xx", propic.toString());
+        propic.setVisibility(View.VISIBLE);
+        Log.i("xx", "do?");
+        Glide.with(this).load("https://graph.facebook.com/" + UserManage.getInstance((Context)Cache.getInstance().getData("MainActivityContext")).getCurrentFacebookId() + "/picture?type=large").into(propic);
         return view;
     }
     public void setDay(View view){

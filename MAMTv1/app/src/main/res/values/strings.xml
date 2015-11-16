@@ -19,4 +19,6 @@
     <string name="title_activity_pre">PreActivity</string>
     <string name="title_activity_posture">PostureActivity</string>
     <string name="title_activity_scoreboard">ScoreboardActivity</string>
+    <string name="title_activity_create_group">CreateGroupActivity</string>
+    <string name="title_activity_join_group">JoinGroupActivity</string>
 </resources>
