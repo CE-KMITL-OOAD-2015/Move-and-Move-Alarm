@@ -17,7 +17,6 @@ public class Posture extends Model
     public Posture()
     {
         this.tableName = "posture";
-        this.requiredFields = new ArrayList<>();
         this.addRequiredField("imageData");
         this.addRequiredField("title");
     }
@@ -25,10 +24,10 @@ public class Posture extends Model
     public static Posture find(int id)
     {
         HashMap<String, Object> posture_map = modelCollection.find("posture", id);
-        if(posture_map == null) {
+        if(posture_map == null) { //if found nothing, return null
             return null;
         }
-        Posture model = new Posture();
+        Posture model = new Posture(); //create posture and return its value
         model.id = (int)posture_map.get("id");
         model.createdDate = (Date)posture_map.get("createdDate");
         model.imageData = (int)posture_map.get("imageData");
@@ -41,7 +40,7 @@ public class Posture extends Model
     public static Posture[] where(String colName, String operator, String value)
     {
         ArrayList<HashMap<String, Object>> temp = modelCollection.where("posture",colName,operator,value);
-        ArrayList<Posture> collection = new ArrayList<>();
+        ArrayList<Posture> collection = new ArrayList<>(); //create array of posture and return its value
         for(HashMap<String, Object> item : temp) {
             Posture model = new Posture();
             model.id = (int)item.get("id");
@@ -57,11 +56,11 @@ public class Posture extends Model
 
     public static Posture[] where(String colName, String operator, String value,String extraCondition)
     {
-        return where(colName, operator, value + " " + extraCondition);
+        return where(colName, operator, value + " " + extraCondition); //where method with extra condition
     }
     public static Posture[] all()
     {
-        ArrayList<HashMap<String, Object>> temp = modelCollection.all("posture");
+        ArrayList<HashMap<String, Object>> temp = modelCollection.all("posture"); //get all postures
         ArrayList<Posture> collection = new ArrayList<>();
         for(HashMap<String, Object> item : temp) {
             Posture model = new Posture();
@@ -79,7 +78,7 @@ public class Posture extends Model
     @Override
     public HashMap<String, Object> getValues()
     {
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss"); //return all field of model then, return in Hashmap type
         HashMap<String, Object> posture_map = new HashMap<>();
         posture_map.put("title",this.title);
         posture_map.put("description",this.description);
@@ -94,7 +93,7 @@ public class Posture extends Model
     }
 
     @Override
-    public HashMap<String, Object> getGeneralValues() {
+    public HashMap<String, Object> getGeneralValues() { //like getValues method but return only common field
         HashMap<String, Object> posture_map = new HashMap<>();
         posture_map.put("title",this.title);
         posture_map.put("description",this.description);
