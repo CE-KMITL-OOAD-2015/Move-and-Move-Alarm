@@ -319,6 +319,28 @@ public class UserController {
         return converter.HashMapToJSON(JSON); //convert to JSON string
     }
 
+    @RequestMapping("/user/loginFacebook")
+    public String loginFacebook(@RequestParam(value = "facebookID", required = true, defaultValue = "0")String facebookID,
+                                @RequestParam(value = "facebookFirstName", required = true, defaultValue = "0")String facebookFirstName)
+    {
+        User user;
+        HashMap<String, Object> JSON;
+        try {
+            user = User.where("facebookID","=",facebookID)[0];
+            user.setFacebookFirstName(facebookFirstName);
+            JSON = StatusDescription.createProcessStatus(true);
+        }
+        catch (Exception e) {
+            user = new User();
+            user.setFacebookID(facebookID);
+            user.setFacebookFirstName(facebookFirstName);
+            JSON = user.save();
+        }
+        JSON.put("user",user.getGeneralValues());
+
+        return converter.HashMapToJSON(JSON);
+    }
+
     public void changeDatabaseInquirer(DatabaseInterface databaseInquirer)
     {
         this.databaseInquirer = databaseInquirer; //this controller can be change database inquirer interface
