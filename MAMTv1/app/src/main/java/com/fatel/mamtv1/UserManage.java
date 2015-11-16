@@ -108,7 +108,6 @@ public class UserManage {
         String url = "http://203.151.92.196:8080/user/createUser";
         final String un = username;
         final String pw = password;
-        /////////////edit
         Log.i("User", "funh addnewuser :"+un+pw );
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() { //create new request
             @Override
@@ -163,7 +162,6 @@ public class UserManage {
         Log.i("User", "funh addnewuser http:");
         HttpConnector.getInstance(context).addToRequestQueue(stringRequest); //add the request to HTTPConnector, the class will respond the request automatically at separated thread
 
-        //////////////end ตรงนั้นไม่รู้ เปิดคลาสที่เรียก method หน่อย
 
 
 
@@ -200,6 +198,10 @@ public class UserManage {
             currentUser.save(context);
             updateUser();
         }
+    }
+
+    public int getCurrentIdUser (){
+        return currentUser.getIdUser();
     }
     public void setFirstName(String firstName,Context context){
         if(currentUser!=null){
