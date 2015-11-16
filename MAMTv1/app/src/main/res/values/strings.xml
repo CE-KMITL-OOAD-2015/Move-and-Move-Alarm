@@ -8,17 +8,16 @@
     <string name="drawer_close">Close Navigation drawer</string>
 
 <!-- TODO: Remove or change this placeholder text -->
-    <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="title_activity_">Activity</string>
     <string name="title_activity_act_alarm">actAlarm</string>
-    <string name="title_activity_intro_">Intro_Activity</string>
-    <string name="title_activity_login_">Login_Activity</string>
-    <string name="title_activity_create__account_">Create_Account_Activity</string>
-    <string name="title_activity_shared">Share_Activity</string>
+    <string name="title_activity_intro_">Move Alarm</string>
+    <string name="title_activity_login_">Login</string>
+    <string name="title_activity_create__account_">Create Account</string>
+    <string name="title_activity_shared">Share Activity</string>
     <string name="facebook_app_id">536873643131521</string>
-    <string name="title_activity_pre">PreActivity</string>
-    <string name="title_activity_posture">PostureActivity</string>
-    <string name="title_activity_scoreboard">ScoreboardActivity</string>
-    <string name="title_activity_create_group">CreateGroupActivity</string>
-    <string name="title_activity_join_group">JoinGroupActivity</string>
+    <string name="title_activity_pre">Pre Activity</string>
+    <string name="title_activity_posture">Posture</string>
+    <string name="title_activity_scoreboard">Scoreboard</string>
+    <string name="title_activity_create_group">Create Group</string>
+    <string name="title_activity_join_group">Join Group</string>
 </resources>
