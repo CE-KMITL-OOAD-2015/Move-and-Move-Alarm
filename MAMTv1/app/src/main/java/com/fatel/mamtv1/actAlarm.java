@@ -8,6 +8,7 @@ import android.media.RingtoneManager;
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -65,6 +66,14 @@ public class actAlarm extends AppCompatActivity {
     }
 
     public void linkActivity(View view){
+        //history
+        HistoryHelper mhistoryHelper = new HistoryHelper(this);
+        History history = mhistoryHelper.getHistoryUser(UserManage.getInstance(this).getCurrentIdUser());
+        history.addaccept(1);
+        history.save(this);
+        Log.i("historyacc", UserManage.getInstance(this).getCurrentIdUser() + "");
+        Log.i("historyacc",history.getNumberOfAccept()+"");
+        Log.i("historyacc",history.gettotal()+"");
         Intent intent = new Intent(this, Activity.class);
         startActivity(intent);
         v.cancel();
@@ -72,6 +81,14 @@ public class actAlarm extends AppCompatActivity {
     }
 
     public void linkHome(View view){
+        //history
+        HistoryHelper mhistoryHelper = new HistoryHelper(this);
+        History history = mhistoryHelper.getHistoryUser(UserManage.getInstance(this).getCurrentIdUser());
+        history.addcancel(1);
+        history.save(this);
+        Log.i("historycancel", UserManage.getInstance(this).getCurrentIdUser()+ "");
+        Log.i("historycancel", history.getCancelActivity() + "");
+        Log.i("historycancel", history.gettotal() + "");
         Intent i1 = new Intent(actAlarm.this, MainActivity.class);
         // Bundle b1 = new Bundle();
         //b1.putExtra("key", "main");
