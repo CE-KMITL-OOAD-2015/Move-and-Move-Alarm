@@ -36,10 +36,10 @@ public class UserManage {
         }
         return instance;
     }
-    public User getCurrentUser(){
+    private User getCurrentUser(){
         return currentUser;
     }
-    public  void setCurrentUser(User user){
+    private  void setCurrentUser(User user){
        currentUser= user;
     }
 /*
@@ -62,7 +62,7 @@ public class UserManage {
         currentUser.save(context);
     }
     public void loginUser (String username,String password, final Context context){
-        int idUser = findUser(username, password);
+        /*int idUser = findUser(username, password);
 
         if((User.find(idUser, context))!= null){
             User user=User.find(idUser, context);
@@ -74,8 +74,9 @@ public class UserManage {
         }
         currentUser.setLogin(1);
         currentUser.save(context);
+        */
         ///////
-        /*
+
         String url = "http://203.151.92.196:8080/user/login"; //url of login API
         final String un = username;
         final String pw = password;
@@ -85,35 +86,44 @@ public class UserManage {
                     public void onResponse(String response) { //when listener is activated
                         Converter converter = Converter.getInstance();
                         Context context = (Context) Cache.getInstance().getData("loginContext");
-                        HashMap<String, Object> data = converter.JsonToHashMap(response); //convert JSON to HashMap format
-                        HashMap<String, Object> userData = converter.JsonToHashMap(converter.toString(data.get("user")));
+                        HashMap<String, Object> data = converter.JSONToHashMap(response); //convert JSON to HashMap format
+                        HashMap<String, Object> userData = converter.JSONToHashMap(converter.toString(data.get("user")));
                         Log.i("volley", userData.toString()); //throw the message to the console.
-
+                        Log.i("User", "login");
                         if((boolean) data.get("status")) {
                             int idUser = converter.toInt(userData.get("id"));
-                            String username = converter.toString(data.get("userName"));
+                            String username = converter.toString(userData.get("userName"));
+                            Log.i("User", "login :" + idUser);
+                            if((User.find(idUser, context))!= null){
+                                User user=User.find(idUser, context);
+                                UserManage.getInstance(context).setCurrentUser(user);
+                            }
+                            else{
+                                User user = new User(idUser, username);
+                                UserManage.getInstance(context).setCurrentUser(user);
 
-                            Log.i("User", "createnewuser :" + idUser);
-                            User currentUser = new User(idUser, username);
-                            currentUser.setLogin(1);
-                            currentUser.save(context); Log.i("User", "save :" + idUser);
-                            UserManage.getInstance(context).setCurrentUser(currentUser);
-                            context.startActivity(new Intent(context, MainActivity.class));
+                            }
+                            UserManage.getInstance(context).getCurrentUser().setFirstName(converter.toString(userData.get("firstName")));
+                            UserManage.getInstance(context).getCurrentUser().setLastName(converter.toString(userData.get("lastName")));
+                            UserManage.getInstance(context).getCurrentUser().setUserName(username);
+                            UserManage.getInstance(context).getCurrentUser().setAge(converter.toInt(userData.get("age")));
+                            UserManage.getInstance(context).getCurrentUser().setScore(converter.toInt(userData.get("score")));
+                            UserManage.getInstance(context).getCurrentUser().setGender(converter.toInt(userData.get("gender")));
+                            UserManage.getInstance(context).getCurrentUser().setEmail(converter.toString(userData.get("email")));
+                            UserManage.getInstance(context).getCurrentUser().setFacebookID(converter.toString(userData.get("facebookID")));
+                            UserManage.getInstance(context).getCurrentUser().setFacebookFirstName(converter.toString(userData.get("facebookFirstName")));
+                            UserManage.getInstance(context).getCurrentUser().setFacebookLastName(converter.toString(userData.get("facebookLastName ")));
+                            UserManage.getInstance(context).getCurrentUser().setLogin(1);
+                            UserManage.getInstance(context).getCurrentUser().save(context);
+                            Log.i("User", "login user fb id:" + converter.toString(userData.get("facebookID")));
+
+                                    context.startActivity(new Intent(context, MainActivity.class));
                         }
                         else {
                             Toast toast = Toast.makeText(context, converter.toString(data.get("description")), Toast.LENGTH_SHORT);
                             toast.show();
                         }
-
-                        if(userData.get("id") != null) { //if downloaded data is downloaded correctly
-                            UserController.getInstance().setCurrentUser(User.createUser(userData)); //let the UserController hold the actual user data.
-                            startActivity(new Intent((Context) Cache.getInstance().getData("loginContext"), MainActivity.class)); //then start a main activity
-                            finish();
-                        }
-                        else {
-                            makeToast("Authentication failed. " + userData.get("description")); //show the error message
-                            setEnableInput(true); //enable text boxes to let the user input their username again
-                        }
+                        Log.i("User", "login user id:" + currentUser.getId()+" iduser:"+currentUser.getIdUser()+"username:"+currentUser.getUserName()+"fbid:"+currentUser.getFacebookID());
 
 
                     }
@@ -121,15 +131,12 @@ public class UserManage {
             @Override
             public void onErrorResponse(VolleyError volleyError) { //when error listener is activated
                 Log.i("volley", volleyError.toString()); //throw the error message to the console
-                makeToast("Authentication failed."); //show the error message
-                setEnableSpinner(false); //stop spinning
-                setEnableInput(true); //enable input box to let user input their username again
-            }
+                  }
         }) { //define POST parameters
             @Override
             protected Map<String, String> getParams() {
 
-                Map<String, String> map = new HashMap<String, String>(); //create map to keep variables
+                Map<String, String> map = new HashMap<>(); //create map to keep variables
                 map.put("userName", un); //API variable name
                 map.put("password", pw);
 
@@ -139,7 +146,7 @@ public class UserManage {
 
         HttpConnector.getInstance(context).addToRequestQueue(loginRequest); //add the request to HTTPConnector, the class will respond the request automatically at separated thread
 
-        */
+
         /////
     }
     public void loginFBUser(String facebookID,String facebookFirstName,Context context){
@@ -206,9 +213,10 @@ public class UserManage {
                 }
                 else
                     Log.i("volley", "s==null");
-                HashMap<String, Object> userData = Converter.getInstance().JSONToHashMap(s); //convert the result into HashMap format
+
+                /*HashMap<String, Object> userData = Converter.getInstance().JsonToHashMap(s); //convert the result into HashMap format
                 Cache.getInstance().putData("idUser", userData.get("id"));
-                Log.i("User", "addnewuser :" + userData.get("id"));
+                Log.i("User", "addnewuser :" + userData.get("id"));*/
             }
         }, new Response.ErrorListener() { //create error listener to catch when the error has occurred
             @Override
@@ -222,6 +230,7 @@ public class UserManage {
                 HashMap<String, Object> user = new HashMap<>(); //create HashMap to keep all the values in one place to be 1 object
                 user.put("userName", un);
                 user.put("password", pw);
+                user.put("facebookID","0");
                 Map<String, String> JSON = new HashMap<>(); //create HashMap again to keep the above user object
                 Log.i("info", user.toString());
                 JSON.put("JSON", Converter.getInstance().HashMapToJSON(user)); //the API receive the values in one parameter name JSON
@@ -234,7 +243,7 @@ public class UserManage {
     }
     private int findUser(String username,String password){
 
-        return 132;
+        return 600;
 
     }
     private int addNewUserFB(String facebookID,String facebookFirstName){

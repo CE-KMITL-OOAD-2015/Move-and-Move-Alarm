@@ -164,8 +164,6 @@ public class UserHelper extends SQLiteOpenHelper {
                     cursor.getInt(6), cursor.getInt(7), cursor.getString(8),
                     cursor.getString(9), cursor.getString(10), cursor.getString(11), cursor.getInt(12), cursor.getInt(13));
 
-
-
             cursor.close();
         }
         db.close();
