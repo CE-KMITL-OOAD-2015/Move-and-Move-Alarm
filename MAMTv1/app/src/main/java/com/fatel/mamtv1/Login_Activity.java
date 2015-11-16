@@ -138,6 +138,7 @@ public class Login_Activity extends AppCompatActivity {
 
         username = (EditText)findViewById(R.id.enter_username);
         password = (EditText)findViewById(R.id.enter_password);
+        Cache.getInstance().putData("loginContext", this);
 
         int isSuccess = UserManage.getInstance(this).checkUser(username.getText().toString(), password.getText().toString());
 

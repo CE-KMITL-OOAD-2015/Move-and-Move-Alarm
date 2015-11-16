@@ -47,6 +47,7 @@ public class User {
         this.id=-1;
         this.score=0;
         this.login=0;
+        this.facebookID="0";
         this.idUser = idUser;
         this.userName = username;
     }
@@ -90,7 +91,11 @@ public class User {
     }
     public static User find(int idUser,Context context){
         UserHelper userHelper = new UserHelper(context);
-        return userHelper.getUser(idUser);
+        if(userHelper.getUser(idUser)==null){
+            return null;
+        }
+        else
+            return userHelper.getUser(idUser);
     }
     public static User checkLogin(Context context){
         UserHelper userHelper = new UserHelper(context);

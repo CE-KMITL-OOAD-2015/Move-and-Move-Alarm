@@ -211,8 +211,24 @@ public class MainActivity extends AppCompatActivity {
                 fragmentClass = null;
                 mAlarmHelper =  new DBAlarmHelper(this);
 
+
+                if( (UserManage.getInstance(this).getCurrentFacebookID().length())>=15){
+                    LoginManager.getInstance().logOut();
+                }
+
+                UserManage.getInstance(this).logoutUser(this);
+
+
+                /*
+                if(UserManage.getInstance(this).mauser == 1) {
+                    UserManage.getInstance(this).logoutUser(this);
+                    UserManage.getInstance(this).mauser = 0;
+                }
+                else if(UserManage.getInstance(this).mauser == 2) {
                     LoginManager.getInstance().logOut();
                     UserManage.getInstance(this).logoutUser(this);
+                    UserManage.getInstance(this).mauser = 0;
+                }*/
 
                 mAlarmHelper.deleteSetAlarm("1");
                 mDrawerLayout.closeDrawers();

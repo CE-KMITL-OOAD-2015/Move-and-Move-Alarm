@@ -69,7 +69,7 @@ public class UserHelper extends SQLiteOpenHelper {
         values.put(User.Column.LOGIN, user.getLogin());
         long id = sqLiteDatabase.insert(User.TABLE, null, values);
         sqLiteDatabase.close();
-        Log.i(TAG,"funh adduser id :"+id+" user:"+user.getUserName()+" iduser:"+user.getIdUser());
+        Log.i(TAG, "funh adduser id :" + id + " user:" + user.getUserName() + " iduser:" + user.getIdUser());
         return ((int)id);
     }
     public void updateUser(User user){
@@ -115,8 +115,8 @@ public class UserHelper extends SQLiteOpenHelper {
                         User.Column.PROFILEIMAGE, User.Column.LOGIN
                 }, User.Column.IDUSER + " = ? ",
                 new String[]{String.valueOf(idUser)}, null, null, null, null);
-        User user=null;
-        Log.i("User", "funh getUser :" + idUser +" ,"+cursor);
+        User user;
+        Log.i("User", "getUser :" + idUser +" ,"+cursor);
         boolean check=false;
         if (cursor != null) {
             check = cursor.moveToFirst();
@@ -131,9 +131,14 @@ public class UserHelper extends SQLiteOpenHelper {
 
 
         cursor.close();
+            db.close();
+            return user;
         }
-        db.close();
-        return user;
+        else {
+            db.close();
+            return null;
+        }
+
     }
     public User checkLoginUser(){
 
