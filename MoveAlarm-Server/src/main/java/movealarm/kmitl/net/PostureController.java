@@ -2,6 +2,7 @@ package movealarm.kmitl.net;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.sql.SQLException;
 import java.util.HashMap;
@@ -9,6 +10,7 @@ import java.util.HashMap;
 /**
  * Created by oat90 on 11/15/2015.
  */
+@RestController
 public class PostureController {
     Converter converter = Converter.getInstance();
     SQLInquirer sqlInquirer = SQLInquirer.getInstance();

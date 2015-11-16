@@ -1,6 +1,7 @@
 package movealarm.kmitl.net;
 
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -8,6 +9,7 @@ import java.util.*;
 /**
  * Created by oat90 on 11/15/2015.
  */
+@RestController
 public class EventController {
     private Event dailyEvent = null;
 
