@@ -39,7 +39,7 @@ public class UserManage {
     public  void setCurrentUser(User user){
        currentUser= user;
     }
-
+/*
     public void createNewUser(String username,String password,Context context) {
 
         addNewUser(username, password, context);
@@ -50,7 +50,8 @@ public class UserManage {
         //currentUser.setLogin(1);
         //currentUser.save(context); Log.i("User", "funh save :" + idUser);
 
-    }
+    }*/
+
     public void createFBUser(String facebookID,String facebookFirstName,Context context){
         int idUser = addNewUserFB(facebookID, facebookFirstName);
         currentUser = new User(idUser,facebookID,facebookFirstName);
@@ -103,7 +104,7 @@ public class UserManage {
     // server
 
 
-    private void addNewUser(String username,String password, final Context context){
+    public void createNewUser(String username,String password, final Context context){
 
         String url = "http://203.151.92.196:8080/user/createUser";
         final String un = username;
@@ -285,7 +286,6 @@ public class UserManage {
     public int getCurrentGender() {
         return currentUser.getGender();
     }
-    public int getCurrentIdUser(){return currentUser.getIdUser();}
     public String getCurrentEmail(){
         return currentUser.getEmail();
     }

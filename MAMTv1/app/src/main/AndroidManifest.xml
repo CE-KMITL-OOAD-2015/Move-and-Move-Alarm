@@ -90,14 +90,6 @@
             android:label="@string/title_activity_scoreboard" >
         </activity>
         <activity
-            android:name=".PreShareActivity"
-            android:label="@string/title_activity_pre" >
-        </activity>
-        <activity
-            android:name=".PostureActivity"
-            android:label="@string/title_activity_posture" >
-        </activity>
-        <activity
 
             android:name="com.facebook.FacebookActivity"
             android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
