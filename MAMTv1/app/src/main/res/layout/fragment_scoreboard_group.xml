@@ -97,7 +97,7 @@
                 android:id="@+id/textView22"
                 android:padding="5dp"
                 android:gravity="center"
-                android:text="ภิญญรัตน์ ชื่นประเสริฐสุข"
+                android:text="Unknown"
                 android:textColor="#FFFFFF"
                 android:textSize="16sp" />
 
@@ -111,7 +111,7 @@
                 android:id="@+id/textView23"
                 android:padding="5dp"
                 android:gravity="center"
-                android:text="50"
+                android:text="0"
                 android:textColor="#FFFFFF"
                 android:textSize="16sp" />
 
@@ -143,7 +143,7 @@
                 android:id="@+id/textView32"
                 android:padding="5dp"
                 android:gravity="center"
-                android:text="ภิญญรัตน์ ชื่นประเสริฐสุข"
+                android:text="Unknown"
                 android:textColor="#FFFFFF"
                 android:textSize="16sp" />
 
@@ -157,7 +157,7 @@
                 android:id="@+id/textView33"
                 android:padding="5dp"
                 android:gravity="center"
-                android:text="50"
+                android:text="0"
                 android:textColor="#FFFFFF"
                 android:textSize="16sp" />
 
@@ -195,7 +195,7 @@
                 android:id="@+id/textView42"
                 android:padding="5dp"
                 android:gravity="center"
-                android:text="ภิญญรัตน์ ชื่นประเสริฐสุข"
+                android:text="Unknown"
                 android:textColor="#FFFFFF"
                 android:textSize="16sp" />
 
@@ -209,7 +209,7 @@
                 android:id="@+id/textView43"
                 android:padding="5dp"
                 android:gravity="center"
-                android:text="50"
+                android:text="0"
                 android:textColor="#FFFFFF"
                 android:textSize="16sp" />
 
@@ -246,7 +246,7 @@
                 android:id="@+id/textView52"
                 android:padding="5dp"
                 android:gravity="center"
-                android:text="ภิญญรัตน์ ชื่นประเสริฐสุข"
+                android:text="Unknown"
                 android:textColor="#FFFFFF"
                 android:textSize="16sp" />
 
@@ -260,7 +260,7 @@
                 android:id="@+id/textView53"
                 android:padding="5dp"
                 android:gravity="center"
-                android:text="50"
+                android:text="0"
                 android:textColor="#FFFFFF"
                 android:textSize="16sp" />
 
@@ -297,7 +297,7 @@
                 android:id="@+id/textView62"
                 android:padding="5dp"
                 android:gravity="center"
-                android:text="ภิญญรัตน์ ชื่นประเสริฐสุข"
+                android:text="Unknown"
                 android:textColor="#FFFFFF"
                 android:textSize="16sp" />
 
@@ -311,7 +311,7 @@
                 android:id="@+id/textView63"
                 android:padding="5dp"
                 android:gravity="center"
-                android:text="50"
+                android:text="0"
                 android:textColor="#FFFFFF"
                 android:textSize="16sp" />
 
@@ -348,7 +348,7 @@
                 android:id="@+id/textView72"
                 android:padding="5dp"
                 android:gravity="center"
-                android:text="ภิญญรัตน์ ชื่นประเสริฐสุข"
+                android:text="Unknown"
                 android:textColor="#FFFFFF"
                 android:textSize="16sp" />
 
@@ -362,7 +362,7 @@
                 android:id="@+id/textView73"
                 android:padding="5dp"
                 android:gravity="center"
-                android:text="50"
+                android:text="0"
                 android:textColor="#FFFFFF"
                 android:textSize="16sp" />
 
@@ -399,7 +399,7 @@
                 android:id="@+id/textView82"
                 android:padding="5dp"
                 android:gravity="center"
-                android:text="ภิญญรัตน์ ชื่นประเสริฐสุข"
+                android:text="Unknown"
                 android:textColor="#FFFFFF"
                 android:textSize="16sp" />
 
@@ -413,7 +413,7 @@
                 android:id="@+id/textView83"
                 android:padding="5dp"
                 android:gravity="center"
-                android:text="50"
+                android:text="0"
                 android:textColor="#FFFFFF"
                 android:textSize="16sp" />
 
@@ -450,7 +450,7 @@
                 android:id="@+id/textView92"
                 android:padding="5dp"
                 android:gravity="center"
-                android:text="ภิญญรัตน์ ชื่นประเสริฐสุข"
+                android:text="Unknown"
                 android:textColor="#FFFFFF"
                 android:textSize="16sp" />
 
@@ -463,7 +463,7 @@
             <TextView
                 android:id="@+id/textView93"
                 android:padding="5dp"
-                android:text="50"
+                android:text="0"
                 android:gravity="center"
                 android:textColor="#FFFFFF"
                 android:textSize="16sp" />
@@ -501,7 +501,7 @@
                 android:id="@+id/textView102"
                 android:padding="5dp"
                 android:gravity="center"
-                android:text="ภิญญรัตน์ ชื่นประเสริฐสุข"
+                android:text="Unknown"
                 android:textColor="#FFFFFF"
                 android:textSize="16sp" />
 
@@ -515,7 +515,7 @@
                 android:id="@+id/textView103"
                 android:padding="5dp"
                 android:gravity="center"
-                android:text="50"
+                android:text="0"
                 android:textColor="#FFFFFF"
                 android:textSize="16sp" />
 
@@ -552,7 +552,7 @@
                 android:id="@+id/textView112"
                 android:padding="5dp"
                 android:gravity="center"
-                android:text="ภิญญรัตน์ ชื่นประเสริฐสุข"
+                android:text="Unknown"
                 android:textColor="#FFFFFF"
                 android:textSize="16sp" />
 
@@ -566,7 +566,7 @@
                 android:id="@+id/textView113"
                 android:padding="5dp"
                 android:gravity="center"
-                android:text="50"
+                android:text="0"
                 android:textColor="#FFFFFF"
                 android:textSize="16sp" />
 
