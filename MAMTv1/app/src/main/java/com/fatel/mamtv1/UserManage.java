@@ -235,6 +235,7 @@ public class UserManage {
     public int getCurrentGender() {
         return currentUser.getGender();
     }
+    public int getCurrentIdUser(){return currentUser.getIdUser();}
     public String getCurrentEmail(){
         return currentUser.getEmail();
     }

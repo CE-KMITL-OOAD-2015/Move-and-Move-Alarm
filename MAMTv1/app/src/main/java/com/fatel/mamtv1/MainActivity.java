@@ -53,6 +53,7 @@ public class MainActivity extends AppCompatActivity {
     public String id;
     Bundle passimg;
     DBAlarmHelper mAlarmHelper;
+    private HistoryHelper mhistoryHelper;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -64,7 +65,6 @@ public class MainActivity extends AppCompatActivity {
             lastName = bundle.getString("lastname");
             id = bundle.getString("id");
         }
-
         profilepic = (CircleImageView) findViewById(R.id.profile_image);
         profilepic2 = (CircleImageView) findViewById(R.id.profile_image_f);
         profilepic2.setVisibility(View.VISIBLE);
@@ -123,6 +123,14 @@ public class MainActivity extends AppCompatActivity {
         mDrawerLayout.setDrawerListener(mDrawerToggle);
         mDrawerToggle.syncState();
 
+        //history
+        mhistoryHelper = new HistoryHelper(this);
+        boolean check = false;
+        History history = mhistoryHelper.getHistoryUser(UserManage.getInstance(this).getCurrentIdUser());
+        if(history==null){
+            history = new History(UserManage.getInstance(this).getCurrentIdUser());
+            history.save(this);
+        }
     }
 
 
