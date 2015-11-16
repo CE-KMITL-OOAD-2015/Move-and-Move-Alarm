@@ -67,7 +67,7 @@ public class History {
         this.numberOfAccept += numberOfAccept;
     }
     public void addcancel(int cancelActivity){
-        this.cancelActivity = cancelActivity;
+        this.cancelActivity += cancelActivity;
     }
     public void subaccept(int numberOfAccept){
         this.numberOfAccept -= numberOfAccept;
