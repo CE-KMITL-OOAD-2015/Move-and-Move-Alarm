@@ -24,6 +24,7 @@ import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
+import com.bumptech.glide.Glide;
 import com.facebook.Profile;
 import com.facebook.login.LoginManager;
 import com.facebook.login.widget.ProfilePictureView;
@@ -47,7 +48,6 @@ public class MainActivity extends AppCompatActivity {
     private TextView header;
     private TextView user;
     CircleImageView profilepic;
-    CircleImageView profilepic2;
     String firstName;
     String lastName;
     public String id;
@@ -67,17 +67,14 @@ public class MainActivity extends AppCompatActivity {
         }
 
         profilepic = (CircleImageView) findViewById(R.id.profile_image);
-        profilepic2 = (CircleImageView) findViewById(R.id.profile_image_f);
-        profilepic2.setVisibility(View.VISIBLE);
         header = (TextView) findViewById(R.id.profile);
         user = (TextView) findViewById(R.id.username);
         if (bundle != null) {
             user.setText(firstName);
-            Picasso.with(this).load("https://graph.facebook.com/" + id + "/picture?type=large").into(profilepic);
-            Picasso.with(this).load("https://graph.facebook.com/" + id + "/picture?type=large").into(profilepic2);
             passimg = new Bundle();
             passimg.putString("id", id);
         }
+        Glide.with(this).load("https://graph.facebook.com/" + UserManage.getInstance(this).getCurrentFacebookId() + "/picture?type=large").into(profilepic);
         // Intent alarmIntent = new Intent(MainActivity.this, AlarmReceiver.class);
         //pendingIntent = PendingIntent.getBroadcast(MainActivity.this, 0, alarmIntent, 0);
         FragmentTransaction tx = getSupportFragmentManager().beginTransaction();
@@ -92,7 +89,6 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onClick(View v) {
                 Fragment fragment = null;
-                profilepic2.setVisibility(View.VISIBLE);
                 Class fragmentClass;
                 fragmentClass = ProfileFragment.class;
                 try {
@@ -167,12 +163,10 @@ public class MainActivity extends AppCompatActivity {
         // Create a new fragment and specify the planet to show based on
         // position
         Fragment fragment = null;
-        profilepic2.setVisibility(View.GONE);
         Class fragmentClass;
         switch (menuItem.getItemId()) {
             case R.id.nav_home_fragment:
                 fragmentClass = MainFragment.class;
-                profilepic2.setVisibility(View.VISIBLE);
                 break;
             case R.id.nav_alarm_fragment:
                 fragmentClass = AlarmFragment.class;
@@ -191,6 +185,9 @@ public class MainActivity extends AppCompatActivity {
                 break;
             case R.id.nav_about_fragment:
                 fragmentClass = AboutFragment.class;
+                break;
+            case R.id.nav_group_fragment:
+                fragmentClass = GroupFragment.class;
                 break;
             case R.id.nav_logout_fragment:
                 fragmentClass = null;
@@ -244,20 +241,7 @@ public class MainActivity extends AppCompatActivity {
         // Sync the toggle state after onRestoreInstanceState has occurred.
         mDrawerToggle.syncState();
     }
-//    public void previewCapturedImage(CircleImageView pic,String id) {
-//        try {
-//            pic.setVisibility(View.VISIBLE);
-//            URL url = new URL("https://graph.facebook.com/" + id + "/picture?type=large");
-//            new LoadImageTask(url).execute(pic);
-//
-//        } catch (NullPointerException e) {
-//            e.printStackTrace();
-//        }catch (MalformedURLException e){
-//            Log.i("xx", "mal");
-//        }catch (IOException e){
-//            Log.i("xx", "io");
-//        }
-//    }
+
 
     public void linkPosture1(View view) {
         Intent intent = new Intent(this, PostureActivity.class);
@@ -310,5 +294,18 @@ public class MainActivity extends AppCompatActivity {
     public void linkPosture9(View view) {
         Intent intent = new Intent(this, PostureActivity.class);
         intent.putExtra("value", 8);
+        startActivity(intent);
+    }
+
+    public void linkCreateGroup(View view)
+    {
+        Intent intent = new Intent(this, CreateGroupActivity.class);
+        startActivity(intent);
+    }
+
+    public void linkJoinGroup(View view)
+    {
+        Intent intent = new Intent(this, JoinGroupActivity.class);
+        startActivity(intent);
     }
 }
