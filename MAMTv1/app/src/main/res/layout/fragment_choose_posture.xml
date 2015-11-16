@@ -5,17 +5,21 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:fillViewport="true"
+
         tools:context="com.fatel.mamtv1.ChoosePostureFragment"
         >
         <!--android:background="@drawable/blankbg"-->
+
     <Button
         android:id="@+id/post1"
         android:text="Posture #1"
         android:gravity="center"
         android:textStyle="bold"
+
         android:textColor="#FF7E3D"
         android:textSize="20sp"
         android:layout_gravity="center"
+
         android:shadowColor="#919191"
         android:shadowDx="3"
         android:shadowDy="3"
@@ -25,7 +29,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAllCaps="false"
+
         android:background="@drawable/buttonshape3"
+
         android:onClick="linkPosture1"
         />
     <Button
@@ -34,10 +40,12 @@
         android:text="Posture #2"
         android:gravity="center"
         android:textStyle="bold"
+
         android:textColor="#FF7E3D"
         android:textSize="20sp"
         android:layout_gravity="center"
         android:background="@drawable/buttonshape3"
+
         android:shadowColor="#919191"
         android:shadowDx="3"
         android:shadowDy="3"
@@ -55,10 +63,12 @@
         android:text="Posture #3"
         android:gravity="center"
         android:textStyle="bold"
+
         android:textColor="#FF7E3D"
         android:textSize="20sp"
         android:layout_gravity="center"
         android:background="@drawable/buttonshape3"
+
         android:shadowColor="#919191"
         android:shadowDx="3"
         android:shadowDy="3"
@@ -76,10 +86,12 @@
         android:text="Posture #4"
         android:gravity="center"
         android:textStyle="bold"
+
         android:textColor="#FF7E3D"
         android:textSize="20sp"
         android:layout_gravity="center"
         android:background="@drawable/buttonshape3"
+
         android:shadowColor="#919191"
         android:shadowDx="3"
         android:shadowDy="3"
@@ -97,10 +109,12 @@
         android:text="Posture #5"
         android:gravity="center"
         android:textStyle="bold"
+
         android:textColor="#FF7E3D"
         android:textSize="20sp"
         android:layout_gravity="center"
         android:background="@drawable/buttonshape3"
+
         android:shadowColor="#919191"
         android:shadowDx="3"
         android:shadowDy="3"
@@ -118,10 +132,12 @@
         android:text="Posture #6"
         android:gravity="center"
         android:textStyle="bold"
+
         android:textColor="#FF7E3D"
         android:textSize="20sp"
         android:layout_gravity="center"
         android:background="@drawable/buttonshape3"
+
         android:shadowColor="#919191"
         android:shadowDx="3"
         android:shadowDy="3"
@@ -139,10 +155,12 @@
         android:text="Posture #7"
         android:gravity="center"
         android:textStyle="bold"
+
         android:textColor="#FF7E3D"
         android:textSize="20sp"
         android:layout_gravity="center"
         android:background="@drawable/buttonshape3"
+
         android:shadowColor="#919191"
         android:shadowDx="3"
         android:shadowDy="3"
@@ -160,10 +178,12 @@
         android:text="Posture #8"
         android:gravity="center"
         android:textStyle="bold"
+
         android:textColor="#FF7E3D"
         android:textSize="20sp"
         android:layout_gravity="center"
         android:background="@drawable/buttonshape3"
+
         android:shadowColor="#919191"
         android:shadowDx="3"
         android:shadowDy="3"
@@ -181,10 +201,12 @@
         android:text="Posture #9"
         android:gravity="center"
         android:textStyle="bold"
+
         android:textColor="#FF7E3D"
         android:textSize="20sp"
         android:layout_gravity="center"
         android:background="@drawable/buttonshape3"
+
         android:shadowColor="#919191"
         android:shadowDx="3"
         android:shadowDy="3"
