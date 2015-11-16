@@ -12,17 +12,12 @@ import java.util.*;
 @RestController
 public class EventController {
     private Event dailyEvent = null;
-
-    public EventController()
-    {
-
-    }
+    private Converter converter = Converter.getInstance();
 
     @RequestMapping("/event/getEvent")
     public String genEvent()
     {
         Event event = new Event();
-        Converter converter = Converter.getInstance();
         ArrayList<Posture> allPosture = new ArrayList<>(Arrays.asList(Posture.all()));
         ArrayList<Posture> postures = new ArrayList<>();
         for(int i = 0;i < 5;i++) { //random and pick up 5 posture
