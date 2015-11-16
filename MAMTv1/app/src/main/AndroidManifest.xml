@@ -111,6 +111,10 @@
             android:name=".JoinGroupActivity"
             android:label="@string/title_activity_join_group" >
         </activity>
+        <activity
+            android:name=".GroupMainActivity"
+            android:label="@string/title_activity_group_main" >
+        </activity>
     </application>
 
 </manifest>

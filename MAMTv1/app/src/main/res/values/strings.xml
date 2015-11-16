@@ -20,4 +20,5 @@
     <string name="title_activity_scoreboard">Scoreboard</string>
     <string name="title_activity_create_group">Create Group</string>
     <string name="title_activity_join_group">Join Group</string>
+    <string name="title_activity_group_main">GroupMainActivity</string>
 </resources>
