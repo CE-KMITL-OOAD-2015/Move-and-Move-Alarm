@@ -49,7 +49,7 @@ public class Converter {
 
     public ArrayList<HashMap<String, Object>> toHashMapArrayList(Object JSON)
     {
-        Type listType = new TypeToken<List<HashMap<String, String>>>(){}.getType();
+        Type listType = new TypeToken<List<HashMap<String, Object>>>(){}.getType();
         List<HashMap<String, Object>> listOfCountry = gson.fromJson(JSON.toString(), listType);
         ArrayList<HashMap<String, Object>> temp = new ArrayList<>(listOfCountry.size());
         temp.addAll(listOfCountry);
