@@ -158,11 +158,7 @@ public class Login_Activity extends AppCompatActivity {
         }
         else {
             UserManage.getInstance(this).loginUser(username.getText().toString(), password.getText().toString(), this);
-<<<<<<< HEAD
-=======
 
-            //HttpConnector request = HttpConnector.getInstance(this);
->>>>>>> login wrong
 
 
             //Intent intent = new Intent(this, MainActivity.class);
@@ -245,18 +241,10 @@ public class Login_Activity extends AppCompatActivity {
 
         Cache.getInstance().putData("loginFBContext", this);
         if (loggedIn && (profile != null)) {
-<<<<<<< HEAD
-            UserManage.getInstance(this).createFBUser(profile.getId(), profile.getFirstName(), this);
-            UserManage.getInstance(this).loginFBUser(profile.getId(), profile.getFirstName(),this);
-<<<<<<< HEAD
 
-=======
->>>>>>> login wrong
-=======
             Log.i("User", "loginfb");
             UserManage.getInstance(this).loginFBUser(profile.getId(), profile.getFirstName(), this);
             UserManage.getInstance(this).setFacebookLastName(profile.getLastName(), this);
->>>>>>> login fb server
             Intent intent = new Intent(Login_Activity.this, MainActivity.class);
             intent.putExtra("firstname", profile.getFirstName());
             intent.putExtra("lastname", profile.getLastName());

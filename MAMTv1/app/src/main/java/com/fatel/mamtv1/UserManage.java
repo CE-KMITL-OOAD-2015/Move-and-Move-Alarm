@@ -127,19 +127,7 @@ public class UserManage {
         /////
     }
     public void loginFBUser(String facebookID,String facebookFirstName,Context context){
-        /*8int idUser = findUserFB(facebookID, facebookFirstName);
-        User user=User.find(idUser, context);
-        if(user!=null){
-            currentUser=user;
-        }
-        else {
-            currentUser = new User(idUser,facebookID,facebookFirstName);
 
-        }
-        currentUser.setLogin(1);
-        currentUser.save(context);
-        */
-        //////
         String url = "http://203.151.92.196:8080/user/loginFacebook"; //url of login API
         final String id = facebookID;
         final String name = facebookFirstName;
