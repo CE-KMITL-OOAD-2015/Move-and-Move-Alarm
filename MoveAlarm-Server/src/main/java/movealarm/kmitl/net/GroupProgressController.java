@@ -32,10 +32,15 @@ public class GroupProgressController {
 
         GroupActivityProgress progress = new GroupActivityProgress();
         progress.setGroup(group);
-        progress.setDate((Date) logData.get("date"));
         progress.setNumberOfAccept(converter.toInt(logData.get("numberOfAccept")));
         progress.setNumberOfCancel(converter.toInt(logData.get("numberOfCancel")));
-        progress.setCancelActivity(converter.toInt(logData.get("cancelActivity")));
+
+        try {
+            progress.setDate((Date) logData.get("date"));
+            progress.setCancelActivity(converter.toInt(logData.get("cancelActivity")));
+        } catch (Exception e) {
+
+        }
 
         return converter.HashMapToJSON(progress.save());
     }
@@ -103,5 +108,53 @@ public class GroupProgressController {
         response.put("logs", logs);
 
         return converter.HashMapToJSON(response);
+    }
+
+    @RequestMapping("/groupProgress/getByGroup")
+    public String getByGroup(@RequestParam(value = "JSON", required = true, defaultValue = "0")String JSON)
+    {
+        HashMap<String, Object> data = converter.JSONToHashMap(JSON);
+        HashMap<String, Object> groupData = converter.JSONToHashMap(converter.toString(data.get("group")));
+
+        Group group = Group.find(converter.toInt(groupData.get("id")));
+        if(group == null)
+            return converter.HashMapToJSON(StatusDescription.createProcessStatus(false, "group does not exist."));
+
+        GroupActivityProgress progress = GroupActivityProgress.findByGroup(group);
+        if(progress == null)
+            return converter.HashMapToJSON(StatusDescription.createProcessStatus(false, "No group activity progress."));
+
+        HashMap<String, Object> response = StatusDescription.createProcessStatus(true);
+        response.put("progress", progress.getGeneralValues());
+
+        return converter.HashMapToJSON(response);
+    }
+
+    @RequestMapping("/groupProgress/update")
+    public String updateProgress(@RequestParam(value = "JSON", required = true, defaultValue = "0")String JSON)
+    {
+        HashMap<String, Object> data = converter.JSONToHashMap(JSON);
+        HashMap<String, Object> groupData = converter.JSONToHashMap(converter.toString(data.get("group")));
+        HashMap<String, Object> progressData = converter.JSONToHashMap(converter.toString(data.get("activityProgress")));
+
+        Group group = Group.find(converter.toInt(groupData.get("id")));
+        if(group == null)
+            return converter.HashMapToJSON(StatusDescription.createProcessStatus(false, "group does not exist."));
+
+        GroupActivityProgress progress = GroupActivityProgress.findByGroup(group);
+        if(progress == null)
+            return converter.HashMapToJSON(StatusDescription.createProcessStatus(false, "No group activity progress."));
+
+        progress.setNumberOfAccept(converter.toInt(progressData.get("numberOfAccept")));
+        progress.setNumberOfCancel(converter.toInt(progressData.get("numberOfCancel")));
+
+        try {
+            progress.setDate((Date) progressData.get("date"));
+            progress.setCancelActivity(converter.toInt(progressData.get("cancelActivity")));
+        } catch (Exception e) {
+
+        }
+
+        return converter.HashMapToJSON(progress.save());
     }
 }

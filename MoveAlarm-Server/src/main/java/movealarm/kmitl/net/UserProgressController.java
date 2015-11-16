@@ -21,7 +21,7 @@ public class UserProgressController {
     {
         HashMap<String, Object> data = converter.JSONToHashMap(JSON);
         HashMap<String, Object> userData = converter.JSONToHashMap(converter.toString(data.get("user")));
-        HashMap<String, Object> logData = converter.JSONToHashMap(converter.toString(data.get("activityLog")));
+        HashMap<String, Object> logData = converter.JSONToHashMap(converter.toString(data.get("activityProgress")));
 
         User user = User.find(converter.toInt(userData.get("id")));
         if(user == null)
@@ -32,10 +32,15 @@ public class UserProgressController {
 
         UserActivityProgress progress = new UserActivityProgress();
         progress.setUser(user);
-        progress.setDate((Date) logData.get("date"));
         progress.setNumberOfAccept(converter.toInt(logData.get("numberOfAccept")));
         progress.setNumberOfCancel(converter.toInt(logData.get("numberOfCancel")));
-        progress.setCancelActivity(converter.toInt(logData.get("cancelActivity")));
+
+        try {
+            progress.setDate((Date) logData.get("date"));
+            progress.setCancelActivity(converter.toInt(logData.get("cancelActivity")));
+        } catch (Exception e) {
+
+        }
 
         return converter.HashMapToJSON(progress.save());
     }
@@ -103,5 +108,53 @@ public class UserProgressController {
         response.put("logs", logs);
 
         return converter.HashMapToJSON(response);
+    }
+
+    @RequestMapping("/userProgress/getByUser")
+    public String getByUser(@RequestParam(value = "JSON", required = true, defaultValue = "0")String JSON)
+    {
+        HashMap<String, Object> data = converter.JSONToHashMap(JSON);
+        HashMap<String, Object> userData = converter.JSONToHashMap(converter.toString(data.get("user")));
+
+        User user = User.find(converter.toInt(userData.get("id")));
+        if(user == null)
+            return converter.HashMapToJSON(StatusDescription.createProcessStatus(false, "user does not exist."));
+
+        UserActivityProgress progress = UserActivityProgress.findByUser(user);
+        if(progress == null)
+            return converter.HashMapToJSON(StatusDescription.createProcessStatus(false, "No user activity progress."));
+
+        HashMap<String, Object> response = StatusDescription.createProcessStatus(true);
+        response.put("progress", progress.getGeneralValues());
+
+        return converter.HashMapToJSON(response);
+    }
+
+    @RequestMapping("/userProgress/update")
+    public String updateProgress(@RequestParam(value = "JSON", required = true, defaultValue = "0")String JSON)
+    {
+        HashMap<String, Object> data = converter.JSONToHashMap(JSON);
+        HashMap<String, Object> userData = converter.JSONToHashMap(converter.toString(data.get("user")));
+        HashMap<String, Object> progressData = converter.JSONToHashMap(converter.toString(data.get("activityProgress")));
+
+        User user = User.find(converter.toInt(userData.get("id")));
+        if(user == null)
+            return converter.HashMapToJSON(StatusDescription.createProcessStatus(false, "user does not exist."));
+
+        UserActivityProgress progress = UserActivityProgress.findByUser(user);
+        if(progress == null)
+            return converter.HashMapToJSON(StatusDescription.createProcessStatus(false, "No user activity progress."));
+
+        progress.setNumberOfAccept(converter.toInt(progressData.get("numberOfAccept")));
+        progress.setNumberOfCancel(converter.toInt(progressData.get("numberOfCancel")));
+
+        try {
+            progress.setDate((Date) progressData.get("date"));
+            progress.setCancelActivity(converter.toInt(progressData.get("cancelActivity")));
+        } catch (Exception e) {
+
+        }
+
+        return converter.HashMapToJSON(progress.save());
     }
 }

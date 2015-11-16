@@ -1,6 +1,7 @@
 package movealarm.kmitl.net;
 
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 
@@ -17,9 +18,28 @@ public class UserActivityProgress extends Model {
 
         this.addRequiredField("numberOfAccept");
         this.addRequiredField("numberOfCancel");
-        this.addRequiredField("cancelActivity");
-        this.addRequiredField("date");
         this.addRequiredField("userID");
+    }
+
+    public static UserActivityProgress findByUser(User user)
+    {
+        Converter converter = Converter.getInstance();
+        ArrayList<HashMap<String, Object>> data = modelCollection.where("userActivity_progress", "userID", "=", converter.toString(user.getID()));
+
+        if(data == null || data.size() == 0)
+            return null;
+
+        HashMap<String, Object> progressData = data.get(0);
+
+        UserActivityProgress model = new UserActivityProgress();
+        model.id = converter.toInt(progressData.get("id"));
+        model.user = user;
+        model.numberOfAccept = converter.toInt(progressData.get("numberOfAccept"));
+        model.numberOfCancel = converter.toInt(progressData.get("numberOfCancel"));
+        model.cancelActivity = converter.toInt(progressData.get("cancelActivity"));
+        model.date = (Date) progressData.get("date");
+
+        return model;
     }
 
     @Override
@@ -32,7 +52,8 @@ public class UserActivityProgress extends Model {
         temp.put("numberOfCancel", numberOfCancel);
         temp.put("cancelActivity", cancelActivity);
         temp.put("userID", user.getID());
-        temp.put("date", sdf.format(date));
+        if(date != null)
+            temp.put("date", sdf.format(date));
 
         return temp;
     }
@@ -46,8 +67,8 @@ public class UserActivityProgress extends Model {
         temp.put("numberOfAccept", numberOfAccept);
         temp.put("numberOfCancel", numberOfCancel);
         temp.put("cancelActivity", cancelActivity);
-        temp.put("user", user);
-        temp.put("date", sdf.format(date));
+        if(date != null)
+            temp.put("date", sdf.format(date));
 
         return temp;
     }
