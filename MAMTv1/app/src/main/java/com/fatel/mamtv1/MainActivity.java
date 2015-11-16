@@ -306,6 +306,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void linkCreateGroup(View view)
     {
+
         Intent intent = new Intent(this, CreateGroupActivity.class);
         startActivity(intent);
     }
