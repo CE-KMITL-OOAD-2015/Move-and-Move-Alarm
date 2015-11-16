@@ -4,13 +4,18 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.EditText;
+import android.widget.TextView;
+import android.widget.Toast;
 
 public class CreateGroupActivity extends AppCompatActivity {
-
+    EditText gName;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_create_group);
+        gName = (EditText)findViewById(R.id.edit_message);
     }
 
     @Override
@@ -33,5 +38,13 @@ public class CreateGroupActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    public void linkGroup(View view)
+    {
+        if(gName.length()<6)
+        {
+            Toast.makeText(this, "Please enter Group name at least 6 characters", Toast.LENGTH_SHORT).show();
+        }
     }
 }
