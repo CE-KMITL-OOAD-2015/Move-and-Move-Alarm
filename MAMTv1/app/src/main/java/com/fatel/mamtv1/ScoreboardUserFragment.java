@@ -14,6 +14,7 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
+import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -43,6 +44,9 @@ public class ScoreboardUserFragment extends Fragment {
     TextView score9;
     TextView score10;
 
+    TextView user0;
+    TextView score0;
+    TextView ranking0;
     public static ScoreboardUserFragment newInstance() {
         // Required empty public constructor
         ScoreboardUserFragment fragment = new ScoreboardUserFragment();
@@ -76,7 +80,21 @@ public class ScoreboardUserFragment extends Fragment {
         score8 = (TextView)rootView.findViewById(R.id.textView93);
         score9 = (TextView)rootView.findViewById(R.id.textView103);
         score10 = (TextView)rootView.findViewById(R.id.textView113);
+        user0 = (TextView)rootView.findViewById(R.id.userscore);
+        score0 = (TextView)rootView.findViewById(R.id.scoreuser);
+        ranking0 = (TextView)rootView.findViewById(R.id.userranking);
+        String tempid = UserManage.getInstance((Context) Cache.getInstance().getData("MainActivityContext")).getCurrentFacebookId();
+        if(!tempid.equals("0.0")) {
+            if (!tempid.equals("0")) {
+                user0.setText(UserManage.getInstance((Context) Cache.getInstance().getData("MainActivityContext")).getCurrentFacebookFirstName());
+            }
+        }else {
+            user0.setText(UserManage.getInstance((Context) Cache.getInstance().getData("MainActivityContext")).getCurrentUsername());
+        }
+        Log.i("score",UserManage.getInstance((Context) Cache.getInstance().getData("MainActivityContext")).getCurrentScore()+"");
+        score0.setText(UserManage.getInstance((Context) Cache.getInstance().getData("MainActivityContext")).getCurrentScore()+"");
         String url = "http://203.151.92.196:8080/user/findByRank";
+        String url2 = "http://203.151.92.196:8080/user/getUserRank";
 
         StringRequest userScoreboardRequest = new StringRequest(Request.Method.POST, url, //create new string request with POST method
                 new Response.Listener<String>() { //create new listener to traces the data
@@ -131,8 +149,44 @@ public class ScoreboardUserFragment extends Fragment {
                 return map;
             }
         };
-
         HttpConnector.getInstance((Context) Cache.getInstance().getData("MainActivityContext")).addToRequestQueue(userScoreboardRequest);
+
+        StringRequest userRankingRequest = new StringRequest(Request.Method.POST, url2, //create new string request with POST method
+                new Response.Listener<String>() { //create new listener to traces the data
+                    @Override
+                    public void onResponse(String response) { //when listener is activated
+                        Log.i("volley", response);
+                        Converter converter = Converter.getInstance();
+                        Log.i("res",response);
+                       // HashMap<String, Object> data = converter.JSONToHashMap(response);
+                        try {
+                            //if((boolean) data.get("status"))
+                            //{
+                            ranking0.setText(response);
+                            //}
+                        } catch (Exception e) {
+                            Log.i("scoreboard error", e.toString());
+                        }
+                    }
+                }, new Response.ErrorListener() { //create error listener to trace an error if download process fail
+            @Override
+            public void onErrorResponse(VolleyError volleyError) { //when error listener is activated
+                Log.i("volley", volleyError.toString());
+            }
+        }) { //define POST parameters
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> map = new HashMap<String, String>(); //create map to keep variables
+                User user = UserManage.getInstance((Context) Cache.getInstance().getData("MainActivityContext")).getCurrentUser();
+                HashMap<String,Object> usermap = new HashMap<>();
+                usermap.put("id",user.getIdUser());
+                map.put("JSON", Converter.getInstance().HashMapToJSON(usermap));
+                return map;
+            }
+        };
+        HttpConnector.getInstance((Context) Cache.getInstance().getData("MainActivityContext")).addToRequestQueue(userRankingRequest);
+
+
         return rootView;
     }
 

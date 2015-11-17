@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.fatel.mamtv1.ScoreboardUserFragment"
-    android:background="@drawable/scoreboardbg">
+    >
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -13,14 +13,21 @@
         android:orientation="horizontal"
         android:layout_gravity="center">
         <TextView
+            android:textStyle="bold"
             android:id="@+id/userscore"
             android:text="User"
             android:textSize="25sp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
         <TextView
+            android:text="Score : "
+            android:layout_marginLeft="10dp"
+            android:textSize="20sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
             android:layout_marginLeft="20dp"
-            android:textSize="25sp"
+            android:textSize="20sp"
             android:id="@+id/scoreuser"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -32,15 +39,16 @@
         android:orientation="horizontal"
         android:layout_gravity="center">
         <TextView
-            android:text="Ranking"
-            android:textSize="25sp"
+            android:text="Ranking : "
+            android:textSize="20sp"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content" />
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="80dp"/>
         <TextView
-            android:id="@+id/userdegree"
+            android:id="@+id/userranking"
             android:layout_marginLeft="20dp"
             android:text="00"
-            android:textSize="25sp"
+            android:textSize="20sp"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
     </LinearLayout>

@@ -89,12 +89,14 @@ public class MainActivity extends AppCompatActivity {
         Log.i("checkid", UserManage.getInstance(this).getCurrentFacebookLastName() + "");
         Log.i("checkid", UserManage.getInstance(this).getCurrentAge() + "");
         Log.i("checkid", UserManage.getInstance(this).getCurrentGender() + "");
-        Log.i("checkid", UserManage.getInstance(this).getCurrentScore() + "");
+        Log.i("score", UserManage.getInstance(this).getCurrentScore() + "");
         tempid = UserManage.getInstance(this).getCurrentFacebookID();
         Log.i("checkname", tempid+"");
         if(!tempid.equals("0.0")) {
-            tempid = tempid.substring(0, 1) + tempid.substring(2, 17);
-            Glide.with(this).load("https://graph.facebook.com/" + tempid + "/picture?type=large").into(profilepic);
+            if(!tempid.equals("0")) {
+                tempid = tempid.substring(0, 1) + tempid.substring(2, 17);
+                Glide.with(this).load("https://graph.facebook.com/" + tempid + "/picture?type=large").into(profilepic);
+            }
         }
         // Intent alarmIntent = new Intent(MainActivity.this, AlarmReceiver.class);
         //pendingIntent = PendingIntent.getBroadcast(MainActivity.this, 0, alarmIntent, 0);

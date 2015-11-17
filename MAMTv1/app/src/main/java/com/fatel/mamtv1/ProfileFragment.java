@@ -39,8 +39,10 @@ public class ProfileFragment extends android.support.v4.app.Fragment {
         lastname = (TextView)view.findViewById(R.id.editsurproname);
         String tempid = UserManage.getInstance((Context) Cache.getInstance().getData("MainActivityContext")).getCurrentFacebookId();
         if(!tempid.equals("0.0")) {
-            tempid = tempid.substring(0, 1) + tempid.substring(2, 17);
-            Glide.with(this).load("https://graph.facebook.com/" + tempid + "/picture?type=large").into(propic);
+            if(!tempid.equals("0")) {
+                tempid = tempid.substring(0, 1) + tempid.substring(2, 17);
+                Glide.with(this).load("https://graph.facebook.com/" + tempid + "/picture?type=large").into(propic);
+            }
         }
         if(!(UserManage.getInstance((Context) Cache.getInstance().getData("MainActivityContext")).getCurrentUsername()+"").equals("null"))
         user.setText(UserManage.getInstance((Context) Cache.getInstance().getData("MainActivityContext")).getCurrentUsername());
