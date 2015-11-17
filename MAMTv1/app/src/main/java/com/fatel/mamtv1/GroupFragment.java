@@ -17,11 +17,16 @@ import java.util.HashMap;
  */
 public class GroupFragment extends android.support.v4.app.Fragment {
 
+    public static GroupFragment instance = null;
 
     public GroupFragment() {
-        // Required empty public constructor
+        instance = this;
     }
 
+    public void finish()
+    {
+        getActivity().finish();
+    }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,

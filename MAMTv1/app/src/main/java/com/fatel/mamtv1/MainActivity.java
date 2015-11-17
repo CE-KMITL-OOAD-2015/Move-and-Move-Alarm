@@ -365,6 +365,8 @@ public class MainActivity extends AppCompatActivity {
         Toast.makeText(this, text, Toast.LENGTH_SHORT).show();
     }
 
+
+
     public void requestGroupInfo()
     {
         String url = "http://203.151.92.196:8080/group/findByID";
