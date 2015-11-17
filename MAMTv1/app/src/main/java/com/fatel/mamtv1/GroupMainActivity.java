@@ -17,6 +17,7 @@ public class GroupMainActivity extends AppCompatActivity {
     TextView groupName;
     TextView amountMember;
     TextView groupCode;
+    TextView groupScore;
     TextView getEvent;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,6 +27,7 @@ public class GroupMainActivity extends AppCompatActivity {
         adminName = (TextView)findViewById(R.id.adminname);
         groupName = (TextView)findViewById(R.id.groupname);
         amountMember = (TextView)findViewById(R.id.amount);
+        groupScore = (TextView)findViewById(R.id.score);
         getEvent = (TextView)findViewById(R.id.getEvent);
 
         Log.i("Group", "start group fragment");
@@ -38,12 +40,17 @@ public class GroupMainActivity extends AppCompatActivity {
             Log.i("Group", groupData.toString());
             Log.i("Group", userData.toString());
             String groupID = "" + converter.toInt(groupData.get("id"));
+            String userName = converter.toString(userData.get("userName"));
+            String nameOfAdmin = (userName == null) ? converter.toString(userData.get("facebookFirstName")) : userName;
             int addedDigit = 4 - groupID.length();
             String code = String.format("%0" + addedDigit + "d%s", 0, groupID);
             groupCode.setText(code);
             groupName.setText(converter.toString(groupData.get("name")));
-            adminName.setText(converter.toString(userData.get("userName")));
+
+
+            adminName.setText(nameOfAdmin);
             amountMember.setText("" + converter.toInt(groupData.get("amountMember")));
+            groupScore.setText("" + converter.toInt(groupData.get("score")));
         } catch (Exception e) {
             Log.i("Group", e.toString());
         }

@@ -76,14 +76,13 @@ public class CreateGroupActivity extends AppCompatActivity {
                             HashMap<String, Object> data = converter.JSONToHashMap(response);
                             if((boolean) data.get("status")) {
                                 HashMap<String, Object> groupData = converter.JSONToHashMap(converter.toString(data.get("group")));
-                                String name = converter.toString(groupData.get("name"));
                                 int groupID = converter.toInt(groupData.get("id"));
-                                int score = converter.toInt(groupData.get("score"));
                                 user.setIdGroup(groupID);
                                 user.save(CreateGroupActivity.this);
                                 Cache.getInstance().putData("groupData", groupData);
 
                                 startActivity(new Intent(CreateGroupActivity.this, GroupMainActivity.class));
+                                finish();
                             }
                             else {
                                 makeToast(converter.toString(data.get("description")));
@@ -92,7 +91,7 @@ public class CreateGroupActivity extends AppCompatActivity {
                     }, new Response.ErrorListener() { //create error listener to trace an error if download process fail
                 @Override
                 public void onErrorResponse(VolleyError volleyError) { //when error listener is activated
-                    Log.i("volley", volleyError.toString());
+                    makeToast("Cannot connect to server or internal server error.");
                 }
             }) { //define POST parameters
                 @Override

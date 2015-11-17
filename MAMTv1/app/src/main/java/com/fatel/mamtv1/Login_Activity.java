@@ -39,10 +39,21 @@ public class Login_Activity extends AppCompatActivity {
     private PendingIntent pendingIntent;
     private AlarmManager manager;
     private DBAlarmHelper mAlarmHelper;
+    public static Login_Activity instance;
+
     CallbackManager callbackManager;
     ProfileTracker profileTracker;
+
+    @Override
+    public void finish()
+    {
+        super.finish();
+        instance = null;
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        instance = this;
         super.onCreate(savedInstanceState);
         try {
             PackageInfo info = getPackageManager().getPackageInfo(
@@ -158,8 +169,6 @@ public class Login_Activity extends AppCompatActivity {
         }
         else {
             UserManage.getInstance(this).loginUser(username.getText().toString(), password.getText().toString(), this);
-
-
 
             //Intent intent = new Intent(this, MainActivity.class);
             //Toast.makeText(this, "Hello "+username.getText().toString(), Toast.LENGTH_SHORT).show();
