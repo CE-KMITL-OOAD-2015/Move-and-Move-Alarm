@@ -377,7 +377,7 @@ public class UserManage {
             updateUser();
         }
     }
-    
+
 
     public String getCurrentFirstName (){
         return currentUser.getFirstName();

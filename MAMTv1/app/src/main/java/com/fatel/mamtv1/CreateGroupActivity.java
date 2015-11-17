@@ -87,27 +87,17 @@ public class CreateGroupActivity extends AppCompatActivity {
             }) { //define POST parameters
                 @Override
                 protected Map<String, String> getParams() {
+                    Map<String, String> map = new HashMap<String, String>(); //create map to keep variables
                     User user = UserManage.getInstance(CreateGroupActivity.this).getCurrentUser();
                     HashMap<String, Object> JSON = new HashMap<>();
-                    HashMap<String, Object> userData = new HashMap<>();
+                    HashMap<String, Object> userData = user.getGeneralValues();
                     HashMap<String, Object> groupData = new HashMap<>();
-                    userData.put("id", user.getIdUser());
-                    userData.put("firstName",user.getFirstName());
-                    userData.put("lastName",user.getLastName());
-                    userData.put("userName",user.getUserName());
-                    userData.put("age",user.getAge());
-                    userData.put("score",user.getScore());
-                    userData.put("profileImage",user.getProfileImage());
-                    userData.put("facebookID",user.getFacebookID());
-                    userData.put("facebookFirstName",user.getFacebookFirstName());
-                    userData.put("facebookLastName",user.getFacebookLastName());
-                    userData.put("gender",user.getGender());
-                    userData.put("email",user.getEmail());
 
-                    groupData.put("user", user);
+                    groupData.put("admin", userData);
                     groupData.put("name", gName.getText().toString());
 
-                    Map<String, String> map = new HashMap<String, String>(); //create map to keep variables
+                    JSON.put("group", groupData);
+                    map.put("JSON", Converter.getInstance().HashMapToJSON(JSON));
 
                     return map;
                 }
