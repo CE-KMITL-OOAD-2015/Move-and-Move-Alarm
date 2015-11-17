@@ -36,9 +36,11 @@ public class UserManage {
         }
         return instance;
     }
+
     public User getCurrentUser(){
         return currentUser;
     }
+
     private  void setCurrentUser(User user){
        currentUser= user;
     }

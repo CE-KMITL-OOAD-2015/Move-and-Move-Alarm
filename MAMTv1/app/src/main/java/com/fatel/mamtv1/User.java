@@ -4,6 +4,8 @@ import android.content.Context;
 import android.provider.BaseColumns;
 import android.util.Log;
 
+import java.util.HashMap;
+
 /**
  * Created by Monthon on 3/11/2558.
  */
@@ -192,5 +194,26 @@ public class User {
     public void setLogin(int login) {
         this.login = login;
     }
+
     public void setIdGroup(int idGroup){this.idGroup = idGroup;}
+
+    
+    public HashMap<String, Object> getGeneralValues()
+    {
+        HashMap<String, Object> userData = new HashMap<>();
+        userData.put("id", this.getIdUser());
+        userData.put("firstName",this.getFirstName());
+        userData.put("lastName",this.getLastName());
+        userData.put("userName",this.getUserName());
+        userData.put("age",this.getAge());
+        userData.put("score",this.getScore());
+        userData.put("profileImage",this.getProfileImage());
+        userData.put("facebookID",this.getFacebookID());
+        userData.put("facebookFirstName",this.getFacebookFirstName());
+        userData.put("facebookLastName",this.getFacebookLastName());
+        userData.put("gender",this.getGender());
+        userData.put("email",this.getEmail());
+
+        return userData;
+    }
 }
