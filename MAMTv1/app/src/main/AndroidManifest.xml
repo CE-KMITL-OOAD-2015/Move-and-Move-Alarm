@@ -119,6 +119,10 @@
             android:name=".MemberGroupActivity"
             android:label="@string/title_activity_member_group" >
         </activity>
+        <activity
+            android:name=".ProgressActivity"
+            android:label="@string/title_activity_progress" >
+        </activity>
     </application>
 
 </manifest>

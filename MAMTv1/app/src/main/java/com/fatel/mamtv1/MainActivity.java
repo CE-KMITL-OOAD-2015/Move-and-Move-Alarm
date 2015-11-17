@@ -203,6 +203,12 @@ public class MainActivity extends AppCompatActivity {
             case R.id.nav_posture_fragment:
                 fragmentClass = ChoosePostureFragment.class;
                 break;
+            case R.id.nav_progress_fragment :
+                fragmentClass = null;
+                mDrawerLayout.closeDrawers();
+                Intent intent4 = new Intent(this, ProgressActivity.class);
+                startActivity(intent4);
+                break;
             case R.id.nav_lboard_fragment:
                 fragmentClass = null;
                 mDrawerLayout.closeDrawers();
