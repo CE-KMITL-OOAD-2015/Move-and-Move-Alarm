@@ -63,32 +63,17 @@ public class MainActivity extends AppCompatActivity {
 
         Cache.getInstance().putData("MainActivityContext", this);
 
-
-
-        Bundle bundle = getIntent().getExtras();
-        if (bundle != null) {
-            firstName = bundle.getString("firstname");
-            lastName = bundle.getString("lastname");
-            id = bundle.getString("id");
-        }
-
         profilepic = (CircleImageView) findViewById(R.id.profile_image);
 
         header = (TextView) findViewById(R.id.profile);
         user = (TextView) findViewById(R.id.username);
-        if (bundle != null) {
-            user.setText(firstName);
-
-            passimg = new Bundle();
-            passimg.putString("id", id);
-        }
+        user.setText(UserManage.getInstance(this).getCurrentUsername());
+        Log.i("checkid", UserManage.getInstance(this).getCurrentFacebookId() + "");
         Glide.with(this).load("https://graph.facebook.com/" + UserManage.getInstance(this).getCurrentFacebookId() + "/picture?type=large").into(profilepic);
         // Intent alarmIntent = new Intent(MainActivity.this, AlarmReceiver.class);
         //pendingIntent = PendingIntent.getBroadcast(MainActivity.this, 0, alarmIntent, 0);
         FragmentTransaction tx = getSupportFragmentManager().beginTransaction();
         MainFragment fragobj = new MainFragment();
-        if (bundle != null)
-            fragobj.setArguments(passimg);
         tx.replace(R.id.container, fragobj);
         tx.commit();
         NavigationView nvDrawer = (NavigationView) findViewById(R.id.nvView);

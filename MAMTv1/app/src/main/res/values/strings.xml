@@ -21,5 +21,6 @@
     <string name="title_activity_create_group">Create Group</string>
     <string name="title_activity_join_group">Join Group</string>
     <string name="title_activity_group_main">GroupMainActivity</string>
+    <string name="title_activity_member_group">MemberGroupActivity</string>
 
 </resources>

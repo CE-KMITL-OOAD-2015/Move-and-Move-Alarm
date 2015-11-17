@@ -406,5 +406,5 @@ public class UserManage {
         return currentUser.getFacebookLastName();
     }
 public String getCurrentFacebookId(){return currentUser.getFacebookID();}
-
+public String getCurrentUsername(){return currentUser.getUserName();}
 }

@@ -1,24 +1,22 @@
 package com.fatel.mamtv1;
 
-import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.view.View;
 
-public class GroupMainActivity extends AppCompatActivity {
+public class MemberGroupActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_group_main);
+        setContentView(R.layout.activity_member_group);
     }
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
         // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_group_main, menu);
+        getMenuInflater().inflate(R.menu.menu_member_group, menu);
         return true;
     }
 
@@ -35,11 +33,5 @@ public class GroupMainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
-    }
-
-    public void linkMember(View view)
-    {
-        Intent intent = new Intent(this, MemberGroupActivity.class);
-        startActivity(intent);
     }
 }
