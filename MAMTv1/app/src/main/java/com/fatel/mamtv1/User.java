@@ -22,6 +22,7 @@ public class User {
     private String facebookLastName;
     private int profileImage;
     private int login;
+    private int idGroup;
 
     public static final int DATABASE_VERSION = 1;
     public static final String TABLE = "user";
@@ -40,6 +41,7 @@ public class User {
         public static final String FACEBOOKLASTNAME = "facebooklastname";
         public static final String PROFILEIMAGE = "profileimage";
         public static final String LOGIN = "login";
+        public static final String IDGROUP = "idgroup";
     }
     public User(){
     }
@@ -61,7 +63,7 @@ public class User {
     }
     public User(int id,int idUser,String firstName, String lastName, String username,int age,int score
             ,int gender,String email, String facebookID, String facebookFirstName,
-                String facebookLastName, int profileImage,int login){
+                String facebookLastName, int profileImage,int login,int idGroup){
         this.id=id;
         this.idUser = idUser;
         this.firstName = firstName;
@@ -76,6 +78,7 @@ public class User {
         this.facebookLastName=facebookLastName;
         this.profileImage = profileImage;
         this.login=login;
+        this.idGroup=idGroup;
     }
     public void save (Context context){
 
@@ -142,6 +145,7 @@ public class User {
         return profileImage;
     }
     public int getLogin(){ return login; }
+    public int getIdGroup(){return idGroup;}
     public void setId(int id){
         this.id = id;
     }
@@ -188,4 +192,5 @@ public class User {
     public void setLogin(int login) {
         this.login = login;
     }
+    public void setIdGroup(int idGroup){this.idGroup = idGroup;}
 }
