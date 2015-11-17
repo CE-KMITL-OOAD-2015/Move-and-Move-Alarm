@@ -378,6 +378,11 @@ public class UserManage {
         }
     }
 
+    public User getCurrentUser()
+    {
+        return currentUser;
+    }
+
     public String getCurrentFirstName (){
         return currentUser.getFirstName();
     }

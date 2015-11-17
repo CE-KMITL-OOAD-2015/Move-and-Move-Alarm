@@ -19,7 +19,7 @@ public class History {
         public static final String ID = BaseColumns._ID;
         public static final String IDUSER = "iduser";
         public static final String NUMACCEPT = "numberOfAccept";
-        public static final String CANCEL = "CANCELACTIVITY";
+        public static final String CANCEL = "numberofcancel";
     }
     public History(){
 
