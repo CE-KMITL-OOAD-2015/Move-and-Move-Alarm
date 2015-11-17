@@ -378,10 +378,7 @@ public class UserManage {
         }
     }
 
-<<<<<<< HEAD
-=======
 
->>>>>>> feature/idgroup
     public String getCurrentFirstName (){
         return currentUser.getFirstName();
     }
@@ -411,11 +408,9 @@ public class UserManage {
     }
 public String getCurrentFacebookId(){return currentUser.getFacebookID();}
 public String getCurrentUsername(){return currentUser.getUserName();}
-<<<<<<< HEAD
-    public int getCurrentIdUser()
-    {
+    public int getCurrentIdUser() {
         return currentUser.getIdUser();
-=======
+    }
     public int getCurrentIdGroup(){
         return currentUser.getIdGroup();
     }
@@ -425,6 +420,5 @@ public String getCurrentUsername(){return currentUser.getUserName();}
             currentUser.save(context);
             updateUser();
         }
->>>>>>> feature/idgroup
     }
 }
