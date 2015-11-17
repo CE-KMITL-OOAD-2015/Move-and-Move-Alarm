@@ -23,7 +23,12 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
 import com.bumptech.glide.Glide;
 import com.facebook.Profile;
 import com.facebook.login.LoginManager;
@@ -36,7 +41,11 @@ import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Objects;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -189,7 +198,13 @@ public class MainActivity extends AppCompatActivity {
                 fragmentClass = AboutFragment.class;
                 break;
             case R.id.nav_group_fragment:
+
+                if(true/*ไม่มีกลุ่ม*/)
                 fragmentClass = GroupFragment.class;
+                else{//มีกลุ่ม
+                    Intent intent3 = new Intent(this,GroupMainActivity.class);
+                    startActivity(intent3);
+                }
                 break;
 
             case R.id.nav_logout_fragment:
@@ -313,6 +328,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void linkCreateGroup(View view)
     {
+
         Intent intent = new Intent(this, CreateGroupActivity.class);
         startActivity(intent);
     }
@@ -323,5 +339,10 @@ public class MainActivity extends AppCompatActivity {
 
         startActivity(intent);
 
+    }
+
+    public void makeToast(String text)
+    {
+        Toast.makeText(this, text, Toast.LENGTH_SHORT).show();
     }
 }
