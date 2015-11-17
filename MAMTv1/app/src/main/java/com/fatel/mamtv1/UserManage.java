@@ -36,7 +36,7 @@ public class UserManage {
         }
         return instance;
     }
-    private User getCurrentUser(){
+    public User getCurrentUser(){
         return currentUser;
     }
     private  void setCurrentUser(User user){
@@ -378,10 +378,6 @@ public class UserManage {
         }
     }
 
-    public User getCurrentUser()
-    {
-        return currentUser;
-    }
 
     public String getCurrentFirstName (){
         return currentUser.getFirstName();
@@ -412,4 +408,14 @@ public class UserManage {
     }
 public String getCurrentFacebookId(){return currentUser.getFacebookID();}
 public String getCurrentUsername(){return currentUser.getUserName();}
+    public int getCurrentIdGroup(){
+        return currentUser.getIdGroup();
+    }
+    public void setIdGroup(int idGroup,Context context){
+        if(currentUser!=null){
+            currentUser.setIdGroup(idGroup);
+            currentUser.save(context);
+            updateUser();
+        }
+    }
 }

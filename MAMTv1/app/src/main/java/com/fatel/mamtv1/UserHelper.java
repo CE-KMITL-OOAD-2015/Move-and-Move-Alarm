@@ -25,7 +25,7 @@ public class UserHelper extends SQLiteOpenHelper {
         //not sure %s int for image
         String CREATE_USER_TABLE = String.format("CREATE TABLE %s " +
                         "(%s INTEGER PRIMARY KEY  AUTOINCREMENT,%s INTEGER, %s TEXT, %s TEXT, %s TEXT, %s INTEGER" +
-                        ",%s INTEGER,%s INTEGER, %s TEXT, %s TEXT,%s TEXT,%s TEXT,%s INTEGER,%s INTEGER)",
+                        ",%s INTEGER,%s INTEGER, %s TEXT, %s TEXT,%s TEXT,%s TEXT,%s INTEGER,%s INTEGER,%s INTEGER)",
                 User.TABLE,
                 User.Column.ID,
                 User.Column.IDUSER,
@@ -40,7 +40,8 @@ public class UserHelper extends SQLiteOpenHelper {
                 User.Column.FACEBOOKFIRSTNAME,
                 User.Column.FACEBOOKLASTNAME,
                 User.Column.PROFILEIMAGE,
-                User.Column.LOGIN);
+                User.Column.LOGIN,
+                User.Column.IDGROUP);
         Log.i(TAG, CREATE_USER_TABLE);
         db.execSQL(CREATE_USER_TABLE);
     }
@@ -67,6 +68,7 @@ public class UserHelper extends SQLiteOpenHelper {
         values.put(User.Column.FACEBOOKLASTNAME, user.getFacebookLastName());
         values.put(User.Column.PROFILEIMAGE,user.getProfileImage());
         values.put(User.Column.LOGIN, user.getLogin());
+        values.put(User.Column.IDGROUP,user.getIdGroup());
         long id = sqLiteDatabase.insert(User.TABLE, null, values);
         sqLiteDatabase.close();
         Log.i(TAG, "funh adduser id :" + id + " user:" + user.getUserName() + " iduser:" + user.getIdUser());
@@ -88,6 +90,7 @@ public class UserHelper extends SQLiteOpenHelper {
         values.put(User.Column.FACEBOOKLASTNAME, user.getFacebookLastName());
         values.put(User.Column.PROFILEIMAGE, user.getProfileImage());
         values.put(User.Column.LOGIN, user.getLogin());
+        values.put(User.Column.IDGROUP,user.getIdGroup());
         int row = sqLiteDatabase.update(User.TABLE,
                 values,
                 User.Column.ID + " = ? ",
@@ -112,7 +115,7 @@ public class UserHelper extends SQLiteOpenHelper {
                         User.Column.USERNAME, User.Column.AGE, User.Column.SCORE,
                         User.Column.GENDER, User.Column.EMAIL,
                         User.Column.FACEBOOKID, User.Column.FACEBOOKFIRSTNAME, User.Column.FACEBOOKLASTNAME,
-                        User.Column.PROFILEIMAGE, User.Column.LOGIN
+                        User.Column.PROFILEIMAGE, User.Column.LOGIN, User.Column.IDGROUP
                 }, User.Column.IDUSER + " = ? ",
                 new String[]{String.valueOf(idUser)}, null, null, null, null);
         User user;
@@ -126,7 +129,7 @@ public class UserHelper extends SQLiteOpenHelper {
         user = new User(cursor.getInt(0), cursor.getInt(1),
                 cursor.getString(2), cursor.getString(3), cursor.getString(4), cursor.getInt(5),
                 cursor.getInt(6), cursor.getInt(7), cursor.getString(8),
-                cursor.getString(9), cursor.getString(10), cursor.getString(11), cursor.getInt(12), cursor.getInt(13));
+                cursor.getString(9), cursor.getString(10), cursor.getString(11), cursor.getInt(12), cursor.getInt(13),cursor.getInt(14));
 
 
 
@@ -148,7 +151,7 @@ public class UserHelper extends SQLiteOpenHelper {
                         User.Column.USERNAME, User.Column.AGE, User.Column.SCORE,
                         User.Column.GENDER, User.Column.EMAIL,
                         User.Column.FACEBOOKID, User.Column.FACEBOOKFIRSTNAME, User.Column.FACEBOOKLASTNAME,
-                        User.Column.PROFILEIMAGE, User.Column.LOGIN
+                        User.Column.PROFILEIMAGE, User.Column.LOGIN , User.Column.IDGROUP
                 }, User.Column.LOGIN + " = ? ",
                 new String[]{String.valueOf(1)}, null, null, null, null);
 
@@ -162,7 +165,7 @@ public class UserHelper extends SQLiteOpenHelper {
             user = new User(cursor.getInt(0), cursor.getInt(1),
                     cursor.getString(2), cursor.getString(3), cursor.getString(4), cursor.getInt(5),
                     cursor.getInt(6), cursor.getInt(7), cursor.getString(8),
-                    cursor.getString(9), cursor.getString(10), cursor.getString(11), cursor.getInt(12), cursor.getInt(13));
+                    cursor.getString(9), cursor.getString(10), cursor.getString(11), cursor.getInt(12), cursor.getInt(13),cursor.getInt((14)));
 
             cursor.close();
         }
