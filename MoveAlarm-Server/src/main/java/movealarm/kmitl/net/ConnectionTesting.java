@@ -9,7 +9,7 @@ import java.util.HashMap;
 
  @RestController
  public class ConnectionTesting {
-     private SQLInquirer sqlInquirer = SQLInquirer.getInstance();
+     private DatabaseInterface databaseInquirer = SQLInquirer.getInstance();
      private Converter converter = Converter.getInstance();
 
      @RequestMapping("/test/serverConnection")
@@ -21,8 +21,8 @@ import java.util.HashMap;
      @RequestMapping("/test/databaseServerConnection")
      public String testDatabaseServerConnection()
      {
-         sqlInquirer.startConnection(); //always re-start database connection when this method is called to make sure that service server can create new connection to database server
-         if(sqlInquirer.isConnecting()) //check connection status
+         databaseInquirer.startConnection(); //always re-start database connection when this method is called to make sure that service server can create new connection to database server
+         if(databaseInquirer.isConnecting()) //check connection status
             return converter.HashMapToJSON(StatusDescription.createProcessStatus(true, "connected.")); //respond inform of JSON
 
          return converter.HashMapToJSON(StatusDescription.createProcessStatus(false, "Cannot connect to the database server."));
@@ -45,8 +45,8 @@ import java.util.HashMap;
      {
          ArrayList<HashMap<String, Object>> temp = null;
          try {
-             temp = sqlInquirer.where("testTable", "var2", "=", "8988"); //query predefined data
-         } catch (SQLException e) {
+             temp = databaseInquirer.where("testTable", "var2", "=", "8988"); //query predefined data
+         } catch (Exception e) {
              e.printStackTrace();
          }
 

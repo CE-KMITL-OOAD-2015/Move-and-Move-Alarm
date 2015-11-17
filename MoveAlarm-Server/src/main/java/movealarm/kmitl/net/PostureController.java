@@ -4,7 +4,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import java.sql.SQLException;
 import java.util.HashMap;
 
 /**
@@ -13,7 +12,7 @@ import java.util.HashMap;
 @RestController
 public class PostureController {
     Converter converter = Converter.getInstance();
-    SQLInquirer sqlInquirer = SQLInquirer.getInstance();
+    DatabaseInterface databaseInquirer = SQLInquirer.getInstance();
 
     @RequestMapping("/posture/findByID")
     public String findByID(@RequestParam(value="id", required = true, defaultValue = "0") int id)
@@ -100,9 +99,9 @@ public class PostureController {
     {
         int amount = 0;
         try {
-            HashMap<String, Object> data = sqlInquirer.query("SELECT COUNT(id) AS amount FROM posture").get(0);
+            HashMap<String, Object> data = databaseInquirer.query("SELECT COUNT(id) AS amount FROM posture").get(0);
             amount = converter.toInt(data.get("amount"));
-        } catch (SQLException e) {
+        } catch (Exception e) {
             e.printStackTrace();
             return "-1";
         }
