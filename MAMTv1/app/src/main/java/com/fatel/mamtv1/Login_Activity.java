@@ -243,14 +243,11 @@ public class Login_Activity extends AppCompatActivity {
         if (loggedIn && (profile != null)) {
 
             Log.i("User", "loginfb");
+            Log.i("User", profile.getLastName());
             UserManage.getInstance(this).loginFBUser(profile.getId(), profile.getFirstName(), this);
             UserManage.getInstance(this).setFacebookLastName(profile.getLastName(), this);
+
             Intent intent = new Intent(Login_Activity.this, MainActivity.class);
-            intent.putExtra("firstname", profile.getFirstName());
-            intent.putExtra("lastname", profile.getLastName());
-            intent.putExtra("id",profile.getId());
-            //String uri = profile.getProfilePictureUri(100,100).toString();
-            intent.putExtra("propic",profile.getProfilePictureUri(300,300));
             Toast.makeText(this, "Hello "+profile.getFirstName(), Toast.LENGTH_SHORT).show();
             //startActivity(intent);
         }

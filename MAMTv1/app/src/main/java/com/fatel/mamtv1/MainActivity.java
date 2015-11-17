@@ -30,6 +30,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.bumptech.glide.Glide;
+import com.facebook.FacebookSdk;
 import com.facebook.Profile;
 import com.facebook.login.LoginManager;
 import com.facebook.login.widget.ProfilePictureView;
@@ -57,11 +58,11 @@ public class MainActivity extends AppCompatActivity {
     private TextView header;
     private TextView user;
     CircleImageView profilepic;
-    CircleImageView profilepic2;
     String firstName;
     String lastName;
     public String id;
     Bundle passimg;
+    String tempid;
     DBAlarmHelper mAlarmHelper;
     private HistoryHelper mhistoryHelper;
 
@@ -76,9 +77,25 @@ public class MainActivity extends AppCompatActivity {
 
         header = (TextView) findViewById(R.id.profile);
         user = (TextView) findViewById(R.id.username);
-        user.setText(UserManage.getInstance(this).getCurrentUsername());
+        if((UserManage.getInstance(this).getCurrentUsername()+"").equals("null"))
+            user.setText(UserManage.getInstance(this).getCurrentFacebookFirstName());
+        else
+            user.setText(UserManage.getInstance(this).getCurrentUsername());
+
         Log.i("checkid", UserManage.getInstance(this).getCurrentFacebookId() + "");
-        Glide.with(this).load("https://graph.facebook.com/" + UserManage.getInstance(this).getCurrentFacebookId() + "/picture?type=large").into(profilepic);
+        Log.i("checkuser", UserManage.getInstance(this).getCurrentUsername() + "");
+        Log.i("checkemail", UserManage.getInstance(this).getCurrentEmail() + "");
+        Log.i("checkemail", UserManage.getInstance(this).getCurrentFacebookFirstName() + "");
+        Log.i("checkid", UserManage.getInstance(this).getCurrentFacebookLastName() + "");
+        Log.i("checkid", UserManage.getInstance(this).getCurrentAge() + "");
+        Log.i("checkid", UserManage.getInstance(this).getCurrentGender() + "");
+        Log.i("checkid", UserManage.getInstance(this).getCurrentScore() + "");
+        tempid = UserManage.getInstance(this).getCurrentFacebookID();
+        Log.i("checkname", tempid+"");
+        if(!tempid.equals("0.0")) {
+            tempid = tempid.substring(0, 1) + tempid.substring(2, 17);
+            Glide.with(this).load("https://graph.facebook.com/" + tempid + "/picture?type=large").into(profilepic);
+        }
         // Intent alarmIntent = new Intent(MainActivity.this, AlarmReceiver.class);
         //pendingIntent = PendingIntent.getBroadcast(MainActivity.this, 0, alarmIntent, 0);
         FragmentTransaction tx = getSupportFragmentManager().beginTransaction();
@@ -177,7 +194,6 @@ public class MainActivity extends AppCompatActivity {
         switch (menuItem.getItemId()) {
             case R.id.nav_home_fragment:
                 fragmentClass = MainFragment.class;
-                profilepic2.setVisibility(View.VISIBLE);
                 break;
             case R.id.nav_alarm_fragment:
                 fragmentClass = AlarmFragment.class;
@@ -212,7 +228,8 @@ public class MainActivity extends AppCompatActivity {
                 mAlarmHelper =  new DBAlarmHelper(this);
 
 
-                if( (UserManage.getInstance(this).getCurrentFacebookID().length())>=15){
+                if(!tempid.equals("0.0")){
+                    FacebookSdk.sdkInitialize(this.getApplicationContext());
                     LoginManager.getInstance().logOut();
                 }
 
