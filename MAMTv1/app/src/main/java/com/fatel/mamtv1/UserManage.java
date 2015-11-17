@@ -36,7 +36,7 @@ public class UserManage {
         }
         return instance;
     }
-    private User getCurrentUser(){
+    public User getCurrentUser(){
         return currentUser;
     }
     private  void setCurrentUser(User user){
@@ -308,9 +308,9 @@ public class UserManage {
         }
     }
 
-    public int getCurrentIdUser (){
-        return currentUser.getIdUser();
-    }
+    //public int getCurrentIdUser (){
+//        return currentUser.getIdUser();
+//    }
     public String getCurrentFacebookID(){
         return currentUser.getFacebookID();
     }
@@ -378,11 +378,6 @@ public class UserManage {
         }
     }
 
-    public User getCurrentUser()
-    {
-        return currentUser;
-    }
-
     public String getCurrentFirstName (){
         return currentUser.getFirstName();
     }
@@ -412,4 +407,8 @@ public class UserManage {
     }
 public String getCurrentFacebookId(){return currentUser.getFacebookID();}
 public String getCurrentUsername(){return currentUser.getUserName();}
+    public int getCurrentIdUser()
+    {
+        return currentUser.getIdUser();
+    }
 }

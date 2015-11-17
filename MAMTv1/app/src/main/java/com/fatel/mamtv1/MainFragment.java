@@ -32,7 +32,7 @@ import de.hdodenhof.circleimageview.CircleImageView;
 public class MainFragment extends android.support.v4.app.Fragment {
     private DBAlarmHelper mAlarmHelper;
     CircleImageView propic;
-
+    TextView score;
     public MainFragment() {
         // Required empty public constructor
     }
@@ -45,13 +45,15 @@ public class MainFragment extends android.support.v4.app.Fragment {
         View view = inflater.inflate(R.layout.fragment_main, container, false);
         setDay(view);
         mAlarmHelper = new DBAlarmHelper(getActivity());
-        setTextAlarm(view,mAlarmHelper);
+        setTextAlarm(view, mAlarmHelper);
         propic = (CircleImageView)view.findViewById(R.id.profile_image_f);
-        Log.i("xx", propic.toString());
-        propic.setVisibility(View.VISIBLE);
-        Log.i("xx", "do?");
-        Glide.with(this).load("https://graph.facebook.com/" + UserManage.getInstance((Context)Cache.getInstance().getData("MainActivityContext")).getCurrentFacebookId() + "/picture?type=large").into(propic);
-
+        String tempid = UserManage.getInstance((Context) Cache.getInstance().getData("MainActivityContext")).getCurrentFacebookId();
+        if(!tempid.equals("0.0")) {
+            tempid = tempid.substring(0, 1) + tempid.substring(2, 17);
+            Glide.with(this).load("https://graph.facebook.com/" + tempid + "/picture?type=large").into(propic);
+        }
+        score = (TextView)view.findViewById(R.id.scoreNum);
+        score.setText(UserManage.getInstance((Context) Cache.getInstance().getData("MainActivityContext")).getCurrentScore()+"");
         return view;
     }
     public void setDay(View view){
