@@ -268,6 +268,9 @@ public class MainActivity extends AppCompatActivity {
                 Intent intent = new Intent(this, Intro_Activity.class);
                 startActivity(intent);
                 break;
+            case R.id.nav_set_fragment:
+                fragmentClass = SetFragment.class;
+                break;
 //            case R.id.nav_third_fragment:
 //                fragmentClass = ThirdFragment.class;
 //                break;
