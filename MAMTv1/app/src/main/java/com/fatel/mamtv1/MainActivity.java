@@ -72,7 +72,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         Cache.getInstance().putData("MainActivityContext", this);
-
+        Cache.getInstance().putData("MainActivityActivity",this);
         profilepic = (CircleImageView) findViewById(R.id.profile_image);
 
         header = (TextView) findViewById(R.id.profile);
