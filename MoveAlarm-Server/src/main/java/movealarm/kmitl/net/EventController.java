@@ -26,7 +26,7 @@ public class EventController {
             allPosture.remove(random);
         }
         Calendar calendar = Calendar.getInstance(); //random time
-        calendar.set(Calendar.HOUR_OF_DAY,(int)(Math.random()*24));
+        calendar.set(Calendar.HOUR_OF_DAY,(int)(Math.random()*23));
         calendar.set(Calendar.MINUTE,(int)(Math.random()*59));
         calendar.set(Calendar.SECOND,0);
         calendar.set(Calendar.MILLISECOND,0);
