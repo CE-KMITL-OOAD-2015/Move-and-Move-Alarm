@@ -1,12 +1,16 @@
 package com.fatel.mamtv1;
+
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 
-public class PagerAdapter extends FragmentPagerAdapter {
+/**
+ * Created by kid14 on 11/17/2015.
+ */
+public class ProgressPagerAdapter extends FragmentPagerAdapter {
     private final int PAGE_NUM = 2;
-    private static final String[] CONTENT = new String[] { "User","Group" };
-    public PagerAdapter(FragmentManager fm) {
+    private static final String[] CONTENT = new String[] { "Activity","Event" };
+    public ProgressPagerAdapter(FragmentManager fm) {
         super(fm);
     }
 
@@ -16,9 +20,9 @@ public class PagerAdapter extends FragmentPagerAdapter {
 
     public Fragment getItem(int position) {
         if(position == 0)
-            return ScoreboardUserFragment.newInstance();
+            return ProgressActivityFragment.newInstance();
         else if(position == 1)
-            return ScoreboardGroupFragment.newInstance();
+            return ProgressEventFragment.newInstance();
         return null;
     }
 
