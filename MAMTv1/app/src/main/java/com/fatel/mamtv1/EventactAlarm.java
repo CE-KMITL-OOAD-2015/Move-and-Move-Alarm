@@ -64,13 +64,13 @@ public class EventactAlarm extends AppCompatActivity {
 
     public void linkActivity(View view){
         //history
-        HistoryHelper mhistoryHelper = new HistoryHelper(this);
-        History history = mhistoryHelper.getHistoryUser(UserManage.getInstance(this).getCurrentIdUser());
-        history.addaccept(1);
-        history.save(this);
-        Log.i("historyacc", UserManage.getInstance(this).getCurrentIdUser() + "");
-        Log.i("historyacc",history.getNumberOfAccept()+"");
-        Log.i("historyacc",history.gettotal()+"");
+        HistorygroupHelper mhistorygroupHelper = new HistorygroupHelper(this);
+        Historygroup historygroup = mhistorygroupHelper.getHistoryGroup(UserManage.getInstance(this).getCurrentIdGroup());
+        historygroup.addaccept(1);
+        historygroup.save(this);
+        Log.i("historyacc", UserManage.getInstance(this).getCurrentIdGroup() + "");
+        Log.i("historyacc",historygroup.getNumberOfAccept()+"");
+        Log.i("historyacc",historygroup.gettotal()+"");
         Intent intent = new Intent(this, EventActivity.class);
         startActivity(intent);
         v.cancel();
@@ -79,13 +79,13 @@ public class EventactAlarm extends AppCompatActivity {
 
     public void linkHome(View view){
         //history
-        HistoryHelper mhistoryHelper = new HistoryHelper(this);
-        History history = mhistoryHelper.getHistoryUser(UserManage.getInstance(this).getCurrentIdUser());
-        history.addcancel(1);
-        history.save(this);
-        Log.i("historycancel", UserManage.getInstance(this).getCurrentIdUser()+ "");
-        Log.i("historycancel", history.getCancelActivity() + "");
-        Log.i("historycancel", history.gettotal() + "");
+        HistorygroupHelper mhistorygrouphelper = new HistorygroupHelper(this);
+        Historygroup historygroup = mhistorygrouphelper.getHistoryGroup(UserManage.getInstance(this).getCurrentIdGroup());
+        historygroup.addaccept(1);
+        historygroup.save(this);
+        Log.i("historycancel", UserManage.getInstance(this).getCurrentIdGroup()+ "");
+        Log.i("historycancel", historygroup.getCancelEvent() + "");
+        Log.i("historycancel", historygroup.gettotal() + "");
         Intent i1 = new Intent(EventactAlarm.this, MainActivity.class);
         // Bundle b1 = new Bundle();
         //b1.putExtra("key", "main");

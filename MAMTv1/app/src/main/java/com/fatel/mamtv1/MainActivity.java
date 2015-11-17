@@ -65,7 +65,7 @@ public class MainActivity extends AppCompatActivity {
     String tempid;
     DBAlarmHelper mAlarmHelper;
     private HistoryHelper mhistoryHelper;
-
+    private HistorygroupHelper mhistorygroupHelper;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -147,6 +147,14 @@ public class MainActivity extends AppCompatActivity {
         if(history==null){
             history = new History(UserManage.getInstance(this).getCurrentIdUser());
             history.save(this);
+        }
+
+        //historygroup
+        mhistorygroupHelper = new HistorygroupHelper(this);
+        Historygroup historygroup = mhistorygroupHelper.getHistoryGroup(UserManage.getInstance(this).getCurrentIdGroup());
+        if(historygroup==null&&UserManage.getInstance(this).getCurrentIdGroup()!=0){
+            historygroup = new Historygroup(UserManage.getInstance(this).getCurrentIdGroup());
+            historygroup.save(this);
         }
     }
 

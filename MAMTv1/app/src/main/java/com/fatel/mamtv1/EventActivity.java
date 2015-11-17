@@ -122,6 +122,8 @@ public class EventActivity extends AppCompatActivity {
 
             public void onFinish() {
                 txtA.setText("Activity Time done!");
+                //sent data to serve
+
 
                 //history
                 //go to main
@@ -182,15 +184,14 @@ public class EventActivity extends AppCompatActivity {
     public void linkHome(View view)
     {
         //history
-        HistoryHelper mhistoryHelper = new HistoryHelper(this);
-        History history = mhistoryHelper.getHistoryUser(UserManage.getInstance(this).getCurrentIdUser());
-        history.subaccept(1);
-        history.addcancel(1);
-        history.save(this);
-        Log.i("historycancel", UserManage.getInstance(this).getCurrentIdUser() + "");
-        Log.i("historycancel", history.getCancelActivity() + "");
-        Log.i("historycancel", history.gettotal() + "");
-
+        HistorygroupHelper mhistorygroupHelper = new HistorygroupHelper(this);
+        Historygroup historygroup = mhistorygroupHelper.getHistoryGroup(UserManage.getInstance(this).getCurrentIdGroup());
+        historygroup.subaccept(1);
+        historygroup.addcancel(1);
+        historygroup.save(this);
+        Log.i("historycancel", UserManage.getInstance(this).getCurrentIdGroup() + "");
+        Log.i("historycancel", historygroup.getCancelEvent() + "");
+        Log.i("historycancel", historygroup.gettotal() + "");
         Intent i1 = new Intent(EventActivity.this, MainActivity.class);
         // Bundle b1 = new Bundle();
         //b1.putExtra("key", "main");

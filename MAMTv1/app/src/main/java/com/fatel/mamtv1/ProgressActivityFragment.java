@@ -30,11 +30,11 @@ public class ProgressActivityFragment extends Fragment {
     private Handler mHandler = new Handler();
 
     TextView timeFrac,accept,cancel;
-    private int countAccept = 6;
+    //private int countAccept = 6;
     private int cancelPercent = 0;
-    private int countTotal = 10;
+    //private int countTotal = 10;
     private int cirProgressstatus = 0;
-    private int timePerPic = 6;
+    private int timePerPic = 1;
     public static ProgressActivityFragment newInstance() {
         // Required empty public constructor
         ProgressActivityFragment fragment = new ProgressActivityFragment();
@@ -51,8 +51,18 @@ public class ProgressActivityFragment extends Fragment {
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_progress_activity, container, false);
         //cal % of circular progress
-        cirProgressstatus = (countAccept*100)/countTotal;
-        cancelPercent = 100-cirProgressstatus;
+        HistoryHelper mhistoryHelper = new HistoryHelper(getActivity());
+        History history = mhistoryHelper.getHistoryUser(UserManage.getInstance(getActivity()).getCurrentIdUser());
+        if(history.gettotal()==0){
+            cirProgressstatus = 0;
+            cancelPercent = 0;
+            mProgressStatus = 0;
+        }
+        else{
+            cirProgressstatus = (history.getNumberOfAccept()*100)/history.gettotal();
+            cancelPercent = 100-cirProgressstatus;
+            mProgressStatus = ((history.getNumberOfAccept() * timePerPic) * 100) / (history.gettotal() * timePerPic);
+        }
         accept = (TextView) view.findViewById(R.id.acceptPercent);
         cancel = (TextView) view.findViewById(R.id.cancelPercent);
         accept.setText(cirProgressstatus + "%");
@@ -82,15 +92,10 @@ public class ProgressActivityFragment extends Fragment {
         timeFrac = (TextView) view.findViewById(R.id.timeFraction);
 
 
-
-        if (mProgressStatus < 100) {
-            mProgressStatus = ((countAccept * timePerPic) * 100) / (countTotal * timePerPic);
-            //set progress bar in each days
-            timeProgress.setProgress(mProgressStatus);
-            // Show the progress on TextView
-            timeFrac.setText((countAccept*timePerPic)+"/"+(countTotal*timePerPic)+"min");
-        }
-
+        //set progress bar in each days
+        timeProgress.setProgress(mProgressStatus);
+        // Show the progress on TextView
+        timeFrac.setText((history.getNumberOfAccept()*timePerPic)+"/"+(history.gettotal()*timePerPic)+"min");
     return view;
     }
 
