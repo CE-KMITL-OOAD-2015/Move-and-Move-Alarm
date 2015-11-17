@@ -408,7 +408,7 @@ public class User extends Model{
                 return StatusDescription.createProcessStatus(false, "An error has occurred while adding a score log.");
             }
 
-            temp_scoreLogList = null; //clear temp score log list
+            temp_scoreLogList.clear(); //clear temp score log list
         }
 
         return null;

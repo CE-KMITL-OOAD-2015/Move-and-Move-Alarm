@@ -13,10 +13,10 @@ public class Group extends Model{
     private int amountMember = 0;
     private User admin = null;
     private Converter converter = Converter.getInstance();
-    private ArrayList<User> members = null;
-    private ArrayList<User> temp_addedUserList = null; //create temp list to keep temporary added users until next saving model
-    private ArrayList<User> temp_removeUserList = null; //create temp list to keep temporary removed users until next saving model
-    private ArrayList<HashMap<String, Object>> temp_scoreLogList = null; //create temp list to keep temporary score logs until next saving model
+    private ArrayList<User> members;
+    private ArrayList<User> temp_addedUserList; //create temp list to keep temporary added users until next saving model
+    private ArrayList<User> temp_removeUserList; //create temp list to keep temporary removed users until next saving model
+    private ArrayList<HashMap<String, Object>> temp_scoreLogList; //create temp list to keep temporary score logs until next saving model
 
     public Group()
     {
@@ -311,19 +311,19 @@ public class Group extends Model{
 
             id = converter.toInt(temp.get("id")); //set id
             createdDate = (Date) temp.get("createdDate"); //set created date
-            return StatusDescription.createProcessStatus(true);
+            //return StatusDescription.createProcessStatus(true);
         }
 
         HashMap<String, Object> addGroupIDStatus = addGroupIDToUser(); //change group id of each user
-        if(addGroupIDStatus != null) //if an error has occurred while changing group id of each user on the database
+        if(addGroupIDStatus != null && (boolean) addGroupIDStatus.get("status") == false) //if an error has occurred while changing group id of each user on the database
             return addGroupIDStatus; //break saving process and return error description
 
         HashMap<String, Object> removeGroupIDStatus = removeGroupIDFromUser(); //remove group id of each user
-        if(removeGroupIDStatus != null) //if an error has occurred while removing group id of each user on the database
+        if(removeGroupIDStatus != null && (boolean) removeGroupIDStatus.get("status") == false) //if an error has occurred while removing group id of each user on the database
             return removeGroupIDStatus; //break saving process and return error description
 
         HashMap<String, Object> addScoreLogStatus = addScoreLogToDatabase(); //add score log to database
-        if(addScoreLogStatus != null) //if an error has occurred while adding score logs to the database
+        if(addScoreLogStatus != null && (boolean) addScoreLogStatus.get("status") == false) //if an error has occurred while adding score logs to the database
             return addScoreLogStatus; //break saving process and return error description
 
         return StatusDescription.createProcessStatus(modelCollection.save(this)); //if saving process is success
@@ -351,12 +351,15 @@ public class Group extends Model{
             for(User user : temp_addedUserList) {
                 if(modelCollection.manualEditData("user", "groupID='" + id + "'", "id", "=", converter.toString(user.getID()))) {//if updating data on database is success
                     amountMember++; //increase amount of members
-                    temp_addedUserList = null; //clear temp list
+                    members.add(user);
                 }
                 else {
                     System.out.println("An error has occurred while adding a member."); //or database error
                     return StatusDescription.createProcessStatus(false, "An error has occurred while adding a member.");
                 }
+
+                temp_addedUserList.clear(); //clear temp list
+                return StatusDescription.createProcessStatus(true);
             }
         }
 
@@ -369,13 +372,22 @@ public class Group extends Model{
             for(User user : temp_removeUserList) {
                 if(modelCollection.manualEditData("user", "groupID=NULL", "id", "=", "" + user.getID())) {
                     amountMember--;
-                    temp_removeUserList = null; //clear temp list
+
+                    for(User item : members) {
+                        if(item.getID() == user.getID()){
+                            members.remove(item);
+                            break;
+                        }
+                    }
                 }
                 else {
                     System.out.println("An error has occurred while removing a member.");
                     return StatusDescription.createProcessStatus(false, "An error has occurred while removing a member.");
                 }
             }
+
+            temp_removeUserList.clear(); //clear temp list
+            return StatusDescription.createProcessStatus(true);
         }
 
         return null;
@@ -398,7 +410,8 @@ public class Group extends Model{
                 return StatusDescription.createProcessStatus(false, "An error has occurred while adding a score log.");
             }
 
-            temp_scoreLogList = null; //clear temp score log list
+            temp_scoreLogList.clear(); //clear temp score log list
+            return StatusDescription.createProcessStatus(true);
         }
 
         return null;

@@ -18,9 +18,10 @@ public class GroupController {
     public String createGroup(@RequestParam(value = "JSON", required = true, defaultValue = "0")String JSON)
     {
         HashMap<String, Object> data = converter.JSONToHashMap(JSON); //convert JSON string to HashMap format
-        HashMap<String, Object> userData = converter.JSONToHashMap(converter.toString(data.get("admin"))); //convert nested JSON
+        HashMap<String, Object> groupData = converter.JSONToHashMap(converter.toString(data.get("group")));
+        HashMap<String, Object> userData = converter.JSONToHashMap(converter.toString(groupData.get("admin"))); //convert nested JSON
 
-        Group[] groupName_match = Group.where("name", "=", converter.toString(data.get("name"))); //check match group name
+        Group[] groupName_match = Group.where("name", "=", converter.toString(groupData.get("name"))); //check match group name
         if(groupName_match.length > 0) //if this name is already used
             return converter.HashMapToJSON(StatusDescription.createProcessStatus(false, "This group name already exists.")); //send error description to client
 
@@ -29,9 +30,9 @@ public class GroupController {
             return converter.HashMapToJSON(StatusDescription.createProcessStatus(false, "This user does not exist."));
 
         Group group = new Group();
-        group.setName(converter.toString(data.get("name")));
+        group.setName(converter.toString(groupData.get("name")));
         group.setAdmin(user);
-        group.setStatus(converter.toString(data.get("status")));
+        group.setStatus(converter.toString(groupData.get("status")));
         if((boolean) group.save().get("status")) { //if saving process is success
             HashMap<String, Object> temp = StatusDescription.createProcessStatus(true); //create response object
             temp.put("group", group.getGeneralValues()); //put the new group include id and created date
