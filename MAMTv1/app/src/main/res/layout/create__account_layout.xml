@@ -44,7 +44,7 @@
             android:textSize="13sp"
             android:layout_gravity="center_vertical"
             android:background="@drawable/edittext_draw"
-            android:maxLength="12"/>
+            android:maxLength="29"/>
     </LinearLayout>
 
     <LinearLayout
