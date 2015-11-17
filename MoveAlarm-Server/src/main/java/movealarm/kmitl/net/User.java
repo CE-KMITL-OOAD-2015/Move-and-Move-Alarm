@@ -1,6 +1,5 @@
 package movealarm.kmitl.net;
 
-import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -29,7 +28,6 @@ public class User extends Model{
     public User()
     {
         this.tableName = "user"; //table name of user data in the database
-        this.addRequiredField("password");
         temp_scoreLogList = new ArrayList<>();
         temp_activityLogList = new ArrayList<>();
     }
@@ -410,7 +408,7 @@ public class User extends Model{
                 return StatusDescription.createProcessStatus(false, "An error has occurred while adding a score log.");
             }
 
-            temp_scoreLogList = null; //clear temp score log list
+            temp_scoreLogList.clear(); //clear temp score log list
         }
 
         return null;

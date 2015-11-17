@@ -1,6 +1,7 @@
 package movealarm.kmitl.net;
 
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RestController;
 
 import java.text.SimpleDateFormat;
 import java.util.*;
@@ -8,27 +9,23 @@ import java.util.*;
 /**
  * Created by oat90 on 11/15/2015.
  */
+@RestController
 public class EventController {
     private Event dailyEvent = null;
-
-    public EventController()
-    {
-
-    }
+    private Converter converter = Converter.getInstance();
 
     @RequestMapping("/event/getEvent")
     public String genEvent()
     {
         Event event = new Event();
-        Converter converter = Converter.getInstance();
         ArrayList<Posture> allPosture = new ArrayList<>(Arrays.asList(Posture.all()));
         ArrayList<Posture> postures = new ArrayList<>();
-        for(int i = 0;i < 5;i++) {
+        for(int i = 0;i < 5;i++) { //random and pick up 5 posture
             int random = (int)(Math.random() * allPosture.size());
             postures.add(allPosture.get(random));
             allPosture.remove(random);
         }
-        Calendar calendar = Calendar.getInstance();
+        Calendar calendar = Calendar.getInstance(); //random time
         calendar.set(Calendar.HOUR_OF_DAY,(int)(Math.random()*24));
         calendar.set(Calendar.MINUTE,(int)(Math.random()*59));
         calendar.set(Calendar.SECOND,0);

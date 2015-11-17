@@ -313,10 +313,55 @@ public class UserController {
         if(user == null || !currentPassword.equals(password)) //if user does not exist or password missmatch
             return converter.HashMapToJSON(StatusDescription.createProcessStatus(false, "User does not exist or password is incorrect."));
 
+        Group group = null;
+        try {
+            HashMap<String, Object> userRawData = databaseInquirer.where("user", "id", "=", "" + user.getID()).get(0);
+            group = Group.find(converter.toInt(userRawData.get("groupID")));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
         HashMap<String, Object> JSON = StatusDescription.createProcessStatus(true); //create response object and put the data
         JSON.put("user", user.getGeneralValues());
 
+        if(group != null)
+            JSON.put("group", group.getGeneralValues());
+
         return converter.HashMapToJSON(JSON); //convert to JSON string
+    }
+
+    @RequestMapping("/user/loginFacebook")
+    public String loginFacebook(@RequestParam(value = "facebookID", required = true, defaultValue = "0")String facebookID,
+                                @RequestParam(value = "facebookFirstName", required = true, defaultValue = "0")String facebookFirstName)
+    {
+        User user;
+        HashMap<String, Object> JSON;
+        try {
+            user = User.where("facebookID","=",facebookID)[0];
+            user.setFacebookFirstName(facebookFirstName);
+            JSON = StatusDescription.createProcessStatus(true);
+        }
+        catch (Exception e) {
+            user = new User();
+            user.setFacebookID(facebookID);
+            user.setFacebookFirstName(facebookFirstName);
+            JSON = user.save();
+        }
+
+        Group group = null;
+        try {
+            HashMap<String, Object> userRawData = databaseInquirer.where("user", "facebookID", "=", "" + user.getFacebookID()).get(0);
+            group = Group.find(converter.toInt(userRawData.get("groupID")));
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        if(group != null)
+            JSON.put("group", group.getGeneralValues());
+
+        JSON.put("user",user.getGeneralValues());
+
+        return converter.HashMapToJSON(JSON);
     }
 
     public void changeDatabaseInquirer(DatabaseInterface databaseInquirer)
