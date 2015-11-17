@@ -6,13 +6,24 @@ import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.TextView;
 
 public class GroupMainActivity extends AppCompatActivity {
 
+    TextView adminName;
+    TextView groupName;
+    TextView amountMember;
+    TextView groupCode;
+    TextView getEvent;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_group_main);
+        groupCode = (TextView)findViewById(R.id.groupcode);
+        adminName = (TextView)findViewById(R.id.adminname);
+        groupName = (TextView)findViewById(R.id.groupname);
+        amountMember = (TextView)findViewById(R.id.amount);
+        getEvent = (TextView)findViewById(R.id.getEvent);
     }
 
     @Override

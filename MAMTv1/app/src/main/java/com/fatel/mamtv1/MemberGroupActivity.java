@@ -4,13 +4,34 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.widget.TextView;
 
 public class MemberGroupActivity extends AppCompatActivity {
-
+    TextView user1;
+    TextView user2;
+    TextView user3;
+    TextView user4;
+    TextView user5;
+    TextView user6;
+    TextView user7;
+    TextView user8;
+    TextView user9;
+    TextView user10;
+   
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_member_group);
+        user1 = (TextView)findViewById(R.id.textView22);
+        user2 = (TextView)findViewById(R.id.textView32);
+        user3 = (TextView)findViewById(R.id.textView42);
+        user4 = (TextView)findViewById(R.id.textView52);
+        user5 = (TextView)findViewById(R.id.textView62);
+        user6 = (TextView)findViewById(R.id.textView72);
+        user7 = (TextView)findViewById(R.id.textView82);
+        user8 = (TextView)findViewById(R.id.textView92);
+        user9 = (TextView)findViewById(R.id.textView102);
+        user10 = (TextView)findViewById(R.id.textView112);
     }
 
     @Override
