@@ -48,7 +48,7 @@
                 <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
         </receiver>
-
+        <receiver android:name=".EventReceiver" />
         <activity
             android:name=".Intro_Activity"
             android:label="@string/title_activity_intro_"
