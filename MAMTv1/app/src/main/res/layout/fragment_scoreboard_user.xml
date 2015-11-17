@@ -3,9 +3,50 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.fatel.mamtv1.ScoreboardUserFragment">
+    tools:context="com.fatel.mamtv1.ScoreboardUserFragment"
+    android:background="@drawable/scoreboardbg">
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/userscoreblk"
+        android:layout_marginTop="70dp"
+        android:orientation="horizontal"
+        android:layout_gravity="center">
+        <TextView
+            android:id="@+id/userscore"
+            android:text="User"
+            android:textSize="25sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:layout_marginLeft="20dp"
+            android:textSize="25sp"
+            android:id="@+id/scoreuser"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="00"/>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_gravity="center">
+        <TextView
+            android:text="Ranking"
+            android:textSize="25sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/userdegree"
+            android:layout_marginLeft="20dp"
+            android:text="00"
+            android:textSize="25sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
+
 <TableLayout
-    android:layout_marginTop="120dp"
+    android:layout_marginTop="30dp"
     android:id="@+id/table"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
