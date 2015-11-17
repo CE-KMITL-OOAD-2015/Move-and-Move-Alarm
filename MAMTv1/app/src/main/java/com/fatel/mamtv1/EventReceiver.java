@@ -1,11 +1,17 @@
 package com.fatel.mamtv1;
 
 import android.app.AlarmManager;
+import android.app.Notification;
+import android.app.NotificationManager;
 import android.app.PendingIntent;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
+import android.media.RingtoneManager;
+import android.net.Uri;
 import android.os.Bundle;
+import android.os.PowerManager;
+import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 import android.widget.Toast;
 
@@ -30,11 +36,28 @@ public class EventReceiver extends BroadcastReceiver {
         else{
             Log.i("tempevent",temp);
             if(temp==null||temp.equalsIgnoreCase("event")){
-//                Intent i = new Intent(context, actAlarm.class);
-//                Log.i("AlarmReceiver", "CanJump");
-//                i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-//                context.startActivity(i);
-//                Toast.makeText(context, "I'm running", Toast.LENGTH_SHORT).show();
+                Intent activityIntent = new Intent(context,EventactAlarm.class);
+                activityIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+
+                PendingIntent pendingIntent = PendingIntent.getActivity(context,0,activityIntent,PendingIntent.FLAG_ONE_SHOT);
+                Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+
+                Notification notification = new NotificationCompat.Builder(context)
+                        .setSmallIcon(R.drawable.duck_yellow)
+                        .setContentTitle("Move Alarm Notification")  //title
+                        .setContentText("Get Event")    //detail
+                                //.setPriority(Notification.PRIORITY_HIGH)
+                        .setTicker("Get Event")
+                        .setSound(defaultSoundUri)
+                        .setAutoCancel(true)
+                        .setContentIntent(pendingIntent)
+                        .build();
+
+                NotificationManager notificationManager = (NotificationManager)context.getSystemService(context.NOTIFICATION_SERVICE);
+                notificationManager.notify(1000, notification);
+
+                PowerManager.WakeLock screenOn = ((PowerManager)context.getSystemService(context.POWER_SERVICE)).newWakeLock(PowerManager.SCREEN_BRIGHT_WAKE_LOCK | PowerManager.ACQUIRE_CAUSES_WAKEUP,"example" );
+                screenOn.acquire();
                 if (manager != null) {
                     manager.cancel(pendingIntent);
                 }

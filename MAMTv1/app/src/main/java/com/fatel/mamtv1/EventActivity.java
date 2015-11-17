@@ -1,33 +1,24 @@
 package com.fatel.mamtv1;
 
-import android.app.AlarmManager;
-import android.app.PendingIntent;
 import android.content.Context;
-
 import android.content.Intent;
-
 import android.graphics.drawable.AnimationDrawable;
 import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuItem;
+import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
-import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import java.util.ArrayList;
 import java.util.concurrent.TimeUnit;
-import android.widget.ImageView;
 
-import android.content.ContentValues;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
-
-
-
-
-public class Activity extends AppCompatActivity {
+public class EventActivity extends AppCompatActivity {
 
     TextView txtR;
     TextView txtA;
@@ -134,8 +125,8 @@ public class Activity extends AppCompatActivity {
 
                 //history
                 //go to main
-                Intent i1 = new Intent(Activity.this, PreShareActivity.class);
-               // Bundle b1 = new Bundle();
+                Intent i1 = new Intent(EventActivity.this, MainActivity.class);
+                // Bundle b1 = new Bundle();
                 //b1.putExtra("key", "main");
                 //i1.putExtra("key", "main");
                 startActivity(i1);
@@ -200,7 +191,7 @@ public class Activity extends AppCompatActivity {
         Log.i("historycancel", history.getCancelActivity() + "");
         Log.i("historycancel", history.gettotal() + "");
 
-        Intent i1 = new Intent(Activity.this, MainActivity.class);
+        Intent i1 = new Intent(EventActivity.this, MainActivity.class);
         // Bundle b1 = new Bundle();
         //b1.putExtra("key", "main");
         //i1.putExtra("key", "main");
@@ -215,6 +206,6 @@ public class Activity extends AppCompatActivity {
         //AlarmManager manager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
         //int interval = 60*1000*1;
         //PendingIntent pendingIntent = PendingIntent.getBroadcast(Activity.this, 0, i, 0);
-       // manager.setExact(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + interval, pendingIntent);
+        // manager.setExact(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + interval, pendingIntent);
     }
 }

@@ -49,6 +49,7 @@
             </intent-filter>
         </receiver>
         <receiver android:name=".EventReceiver" />
+
         <activity
             android:name=".Intro_Activity"
             android:label="@string/title_activity_intro_"
@@ -122,6 +123,14 @@
         <activity
             android:name=".ProgressActivity"
             android:label="@string/title_activity_progress" >
+        </activity>
+        <activity
+            android:name=".EventActivity"
+            android:label="@string/title_activity_event" >
+        </activity>
+        <activity
+            android:name=".EventactAlarm"
+            android:label="@string/title_activity_eventact_alarm" >
         </activity>
     </application>
 
