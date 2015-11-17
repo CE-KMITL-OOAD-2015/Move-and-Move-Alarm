@@ -67,6 +67,9 @@ public class UserManage {
 
                         if((boolean) data.get("status")) {
                             HashMap<String, Object> userData = converter.JSONToHashMap(converter.toString(data.get("user")));
+                            HashMap<String, Object> groupData = converter.JSONToHashMap(converter.toString(data.get("group")));
+
+                            Cache.getInstance().putData("groupData", groupData);
                             Log.i("volley", userData.toString()); //throw the message to the console.
                             Log.i("User", "login");
                             int idUser = converter.toInt(userData.get("id"));
@@ -79,7 +82,6 @@ public class UserManage {
                             else{
                                 User user = new User(idUser, username);
                                 UserManage.getInstance(context).setCurrentUser(user);
-
                             }
                             UserManage.getInstance(context).getCurrentUser().setFirstName(converter.toString(userData.get("firstName")));
                             UserManage.getInstance(context).getCurrentUser().setLastName(converter.toString(userData.get("lastName")));
@@ -91,12 +93,15 @@ public class UserManage {
                             UserManage.getInstance(context).getCurrentUser().setFacebookID(converter.toString(userData.get("facebookID")));
                             UserManage.getInstance(context).getCurrentUser().setFacebookFirstName(converter.toString(userData.get("facebookFirstName")));
                             UserManage.getInstance(context).getCurrentUser().setFacebookLastName(converter.toString(userData.get("facebookLastName ")));
+                            UserManage.getInstance(context).getCurrentUser().setIdGroup(converter.toInt(groupData.get("id")));
                             UserManage.getInstance(context).getCurrentUser().setLogin(1);
                             UserManage.getInstance(context).getCurrentUser().save(context);
 
                             Toast toast = Toast.makeText(context, "Hello "+username, Toast.LENGTH_SHORT);
                             toast.show();
                             context.startActivity(new Intent(context, MainActivity.class));
+                            if(Login_Activity.instance != null)
+                                Login_Activity.instance.finish();
                         }
                         else {
                             Toast toast = Toast.makeText(context, converter.toString(data.get("description")), Toast.LENGTH_SHORT);
@@ -143,6 +148,9 @@ public class UserManage {
 
                         if((boolean) data.get("status")) {
                             HashMap<String, Object> userData = converter.JSONToHashMap(converter.toString(data.get("user")));
+                            HashMap<String, Object> groupData = converter.JSONToHashMap(converter.toString(data.get("group")));
+
+                            Cache.getInstance().putData("groupData", groupData);
                             Log.i("volley", userData.toString()); //throw the message to the console.
                             Log.i("User", "loginFB");
                             int idUser = converter.toInt(userData.get("id"));
@@ -174,6 +182,8 @@ public class UserManage {
                             Toast toast = Toast.makeText(context, "Hello "+facebookFirstName, Toast.LENGTH_SHORT);
                             toast.show();
                             context.startActivity(new Intent(context, MainActivity.class));
+                            if(Login_Activity.instance != null)
+                                Login_Activity.instance.finish();
                         }
                         else {
                             Toast toast = Toast.makeText(context, converter.toString(data.get("description")), Toast.LENGTH_SHORT);

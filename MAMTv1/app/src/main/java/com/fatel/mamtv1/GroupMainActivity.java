@@ -17,6 +17,7 @@ public class GroupMainActivity extends AppCompatActivity {
     TextView groupName;
     TextView amountMember;
     TextView groupCode;
+    TextView groupScore;
     TextView getEvent;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -26,6 +27,7 @@ public class GroupMainActivity extends AppCompatActivity {
         adminName = (TextView)findViewById(R.id.adminname);
         groupName = (TextView)findViewById(R.id.groupname);
         amountMember = (TextView)findViewById(R.id.amount);
+        groupScore = (TextView)findViewById(R.id.score);
         getEvent = (TextView)findViewById(R.id.getEvent);
 
         Log.i("Group", "start group fragment");
@@ -44,6 +46,7 @@ public class GroupMainActivity extends AppCompatActivity {
             groupName.setText(converter.toString(groupData.get("name")));
             adminName.setText(converter.toString(userData.get("userName")));
             amountMember.setText("" + converter.toInt(groupData.get("amountMember")));
+            groupScore.setText("" + converter.toInt(groupData.get("score")));
         } catch (Exception e) {
             Log.i("Group", e.toString());
         }

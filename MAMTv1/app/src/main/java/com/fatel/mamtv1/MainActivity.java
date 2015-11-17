@@ -192,7 +192,7 @@ public class MainActivity extends AppCompatActivity {
         // position
         Fragment fragment = null;
 
-        Class fragmentClass;
+        Class fragmentClass = null;
         switch (menuItem.getItemId()) {
             case R.id.nav_home_fragment:
                 fragmentClass = MainFragment.class;
@@ -216,12 +216,11 @@ public class MainActivity extends AppCompatActivity {
                 fragmentClass = AboutFragment.class;
                 break;
             case R.id.nav_group_fragment:
-
-                if(true/*ไม่มีกลุ่ม*/)
-                fragmentClass = GroupFragment.class;
+                User currentUser = UserManage.getInstance(this).getCurrentUser();
+                if(currentUser.getIdGroup() == 0)
+                    fragmentClass = GroupFragment.class;
                 else{//มีกลุ่ม
-                    Intent intent3 = new Intent(this,GroupMainActivity.class);
-                    startActivity(intent3);
+                    requestGroupInfo();
                 }
                 break;
 
@@ -253,6 +252,7 @@ public class MainActivity extends AppCompatActivity {
                 mDrawerLayout.closeDrawers();
                 Intent intent = new Intent(this, Intro_Activity.class);
                 startActivity(intent);
+                finish();
                 break;
 //            case R.id.nav_third_fragment:
 //                fragmentClass = ThirdFragment.class;
@@ -363,5 +363,45 @@ public class MainActivity extends AppCompatActivity {
     public void makeToast(String text)
     {
         Toast.makeText(this, text, Toast.LENGTH_SHORT).show();
+    }
+
+    public void requestGroupInfo()
+    {
+        String url = "http://203.151.92.196:8080/group/findByID";
+        StringRequest findGroupRequest = new StringRequest(Request.Method.POST, url, //create new string request with POST method
+                new Response.Listener<String>() { //create new listener to traces the data
+                    @Override
+                    public void onResponse(String response) { //when listener is activated
+                        Log.i("volley", response);
+                        Converter converter = Converter.getInstance();
+                        Cache cache = Cache.getInstance();
+                        HashMap<String, Object> data = converter.JSONToHashMap(response);
+                        if((boolean) data.get("status")) {
+                            HashMap<String, Object> groupData = converter.JSONToHashMap(converter.toString(data.get("group")));
+                            cache.putData("groupData", groupData);
+                            Intent intent3 = new Intent(MainActivity.this, GroupMainActivity.class);
+                            startActivity(intent3);
+                        }
+                        else {
+                            makeToast(converter.toString(data.get("description")));
+                        }
+                    }
+                }, new Response.ErrorListener() { //create error listener to trace an error if download process fail
+            @Override
+            public void onErrorResponse(VolleyError volleyError) { //when error listener is activated
+                Log.i("volley", volleyError.toString());
+                makeToast("Cannot connect to server. Please check the Internet setting.");
+            }
+        }) { //define POST parameters
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> map = new HashMap<String, String>(); //create map to keep variables
+                map.put("id", "" + UserManage.getInstance(MainActivity.this).getCurrentUser().getIdGroup());
+
+                return map;
+            }
+        };
+
+        HttpConnector.getInstance((Context) Cache.getInstance().getData("MainActivityContext")).addToRequestQueue(findGroupRequest);
     }
 }

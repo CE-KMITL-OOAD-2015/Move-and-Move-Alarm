@@ -114,10 +114,32 @@
             android:onClick="linkMember"/>
     </LinearLayout>
 
+    <LinearLayout
+        android:id="@+id/ScoreL"
+        android:layout_marginTop="20dp"
+        android:layout_below="@id/MemberL"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Score :  "
+            android:textSize="25sp"
+            android:textColor="#000000"/>
+        <TextView
+            android:id="@+id/score"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="25sp"
+            android:textColor="#000000"
+            android:text="0"
+            />
+
+    </LinearLayout>
 
     <TextView
         android:layout_marginTop="20dp"
-        android:layout_below="@id/MemberL"
+        android:layout_below="@id/ScoreL"
         android:id="@+id/Event"
         android:text="Event"
         android:layout_width="wrap_content"
