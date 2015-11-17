@@ -1,6 +1,10 @@
 package com.fatel.mamtv1;
 
+import android.support.v4.app.Fragment;
 import android.content.Context;
+import android.content.Intent;
+import android.support.v4.app.FragmentManager;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
@@ -61,6 +65,7 @@ public class CreateGroupActivity extends AppCompatActivity {
         else{
             //ตรงนี้
             String url = "http://203.151.92.196:8080/group/createGroup";
+            final User user = UserManage.getInstance(CreateGroupActivity.this).getCurrentUser();
 
             StringRequest createGroupRequest = new StringRequest(Request.Method.POST, url, //create new string request with POST method
                     new Response.Listener<String>() { //create new listener to traces the data
@@ -72,8 +77,13 @@ public class CreateGroupActivity extends AppCompatActivity {
                             if((boolean) data.get("status")) {
                                 HashMap<String, Object> groupData = converter.JSONToHashMap(converter.toString(data.get("group")));
                                 String name = converter.toString(groupData.get("name"));
-                                int id = converter.toInt(groupData.get("id"));
+                                int groupID = converter.toInt(groupData.get("id"));
                                 int score = converter.toInt(groupData.get("score"));
+                                user.setIdGroup(groupID);
+                                user.save(CreateGroupActivity.this);
+                                Cache.getInstance().putData("groupData", groupData);
+
+                                startActivity(new Intent(CreateGroupActivity.this, GroupMainActivity.class));
                             }
                             else {
                                 makeToast(converter.toString(data.get("description")));
@@ -88,7 +98,6 @@ public class CreateGroupActivity extends AppCompatActivity {
                 @Override
                 protected Map<String, String> getParams() {
                     Map<String, String> map = new HashMap<String, String>(); //create map to keep variables
-                    User user = UserManage.getInstance(CreateGroupActivity.this).getCurrentUser();
                     HashMap<String, Object> JSON = new HashMap<>();
                     HashMap<String, Object> userData = user.getGeneralValues();
                     HashMap<String, Object> groupData = new HashMap<>();
