@@ -1,2 +1,1 @@
-include ':app:libraries:CircularProgressBar'
-include ':app:libraries:volley'
+include ':app:libraries:volley', ':app:libraries:CircularProgressBar', ':app', ':app:libraries'
