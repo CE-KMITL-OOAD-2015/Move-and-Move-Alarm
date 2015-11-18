@@ -34,6 +34,7 @@ public class GroupController {
         group.setAdmin(user);
         group.setStatus(converter.toString(groupData.get("status")));
         if((boolean) group.save().get("status")) { //if saving process is success
+
             HashMap<String, Object> temp = StatusDescription.createProcessStatus(true); //create response object
             temp.put("group", group.getGeneralValues()); //put the new group include id and created date
             return converter.HashMapToJSON(temp); //return to client
@@ -47,7 +48,7 @@ public class GroupController {
     {
         Group group = Group.find(id);
         if(group == null) //if group does not exist
-            return converter.HashMapToJSON(StatusDescription.createProcessStatus(false, "Not found the required user.")); //return error description
+            return converter.HashMapToJSON(StatusDescription.createProcessStatus(false, "Not found the required group.")); //return error description
 
         HashMap<String, Object> JSON = StatusDescription.createProcessStatus(true); //create response object
         JSON.put("group", group.getGeneralValues()); //attach group to JSON
@@ -61,7 +62,7 @@ public class GroupController {
     {
         Group[] groups = Group.where(columnName, operator, value);
         if(groups == null) //if cannot find any groups
-            return converter.HashMapToJSON(StatusDescription.createProcessStatus(false, "Not found the required users.")); //return result
+            return converter.HashMapToJSON(StatusDescription.createProcessStatus(false, "Not found the required groups.")); //return result
 
         HashMap<String, Object>[] tempMap = converter.ModelArrayToHashMapArray(groups); //convert array of group to array of HashMap
         HashMap<String, Object> JSON = StatusDescription.createProcessStatus(true);
