@@ -126,7 +126,10 @@ public class MainActivity extends AppCompatActivity {
         if(history==null){
             history = new History(UserManage.getInstance(this).getCurrentIdUser());
             history.save(this);
-            //
+            requestUserProgress();
+        }
+        else{
+            //ส่ง
         }
 //
         //historygroup
@@ -134,6 +137,10 @@ public class MainActivity extends AppCompatActivity {
         if(historygroup==null&&UserManage.getInstance(this).getCurrentIdGroup()!=0){
             historygroup = new Historygroup(UserManage.getInstance(this).getCurrentIdGroup());
             historygroup.save(this);
+            //รับ
+        }
+        else if(UserManage.getInstance(this).getCurrentIdGroup()!=0){
+            //ส่ง
         }
     }
 
@@ -515,6 +522,7 @@ public class MainActivity extends AppCompatActivity {
 
         HttpConnector.getInstance(this).addToRequestQueue(eventRequest);
     }
+
     public void editname(View view){
         final EditText name = new EditText(this);
         final EditText surname = new EditText(this);
@@ -578,5 +586,92 @@ public class MainActivity extends AppCompatActivity {
     }
     private boolean isEmpty(EditText myeditText) {
         return myeditText.getText().toString().trim().length() == 0;
+
+    public void requestUserProgress()
+    {
+        String url = HttpConnector.URL + "userProgress/createLog";
+        StringRequest progressRequest = new StringRequest(Request.Method.POST, url, //create new string request with POST method
+                new Response.Listener<String>() { //create new listener to traces the data
+                    @Override
+                    public void onResponse(String response) { //when listener is activated
+                        Log.i("volley", response);
+                        Converter converter = Converter.getInstance();
+                        HashMap<String, Object> data = converter.JSONToHashMap(response);
+                        if((boolean) data.get("status")) {
+                            HashMap<String, Object> progress = (HashMap<String, Object>) data.get("progress");
+                            HashMap<String, Object> userData = (HashMap<String, Object>) progress.get("user");
+                            History history = new History(UserManage.getInstance(MainActivity.this).getCurrentIdUser());
+                            history.setCancelActivity(converter.toInt(progress.get("cancelActivity")));
+                            history.setNumberOfAccept(converter.toInt(progress.get("numberOfAccept")));
+                            history.setIdUser(converter.toInt(userData.get("id")));
+                            history.save(MainActivity.this);
+                            makeToast("sync process completed.");
+                        }
+                        else {
+                            makeToast(converter.toString(data.get("description")));
+                        }
+                    }
+                }, new Response.ErrorListener() { //create error listener to trace an error if download process fail
+            @Override
+            public void onErrorResponse(VolleyError volleyError) { //when error listener is activated
+                Log.i("volley", volleyError.toString());
+                makeToast("Cannot connect to server. Please check the Internet setting.");
+            }
+        }) { //define POST parameters
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> map = new HashMap<String, String>(); //create map to keep variables
+                HashMap<String, Object> JSON = new HashMap<>();
+                JSON.put("user", UserManage.getInstance(MainActivity.this).getCurrentUser().getGeneralValues());
+                map.put("JSON", Converter.getInstance().HashMapToJSON(JSON));
+                return map;
+            }
+        };
+
+        HttpConnector.getInstance(this).addToRequestQueue(progressRequest);
+    }
+
+    public void requestSendUserProgress()
+    {
+        String url = HttpConnector.URL + "userProgress/createLog";
+        StringRequest progressRequest = new StringRequest(Request.Method.POST, url, //create new string request with POST method
+                new Response.Listener<String>() { //create new listener to traces the data
+                    @Override
+                    public void onResponse(String response) { //when listener is activated
+                        Log.i("volley", response);
+                        Converter converter = Converter.getInstance();
+                        HashMap<String, Object> data = converter.JSONToHashMap(response);
+                        if((boolean) data.get("status")) {
+                            HashMap<String, Object> progress = (HashMap<String, Object>) data.get("progress");
+                            HashMap<String, Object> userData = (HashMap<String, Object>) progress.get("user");
+                            History history = new History(UserManage.getInstance(MainActivity.this).getCurrentIdUser());
+                            history.setCancelActivity(converter.toInt(progress.get("cancelActivity")));
+                            history.setNumberOfAccept(converter.toInt(progress.get("numberOfAccept")));
+                            history.setIdUser(converter.toInt(userData.get("id")));
+                            history.save(MainActivity.this);
+                            makeToast("sync process completed.");
+                        }
+                        else {
+                            makeToast(converter.toString(data.get("description")));
+                        }
+                    }
+                }, new Response.ErrorListener() { //create error listener to trace an error if download process fail
+            @Override
+            public void onErrorResponse(VolleyError volleyError) { //when error listener is activated
+                Log.i("volley", volleyError.toString());
+                makeToast("Cannot connect to server. Please check the Internet setting.");
+            }
+        }) { //define POST parameters
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> map = new HashMap<String, String>(); //create map to keep variables
+                HashMap<String, Object> JSON = new HashMap<>();
+                JSON.put("user", UserManage.getInstance(MainActivity.this).getCurrentUser().getGeneralValues());
+                map.put("JSON", Converter.getInstance().HashMapToJSON(JSON));
+                return map;
+            }
+        };
+
+        HttpConnector.getInstance(this).addToRequestQueue(progressRequest);
     }
 }

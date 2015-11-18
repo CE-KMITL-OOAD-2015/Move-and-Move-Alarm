@@ -191,7 +191,7 @@ public class Activity extends AppCompatActivity {
             }
         };
 
-        HttpConnector.getInstance((Context) Cache.getInstance().getData("MainActivityContext")).addToRequestQueue(eventRequest);
+        HttpConnector.getInstance(this).addToRequestQueue(eventRequest);
     }
 
     public void makeToast(String text)

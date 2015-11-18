@@ -14,7 +14,7 @@
         <TextView
             android:id="@+id/gc"
             android:text="Group Code : "
-            android:layout_width="wrap_content"
+            android:layout_width="150dp"
             android:layout_height="wrap_content"
             android:textSize="20sp"
             android:textColor="#f5ab35"/>
@@ -38,7 +38,7 @@
         <TextView
             android:id="@+id/gn"
             android:text="Group Name : "
-            android:layout_width="wrap_content"
+            android:layout_width="150dp"
             android:layout_height="wrap_content"
             android:textSize="20sp"
             android:textColor="#f5ab35"/>
@@ -59,7 +59,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="150dp"
             android:layout_height="wrap_content"
             android:text="Admin :  "
             android:textSize="20sp"
@@ -82,7 +82,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="150dp"
             android:layout_height="wrap_content"
             android:textSize="20sp"
             android:textColor="#f5ab35"
@@ -108,7 +108,7 @@
             android:text="10"/>
         <Button
             android:layout_marginLeft="10dp"
-            android:layout_width="60dp"
+            android:layout_width="85dp"
             android:layout_height="25dp"
 
             android:background="@drawable/selectormem"
@@ -122,7 +122,7 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
         <TextView
-            android:layout_width="wrap_content"
+            android:layout_width="150dp"
             android:layout_height="wrap_content"
             android:text="Score :  "
             android:textSize="20sp"
@@ -142,21 +142,23 @@
         android:layout_marginTop="20dp"
         android:layout_below="@id/ScoreL"
         android:id="@+id/Event"
-        android:text="Event"
-        android:layout_width="wrap_content"
+        android:text="Event time : "
+        android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:textSize="20sp"
         android:textColor="#f5ab35"/>
     <TextView
         android:id="@+id/getEvent"
+        android:layout_marginTop="20dp"
         android:text="Unknown"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="20sp"
         android:textColor="#f5ab35"
-        android:layout_alignTop="@+id/Event"
-        android:layout_toRightOf="@+id/ScoreL"
-        android:layout_toEndOf="@+id/ScoreL" />
+        android:layout_below="@id/ScoreL"
+        android:layout_toRightOf="@id/Event"
+        android:layout_toEndOf="@id/Event"
+         />
 
     <ImageView
         android:layout_marginTop="20dp"
