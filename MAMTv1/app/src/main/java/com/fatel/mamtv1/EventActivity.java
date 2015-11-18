@@ -3,6 +3,7 @@ package com.fatel.mamtv1;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.AnimationDrawable;
+import android.media.Image;
 import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -39,7 +40,7 @@ public class EventActivity extends AppCompatActivity {
     AnimationDrawable frameAnimation;
     int count=0;
     //int[] imageId = new int[] {-1,-1,-1,-1};
-    ArrayList<Image> img ;
+    ArrayList<Posture> img ;
     int exerciseImg;
     String exerciseDes;
 
@@ -50,7 +51,7 @@ public class EventActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         Log.i("Activity", "Can go");
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_event);
+        setContentView(R.layout.activity);
         final Window win= getWindow();
         win.addFlags(WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED | WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD);
         win.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON | WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON);
@@ -61,19 +62,16 @@ public class EventActivity extends AppCompatActivity {
         txtDes=(TextView) findViewById(R.id.des);
         imgView=(ImageView) findViewById(R.id.img);
         ActivityHandle activityHandle=new ActivityHandle();
-
         context=getApplicationContext();
-        if(ImageCollection.size()==0){
-            ImageCollection.initial(context);
-        }
+        PostureCollection postureCollection= PostureCollection.getInstance(this);
 
         Log.i("Activity","can go +1");
-        img = ImageCollection.getImageById(activityHandle.getImageId());
+        img = postureCollection.getPosture(activityHandle.getImageId());
         Log.i("Activity","can go +1"+img);
         Log.i("Activity","can go +2");
         exerciseImg=(img.get(count)).getImage();
         Log.i("Activity",""+(img.get(count)).getImage());
-        Log.i("Activity","can go +3");
+        Log.i("Activity","can go +3 id:"+img.get(count));
         exerciseDes=(img.get(count)).getDescription();
         Log.i("Activity",""+(img.get(count)).getDescription());
         Log.i("Activity","can go +4");

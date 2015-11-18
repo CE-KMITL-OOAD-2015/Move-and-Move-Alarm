@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- From: file:/E:/funh/Move-and-Move-Alarm/MAMTv1/app/libraries/CircularProgressBar/src/main/res/values/colors.xml -->
+    <!-- From: file:/D:/workooad/Move2/Move-and-Move-Alarm/MAMTv1/app/libraries/CircularProgressBar/src/main/res/values/colors.xml -->
     <eat-comment/>
     <color name="circular_progress_default_background">#787878</color>
     <color name="circular_progress_default_progress">#bada55</color>
     <color name="circular_progress_default_subtitle">#D1D1D1</color>
     <color name="circular_progress_default_title">#bada55</color>
     <declare-styleable name="CircularProgressBar"><attr format="boolean" name="cpb_hasShadow"/><attr format="string" name="cpb_progressColor"/><attr format="string" name="cpb_backgroundColor"/><attr format="string" name="cpb_title"/><attr format="string" name="cpb_titleColor"/><attr format="string" name="cpb_subtitle"/><attr format="string" name="cpb_subtitleColor"/><attr format="integer" name="cpb_strokeWidth"/></declare-styleable>
-    <!-- From: file:/E:/funh/Move-and-Move-Alarm/MAMTv1/app/libraries/CircularProgressBar/src/main/res/values/styles.xml -->
+    <!-- From: file:/D:/workooad/Move2/Move-and-Move-Alarm/MAMTv1/app/libraries/CircularProgressBar/src/main/res/values/styles.xml -->
     <eat-comment/>
     <style name="Widget"/>
     <style name="Widget.ProgressBar.CircularProgressBar" parent="Widget">
