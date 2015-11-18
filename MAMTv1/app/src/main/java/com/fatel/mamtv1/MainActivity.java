@@ -81,6 +81,7 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        requestGroupInfo();
         Cache.getInstance().putData("MainActivityContext", this);
         Cache.getInstance().putData("MainActivityActivity",this);
         profilepic = (CircleImageView) findViewById(R.id.profile_image);
@@ -250,7 +251,7 @@ public class MainActivity extends AppCompatActivity {
                 if(currentUser.getIdGroup() == 0)
                     fragmentClass = GroupFragment.class;
                 else{//มีกลุ่ม
-                    requestGroupInfo();
+                    requestGroupInfo(GroupMainActivity.class);
                 }
                 break;
 
@@ -427,8 +428,9 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-    public void requestGroupInfo()
+    public void requestGroupInfo(Class nextActivity)
     {
+        final Class nxtActivity = nextActivity;
         String url = "http://203.151.92.196:8080/group/findByID";
         StringRequest findGroupRequest = new StringRequest(Request.Method.POST, url, //create new string request with POST method
                 new Response.Listener<String>() { //create new listener to traces the data
@@ -441,7 +443,8 @@ public class MainActivity extends AppCompatActivity {
                         if((boolean) data.get("status")) {
                             HashMap<String, Object> groupData = converter.JSONToHashMap(converter.toString(data.get("group")));
                             cache.putData("groupData", groupData);
-                            Intent intent3 = new Intent(MainActivity.this, GroupMainActivity.class);
+                            Intent intent3 = new Intent(MainActivity.this, nxtActivity);
+                            Log.i("will it crash?", "not crash");
                             startActivity(intent3);
                         }
                         else {
@@ -464,12 +467,51 @@ public class MainActivity extends AppCompatActivity {
             }
         };
 
-        HttpConnector.getInstance((Context) Cache.getInstance().getData("MainActivityContext")).addToRequestQueue(findGroupRequest);
+        HttpConnector.getInstance(this).addToRequestQueue(findGroupRequest);
+    }
+
+    public void requestGroupInfo()
+    {
+        String url = "http://203.151.92.196:8080/group/findByID";
+        StringRequest findGroupRequest = new StringRequest(Request.Method.POST, url, //create new string request with POST method
+                new Response.Listener<String>() { //create new listener to traces the data
+                    @Override
+                    public void onResponse(String response) { //when listener is activated
+                        Log.i("volley", response);
+                        Converter converter = Converter.getInstance();
+                        Cache cache = Cache.getInstance();
+                        HashMap<String, Object> data = converter.JSONToHashMap(response);
+                        if((boolean) data.get("status")) {
+                            HashMap<String, Object> groupData = converter.JSONToHashMap(converter.toString(data.get("group")));
+                            cache.putData("groupData", groupData);
+                            makeToast("sync process completed.");
+                        }
+                        else {
+                            makeToast(converter.toString(data.get("description")));
+                        }
+                    }
+                }, new Response.ErrorListener() { //create error listener to trace an error if download process fail
+            @Override
+            public void onErrorResponse(VolleyError volleyError) { //when error listener is activated
+                Log.i("volley", volleyError.toString());
+                makeToast("Cannot connect to server. Please check the Internet setting.");
+            }
+        }) { //define POST parameters
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> map = new HashMap<String, String>(); //create map to keep variables
+                map.put("id", "" + UserManage.getInstance(MainActivity.this).getCurrentUser().getIdGroup());
+
+                return map;
+            }
+        };
+
+        HttpConnector.getInstance(this).addToRequestQueue(findGroupRequest);
     }
 
     public void requestEvent()
     {
-        String url = "http://203.151.92.196:8080/event/getEventFixedTime";
+        String url = "http://203.151.92.196:8080/event/getEvent";
         StringRequest eventRequest = new StringRequest(Request.Method.GET, url, //create new string request with POST method
                 new Response.Listener<String>() { //create new listener to traces the data
                     @Override
@@ -510,6 +552,6 @@ public class MainActivity extends AppCompatActivity {
             }
         });
 
-        HttpConnector.getInstance((Context) Cache.getInstance().getData("MainActivityContext")).addToRequestQueue(eventRequest);
+        HttpConnector.getInstance(this).addToRequestQueue(eventRequest);
     }
 }

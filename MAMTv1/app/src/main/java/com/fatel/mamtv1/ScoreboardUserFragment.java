@@ -23,26 +23,6 @@ import java.util.Objects;
 
 
 public class ScoreboardUserFragment extends Fragment {
-    TextView user1;
-    TextView user2;
-    TextView user3;
-    TextView user4;
-    TextView user5;
-    TextView user6;
-    TextView user7;
-    TextView user8;
-    TextView user9;
-    TextView user10;
-    TextView score1;
-    TextView score2;
-    TextView score3;
-    TextView score4;
-    TextView score5;
-    TextView score6;
-    TextView score7;
-    TextView score8;
-    TextView score9;
-    TextView score10;
 
     TextView user0;
     TextView score0;
@@ -57,29 +37,31 @@ public class ScoreboardUserFragment extends Fragment {
 
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+    public View onCreateView(LayoutInflater inflater, final ViewGroup container,
                              Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.fragment_scoreboard_user, container, false);
-        user1 = (TextView)rootView.findViewById(R.id.textView22);
-        user2 = (TextView)rootView.findViewById(R.id.textView32);
-        user3 = (TextView)rootView.findViewById(R.id.textView42);
-        user4 = (TextView)rootView.findViewById(R.id.textView52);
-        user5 = (TextView)rootView.findViewById(R.id.textView62);
-        user6 = (TextView)rootView.findViewById(R.id.textView72);
-        user7 = (TextView)rootView.findViewById(R.id.textView82);
-        user8 = (TextView)rootView.findViewById(R.id.textView92);
-        user9 = (TextView)rootView.findViewById(R.id.textView102);
-        user10 = (TextView)rootView.findViewById(R.id.textView112);
-        score1 = (TextView)rootView.findViewById(R.id.textView23);
-        score2 = (TextView)rootView.findViewById(R.id.textView33);
-        score3 = (TextView)rootView.findViewById(R.id.textView43);
-        score4 = (TextView)rootView.findViewById(R.id.textView53);
-        score5 = (TextView)rootView.findViewById(R.id.textView63);
-        score6 = (TextView)rootView.findViewById(R.id.textView73);
-        score7 = (TextView)rootView.findViewById(R.id.textView83);
-        score8 = (TextView)rootView.findViewById(R.id.textView93);
-        score9 = (TextView)rootView.findViewById(R.id.textView103);
-        score10 = (TextView)rootView.findViewById(R.id.textView113);
+        final ArrayList<TextView> usersTextView = new ArrayList<>();
+        final ArrayList<TextView> scoresTextView = new ArrayList<>();
+        usersTextView.add((TextView) rootView.findViewById(R.id.textView22));
+        usersTextView.add((TextView) rootView.findViewById(R.id.textView32));
+        usersTextView.add((TextView) rootView.findViewById(R.id.textView42));
+        usersTextView.add((TextView) rootView.findViewById(R.id.textView52));
+        usersTextView.add((TextView) rootView.findViewById(R.id.textView62));
+        usersTextView.add((TextView) rootView.findViewById(R.id.textView72));
+        usersTextView.add((TextView) rootView.findViewById(R.id.textView82));
+        usersTextView.add((TextView) rootView.findViewById(R.id.textView92));
+        usersTextView.add((TextView) rootView.findViewById(R.id.textView102));
+        usersTextView.add((TextView) rootView.findViewById(R.id.textView112));
+        scoresTextView.add((TextView) rootView.findViewById(R.id.textView23));
+        scoresTextView.add((TextView) rootView.findViewById(R.id.textView33));
+        scoresTextView.add((TextView) rootView.findViewById(R.id.textView43));
+        scoresTextView.add((TextView) rootView.findViewById(R.id.textView53));
+        scoresTextView.add((TextView) rootView.findViewById(R.id.textView63));
+        scoresTextView.add((TextView) rootView.findViewById(R.id.textView73));
+        scoresTextView.add((TextView) rootView.findViewById(R.id.textView83));
+        scoresTextView.add((TextView) rootView.findViewById(R.id.textView93));
+        scoresTextView.add((TextView) rootView.findViewById(R.id.textView103));
+        scoresTextView.add((TextView) rootView.findViewById(R.id.textView113));
         user0 = (TextView)rootView.findViewById(R.id.userscore);
         score0 = (TextView)rootView.findViewById(R.id.scoreuser);
         ranking0 = (TextView)rootView.findViewById(R.id.userranking);
@@ -107,29 +89,15 @@ public class ScoreboardUserFragment extends Fragment {
                             if((boolean) data.get("status"))
                             {
                                 ArrayList<HashMap<String, Object>> users = converter.toHashMapArrayList(data.get("users"));
-                                user1.setText(converter.toString(users.get(0).get("userName")));
-                                score1.setText(converter.toString(users.get(0).get("score")));
-                                user2.setText(converter.toString(users.get(1).get("userName")));
-                                score2.setText(converter.toString(users.get(1).get("score")));
-                                user3.setText(converter.toString(users.get(2).get("userName")));
-                                score3.setText(converter.toString(users.get(2).get("score")));
-                                user4.setText(converter.toString(users.get(3).get("userName")));
-                                score4.setText(converter.toString(users.get(3).get("score")));
-                                user5.setText(converter.toString(users.get(4).get("userName")));
-                                score5.setText(converter.toString(users.get(4).get("score")));
-                                user6.setText(converter.toString(users.get(5).get("userName")));
-                                score6.setText(converter.toString(users.get(5).get("score")));
-                                user7.setText(converter.toString(users.get(6).get("userName")));
-                                score7.setText(converter.toString(users.get(6).get("score")));
-                                user8.setText(converter.toString(users.get(7).get("userName")));
-                                score8.setText(converter.toString(users.get(7).get("score")));
-                                user9.setText(converter.toString(users.get(8).get("userName")));
-                                score9.setText(converter.toString(users.get(8).get("score")));
-                                user10.setText(converter.toString(users.get(9).get("userName")));
-                                score10.setText(converter.toString(users.get(9).get("score")));
-//                            for(HashMap<String, Objects> item : users) {
-//
-//                            }
+                                int size = users.size();
+                                for(int i = 0; i < size; i++) {
+                                    HashMap<String, Object> userData = users.get(i);
+                                    String userName = converter.toString(userData.get("userName"));
+                                    String name = (userName == null || userName.equals("")) ? converter.toString(userData.get("facebookFirstName")) : userName;
+                                    int score = converter.toInt(userData.get("score"));
+                                    usersTextView.get(i).setText(name);
+                                    scoresTextView.get(i).setText("" + score);
+                                }
                             }
                         } catch (Exception e) {
                             Log.i("scoreboard error", e.toString());

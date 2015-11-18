@@ -5,45 +5,54 @@
     android:layout_height="match_parent"
     tools:context="com.fatel.mamtv1.ScoreboardGroupFragment">
 
-    <LinearLayout
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:id="@+id/userscoreblk"
-    android:layout_marginTop="70dp"
-    android:orientation="horizontal"
-    android:layout_gravity="center">
     <TextView
-        android:id="@+id/userscore"
-        android:text="User"
+        android:textStyle="bold"
+        android:id="@+id/groupscore"
+        android:text="Group"
         android:textSize="25sp"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content" />
-    <TextView
-        android:layout_marginLeft="20dp"
-        android:textSize="25sp"
-        android:id="@+id/scoreuser"
+        android:layout_marginTop="60dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="00"/>
-</LinearLayout>
-<LinearLayout
-android:layout_width="wrap_content"
-android:layout_height="wrap_content"
-android:orientation="horizontal"
-android:layout_gravity="center">
-<TextView
-    android:text="Ranking"
-    android:textSize="25sp"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content" />
-<TextView
-    android:id="@+id/userdegree"
-    android:layout_marginLeft="20dp"
-    android:text="00"
-    android:textSize="25sp"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content" />
-</LinearLayout>
+        android:layout_gravity="center"/>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/groupscoreblk"
+        android:orientation="horizontal"
+        android:layout_gravity="center">
+
+        <TextView
+            android:text="Score : "
+            android:layout_marginLeft="10dp"
+            android:textSize="20sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:layout_marginLeft="20dp"
+            android:textSize="20sp"
+            android:id="@+id/scoregroup"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="00"/>
+    </LinearLayout>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_gravity="center">
+        <TextView
+            android:text="Ranking : "
+            android:textSize="20sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+        <TextView
+            android:id="@+id/groupranking"
+            android:layout_marginLeft="20dp"
+            android:text="00"
+            android:textSize="20sp"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content" />
+    </LinearLayout>
     <RelativeLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
@@ -140,7 +149,7 @@ android:layout_gravity="center">
                 android:id="@+id/textView22"
                 android:padding="5dp"
                 android:gravity="center"
-                android:text="Unknown"
+                android:text="-"
                 android:textColor="#FFFFFF"
                 android:textSize="16sp" />
 
@@ -186,7 +195,7 @@ android:layout_gravity="center">
                 android:id="@+id/textView32"
                 android:padding="5dp"
                 android:gravity="center"
-                android:text="Unknown"
+                android:text="-"
                 android:textColor="#FFFFFF"
                 android:textSize="16sp" />
 
@@ -238,7 +247,7 @@ android:layout_gravity="center">
                 android:id="@+id/textView42"
                 android:padding="5dp"
                 android:gravity="center"
-                android:text="Unknown"
+                android:text="-"
                 android:textColor="#FFFFFF"
                 android:textSize="16sp" />
 
@@ -289,7 +298,7 @@ android:layout_gravity="center">
                 android:id="@+id/textView52"
                 android:padding="5dp"
                 android:gravity="center"
-                android:text="Unknown"
+                android:text="-"
                 android:textColor="#FFFFFF"
                 android:textSize="16sp" />
 
@@ -340,7 +349,7 @@ android:layout_gravity="center">
                 android:id="@+id/textView62"
                 android:padding="5dp"
                 android:gravity="center"
-                android:text="Unknown"
+                android:text="-"
                 android:textColor="#FFFFFF"
                 android:textSize="16sp" />
 
@@ -391,7 +400,7 @@ android:layout_gravity="center">
                 android:id="@+id/textView72"
                 android:padding="5dp"
                 android:gravity="center"
-                android:text="Unknown"
+                android:text="-"
                 android:textColor="#FFFFFF"
                 android:textSize="16sp" />
 
@@ -442,7 +451,7 @@ android:layout_gravity="center">
                 android:id="@+id/textView82"
                 android:padding="5dp"
                 android:gravity="center"
-                android:text="Unknown"
+                android:text="-"
                 android:textColor="#FFFFFF"
                 android:textSize="16sp" />
 
@@ -493,7 +502,7 @@ android:layout_gravity="center">
                 android:id="@+id/textView92"
                 android:padding="5dp"
                 android:gravity="center"
-                android:text="Unknown"
+                android:text="-"
                 android:textColor="#FFFFFF"
                 android:textSize="16sp" />
 
@@ -544,7 +553,7 @@ android:layout_gravity="center">
                 android:id="@+id/textView102"
                 android:padding="5dp"
                 android:gravity="center"
-                android:text="Unknown"
+                android:text="-"
                 android:textColor="#FFFFFF"
                 android:textSize="16sp" />
 
@@ -595,7 +604,7 @@ android:layout_gravity="center">
                 android:id="@+id/textView112"
                 android:padding="5dp"
                 android:gravity="center"
-                android:text="Unknown"
+                android:text="-"
                 android:textColor="#FFFFFF"
                 android:textSize="16sp" />
 

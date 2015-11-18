@@ -11,16 +11,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 
 public class MemberGroupActivity extends AppCompatActivity {
-    TextView user1;
-    TextView user2;
-    TextView user3;
-    TextView user4;
-    TextView user5;
-    TextView user6;
-    TextView user7;
-    TextView user8;
-    TextView user9;
-    TextView user10;
    
     @Override
     protected void onCreate(Bundle savedInstanceState) {
