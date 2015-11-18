@@ -380,6 +380,30 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
     }
 
+    public void linkPosture10(View view) {
+        Intent intent = new Intent(this, PostureActivity.class);
+        intent.putExtra("value", 9);
+        startActivity(intent);
+    }
+
+    public void linkPosture11(View view) {
+        Intent intent = new Intent(this, PostureActivity.class);
+        intent.putExtra("value", 10);
+        startActivity(intent);
+    }
+
+    public void linkPosture12(View view) {
+        Intent intent = new Intent(this, PostureActivity.class);
+        intent.putExtra("value", 11);
+        startActivity(intent);
+    }
+    public void linkPosture13(View view) {
+        Intent intent = new Intent(this, PostureActivity.class);
+        intent.putExtra("value", 12);
+        startActivity(intent);
+    }
+
+
     public void linkCreateGroup(View view)
     {
 

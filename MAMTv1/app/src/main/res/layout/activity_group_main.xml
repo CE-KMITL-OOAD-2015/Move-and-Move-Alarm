@@ -16,16 +16,16 @@
             android:text="Group Code : "
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="25sp"
-            android:textColor="#000000"/>
+            android:textSize="20sp"
+            android:textColor="#f5ab35"/>
 
         <TextView
             android:id="@+id/groupcode"
             android:text="Unknown"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="25sp"
-            android:textColor="#000000"/>
+            android:textSize="20sp"
+            android:textColor="#f5ab35"/>
     </LinearLayout>
 
     <LinearLayout
@@ -40,16 +40,16 @@
             android:text="Group Name : "
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="25sp"
-            android:textColor="#000000"/>
+            android:textSize="20sp"
+            android:textColor="#f5ab35"/>
 
         <TextView
             android:id="@+id/groupname"
             android:text="Unknown"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="25sp"
-            android:textColor="#000000"/>
+            android:textSize="20sp"
+            android:textColor="#f5ab35"/>
     </LinearLayout>
 
     <LinearLayout
@@ -62,14 +62,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Admin :  "
-            android:textSize="25sp"
-            android:textColor="#000000"/>
+            android:textSize="20sp"
+            android:textColor="#f5ab35"/>
         <TextView
             android:id="@+id/adminname"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="25sp"
-            android:textColor="#000000"
+            android:textSize="20sp"
+            android:textColor="#f5ab35"
             android:text="Unknown"
             />
 
@@ -84,33 +84,34 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="25sp"
-            android:textColor="#000000"
+            android:textSize="20sp"
+            android:textColor="#f5ab35"
             android:text="Member : "/>
         <TextView
             android:id="@+id/amount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="25sp"
-            android:textColor="#000000"
+            android:textSize="20sp"
+            android:textColor="#f5ab35"
             android:text="0"/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="25sp"
-            android:textColor="#000000"
+            android:textSize="20sp"
+            android:textColor="#f5ab35"
             android:text=" / "/>
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="25sp"
-            android:textColor="#000000"
+            android:textSize="20sp"
+            android:textColor="#f5ab35"
             android:text="10"/>
         <Button
             android:layout_marginLeft="10dp"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="member"
+            android:layout_width="60dp"
+            android:layout_height="25dp"
+
+            android:background="@drawable/selectormem"
             android:onClick="linkMember"/>
     </LinearLayout>
 
@@ -124,14 +125,14 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Score :  "
-            android:textSize="25sp"
-            android:textColor="#000000"/>
+            android:textSize="20sp"
+            android:textColor="#f5ab35"/>
         <TextView
             android:id="@+id/score"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:textSize="25sp"
-            android:textColor="#000000"
+            android:textSize="20sp"
+            android:textColor="#f5ab35"
             android:text="0"
             />
 
@@ -144,16 +145,21 @@
         android:text="Event"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="25sp"
-        android:textColor="#000000"/>
+        android:textSize="20sp"
+        android:textColor="#f5ab35"/>
     <TextView
-        android:layout_marginTop="20dp"
         android:id="@+id/getEvent"
-        android:layout_below="@id/Event"
         android:text="Unknown"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:textSize="25sp"
-        android:textColor="#000000"/>
+        android:textSize="20sp"
+        android:textColor="#f5ab35"
+        android:layout_alignTop="@+id/Event"
+        android:layout_toRightOf="@+id/ScoreL"
+        android:layout_toEndOf="@+id/ScoreL" />
+
+    <ImageView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
 
 </RelativeLayout>

@@ -8,7 +8,6 @@
         tools:context="com.fatel.mamtv1.ChoosePostureFragment"
         >
 
-
     <Button
         android:id="@+id/post1"
         android:text="Posture #1"
@@ -218,5 +217,102 @@
         android:layout_marginBottom="30dp"
         android:onClick="linkPosture9"
         />
+
+        <Button
+            android:id="@+id/post10"
+            android:layout_below="@id/post8"
+            android:text="Posture #10"
+            android:gravity="center"
+            android:textStyle="bold"
+
+            android:textColor="#FF7E3D"
+            android:textSize="20sp"
+            android:layout_gravity="center"
+            android:background="@drawable/buttonshape3"
+
+            android:shadowColor="#919191"
+            android:shadowDx="3"
+            android:shadowDy="3"
+            android:shadowRadius="5"
+            android:layout_marginTop="30dp"
+            android:layout_centerHorizontal="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAllCaps="false"
+            android:onClick="linkPosture10"
+            />
+
+        <Button
+            android:id="@+id/post11"
+            android:layout_below="@id/post10"
+            android:text="Posture #11"
+            android:gravity="center"
+            android:textStyle="bold"
+
+            android:textColor="#FF7E3D"
+            android:textSize="20sp"
+            android:layout_gravity="center"
+            android:background="@drawable/buttonshape3"
+
+            android:shadowColor="#919191"
+            android:shadowDx="3"
+            android:shadowDy="3"
+            android:shadowRadius="5"
+            android:layout_marginTop="30dp"
+            android:layout_centerHorizontal="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAllCaps="false"
+            android:onClick="linkPosture11"
+            />
+
+        <Button
+            android:id="@+id/post12"
+            android:layout_below="@id/post11"
+            android:text="Posture #12"
+            android:gravity="center"
+            android:textStyle="bold"
+
+            android:textColor="#FF7E3D"
+            android:textSize="20sp"
+            android:layout_gravity="center"
+            android:background="@drawable/buttonshape3"
+
+            android:shadowColor="#919191"
+            android:shadowDx="3"
+            android:shadowDy="3"
+            android:shadowRadius="5"
+            android:layout_marginTop="30dp"
+            android:layout_centerHorizontal="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAllCaps="false"
+            android:onClick="linkPosture12"
+            />
+
+        <Button
+            android:id="@+id/post13"
+            android:layout_below="@id/post12"
+            android:text="Posture #13"
+            android:gravity="center"
+            android:textStyle="bold"
+
+            android:textColor="#FF7E3D"
+            android:textSize="20sp"
+            android:layout_gravity="center"
+            android:background="@drawable/buttonshape3"
+
+            android:shadowColor="#919191"
+            android:shadowDx="3"
+            android:shadowDy="3"
+            android:shadowRadius="5"
+            android:layout_marginTop="30dp"
+            android:layout_centerHorizontal="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAllCaps="false"
+            android:layout_marginBottom="30dp"
+            android:onClick="linkPosture13"
+            />
     </RelativeLayout>
 </ScrollView>
