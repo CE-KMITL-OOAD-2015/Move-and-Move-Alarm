@@ -1,1 +1,2 @@
-include ':app', ':app:libraries', ':app:libraries:volley', ':app:libraries:CircularProgressBar'
+include ':app:libraries:CircularProgressBar'
+include ':app:libraries:volley'

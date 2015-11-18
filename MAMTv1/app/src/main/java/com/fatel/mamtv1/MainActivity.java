@@ -376,6 +376,14 @@ public class MainActivity extends AppCompatActivity {
         startActivity(intent);
 
     }
+    public void linktoreset(View view){
+        mAlarmHelper =  new DBAlarmHelper(this);
+        mAlarmHelper.deleteSetAlarm("1");
+        mDrawerLayout.closeDrawers();
+        makeToast("Delete set time");
+        Intent intent = new Intent(this, MainActivity.class);
+        startActivity(intent);
+    }
 
     public void makeToast(String text)
     {
