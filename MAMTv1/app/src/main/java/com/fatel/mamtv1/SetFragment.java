@@ -33,7 +33,12 @@ public class SetFragment extends android.support.v4.app.Fragment  implements Vie
         mySwitch = (Switch) view.findViewById(R.id.mySwitch);
 
         //set the switch to ON
-        mySwitch.setChecked(true);
+        if(UserManage.getInstance(getActivity()).getCurrentStateSw()==1){
+            mySwitch.setChecked(true);
+        }
+        else{
+            mySwitch.setChecked(false);
+        }
         //attach a listener to check for changes in state
         mySwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
 
@@ -44,9 +49,13 @@ public class SetFragment extends android.support.v4.app.Fragment  implements Vie
                 if(isChecked){
                     //switchStatus.setText("Switch is currently ON");
                     checkswitch = true;
+                    mySwitch.setChecked(true);
+                    UserManage.getInstance(getActivity()).setStateSw(1,getActivity());
                 }else{
                     //switchStatus.setText("Switch is currently OFF");
                     checkswitch =false;
+                    mySwitch.setChecked(false);
+                    UserManage.getInstance(getActivity()).setStateSw(0, getActivity());
                 }
                 Cache.getInstance().putData("switch",checkswitch);
             }

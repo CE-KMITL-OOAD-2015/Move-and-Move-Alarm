@@ -25,7 +25,7 @@ public class User {
     private int profileImage;
     private int login;
     private int idGroup;
-
+    private int statesw;
     public static final int DATABASE_VERSION = 1;
     public static final String TABLE = "user";
     public class Column{
@@ -44,6 +44,7 @@ public class User {
         public static final String PROFILEIMAGE = "profileimage";
         public static final String LOGIN = "login";
         public static final String IDGROUP = "idgroup";
+        public static final String STATESW = "statesw";
     }
     public User(){
     }
@@ -54,6 +55,7 @@ public class User {
         this.facebookID="0";
         this.idUser = idUser;
         this.userName = username;
+        this.statesw =1;
     }
     public User(int idUser,String facebookID,String facebookFirstName){
         this.id=-1;
@@ -62,10 +64,11 @@ public class User {
         this.idUser = idUser;
         this.facebookID = facebookID;
         this.facebookFirstName = facebookFirstName;
+        this.statesw =1;
     }
     public User(int id,int idUser,String firstName, String lastName, String username,int age,int score
             ,int gender,String email, String facebookID, String facebookFirstName,
-                String facebookLastName, int profileImage,int login,int idGroup){
+                String facebookLastName, int profileImage,int login,int idGroup,int statesw){
         this.id=id;
         this.idUser = idUser;
         this.firstName = firstName;
@@ -81,6 +84,7 @@ public class User {
         this.profileImage = profileImage;
         this.login=login;
         this.idGroup=idGroup;
+        this.statesw = statesw;
     }
     public void save (Context context){
 
@@ -143,6 +147,7 @@ public class User {
     public String getFacebookLastName(){
         return facebookLastName;
     }
+    public int getStatesw(){return statesw;}
     public int getProfileImage(){
         return profileImage;
     }
@@ -196,7 +201,9 @@ public class User {
     }
 
     public void setIdGroup(int idGroup){this.idGroup = idGroup;}
-
+    public void setStatesw(int statesw){
+        this.statesw = statesw;
+    }
     
     public HashMap<String, Object> getGeneralValues()
     {
