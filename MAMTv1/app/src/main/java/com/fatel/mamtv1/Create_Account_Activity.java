@@ -73,7 +73,6 @@ public class Create_Account_Activity extends AppCompatActivity {
 
 
            // Log.i("User", "funh createuser ");
-            Toast.makeText(this, "Create Successful", Toast.LENGTH_SHORT).show();
             //startActivity(intent);intent);
 
         }

@@ -81,9 +81,9 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
-        requestGroupInfo();
+        if(UserManage.getInstance(this).getCurrentIdGroup() != 0)
+            requestGroupInfo();
         Cache.getInstance().putData("MainActivityContext", this);
-        Cache.getInstance().putData("MainActivityActivity",this);
         profilepic = (CircleImageView) findViewById(R.id.profile_image);
 
         header = (TextView) findViewById(R.id.profile);
@@ -460,7 +460,7 @@ public class MainActivity extends AppCompatActivity {
                 new Response.Listener<String>() { //create new listener to traces the data
                     @Override
                     public void onResponse(String response) { //when listener is activated
-                        Log.i("volley", response);
+                        Log.i("volley 7", response);
                         Converter converter = Converter.getInstance();
                         Cache cache = Cache.getInstance();
                         HashMap<String, Object> data = converter.JSONToHashMap(response);
@@ -501,7 +501,7 @@ public class MainActivity extends AppCompatActivity {
                 new Response.Listener<String>() { //create new listener to traces the data
                     @Override
                     public void onResponse(String response) { //when listener is activated
-                        Log.i("volley", response);
+                        Log.i("volley 6", response);
                         Converter converter = Converter.getInstance();
                         Cache cache = Cache.getInstance();
                         HashMap<String, Object> data = converter.JSONToHashMap(response);
@@ -540,7 +540,7 @@ public class MainActivity extends AppCompatActivity {
                 new Response.Listener<String>() { //create new listener to traces the data
                     @Override
                     public void onResponse(String response) { //when listener is activated
-                        Log.i("volley", response);
+                        Log.i("volley 5", response);
                         Converter converter = Converter.getInstance();
                         Cache cache = Cache.getInstance();
                         HashMap<String, Object> data = converter.JSONToHashMap(response);

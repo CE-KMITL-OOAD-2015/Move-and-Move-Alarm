@@ -41,9 +41,9 @@ public class GroupMainActivity extends AppCompatActivity {
             HashMap<String, Object> userData = converter.JSONToHashMap(converter.toString(groupData.get("admin")));
             HashMap<String, Object> eventData = (HashMap<String, Object>) Cache.getInstance().getData("eventData");
 
-            Log.i("Group", groupData.toString());
-            Log.i("Group", userData.toString());
-            Log.i("Group", eventData.toString());
+            Log.i("Group groupData", groupData.toString());
+            Log.i("Group userData", userData.toString());
+            Log.i("Group eventData", eventData.toString());
 
             DateFormat dateFormat = new SimpleDateFormat("HH-mm-ss");
             Date date = dateFormat.parse(converter.toString(eventData.get("time")));
