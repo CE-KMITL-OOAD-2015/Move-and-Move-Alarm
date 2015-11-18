@@ -66,14 +66,11 @@ public class Activity extends AppCompatActivity {
         txtDes=(TextView) findViewById(R.id.des);
         imgView=(ImageView) findViewById(R.id.img);
         ActivityHandle activityHandle=new ActivityHandle();
-
         context=getApplicationContext();
-        if(PostureCollection.size()==0){
-            PostureCollection.initial(context);
-        }
+        PostureCollection postureCollection= PostureCollection.getInstance(this);
 
         Log.i("Activity","can go +1");
-        img = PostureCollection.getImageById(activityHandle.getImageId());
+        img = postureCollection.getPosture(activityHandle.getImageId());
         Log.i("Activity","can go +1"+img);
         Log.i("Activity","can go +2");
         exerciseImg=(img.get(count)).getImage();

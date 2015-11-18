@@ -45,12 +45,10 @@ public class PostureActivity extends AppCompatActivity {
         next = (Button) findViewById(R.id.nextbtn);
         previous = (Button) findViewById(R.id.previousbtn);
         context=getApplicationContext();
-        if(PostureCollection.size()==0){
-            PostureCollection.initial(context);
-        }
+        PostureCollection postureCollection = PostureCollection.getInstance(this);
         int[] imageId = new int[] {0,1,2,3,4,5,6,7,8};
         Log.i("Activity", "can go +1");
-        img = PostureCollection.getImageById(imageId);
+        img = postureCollection.getPosture(imageId);
         Log.i("Activity","can go +1"+img);
         Log.i("Activity","can go +2");
         exerciseImg=(img.get(count)).getImage();
