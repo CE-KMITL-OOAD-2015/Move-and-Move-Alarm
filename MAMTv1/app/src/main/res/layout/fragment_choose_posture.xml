@@ -214,13 +214,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textAllCaps="false"
-        android:layout_marginBottom="30dp"
         android:onClick="linkPosture9"
         />
 
         <Button
             android:id="@+id/post10"
-            android:layout_below="@id/post8"
+            android:layout_below="@id/post9"
             android:text="Posture #10"
             android:gravity="center"
             android:textStyle="bold"
