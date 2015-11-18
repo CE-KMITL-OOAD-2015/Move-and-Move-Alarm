@@ -15,6 +15,7 @@ import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 import android.widget.Toast;
 
+import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
@@ -28,14 +29,12 @@ public class EventReceiver extends BroadcastReceiver {
     private PendingIntent pendingIntent;
     @Override
     public void onReceive(Context context, Intent intent) {
+
         Bundle extras = intent.getExtras();
         String temp = extras.getString("event");
-        if(temp==null){
-            Log.i("tempevent", "temp null");
-        }
-        else{
             Log.i("tempevent",temp);
             if(temp==null||temp.equalsIgnoreCase("event")){
+                Log.i("Event","run notification");
                 Intent activityIntent = new Intent(context,EventactAlarm.class);
                 activityIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 
@@ -63,36 +62,52 @@ public class EventReceiver extends BroadcastReceiver {
                 }
             }
             else {
+                Log.i("Event","set time");
                 if (manager != null) {
                     manager.cancel(pendingIntent);
                 }
-                Intent alarmIntent = new Intent(context, AlarmReceiver.class);
+                Log.i("Event","set time1");
+                Intent alarmIntent = new Intent(context, EventReceiver.class);
                 manager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
                 Calendar calendar = Calendar.getInstance();
-                SimpleDateFormat working2 = new SimpleDateFormat("hh:mm");
+                //test
+                calendar.setTimeInMillis(System.currentTimeMillis());
+                //
+                Log.i("Event","set time2");
+                Log.i("Event",temp);
+                DateFormat dateFormat = new SimpleDateFormat("HH.mm");
                 Date infordate = null;
                 try {
-                    infordate = working2.parse(temp);
+                    infordate = dateFormat.parse(temp.toString());
                 } catch (ParseException e) {
-                    e.printStackTrace();
+                   // e.printStackTrace();
                 }
+                Log.i("Event","set time4");
+                Log.i("Event",infordate+"");
                 int hour = infordate.getHours();
                 int min = infordate.getMinutes();
+                Log.i("Event","set time5");
+                //test
+//                calendar.set(Calendar.HOUR_OF_DAY, calendar.get(Calendar.HOUR_OF_DAY));
+//                calendar.set(Calendar.MINUTE, calendar.get(Calendar.MINUTE)+1);
+//                calendar.set(Calendar.SECOND, 0);
+                //
                 calendar.set(Calendar.HOUR_OF_DAY, hour);
                 calendar.set(Calendar.MINUTE, min);
                 calendar.set(Calendar.SECOND, 0);
                 long startUpTime = calendar.getTimeInMillis();
                 if (System.currentTimeMillis() > startUpTime) {
+                    Log.i("Event","set time6");
+                    Log.i("Event",""+calendar.get(Calendar.HOUR_OF_DAY)+" "+(calendar.get(Calendar.MINUTE)+1));
                     startUpTime = startUpTime + 24 * 60 * 60 * 1000;
                 }
                 Bundle mes = new Bundle();
-                mes.putString("key", "event");
+                mes.putString("event", "event");
                 alarmIntent.putExtras(mes);
                 //context.sendBroadcast(alarmIntent);
                 pendingIntent = PendingIntent.getBroadcast(context, 0, alarmIntent, 0);
                 manager.setExact(AlarmManager.RTC_WAKEUP, startUpTime, pendingIntent);
-                Log.i("start", "set time");
+                Log.i("start", ""+hour+" "+min);
             }
-        }
     }
 }

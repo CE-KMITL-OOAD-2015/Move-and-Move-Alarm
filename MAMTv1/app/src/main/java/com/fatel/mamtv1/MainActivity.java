@@ -48,8 +48,12 @@ import java.io.InputStream;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Objects;
@@ -286,6 +290,7 @@ public class MainActivity extends AppCompatActivity {
 //            case R.id.nav_third_fragment:
 //                fragmentClass = ThirdFragment.class;
 //                break;
+//                break;
             default:
                 fragmentClass = MainFragment.class;
         }
@@ -477,6 +482,21 @@ public class MainActivity extends AppCompatActivity {
                             Log.i("event" , "" + data.get("event"));
                             HashMap<String, Object> eventData = converter.JSONToHashMap("" + data.get("event"));
                             cache.putData("eventData", eventData);
+                            DateFormat dateFormat = new SimpleDateFormat("HH-mm-ss");
+                            Date date = null;
+                            try {
+                                date = dateFormat.parse(converter.toString(eventData.get("time")));
+                            } catch (ParseException e) {
+                                e.printStackTrace();
+                            }
+
+                            String time = ""+date.getHours()+"."+date.getMinutes();
+                            Intent intent = new Intent(getBaseContext(), EventReceiver.class);
+                            Bundle b = new Bundle();
+                            b.putString("event", time);
+                            intent.putExtras(b);
+                            sendBroadcast(intent);
+
                         }
                         else {
                             makeToast(converter.toString(data.get("description")));
