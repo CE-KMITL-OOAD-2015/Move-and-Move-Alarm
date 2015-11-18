@@ -18,30 +18,45 @@ public class EventController {
     @RequestMapping("/event/getEvent")
     public String genEvent()
     {
-        Event event = new Event();
-        ArrayList<Posture> allPosture = new ArrayList<>(Arrays.asList(Posture.all()));
-        ArrayList<Posture> postures = new ArrayList<>();
-        for(int i = 0;i < 5;i++) { //random and pick up 5 posture
-            int random = (int)(Math.random() * allPosture.size());
-            postures.add(allPosture.get(random));
-            allPosture.remove(random);
+        Calendar calendar = Calendar.getInstance();
+        boolean alreadyGen = false;
+        if(this.dailyEvent != null) {
+            Date checkDate = this.dailyEvent.getTime();
+            Calendar cal_temp = Calendar.getInstance();
+            cal_temp.setTime(checkDate);
+            if(calendar.get(Calendar.DAY_OF_MONTH) == cal_temp.get(Calendar.DAY_OF_MONTH)) {
+                alreadyGen = true;
+            }
+            else {
+                alreadyGen = false;
+            }
         }
-        Calendar calendar = Calendar.getInstance(); //random time
-        int hourRandom = (int)(Math.random()*23);
-        int minuteRandom = (int)(Math.random()*59);
-        while(hourRandom < calendar.get(Calendar.HOUR_OF_DAY) || minuteRandom < calendar.get(Calendar.MINUTE)) {
-            hourRandom = (int)(Math.random()*23);
-            minuteRandom = (int)(Math.random()*59);
-        }
-        calendar.set(Calendar.HOUR_OF_DAY,hourRandom);
-        calendar.set(Calendar.MINUTE,minuteRandom);
-        calendar.set(Calendar.SECOND,0);
-        calendar.set(Calendar.MILLISECOND,0);
-        Date date = calendar.getTime();
+        if(!alreadyGen) {
+            Event event = new Event();
+            ArrayList<Posture> allPosture = new ArrayList<>(Arrays.asList(Posture.all()));
+            ArrayList<Posture> postures = new ArrayList<>();
+            for (int i = 0; i < 5; i++) { //random and pick up 5 posture
+                int random = (int) (Math.random() * allPosture.size());
+                postures.add(allPosture.get(random));
+                allPosture.remove(random);
+            }
 
-        event.setTime(date);
-        event.setPostures(postures);
-        this.dailyEvent = event;
+            int hourRandom = (int) (Math.random() * 23); //random time
+            int minuteRandom = (int) (Math.random() * 59);
+            while (hourRandom < calendar.get(Calendar.HOUR_OF_DAY) || (hourRandom < calendar.get(Calendar.HOUR_OF_DAY) && minuteRandom < calendar.get(Calendar.MINUTE))) {
+                hourRandom = (int) (Math.random() * 23);
+                minuteRandom = (int) (Math.random() * 59);
+            }
+            calendar.set(Calendar.HOUR_OF_DAY, hourRandom);
+            calendar.set(Calendar.MINUTE, minuteRandom);
+            calendar.set(Calendar.SECOND, 0);
+            calendar.set(Calendar.MILLISECOND, 0);
+            Date date = calendar.getTime();
+
+            event.setTime(date);
+            event.setPostures(postures);
+            this.dailyEvent = event;
+        }
         HashMap<String ,Object> JSON = StatusDescription.createProcessStatus(true);
         JSON.put("event",this.dailyEvent.getGeneralValues());
 
