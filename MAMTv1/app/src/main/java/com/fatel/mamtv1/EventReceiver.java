@@ -35,28 +35,38 @@ public class EventReceiver extends BroadcastReceiver {
             Log.i("tempevent",temp);
             if(temp==null||temp.equalsIgnoreCase("event")){
                 Log.i("Event","run notification");
+                boolean check = true;
+                if(!(Cache.getInstance().getData("switch")+"").equals("null")){
+                    check = (boolean)Cache.getInstance().getData("switch");
+                }
                 Intent activityIntent = new Intent(context,EventactAlarm.class);
-                activityIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                if(check){
+                    activityIntent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 
-                PendingIntent pendingIntent = PendingIntent.getActivity(context,0,activityIntent,PendingIntent.FLAG_ONE_SHOT);
-                Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
+                    PendingIntent pendingIntent = PendingIntent.getActivity(context,0,activityIntent,PendingIntent.FLAG_ONE_SHOT);
+                    Uri defaultSoundUri = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION);
 
-                Notification notification = new NotificationCompat.Builder(context)
-                        .setSmallIcon(R.drawable.duck_yellow)
-                        .setContentTitle("Move Alarm Notification")  //title
-                        .setContentText("Get Event")    //detail
-                                //.setPriority(Notification.PRIORITY_HIGH)
-                        .setTicker("Get Event")
-                        .setSound(defaultSoundUri)
-                        .setAutoCancel(true)
-                        .setContentIntent(pendingIntent)
-                        .build();
+                    Notification notification = new NotificationCompat.Builder(context)
+                            .setSmallIcon(R.drawable.duck_yellow)
+                            .setContentTitle("Move Alarm Notification")  //title
+                            .setContentText("Get Event")    //detail
+                                    //.setPriority(Notification.PRIORITY_HIGH)
+                            .setTicker("Get Event")
+                            .setSound(defaultSoundUri)
+                            .setAutoCancel(true)
+                            .setContentIntent(pendingIntent)
+                            .build();
 
-                NotificationManager notificationManager = (NotificationManager)context.getSystemService(context.NOTIFICATION_SERVICE);
-                notificationManager.notify(1000, notification);
+                    NotificationManager notificationManager = (NotificationManager)context.getSystemService(context.NOTIFICATION_SERVICE);
+                    notificationManager.notify(1000, notification);
 
-                PowerManager.WakeLock screenOn = ((PowerManager)context.getSystemService(context.POWER_SERVICE)).newWakeLock(PowerManager.SCREEN_BRIGHT_WAKE_LOCK | PowerManager.ACQUIRE_CAUSES_WAKEUP,"example" );
-                screenOn.acquire();
+                    PowerManager.WakeLock screenOn = ((PowerManager)context.getSystemService(context.POWER_SERVICE)).newWakeLock(PowerManager.SCREEN_BRIGHT_WAKE_LOCK | PowerManager.ACQUIRE_CAUSES_WAKEUP,"example" );
+                    screenOn.acquire();
+                }
+                else{
+                    activityIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    context.startActivity(activityIntent);
+                }
                 if (manager != null) {
                     manager.cancel(pendingIntent);
                 }

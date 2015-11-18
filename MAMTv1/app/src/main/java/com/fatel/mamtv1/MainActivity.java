@@ -469,7 +469,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void requestEvent()
     {
-        String url = "http://203.151.92.196:8080/event/getEventFixedTime";
+        String url = "http://203.151.92.196:8080/event/getEvent";
         StringRequest eventRequest = new StringRequest(Request.Method.GET, url, //create new string request with POST method
                 new Response.Listener<String>() { //create new listener to traces the data
                     @Override

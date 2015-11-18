@@ -8,6 +8,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CompoundButton;
+import android.widget.Switch;
 
 
 /**
@@ -15,7 +17,8 @@ import android.widget.Button;
  */
 public class SetFragment extends android.support.v4.app.Fragment  implements View.OnClickListener {
 
-
+    private Switch mySwitch;
+    private boolean checkswitch = false;
     public SetFragment() {
         // Required empty public constructor
     }
@@ -27,6 +30,35 @@ public class SetFragment extends android.support.v4.app.Fragment  implements Vie
         // Inflate the layout for this fragment
         View view = inflater.inflate(R.layout.fragment_setting, container, false);
         Button reset= (Button)view.findViewById(R.id.reset);
+        mySwitch = (Switch) view.findViewById(R.id.mySwitch);
+
+        //set the switch to ON
+        mySwitch.setChecked(true);
+        //attach a listener to check for changes in state
+        mySwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView,
+                                         boolean isChecked) {
+
+                if(isChecked){
+                    //switchStatus.setText("Switch is currently ON");
+                    checkswitch = true;
+                }else{
+                    //switchStatus.setText("Switch is currently OFF");
+                    checkswitch =false;
+                }
+                Cache.getInstance().putData("switch",checkswitch);
+            }
+        });
+
+        //check the current state before we display the screen
+        if(mySwitch.isChecked()){
+            //switchStatus.setText("Switch is currently ON");
+        }
+        else {
+           // switchStatus.setText("Switch is currently OFF");
+        }
         return view;
     }
 

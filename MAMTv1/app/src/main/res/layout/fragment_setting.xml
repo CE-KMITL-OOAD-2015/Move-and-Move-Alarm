@@ -12,4 +12,24 @@
         android:onClick="linktoreset"
         />
 
+    <TextView
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="50dp"
+        android:id="@+id/txt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="50sp"
+        android:text="Notification"
+        android:textColor="#FF7700"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"/>
+    <Switch
+        android:layout_marginTop="50dp"
+        android:layout_marginLeft="10dp"
+        android:id="@+id/mySwitch"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_toRightOf="@+id/txt" />
+
 </RelativeLayout>

@@ -1,2 +1,2 @@
 <?xml version="1.0" encoding="utf-8"?>
-<merger version="3"><dataSet config="main"><source path="C:\Users\kid14\Documents\GitHub\Move-and-Move-Alarm\MAMTv1\app\libraries\CircularProgressBar\src\main\assets"/></dataSet><dataSet config="debug"><source path="C:\Users\kid14\Documents\GitHub\Move-and-Move-Alarm\MAMTv1\app\libraries\CircularProgressBar\src\debug\assets"/></dataSet></merger>
+<merger version="3"><dataSet config="main"><source path="C:\msys64\home\Moobi\Move-and-Move-Alarm\MAMTv1\app\libraries\CircularProgressBar\src\main\assets"/></dataSet><dataSet config="debug"><source path="C:\msys64\home\Moobi\Move-and-Move-Alarm\MAMTv1\app\libraries\CircularProgressBar\src\debug\assets"/></dataSet></merger>
