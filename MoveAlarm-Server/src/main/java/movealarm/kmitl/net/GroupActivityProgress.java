@@ -1,7 +1,6 @@
 package movealarm.kmitl.net;
 
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 
@@ -23,27 +22,6 @@ public class GroupActivityProgress extends Model {
         this.addRequiredField("groupID");
     }
 
-    public static GroupActivityProgress findByGroup(Group group)
-    {
-        Converter converter = Converter.getInstance();
-        ArrayList<HashMap<String, Object>> data = modelCollection.where("groupActivity_progress", "groupID", "=", converter.toString(group.getID()));
-
-        if(data == null || data.size() == 0)
-            return null;
-
-        HashMap<String, Object> progressData = data.get(0);
-
-        GroupActivityProgress model = new GroupActivityProgress();
-        model.id = converter.toInt(progressData.get("id"));
-        model.group = group;
-        model.numberOfAccept = converter.toInt(progressData.get("numberOfAccept"));
-        model.numberOfCancel = converter.toInt(progressData.get("numberOfCancel"));
-        model.cancelActivity = converter.toInt(progressData.get("cancelActivity"));
-        model.date = (Date) progressData.get("date");
-
-        return model;
-    }
-
     @Override
     public HashMap<String, Object> getValues() //get all values from model
     {
@@ -54,8 +32,7 @@ public class GroupActivityProgress extends Model {
         temp.put("numberOfCancel", numberOfCancel);
         temp.put("cancelActivity", cancelActivity);
         temp.put("groupID", group.getID());
-        if(date != null)
-            temp.put("date", sdf.format(date));
+        temp.put("date", sdf.format(date));
 
         return temp;
     }
@@ -69,8 +46,8 @@ public class GroupActivityProgress extends Model {
         temp.put("numberOfAccept", numberOfAccept);
         temp.put("numberOfCancel", numberOfCancel);
         temp.put("cancelActivity", cancelActivity);
-        if(date != null)
-            temp.put("date", sdf.format(date));
+        temp.put("group", group);
+        temp.put("date", sdf.format(date));
 
         return temp;
     }
