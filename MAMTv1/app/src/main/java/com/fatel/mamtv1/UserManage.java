@@ -71,7 +71,7 @@ public class UserManage {
                             HashMap<String, Object> groupData = converter.JSONToHashMap(converter.toString(data.get("group")));
 
                             Cache.getInstance().putData("groupData", groupData);
-                            Log.i("volley", userData.toString()); //throw the message to the console.
+                            Log.i("volley 3", userData.toString()); //throw the message to the console.
                             Log.i("User", "login");
                             int idUser = converter.toInt(userData.get("id"));
                             String username = converter.toString(userData.get("userName"));
@@ -155,7 +155,7 @@ public class UserManage {
                             HashMap<String, Object> groupData = converter.JSONToHashMap(converter.toString(data.get("group")));
 
                             Cache.getInstance().putData("groupData", groupData);
-                            Log.i("volley", userData.toString()); //throw the message to the console.
+                            Log.i("volley 4", userData.toString()); //throw the message to the console.
                             Log.i("User", "loginFB");
                             int idUser = converter.toInt(userData.get("id"));
                             String facebookID = converter.toString(userData.get("facebookID"));
@@ -246,18 +246,20 @@ public class UserManage {
                 if (s!=null) {
                     Converter converter = Converter.getInstance();
                     Context context = (Context) Cache.getInstance().getData("CreateAccountContext");
-                    Log.i("volley", s); //throw the result to the console.
+                    Log.i("volley 1", s); //throw the result to the console.
                     HashMap<String, Object> data = converter.JSONToHashMap(s);
                     HashMap<String, Object> userData = converter.JSONToHashMap(converter.toString(data.get("user")));
 
                     if((boolean) data.get("status")) {
                         int idUser = converter.toInt(userData.get("id"));
-                        String username = converter.toString(data.get("userName"));
+                        String username = converter.toString(userData.get("userName"));
+
                         Log.i("User", "createnewuser :" + idUser);
                         User currentUser = new User(idUser, username);
                         currentUser.setLogin(1);
-                        currentUser.save(context); Log.i("User", "save :" + idUser);
+                        currentUser.save(context); Log.i("User save", "save :" + idUser);
                         UserManage.getInstance(context).setCurrentUser(currentUser);
+
                         context.startActivity(new Intent(context, MainActivity.class));
                     }
                     else {
@@ -266,7 +268,7 @@ public class UserManage {
                     }
                 }
                 else
-                    Log.i("volley", "s==null");
+                    Log.i("volley 2", "s==null");
 
                 /*HashMap<String, Object> userData = Converter.getInstance().JsonToHashMap(s); //convert the result into HashMap format
                 Cache.getInstance().putData("idUser", userData.get("id"));

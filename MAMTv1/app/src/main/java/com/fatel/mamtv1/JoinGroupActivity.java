@@ -16,6 +16,10 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -60,7 +64,7 @@ public class JoinGroupActivity extends AppCompatActivity {
 
         final int groupID = Integer.parseInt(groupCode.getText().toString());
 
-        String url = "http://203.151.92.196:8080/group/addMember";
+        String url = HttpConnector.URL + "group/addMember";
         StringRequest findGroupRequest = new StringRequest(Request.Method.POST, url, //create new string request with POST method
                 new Response.Listener<String>() { //create new listener to traces the data
                     @Override
@@ -73,9 +77,7 @@ public class JoinGroupActivity extends AppCompatActivity {
                             HashMap<String, Object> groupData = converter.JSONToHashMap(converter.toString(data.get("group")));
                             UserManage.getInstance(JoinGroupActivity.this).getCurrentUser().setIdGroup(converter.toInt(groupData.get("id")));
                             cache.putData("groupData", groupData);
-                            Intent intent3 = new Intent(JoinGroupActivity.this, GroupMainActivity.class);
-                            startActivity(intent3);
-                            finish();
+                            JoinGroupActivity.this.requestEvent();
                         }
                         else {
                             makeToast(converter.toString(data.get("description")));
@@ -110,5 +112,39 @@ public class JoinGroupActivity extends AppCompatActivity {
     public void makeToast(String text)
     {
         Toast.makeText(this, text, Toast.LENGTH_SHORT).show();
+    }
+
+    public void requestEvent()
+    {
+        String url = HttpConnector.URL + "event/getEvent";
+        StringRequest eventRequest = new StringRequest(Request.Method.GET, url, //create new string request with POST method
+                new Response.Listener<String>() { //create new listener to traces the data
+                    @Override
+                    public void onResponse(String response) { //when listener is activated
+                        Log.i("volley", response);
+                        Converter converter = Converter.getInstance();
+                        Cache cache = Cache.getInstance();
+                        HashMap<String, Object> data = converter.JSONToHashMap(response);
+                        if((boolean) data.get("status")) {
+                            HashMap<String, Object> eventData = converter.JSONToHashMap("" + data.get("event"));
+                            cache.putData("eventData", eventData);
+                            
+                            Intent intent3 = new Intent(JoinGroupActivity.this, GroupMainActivity.class);
+                            startActivity(intent3);
+                            finish();
+                        }
+                        else {
+                            makeToast(converter.toString(data.get("description")));
+                        }
+                    }
+                }, new Response.ErrorListener() { //create error listener to trace an error if download process fail
+            @Override
+            public void onErrorResponse(VolleyError volleyError) { //when error listener is activated
+                Log.i("volley", volleyError.toString());
+                makeToast("Cannot connect to server. Please check the Internet setting.");
+            }
+        });
+
+        HttpConnector.getInstance(this).addToRequestQueue(eventRequest);
     }
 }
