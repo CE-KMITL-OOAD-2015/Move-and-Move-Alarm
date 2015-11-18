@@ -106,6 +106,12 @@ public class MainActivity extends AppCompatActivity {
         }
         // Intent alarmIntent = new Intent(MainActivity.this, AlarmReceiver.class);
         //pendingIntent = PendingIntent.getBroadcast(MainActivity.this, 0, alarmIntent, 0);
+
+        if(UserManage.getInstance(this).getCurrentUser().getIdGroup() != 0) {
+            requestEvent();
+            Log.i("request", "event");
+        }
+
         FragmentTransaction tx = getSupportFragmentManager().beginTransaction();
         MainFragment fragobj = new MainFragment();
         tx.replace(R.id.container, fragobj);
@@ -454,5 +460,36 @@ public class MainActivity extends AppCompatActivity {
         };
 
         HttpConnector.getInstance((Context) Cache.getInstance().getData("MainActivityContext")).addToRequestQueue(findGroupRequest);
+    }
+
+    public void requestEvent()
+    {
+        String url = "http://203.151.92.196:8080/event/getEventFixedTime";
+        StringRequest eventRequest = new StringRequest(Request.Method.GET, url, //create new string request with POST method
+                new Response.Listener<String>() { //create new listener to traces the data
+                    @Override
+                    public void onResponse(String response) { //when listener is activated
+                        Log.i("volley", response);
+                        Converter converter = Converter.getInstance();
+                        Cache cache = Cache.getInstance();
+                        HashMap<String, Object> data = converter.JSONToHashMap(response);
+                        if((boolean) data.get("status")) {
+                            Log.i("event" , "" + data.get("event"));
+                            HashMap<String, Object> eventData = converter.JSONToHashMap("" + data.get("event"));
+                            cache.putData("eventData", eventData);
+                        }
+                        else {
+                            makeToast(converter.toString(data.get("description")));
+                        }
+                    }
+                }, new Response.ErrorListener() { //create error listener to trace an error if download process fail
+            @Override
+            public void onErrorResponse(VolleyError volleyError) { //when error listener is activated
+                Log.i("volley", volleyError.toString());
+                makeToast("Cannot connect to server. Please check the Internet setting.");
+            }
+        });
+
+        HttpConnector.getInstance((Context) Cache.getInstance().getData("MainActivityContext")).addToRequestQueue(eventRequest);
     }
 }

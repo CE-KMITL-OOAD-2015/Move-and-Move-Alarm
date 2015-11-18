@@ -9,6 +9,9 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.HashMap;
 
 public class GroupMainActivity extends AppCompatActivity {
@@ -36,9 +39,15 @@ public class GroupMainActivity extends AppCompatActivity {
         try {
             HashMap<String, Object> groupData = (HashMap<String, Object>) Cache.getInstance().getData("groupData");
             HashMap<String, Object> userData = converter.JSONToHashMap(converter.toString(groupData.get("admin")));
+            HashMap<String, Object> eventData = (HashMap<String, Object>) Cache.getInstance().getData("eventData");
 
             Log.i("Group", groupData.toString());
             Log.i("Group", userData.toString());
+            Log.i("Group", eventData.toString());
+
+            DateFormat dateFormat = new SimpleDateFormat("HH-mm-ss");
+            Date date = dateFormat.parse(converter.toString(eventData.get("time")));
+
             String groupID = "" + converter.toInt(groupData.get("id"));
             String userName = converter.toString(userData.get("userName"));
             String nameOfAdmin = (userName == null) ? converter.toString(userData.get("facebookFirstName")) : userName;
@@ -47,10 +56,10 @@ public class GroupMainActivity extends AppCompatActivity {
             groupCode.setText(code);
             groupName.setText(converter.toString(groupData.get("name")));
 
-
             adminName.setText(nameOfAdmin);
             amountMember.setText("" + converter.toInt(groupData.get("amountMember")));
             groupScore.setText("" + converter.toInt(groupData.get("score")));
+            getEvent.setText(date.getHours() + ":" + date.getMinutes());
         } catch (Exception e) {
             Log.i("Group", e.toString());
         }
