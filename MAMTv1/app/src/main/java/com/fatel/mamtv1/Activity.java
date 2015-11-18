@@ -2,6 +2,7 @@ package com.fatel.mamtv1;
 
 import android.app.AlarmManager;
 import android.app.PendingIntent;
+
 import android.content.Context;
 
 import android.content.Intent;
@@ -33,6 +34,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 
 
+
 public class Activity extends AppCompatActivity {
 
     TextView txtR;
@@ -42,7 +44,7 @@ public class Activity extends AppCompatActivity {
     AnimationDrawable frameAnimation;
     int count=0;
     //int[] imageId = new int[] {-1,-1,-1,-1};
-    ArrayList<Image> img ;
+    ArrayList<Posture> img ;
     int exerciseImg;
     String exerciseDes;
 
@@ -64,19 +66,16 @@ public class Activity extends AppCompatActivity {
         txtDes=(TextView) findViewById(R.id.des);
         imgView=(ImageView) findViewById(R.id.img);
         ActivityHandle activityHandle=new ActivityHandle();
-
         context=getApplicationContext();
-        if(ImageCollection.size()==0){
-            ImageCollection.initial(context);
-        }
+        PostureCollection postureCollection= PostureCollection.getInstance(this);
 
         Log.i("Activity","can go +1");
-        img = ImageCollection.getImageById(activityHandle.getImageId());
+        img = postureCollection.getPosture(activityHandle.getImageId());
         Log.i("Activity","can go +1"+img);
         Log.i("Activity","can go +2");
         exerciseImg=(img.get(count)).getImage();
         Log.i("Activity",""+(img.get(count)).getImage());
-        Log.i("Activity","can go +3");
+        Log.i("Activity","can go +3 id:"+img.get(count));
         exerciseDes=(img.get(count)).getDescription();
         Log.i("Activity",""+(img.get(count)).getDescription());
         Log.i("Activity","can go +4");

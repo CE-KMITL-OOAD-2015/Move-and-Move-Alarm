@@ -27,7 +27,7 @@ public class ActivityHandle {
             int x=0;
             while(same){
                 same=false;
-                x=(int)(Math.random() * 9);
+                x=(int)(Math.random() * 13);
                 for(int j=0;j<i;j++) {
                     if (x == imageId[j]){
                         same=true;

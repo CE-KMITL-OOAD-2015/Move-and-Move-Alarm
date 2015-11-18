@@ -224,7 +224,7 @@ public class PreShareActivity extends  ActionBarActivity {
 
     //add for sync with camera
     /**
-     * Capturing Camera Image will lauch camera app requrest image capture
+     * Capturing Camera Posture will lauch camera app requrest image capture
      */
     private void captureImage() {
         Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
@@ -390,7 +390,7 @@ public class PreShareActivity extends  ActionBarActivity {
         /**
          * Receiving activity result method will be called after closing the camera
          * */
-        // if the result is capturing Image
+        // if the result is capturing Posture
         if (requestCode == CAMERA_CAPTURE_IMAGE_REQUEST_CODE) {
             if (resultCode == RESULT_OK) {
                 // successfully captured the image
@@ -424,7 +424,7 @@ public class PreShareActivity extends  ActionBarActivity {
 
 
             } else if (resultCode == RESULT_CANCELED) {
-                // user cancelled Image capture
+                // user cancelled Posture capture
                 Toast.makeText(getApplicationContext(),
                         "User cancelled image capture", Toast.LENGTH_SHORT)
                         .show();

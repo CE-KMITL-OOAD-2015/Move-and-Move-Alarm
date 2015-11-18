@@ -24,7 +24,7 @@ public class PostureActivity extends AppCompatActivity {
     Button home;
     Button next;
     //int[] imageId = new int[] {-1,-1,-1,-1};
-    ArrayList<Image> img ;
+    ArrayList<Posture> img ;
     int exerciseImg;
     String exerciseDes;
     private static final String FORMAT = "%02d:%02d";
@@ -45,12 +45,10 @@ public class PostureActivity extends AppCompatActivity {
         next = (Button) findViewById(R.id.nextbtn);
         previous = (Button) findViewById(R.id.previousbtn);
         context=getApplicationContext();
-        if(ImageCollection.size()==0){
-            ImageCollection.initial(context);
-        }
+        PostureCollection postureCollection = PostureCollection.getInstance(this);
         int[] imageId = new int[] {0,1,2,3,4,5,6,7,8};
         Log.i("Activity", "can go +1");
-        img = ImageCollection.getImageById(imageId);
+        img = postureCollection.getPosture(imageId);
         Log.i("Activity","can go +1"+img);
         Log.i("Activity","can go +2");
         exerciseImg=(img.get(count)).getImage();
