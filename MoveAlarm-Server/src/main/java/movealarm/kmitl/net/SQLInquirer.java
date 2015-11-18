@@ -116,12 +116,7 @@ public class SQLInquirer implements DatabaseInterface {
 
     public boolean isConnecting()
     {
-        try {
-            return !connector.isClosed();
-        } catch (SQLException e) {
-            e.printStackTrace();
-            return false;
-        }
+        return connectionStatus;
     }
 
     public void closeConnection()

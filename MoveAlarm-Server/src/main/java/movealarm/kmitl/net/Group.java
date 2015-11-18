@@ -256,7 +256,7 @@ public class Group extends Model{
 
     public HashMap<String, Object> addMember(User user)
     {
-        if(amountMember > 10)
+        if(amountMember > 9)
             return StatusDescription.createProcessStatus(false, "The group has reached the maximum members limit now.");
 
         for(User item : temp_addedUserList) { //loop to check duplicated user

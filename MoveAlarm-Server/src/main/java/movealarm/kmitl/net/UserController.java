@@ -125,15 +125,10 @@ public class UserController {
     public String createUser(@RequestParam(value="JSON", required = true, defaultValue = "") String JSON)
     {
         HashMap<String, Object> userData = converter.JSONToHashMap(JSON); //convert JSON string to HashMap format
+        User[] username_match = User.where("userName", "=", converter.toString(userData.get("userName"))); //check match user name
 
-        String userName = converter.toString(userData.get("userName"));
-
-        if(userName != null) {
-            User[] username_match = User.where("userName", "=", converter.toString(userData.get("userName"))); //check match user name
-
-            if(username_match.length > 0) //if this name is already used
-                return converter.HashMapToJSON(StatusDescription.createProcessStatus(false, "This user name is already used by other user."));
-        }
+        if(username_match.length > 0) //if this name is already used
+            return converter.HashMapToJSON(StatusDescription.createProcessStatus(false, "This user name is already used by other user."));
 
         if((converter.toString(userData.get("password"))).length() < 6)
             return converter.HashMapToJSON(StatusDescription.createProcessStatus(false, "Password should not be less than 6 letters."));
@@ -174,6 +169,8 @@ public class UserController {
         if(user == null)  //if user does not exist
             return converter.HashMapToJSON(StatusDescription.createProcessStatus(false, "This user does not exist."));
 
+        user.setEmail(converter.toString(userData.get("email")));
+
         try {
             user.setFirstName(converter.toString(userData.get("firstName")));
             user.setLastName(converter.toString(userData.get("lastName")));
@@ -182,7 +179,6 @@ public class UserController {
             user.setFacebookID(converter.toString(userData.get("facebookID")));
             user.setFacebookFirstName(converter.toString(userData.get("facebookFirstName")));
             user.setFacebookLastName(converter.toString(userData.get("facebookLastName")));
-            user.setEmail(converter.toString(userData.get("email")));
         }
         catch (Exception e) {
             //do nothing

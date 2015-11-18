@@ -195,11 +195,17 @@ public class GroupController {
         if(group == null) //if found nothing
             return converter.HashMapToJSON(StatusDescription.createProcessStatus(false, "This group does not exist."));
 
+        if(group.getAmountMember() > 9)
+            return converter.HashMapToJSON(StatusDescription.createProcessStatus(false, "The group has reached the maximum members limit now."));
+
         if(user == null) //if found nothing
             return converter.HashMapToJSON(StatusDescription.createProcessStatus(false, "This user does not exist."));
 
-        if((boolean) group.addMember(user).get("status")) //check if adding member not cause any issue
-            return converter.HashMapToJSON(group.save()); //return save status
+        if((boolean) group.addMember(user).get("status")) { //check if adding member not cause any issue {
+            HashMap<String, Object> response = group.save();
+            response.put("group", group.getGeneralValues());
+            return converter.HashMapToJSON(response); //return save status
+        }
 
         return converter.HashMapToJSON(StatusDescription.createProcessStatus(false, "An error has occurred due to internal server error."));
     }
