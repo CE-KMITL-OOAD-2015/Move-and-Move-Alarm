@@ -1,8 +1,11 @@
 package com.fatel.mamtv1;
 
 import android.app.AlarmManager;
+import android.app.AlertDialog;
+import android.app.DialogFragment;
 import android.app.PendingIntent;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -16,10 +19,13 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v4.widget.DrawerLayout;
 import android.os.Bundle;
+import android.text.Html;
 import android.util.Log;
+import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
@@ -377,12 +383,30 @@ public class MainActivity extends AppCompatActivity {
 
     }
     public void linktoreset(View view){
-        mAlarmHelper =  new DBAlarmHelper(this);
-        mAlarmHelper.deleteSetAlarm("1");
-        mDrawerLayout.closeDrawers();
-        makeToast("Delete set time");
-        Intent intent = new Intent(this, MainActivity.class);
-        startActivity(intent);
+        DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                switch (which){
+                    case DialogInterface.BUTTON_POSITIVE:
+                        //Yes button clicked
+                        mAlarmHelper =  new DBAlarmHelper(MainActivity.this);
+                        mAlarmHelper.deleteSetAlarm("1");
+                        mDrawerLayout.closeDrawers();
+                        makeToast("Delete set time");
+                        Intent intent = new Intent(MainActivity.this, MainActivity.class);
+                        startActivity(intent);
+                        break;
+
+                    case DialogInterface.BUTTON_NEGATIVE:
+                        //No button clicked
+                        break;
+                }
+            }
+        };
+        AlertDialog.Builder builder = new AlertDialog.Builder(this, AlertDialog.THEME_HOLO_DARK);
+        builder.setTitle("Alarm");
+        builder.setMessage("Do you want to reset alarm?").setPositiveButton("Yes", dialogClickListener)
+                .setNegativeButton("No", dialogClickListener).show();
     }
 
     public void makeToast(String text)
