@@ -17,14 +17,20 @@ import android.view.View;
 import android.widget.TextView;
 
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.concurrent.TimeUnit;
 import android.widget.ImageView;
 
 import android.content.ContentValues;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.widget.Toast;
 
-
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
 
 
 public class Activity extends AppCompatActivity {
@@ -142,7 +148,7 @@ public class Activity extends AppCompatActivity {
                 //Intent intent = new Intent(Activity.this, MainActivity.class);
                 //startActivity(intent);
 
-                //set frq
+                requesAddscore();
             }
         }.start();
 
@@ -216,5 +222,56 @@ public class Activity extends AppCompatActivity {
         //int interval = 60*1000*1;
         //PendingIntent pendingIntent = PendingIntent.getBroadcast(Activity.this, 0, i, 0);
        // manager.setExact(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + interval, pendingIntent);
+    }
+
+    public void requesAddscore()
+    {
+        final Converter converter = Converter.getInstance();
+        String url = HttpConnector.URL + "user/increaseScore";
+        StringRequest eventRequest = new StringRequest(Request.Method.POST, url, //create new string request with POST method
+                new Response.Listener<String>() { //create new listener to traces the data
+                    @Override
+                    public void onResponse(String response) { //when listener is activated
+                        Log.i("volley", response);
+
+                        HashMap<String, Object> data = converter.JSONToHashMap(response);
+                        if((boolean) data.get("status")) {
+                            makeToast("Sync process completed.");
+                            UserManage.getInstance(Activity.this).addScore(1, Activity.this);
+                        }
+                        else {
+                            makeToast(converter.toString(data.get("description")));
+                        }
+                    }
+                }, new Response.ErrorListener() { //create error listener to trace an error if download process fail
+            @Override
+            public void onErrorResponse(VolleyError volleyError) { //when error listener is activated
+                Log.i("volley", volleyError.toString());
+                makeToast("Cannot connect to server. Please check the Internet setting.");
+            }
+        }) { //define POST parameters
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> map = new HashMap<String, String>(); //create map to keep variables
+                HashMap<String, Object> JSON = new HashMap<>();
+                HashMap<String, Object> userData = UserManage.getInstance(Activity.this).getCurrentUser().getGeneralValues();
+                int point = 1;
+
+                JSON.put("score", point);
+                JSON.put("user", userData);
+                JSON.put("description", "Done activity! Get 1 point.");
+                Log.i("JSON", converter.HashMapToJSON(JSON));
+                map.put("JSON", converter.HashMapToJSON(JSON));
+
+                return map;
+            }
+        };
+
+        HttpConnector.getInstance((Context) Cache.getInstance().getData("MainActivityContext")).addToRequestQueue(eventRequest);
+    }
+
+    public void makeToast(String text)
+    {
+        Toast.makeText(this, text, Toast.LENGTH_SHORT).show();
     }
 }
