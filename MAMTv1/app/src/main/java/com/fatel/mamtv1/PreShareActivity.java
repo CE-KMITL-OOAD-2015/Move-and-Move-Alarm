@@ -157,20 +157,20 @@ public class PreShareActivity extends  ActionBarActivity {
         };
 
 
-        //add for activity_share facebook
-        postPictureButton = (Button) findViewById(R.id.btn_postPic);  //btn_postPic    btn_share
-
-        postPictureButton.setOnClickListener(new View.OnClickListener() {
-            //@override
-            public void onClick (View v){
-                showPickPictureDialog();
-            }
-        });
+//        //add for activity_share facebook
+//        postPictureButton = (Button) findViewById(R.id.btn_postPic);  //btn_postPic    btn_share
+//
+//        postPictureButton.setOnClickListener(new View.OnClickListener() {
+//            //@override
+//            public void onClick (View v){
+//                showPickPictureDialog();
+//            }
+//        });
 
 
         //add for sync with camera
         capturePictureButton = (Button)findViewById(R.id.btn_capturePic);
-        imgPreview = (ImageView) findViewById(R.id.imgPreview);
+        //imgPreview = (ImageView) findViewById(R.id.imgPreview);
 
         /**
          * Capture image button click event
