@@ -489,8 +489,14 @@ public class MainActivity extends AppCompatActivity {
                             } catch (ParseException e) {
                                 e.printStackTrace();
                             }
-                            //
-                            
+
+                            String time = ""+date.getHours()+"."+date.getMinutes();
+                            Intent intent = new Intent(getBaseContext(), EventReceiver.class);
+                            Bundle b = new Bundle();
+                            b.putString("event", time);
+                            intent.putExtras(b);
+                            sendBroadcast(intent);
+
                         }
                         else {
                             makeToast(converter.toString(data.get("description")));

@@ -66,8 +66,13 @@ public class EventactAlarm extends AppCompatActivity {
         //history
         HistorygroupHelper mhistorygroupHelper = new HistorygroupHelper(this);
         Historygroup historygroup = mhistorygroupHelper.getHistoryGroup(UserManage.getInstance(this).getCurrentIdGroup());
-        historygroup.addaccept(1);
-        historygroup.save(this);
+        if(historygroup!=null){
+            historygroup.addaccept(1);
+            historygroup.save(this);
+        }
+        else{
+            Log.i("Usergroup","can't addaccept");
+        }
         Log.i("historyacc", UserManage.getInstance(this).getCurrentIdGroup() + "");
         Log.i("historyacc",historygroup.getNumberOfAccept()+"");
         Log.i("historyacc",historygroup.gettotal()+"");
@@ -81,8 +86,13 @@ public class EventactAlarm extends AppCompatActivity {
         //history
         HistorygroupHelper mhistorygrouphelper = new HistorygroupHelper(this);
         Historygroup historygroup = mhistorygrouphelper.getHistoryGroup(UserManage.getInstance(this).getCurrentIdGroup());
-        historygroup.addaccept(1);
-        historygroup.save(this);
+        if(historygroup!=null){
+            historygroup.addcancel(1);
+            historygroup.save(this);
+        }
+        else{
+            Log.i("Usergroup","can't cancel");
+        }
         Log.i("historycancel", UserManage.getInstance(this).getCurrentIdGroup()+ "");
         Log.i("historycancel", historygroup.getCancelEvent() + "");
         Log.i("historycancel", historygroup.gettotal() + "");
@@ -92,11 +102,6 @@ public class EventactAlarm extends AppCompatActivity {
         //i1.putExtra("key", "main");
         startActivity(i1);
         //sendBroadcast(i1);
-        Intent i = new Intent(getBaseContext(), AlarmReceiver.class);
-        Bundle b = new Bundle();
-        b.putString("key", "first");
-        i.putExtras(b);
-        sendBroadcast(i);
         v.cancel();
         m.reset();
         //AlarmManager manager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);

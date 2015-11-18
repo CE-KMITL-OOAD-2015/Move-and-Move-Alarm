@@ -136,6 +136,8 @@ public class EventActivity extends AppCompatActivity {
                 //startActivity(intent);
 
                 //set frq
+
+                //send score to back
             }
         }.start();
 
@@ -186,9 +188,14 @@ public class EventActivity extends AppCompatActivity {
         //history
         HistorygroupHelper mhistorygroupHelper = new HistorygroupHelper(this);
         Historygroup historygroup = mhistorygroupHelper.getHistoryGroup(UserManage.getInstance(this).getCurrentIdGroup());
-        historygroup.subaccept(1);
-        historygroup.addcancel(1);
-        historygroup.save(this);
+        if(historygroup!=null){
+            historygroup.subaccept(1);
+            historygroup.addcancel(1);
+            historygroup.save(this);
+        }
+        else{
+            Log.i("Usergroup","can't cancel");
+        }
         Log.i("historycancel", UserManage.getInstance(this).getCurrentIdGroup() + "");
         Log.i("historycancel", historygroup.getCancelEvent() + "");
         Log.i("historycancel", historygroup.gettotal() + "");
@@ -198,12 +205,6 @@ public class EventActivity extends AppCompatActivity {
         //i1.putExtra("key", "main");
         startActivity(i1);
         //sendBroadcast(i1);
-        Intent i = new Intent(getBaseContext(), AlarmReceiver.class);
-
-        Bundle b = new Bundle();
-        b.putString("key", "first");
-        i.putExtras(b);
-        sendBroadcast(i);
         //AlarmManager manager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
         //int interval = 60*1000*1;
         //PendingIntent pendingIntent = PendingIntent.getBroadcast(Activity.this, 0, i, 0);

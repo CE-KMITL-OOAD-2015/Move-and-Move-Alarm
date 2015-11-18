@@ -61,7 +61,7 @@ public class ProgressEventFragment extends Fragment {
         else{
             cirProgressstatusE = (historygroup.getNumberOfAccept()*100)/historygroup.gettotal();
             cancelPercentE = 100-cirProgressstatusE;
-            mProgressStatusE = ((countAcceptE * timePerPicE) * 100) / (countTotalE * timePerPicE);
+            mProgressStatusE = ((historygroup.getNumberOfAccept() * timePerPicE) * 100) / (historygroup.gettotal() * timePerPicE);
         }
         acceptE = (TextView) view.findViewById(R.id.acceptPercent);
         cancelE = (TextView) view.findViewById(R.id.cancelPercent);
@@ -93,7 +93,7 @@ public class ProgressEventFragment extends Fragment {
             //set progress bar in each days
             timeProgressE.setProgress(mProgressStatusE);
             // Show the progress on TextView
-            timeFracE.setText((countAcceptE*timePerPicE)+"/"+(countTotalE*timePerPicE)+"min");
+            timeFracE.setText((historygroup.getNumberOfAccept()*timePerPicE)+"/"+(historygroup.gettotal()*timePerPicE)+"min");
 
 
         return view;
