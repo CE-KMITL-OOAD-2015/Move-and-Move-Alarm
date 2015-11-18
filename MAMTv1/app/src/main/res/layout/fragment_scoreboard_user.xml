@@ -10,7 +10,7 @@
         android:id="@+id/userscore"
         android:text="User"
         android:textSize="25sp"
-        android:layout_marginTop="70dp"
+        android:layout_marginTop="60dp"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"/>
@@ -53,13 +53,15 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" />
     </LinearLayout>
-
+<RelativeLayout
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content">
 <TableLayout
-    android:layout_marginTop="20dp"
     android:id="@+id/table"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="horizontal"
+    android:layout_alignParentBottom="true"
     android:stretchColumns="*" >
 
 
@@ -633,7 +635,7 @@
 
 </TableLayout>
 
-
+</RelativeLayout>
 
 
 

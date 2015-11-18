@@ -60,6 +60,7 @@ public class UserManage {
                 new Response.Listener<String>() { //create new listener to traces the data
                     @Override
                     public void onResponse(String response) { //when listener is activated
+                        Log.i("volley response",response);
                         Converter converter = Converter.getInstance();
                         Context context = (Context) Cache.getInstance().getData("loginContext");
                         HashMap<String, Object> data = converter.JSONToHashMap(response); //convert JSON to HashMap format
@@ -93,7 +94,10 @@ public class UserManage {
                             UserManage.getInstance(context).getCurrentUser().setFacebookID(converter.toString(userData.get("facebookID")));
                             UserManage.getInstance(context).getCurrentUser().setFacebookFirstName(converter.toString(userData.get("facebookFirstName")));
                             UserManage.getInstance(context).getCurrentUser().setFacebookLastName(converter.toString(userData.get("facebookLastName ")));
-                            UserManage.getInstance(context).getCurrentUser().setIdGroup(converter.toInt(groupData.get("id")));
+
+                            if(groupData != null)
+                                UserManage.getInstance(context).getCurrentUser().setIdGroup(converter.toInt(groupData.get("id")));
+
                             UserManage.getInstance(context).getCurrentUser().setLogin(1);
                             UserManage.getInstance(context).getCurrentUser().save(context);
 
