@@ -9,7 +9,7 @@
         android:background="@drawable/selectorsetting"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
-        android:onClick="onClick"
+        android:onClick="linktoreset"
         />
 
 </RelativeLayout>
