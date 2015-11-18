@@ -437,4 +437,14 @@ public String getCurrentUsername(){return currentUser.getUserName();}
             updateUser();
         }
     }
+    public int getCurrentStateSw(){
+        return currentUser.getStatesw();
+    }
+    public void setStateSw(int stateSw,Context context){
+        if(currentUser!=null){
+            currentUser.setStatesw(stateSw);
+            currentUser.save(context);
+            updateUser();
+        }
+    }
 }
