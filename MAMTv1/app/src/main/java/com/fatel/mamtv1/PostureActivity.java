@@ -46,7 +46,7 @@ public class PostureActivity extends AppCompatActivity {
         previous = (Button) findViewById(R.id.previousbtn);
         context=getApplicationContext();
         PostureCollection postureCollection = PostureCollection.getInstance(this);
-        int[] imageId = new int[] {0,1,2,3,4,5,6,7,8};
+        int[] imageId = new int[] {0,1,2,3,4,5,6,7,8,9,10,11,12};
         Log.i("Activity", "can go +1");
         img = postureCollection.getPosture(imageId);
         Log.i("Activity","can go +1"+img);
@@ -94,7 +94,7 @@ public class PostureActivity extends AppCompatActivity {
             public void onClick(View view) {
                 previous.setEnabled(true);
                 count++;
-                if (count < 9) {
+                if (count < 13) {
                     frameAnimation.stop();
                     exerciseImg = (img.get(count)).getImage();
                     exerciseDes = (img.get(count)).getDescription();
@@ -105,9 +105,9 @@ public class PostureActivity extends AppCompatActivity {
                     // Start the animation (looped playback by default).
                     frameAnimation.start();
                 }
-                else if(count == 9)
+                else if(count == 13)
                 {
-                    count = 8;
+                    count = 12;
                     next.setEnabled(false);
                 }
             }
