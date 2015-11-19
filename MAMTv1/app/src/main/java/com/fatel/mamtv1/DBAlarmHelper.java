@@ -4,7 +4,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.util.Log;
 
 /**
  * Created by Monthon on 12/10/2558.
@@ -31,14 +30,12 @@ public class DBAlarmHelper extends SQLiteOpenHelper{
                 Alarm.Column.STOP_INTERVAL,
                 Alarm.Column.FRQ,
                 Alarm.Column.DAY);
-        Log.i(TAG,CREATE_ALRAM_TABLE);
         db.execSQL(CREATE_ALRAM_TABLE);
     }
     @Override
     public void onUpgrade(SQLiteDatabase db,int oldVersion,int newVersion){
         String DROP_ALRAM_TABLE = "DROP TABLE IF EXISTS"+ Alarm.TABLE;
         db.execSQL(DROP_ALRAM_TABLE);
-        Log.i(TAG, "Upgrade Database from " + oldVersion + " to " + newVersion);
         onCreate(db);
     }
     public void addAlarm(Alarm alarm) {
@@ -71,7 +68,6 @@ public class DBAlarmHelper extends SQLiteOpenHelper{
                 values,
                 Alarm.Column.ID + " = ? ",
                 new String[] { String.valueOf(1) });
-        Log.d("row", row + "");
         sqLiteDatabase.close();
     }
     public int checkdata(){
@@ -84,7 +80,6 @@ public class DBAlarmHelper extends SQLiteOpenHelper{
         }
 
         sqLiteDatabase.close();
-        Log.d("temp", temp + "");
         return temp;
     }
     public Alarm getAlarm(){

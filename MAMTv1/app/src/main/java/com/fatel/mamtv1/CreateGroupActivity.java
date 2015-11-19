@@ -1,18 +1,13 @@
 package com.fatel.mamtv1;
 
-import android.support.v4.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
-import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -63,7 +58,6 @@ public class CreateGroupActivity extends AppCompatActivity {
             Toast.makeText(this, "Please enter Group name at least 6 characters", Toast.LENGTH_SHORT).show();
         }
         else{
-            //ตรงนี้
             String url = "http://203.151.92.196:8080/group/createGroup";
             final User user = UserManage.getInstance(CreateGroupActivity.this).getCurrentUser();
 
@@ -71,7 +65,6 @@ public class CreateGroupActivity extends AppCompatActivity {
                     new Response.Listener<String>() { //create new listener to traces the data
                         @Override
                         public void onResponse(String response) { //when listener is activated
-                            Log.i("volley", response);
                             Converter converter = Converter.getInstance();
                             HashMap<String, Object> data = converter.JSONToHashMap(response);
                             if((boolean) data.get("status")) {

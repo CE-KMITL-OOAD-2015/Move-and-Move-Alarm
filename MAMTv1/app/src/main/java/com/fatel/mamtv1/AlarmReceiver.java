@@ -6,7 +6,6 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.Toast;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -20,49 +19,33 @@ public class AlarmReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
         // Start the service, keeping the device awake while it is launching.
-        Log.i("go", "go to reeceiver");
+
         Bundle extras = intent.getExtras();
         String temp = extras.getString("key");
         mAlarmHelper = new DBAlarmHelper(context);
-        if(temp==null){
-            Log.i("null","temp null");
-        }
-        else{
-            Log.i("temp",temp);
-        }
-        /*if(manager == null){
-            Log.i("null","manager null");
-        }else{
-            Log.i("!null","manager");
-        }*/
+
         if(checkday()){
             //choose day
-            Log.i("Day", "true");
             //bug
             if(checkstarttime()&&(temp==null||!temp.equalsIgnoreCase("first"))){
                 //bug
                     if (manager!= null) {
                        manager.cancel(pendingIntent);
                     }
-                    Log.i("starttimr", "true");
                     Intent i = new Intent(context, actAlarm.class);
-                    Log.i("AlarmReceiver", "CanJump");
                     i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     context.startActivity(i);
                     Toast.makeText(context, "I'm running", Toast.LENGTH_SHORT).show();
             }
             else if(inRange(timenow())) {
-                Log.i("range", "true");
                 setfrq(context,temp);
             }
             else{
-                Log.i("range sttime", "false");
                 setnextstart(context, temp);
             }
         }
         else{
             //don't choose day
-            Log.i("Day", "false");
             setnextstart(context, temp);
         }
     }
@@ -71,7 +54,6 @@ public class AlarmReceiver extends BroadcastReceiver {
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(System.currentTimeMillis());
         Alarm alarm = mAlarmHelper.getAlarm();
-        Log.i("Day",alarm.getDay());
         //choose day return true
         if (Integer.parseInt(alarm.getDay().substring(calendar.get(Calendar.DAY_OF_WEEK) - 1, calendar.get(Calendar.DAY_OF_WEEK))) == 1)
             return true;
@@ -123,23 +105,19 @@ public class AlarmReceiver extends BroadcastReceiver {
         Date end = null;
         try {
             //All your parse Operations
-            Log.i("inRange","error"+" "+starthr+"."+startmin+".00");
             start = new SimpleDateFormat("HH.mm.ss").parse(starthr+"."+startmin+".00");
-            //end = new SimpleDateFormat("HH.mm.ss").parse(stophr+"."+stopmin+".00");
         } catch (ParseException e) {
             //Handle exception here, most of the time you will just log it.
             e.printStackTrace();
         }
         try {
             //All your parse Operations
-            Log.i("inRange","error"+" "+stophr+"."+stopmin+".00");
             // start = new SimpleDateFormat("HH.mm.ss").parse(starthr+"."+startmin+".00");
             end = new SimpleDateFormat("HH.mm.ss").parse(stophr+"."+stopmin+".00");
         } catch (ParseException e) {
             //Handle exception here, most of the time you will just log it.
             e.printStackTrace();
         }
-        Log.i("cross day",end.before(start)+"");
         if(checkstarttime()){
             return true;
         }
@@ -152,13 +130,9 @@ public class AlarmReceiver extends BroadcastReceiver {
         }
     }
     public void setfrq(Context context,String massage){
-        if(massage==null)
-            Log.d("message","null");
-        else
-            Log.d("message",massage);
+
         if(massage==null||massage.equalsIgnoreCase("act")){
             Intent i = new Intent(context, actAlarm.class);
-            Log.i("AlarmReceiver", "CanJump");
             i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             context.startActivity(i);
             Toast.makeText(context, "I'm running", Toast.LENGTH_SHORT).show();
@@ -241,7 +215,6 @@ public class AlarmReceiver extends BroadcastReceiver {
         Date current = null;
         try {
             //All your parse Operations
-            Log.i("current time",currenthr+"."+currentmn+".00");
             current = new SimpleDateFormat("HH.mm.ss").parse(currenthr+"."+currentmn+".00");
         } catch (ParseException e) {
             //Handle exception here, most of the time you will just log it.
@@ -253,7 +226,6 @@ public class AlarmReceiver extends BroadcastReceiver {
     public void setnextstart(Context context,String message){
         if((message==null||message.equalsIgnoreCase("act"))&&checkday()){
             Intent i = new Intent(context, actAlarm.class);
-            Log.i("AlarmReceiver", "CanJump");
             i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             context.startActivity(i);
             Toast.makeText(context, "I'm running", Toast.LENGTH_SHORT).show();
@@ -295,7 +267,6 @@ public class AlarmReceiver extends BroadcastReceiver {
             //context.sendBroadcast(alarmIntent);
             pendingIntent = PendingIntent.getBroadcast(context, 0, alarmIntent, 0);
             manager.setExact(AlarmManager.RTC_WAKEUP, startUpTime, pendingIntent);
-            Log.i("start", "set time");
         }
 
     }

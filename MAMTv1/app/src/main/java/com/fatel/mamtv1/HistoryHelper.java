@@ -5,7 +5,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.util.Log;
 
 import javax.net.ssl.HostnameVerifier;
 
@@ -27,14 +26,12 @@ public class HistoryHelper extends SQLiteOpenHelper {
                 History.Column.IDUSER,
                 History.Column.NUMACCEPT,
                 History.Column.CANCEL);
-        Log.i(TAG,CREATE_HISTORYUSER_TEBLE);
         db.execSQL(CREATE_HISTORYUSER_TEBLE);
     }
     @Override
     public void onUpgrade(SQLiteDatabase db,int oldVersion,int newVersion){
         String DROP_HISTORYUSER_TABLE ="DROP TABLE IF EXISTS"+History.TABLE;
         db.execSQL(DROP_HISTORYUSER_TABLE);
-        Log.i(TAG,"Upgrade Database from"+oldVersion+" to "+newVersion);
         onCreate(db);
     }
     public int addHistoryUser(History history){
@@ -45,7 +42,6 @@ public class HistoryHelper extends SQLiteOpenHelper {
         values.put(History.Column.CANCEL, history.getCancelActivity());
         long id = sqLiteDatabase.insert(History.TABLE,null,values);
         sqLiteDatabase.close();
-        Log.i(TAG, "Add history :" + id + " id user: " + history.getIdUser());
         return ((int)id);
     }
     public void updateHistoryUser(History history){
@@ -78,7 +74,6 @@ public class HistoryHelper extends SQLiteOpenHelper {
         }, History.Column.IDUSER + " = ? ", new String[]
                 {String.valueOf(idUeser)}, null, null, null, null);
         History history = null;
-        Log.i("History","getHistoryUser :" + idUeser+" ,"+cursor);
         boolean check = false;
         if(cursor != null){
             check = cursor.moveToFirst();

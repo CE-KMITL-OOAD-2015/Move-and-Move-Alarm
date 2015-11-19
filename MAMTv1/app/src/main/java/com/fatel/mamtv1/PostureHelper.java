@@ -8,7 +8,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.util.Log;
 
 public class PostureHelper extends SQLiteOpenHelper {
 
@@ -29,14 +28,12 @@ public class PostureHelper extends SQLiteOpenHelper {
                 Posture.Column.IDPOSTURE,
                 Posture.Column.IMAGE,
                 Posture.Column.DESCRIPTION);
-        Log.i(TAG,CREATE_POSTURE_TABLE);
         db.execSQL(CREATE_POSTURE_TABLE);
     }
     @Override
     public void onUpgrade(SQLiteDatabase db,int oldVersion,int newVersion){
         String DROP_POSTURE_TABLE = "DROP TABLE IF EXISTS"+ Posture.TABLE;
         db.execSQL(DROP_POSTURE_TABLE);
-        Log.i(TAG, "Upgrade Database from " + oldVersion + " to " + newVersion);
         onCreate(db);
     }
     public int addPosture(Posture posture){
@@ -101,7 +98,6 @@ public class PostureHelper extends SQLiteOpenHelper {
 
         sqLiteDatabase.delete(Posture.TABLE, Posture.Column.ID + " = ? ",
                 new String[]{String.valueOf(id)});
-        //  sqLiteDatabase.delete(User.TABLE, User.Column.ID + " = " + id, null);
 
         sqLiteDatabase.close();
     }

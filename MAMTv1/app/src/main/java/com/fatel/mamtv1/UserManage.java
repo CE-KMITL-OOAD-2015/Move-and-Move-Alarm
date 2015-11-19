@@ -3,18 +3,14 @@ package com.fatel.mamtv1;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
-import android.view.View;
 import android.widget.Toast;
-
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
-
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 public class UserManage {
 
@@ -29,9 +25,6 @@ public class UserManage {
             User user = User.checkLogin(context);
             if(user!=null){
                 currentUser = user;
-
-                Log.i("User", "loginuser!=null :"+currentUser.getUserName());
-
             }
         }
         return instance;
@@ -40,17 +33,10 @@ public class UserManage {
     public User getCurrentUser(){
         return currentUser;
     }
-
-    private  void setCurrentUser(User user){
+    public void setCurrentUser(User user){
        currentUser= user;
     }
 
-    public void createFBUser(String facebookID,String facebookFirstName,Context context){
-        int idUser = addNewUserFB(facebookID, facebookFirstName);
-        currentUser = new User(idUser,facebookID,facebookFirstName);
-        currentUser.setLogin(1);
-        currentUser.save(context);
-    }
     public void loginUser (String username,String password, final Context context){
 
         String url = "http://203.151.92.196:8080/user/login"; //url of login API
@@ -60,7 +46,6 @@ public class UserManage {
                 new Response.Listener<String>() { //create new listener to traces the data
                     @Override
                     public void onResponse(String response) { //when listener is activated
-                        Log.i("volley response",response);
                         Converter converter = Converter.getInstance();
                         Context context = (Context) Cache.getInstance().getData("loginContext");
                         HashMap<String, Object> data = converter.JSONToHashMap(response); //convert JSON to HashMap format
@@ -69,13 +54,9 @@ public class UserManage {
                         if((boolean) data.get("status")) {
                             HashMap<String, Object> userData = converter.JSONToHashMap(converter.toString(data.get("user")));
                             HashMap<String, Object> groupData = converter.JSONToHashMap(converter.toString(data.get("group")));
-
                             Cache.getInstance().putData("groupData", groupData);
-                            Log.i("volley 3", userData.toString()); //throw the message to the console.
-                            Log.i("User", "login");
                             int idUser = converter.toInt(userData.get("id"));
                             String username = converter.toString(userData.get("userName"));
-                            Log.i("User", "login :" + idUser);
                             if((User.find(idUser, context))!= null){
                                 User user=User.find(idUser, context);
                                 UserManage.getInstance(context).setCurrentUser(user);
@@ -134,8 +115,6 @@ public class UserManage {
 
         HttpConnector.getInstance(context).addToRequestQueue(loginRequest); //add the request to HTTPConnector, the class will respond the request automatically at separated thread
 
-
-        /////
     }
     public void loginFBUser(String facebookID,String facebookFirstName,Context context){
 
@@ -155,12 +134,9 @@ public class UserManage {
                             HashMap<String, Object> groupData = converter.JSONToHashMap(converter.toString(data.get("group")));
 
                             Cache.getInstance().putData("groupData", groupData);
-                            Log.i("volley 4", userData.toString()); //throw the message to the console.
-                            Log.i("User", "loginFB");
                             int idUser = converter.toInt(userData.get("id"));
                             String facebookID = converter.toString(userData.get("facebookID"));
                             String facebookFirstName = converter.toString(userData.get("facebookFirstName"));
-                            Log.i("User", "login :" + idUser);
                             if((User.find(idUser, context))!= null){
                                 User user=User.find(idUser, context);
                                 UserManage.getInstance(context).setCurrentUser(user);
@@ -216,13 +192,11 @@ public class UserManage {
 
         HttpConnector.getInstance(context).addToRequestQueue(loginFBRequest); //add the request to HTTPConnector, the class will respond the request automatically at separated thread
 
-////
     }
     public void logoutUser(Context context){
         currentUser.setLogin(0);
         currentUser.save(context);
         currentUser=null;
-        Log.i("User", "funh looutuser :" + currentUser);
     }
     public boolean checkCurrentLogin(Context context){
         User user = User.checkLogin(context);
@@ -246,7 +220,7 @@ public class UserManage {
                 if (s!=null) {
                     Converter converter = Converter.getInstance();
                     Context context = (Context) Cache.getInstance().getData("CreateAccountContext");
-                    Log.i("volley 1", s); //throw the result to the console.
+                    Log.i("volley ", s); //throw the result to the console.
                     HashMap<String, Object> data = converter.JSONToHashMap(s);
                     HashMap<String, Object> userData = converter.JSONToHashMap(converter.toString(data.get("user")));
 
@@ -254,10 +228,9 @@ public class UserManage {
                         int idUser = converter.toInt(userData.get("id"));
                         String username = converter.toString(userData.get("userName"));
 
-                        Log.i("User", "createnewuser :" + idUser);
                         User currentUser = new User(idUser, username);
                         currentUser.setLogin(1);
-                        currentUser.save(context); Log.i("User save", "save :" + idUser);
+                        currentUser.save(context);
                         UserManage.getInstance(context).setCurrentUser(currentUser);
 
                         context.startActivity(new Intent(context, MainActivity.class));
@@ -268,7 +241,7 @@ public class UserManage {
                     }
                 }
                 else
-                    Log.i("volley 2", "s==null");
+                    Log.i("volley ", "s==null");
 
                 /*HashMap<String, Object> userData = Converter.getInstance().JsonToHashMap(s); //convert the result into HashMap format
                 Cache.getInstance().putData("idUser", userData.get("id"));
@@ -289,12 +262,10 @@ public class UserManage {
                 user.put("password", pw);
                 user.put("facebookID","0");
                 Map<String, String> JSON = new HashMap<>(); //create HashMap again to keep the above user object
-                Log.i("info", user.toString());
                 JSON.put("JSON", Converter.getInstance().HashMapToJSON(user)); //the API receive the values in one parameter name JSON
                 return JSON; //send the value name JSON to the server
             }
         }; //end of request's details
-        Log.i("User", "addnewuser http:");
         HttpConnector.getInstance(context).addToRequestQueue(stringRequest); //add the request to HTTPConnector, the class will respond the request automatically at separated thread
 
     }

@@ -1,8 +1,6 @@
 package com.fatel.mamtv1;
 
 import android.content.Context;
-import android.media.Image;
-import android.util.Log;
 
 import java.util.ArrayList;
 
@@ -33,7 +31,6 @@ public class PostureCollection {
     }
 
     public void initial (Context context){
-        Log.i("Posture", "getPostureCount :" + Posture.getPostureCount(context));
         if(Posture.getPostureCount(context)<13) {
             addImage(R.drawable.pos1, "ยืดกล้ามเนื้อแขน", context);
             addImage(R.drawable.pos2, "ยืดกล้ามเนื้อขา", context);

@@ -1,19 +1,11 @@
 package com.fatel.mamtv1;
 
-import android.app.AlarmManager;
 import android.app.AlertDialog;
-import android.app.DialogFragment;
-import android.app.PendingIntent;
-import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Color;
-import android.net.Uri;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
@@ -21,45 +13,26 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v4.widget.DrawerLayout;
 import android.os.Bundle;
 import android.text.Html;
-import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.LinearLayout;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.bumptech.glide.Glide;
 import com.facebook.FacebookSdk;
-import com.facebook.Profile;
 import com.facebook.login.LoginManager;
-import com.facebook.login.widget.ProfilePictureView;
-import com.squareup.picasso.Picasso;
-
-import java.io.BufferedInputStream;
-import java.io.IOException;
-import java.io.InputStream;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.net.URLConnection;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.ArrayList;
-import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 import de.hdodenhof.circleimageview.CircleImageView;
 
@@ -96,28 +69,16 @@ public class MainActivity extends AppCompatActivity {
         else
             user.setText(UserManage.getInstance(this).getCurrentUsername());
 
-        Log.i("checkid", UserManage.getInstance(this).getCurrentFacebookId() + "");
-        Log.i("checkuser", UserManage.getInstance(this).getCurrentUsername() + "");
-        Log.i("checkemail", UserManage.getInstance(this).getCurrentEmail() + "");
-        Log.i("checkemail", UserManage.getInstance(this).getCurrentFacebookFirstName() + "");
-        Log.i("checkid", UserManage.getInstance(this).getCurrentFacebookLastName() + "");
-        Log.i("checkid", UserManage.getInstance(this).getCurrentAge() + "");
-        Log.i("checkid", UserManage.getInstance(this).getCurrentGender() + "");
-        Log.i("score", UserManage.getInstance(this).getCurrentScore() + "");
         tempid = UserManage.getInstance(this).getCurrentFacebookID();
-        Log.i("checkname", tempid+"");
         if(!tempid.equals("0.0")) {
             if(!tempid.equals("0")) {
                 tempid = tempid.substring(0, 1) + tempid.substring(2, 17);
                 Glide.with(this).load("https://graph.facebook.com/" + tempid + "/picture?type=large").into(profilepic);
             }
         }
-        // Intent alarmIntent = new Intent(MainActivity.this, AlarmReceiver.class);
-        //pendingIntent = PendingIntent.getBroadcast(MainActivity.this, 0, alarmIntent, 0);
 
         if(UserManage.getInstance(this).getCurrentUser().getIdGroup() != 0) {
             requestEvent();
-            Log.i("request", "event");
         }
 
         FragmentTransaction tx = getSupportFragmentManager().beginTransaction();
@@ -272,17 +233,6 @@ public class MainActivity extends AppCompatActivity {
                 UserManage.getInstance(this).logoutUser(this);
 
 
-                /*
-                if(UserManage.getInstance(this).mauser == 1) {
-                    UserManage.getInstance(this).logoutUser(this);
-                    UserManage.getInstance(this).mauser = 0;
-                }
-                else if(UserManage.getInstance(this).mauser == 2) {
-                    LoginManager.getInstance().logOut();
-                    UserManage.getInstance(this).logoutUser(this);
-                    UserManage.getInstance(this).mauser = 0;
-                }*/
-
                 mAlarmHelper.deleteSetAlarm("1");
                 mDrawerLayout.closeDrawers();
                 Intent intent = new Intent(this, Intro_Activity.class);
@@ -292,10 +242,6 @@ public class MainActivity extends AppCompatActivity {
             case R.id.nav_set_fragment:
                 fragmentClass = SetFragment.class;
                 break;
-//            case R.id.nav_third_fragment:
-//                fragmentClass = ThirdFragment.class;
-//                break;
-//                break;
             default:
                 fragmentClass = MainFragment.class;
         }
@@ -314,7 +260,7 @@ public class MainActivity extends AppCompatActivity {
             tx.replace(R.id.container, fragment).commit();
 
             // Highlight the selected item, update the title, and close the drawer
-            //menuItem.setChecked(true);
+
             if (menuItem.getTitle().equals("Home"))
                 setTitle("Move Alarm");
             else
@@ -433,8 +379,6 @@ public class MainActivity extends AppCompatActivity {
                         mAlarmHelper.deleteSetAlarm("1");
                         mDrawerLayout.closeDrawers();
                         makeToast("Delete set time");
-                        //Intent intent = new Intent(MainActivity.this, MainActivity.class);
-                        //startActivity(intent);
                         break;
 
                     case DialogInterface.BUTTON_NEGATIVE:
@@ -464,7 +408,6 @@ public class MainActivity extends AppCompatActivity {
                 new Response.Listener<String>() { //create new listener to traces the data
                     @Override
                     public void onResponse(String response) { //when listener is activated
-                        Log.i("volley 7", response);
                         Converter converter = Converter.getInstance();
                         Cache cache = Cache.getInstance();
                         HashMap<String, Object> data = converter.JSONToHashMap(response);
@@ -472,7 +415,6 @@ public class MainActivity extends AppCompatActivity {
                             HashMap<String, Object> groupData = converter.JSONToHashMap(converter.toString(data.get("group")));
                             cache.putData("groupData", groupData);
                             Intent intent3 = new Intent(MainActivity.this, nxtActivity);
-                            Log.i("will it crash?", "not crash");
                             startActivity(intent3);
                         }
                         else {
@@ -482,7 +424,6 @@ public class MainActivity extends AppCompatActivity {
                 }, new Response.ErrorListener() { //create error listener to trace an error if download process fail
             @Override
             public void onErrorResponse(VolleyError volleyError) { //when error listener is activated
-                Log.i("volley", volleyError.toString());
                 makeToast("Cannot connect to server. Please check the Internet setting.");
             }
         }) { //define POST parameters
@@ -505,7 +446,6 @@ public class MainActivity extends AppCompatActivity {
                 new Response.Listener<String>() { //create new listener to traces the data
                     @Override
                     public void onResponse(String response) { //when listener is activated
-                        Log.i("volley 6", response);
                         Converter converter = Converter.getInstance();
                         Cache cache = Cache.getInstance();
                         HashMap<String, Object> data = converter.JSONToHashMap(response);
@@ -521,7 +461,6 @@ public class MainActivity extends AppCompatActivity {
                 }, new Response.ErrorListener() { //create error listener to trace an error if download process fail
             @Override
             public void onErrorResponse(VolleyError volleyError) { //when error listener is activated
-                Log.i("volley", volleyError.toString());
                 makeToast("Cannot connect to server. Please check the Internet setting.");
             }
         }) { //define POST parameters
@@ -544,12 +483,10 @@ public class MainActivity extends AppCompatActivity {
                 new Response.Listener<String>() { //create new listener to traces the data
                     @Override
                     public void onResponse(String response) { //when listener is activated
-                        Log.i("volley 5", response);
                         Converter converter = Converter.getInstance();
                         Cache cache = Cache.getInstance();
                         HashMap<String, Object> data = converter.JSONToHashMap(response);
                         if((boolean) data.get("status")) {
-                            Log.i("event" , "" + data.get("event"));
                             HashMap<String, Object> eventData = converter.JSONToHashMap("" + data.get("event"));
                             cache.putData("eventData", eventData);
                             DateFormat dateFormat = new SimpleDateFormat("HH-mm-ss");
@@ -575,7 +512,6 @@ public class MainActivity extends AppCompatActivity {
                 }, new Response.ErrorListener() { //create error listener to trace an error if download process fail
             @Override
             public void onErrorResponse(VolleyError volleyError) { //when error listener is activated
-                Log.i("volley", volleyError.toString());
                 makeToast("Cannot connect to server. Please check the Internet setting.");
             }
         });

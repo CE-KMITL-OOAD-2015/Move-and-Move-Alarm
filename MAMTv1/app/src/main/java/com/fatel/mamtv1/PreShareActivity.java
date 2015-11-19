@@ -1,5 +1,5 @@
 package com.fatel.mamtv1;
-        import android.app.AlertDialog;
+import android.app.AlertDialog;
         import android.content.DialogInterface;
         import android.content.Intent;
         import android.content.pm.PackageInfo;
@@ -14,7 +14,6 @@ package com.fatel.mamtv1;
         import android.provider.MediaStore;
         import android.support.v7.app.ActionBarActivity;
         import android.util.Base64;
-        import android.util.Log;
         import android.view.View;
         import android.widget.Button;
         import android.widget.ImageView;
@@ -76,7 +75,6 @@ public class PreShareActivity extends  ActionBarActivity {
     //method เริ่มต้นกระบวนการโพสต์
     private void performPublish(PendingAction action){
         AccessToken accessToken = AccessToken.getCurrentAccessToken();
-        Log.i("log in", "" + accessToken); // new add
 
         if(accessToken != null){
             pendingAction = action;
@@ -107,7 +105,6 @@ public class PreShareActivity extends  ActionBarActivity {
             for (Signature signature : info.signatures) {
                 MessageDigest md = MessageDigest.getInstance("SHA");
                 md.update(signature.toByteArray());
-                Log.d("KeyHash:", Base64.encodeToString(md.digest(), Base64.DEFAULT));
             }
         } catch (PackageManager.NameNotFoundException e) {
 
@@ -125,29 +122,19 @@ public class PreShareActivity extends  ActionBarActivity {
 
                         //add for activity_share facebook
                         handlePendingAction();
-
-                        //updateUI();
                     }
 
 
                     @Override
                     public void onCancel() {
-
-                        //updateUI();
                     }
 
                     @Override
                     public void onError(FacebookException e) {
-
-                        //updateUI();
                     }
                 });
 
         setContentView(R.layout.activity_pre_share);
-        //postLinkButton = (Button)
-        //      findViewById(R.id.post_link_button);
-        //postPictureButton = (Button)
-        // findViewById(R.id.post_picture_button);
 
         profileTracker = new ProfileTracker() {
             @Override
@@ -156,21 +143,8 @@ public class PreShareActivity extends  ActionBarActivity {
             }
         };
 
-
-//        //add for activity_share facebook
-//        postPictureButton = (Button) findViewById(R.id.btn_postPic);  //btn_postPic    btn_share
-//
-//        postPictureButton.setOnClickListener(new View.OnClickListener() {
-//            //@override
-//            public void onClick (View v){
-//                showPickPictureDialog();
-//            }
-//        });
-
-
         //add for sync with camera
         capturePictureButton = (Button)findViewById(R.id.btn_capturePic);
-        //imgPreview = (ImageView) findViewById(R.id.imgPreview);
 
         /**
          * Capture image button click event
@@ -288,8 +262,6 @@ public class PreShareActivity extends  ActionBarActivity {
         // Create the storage directory if it does not exist
         if (!mediaStorageDir.exists()) {
             if (!mediaStorageDir.mkdirs()) {
-                Log.d(IMAGE_DIRECTORY_NAME, "Oops! Failed create "
-                        + IMAGE_DIRECTORY_NAME + " directory");
                 return null;
             }
         }
@@ -311,30 +283,6 @@ public class PreShareActivity extends  ActionBarActivity {
         return mediaFile;
     }
 
-
-
-
-
-//    private void updateUI(){
-//        boolean loggedIn = AccessToken.getCurrentAccessToken()!= null;
-//        Profile profile = Profile.getCurrentProfile();
-//
-//        if(loggedIn && (profile != null)){
-//            profilePicture.setProfileId(profile.getId());
-//            Log.i("iduser", profile.getId());
-//            userName.setText(profile.getName());
-//            Log.i("Nameuser", profile.getName());
-//            Log.i("Firstnameuser", profile.getFirstName());
-//            //postLinkButton.setEnabled(true);
-//            //postPictureButton.setEnabled(true);
-//        }
-//        else {
-//            profilePicture.setProfileId(null);
-//            userName.setText(null);
-//            // postLinkButton.setEnabled(false);
-//            // postPictureButton.setEnabled(false);
-//        }
-//    }
 
     @Override
     protected void onDestroy() {
@@ -365,7 +313,6 @@ public class PreShareActivity extends  ActionBarActivity {
         //add for activity_share facebook
         if(requestCode == PICK_IMAGE && data != null && data.getData() != null) {
             Uri uri = data.getData();
-            Log.i("log in", "" + uri); //new add
 
             if (uri != null) {
                 Cursor cursor = getContentResolver().query(
@@ -396,27 +343,9 @@ public class PreShareActivity extends  ActionBarActivity {
                 // successfully captured the image
                 // display it in image view
 
-                //previewCapturedImage();
-
-
-                //ถ่ายเสร็จละจะทำไรต่อ
-
                 //First Activity to get a Uri the URI which you get from onActivityResult
-                //Uri selectedUri = data.getData();
-                Log.i("URI", "can pass1");
-                //Uri selectedUri = Uri.parse(data.getDataString());
-                Log.i("URI", "can pass2");
                 Intent intent = new Intent(getBaseContext(),ShareActivity.class);
-                // Bundle b = new Bundle();
-                // b.putString("uri_Str",selectedUri.toString());
-                //Log.i("URI", ""+fileUri.toString());
                 intent.putExtra("uri", fileUri);
-                // Log.i("URI", data.getData().toString());
-                //intent.putExtra("uri_Str", data.getData().toString());
-                //Bundle ur = new Bundle();
-                //ur.putString("uri_Str", selectedUri);
-                //intent.putExtra("uri_Str", selectedUri);
-                Log.i("URI", "can pass4");
                 startActivity(intent);
 
 
@@ -437,10 +366,6 @@ public class PreShareActivity extends  ActionBarActivity {
         }
 
     }
-
-
-
-
 
     //add for sync with camera
     /**
@@ -479,7 +404,6 @@ public class PreShareActivity extends  ActionBarActivity {
     //add for activity_share facebook
     private void showConfirmPostPictureDialog(){
         Bitmap picture = BitmapFactory.decodeFile(imageFilePath);
-        Log.i("log in", "filepath :  " + imageFilePath); //new add
 
         final ImageView imageView = new ImageView(this);
         imageView.setImageBitmap(picture);

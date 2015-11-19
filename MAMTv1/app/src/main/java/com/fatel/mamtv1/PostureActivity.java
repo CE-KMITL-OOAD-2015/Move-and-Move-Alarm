@@ -5,7 +5,6 @@ import android.content.Intent;
 import android.graphics.drawable.AnimationDrawable;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -23,7 +22,6 @@ public class PostureActivity extends AppCompatActivity {
     Button previous;
     Button home;
     Button next;
-    //int[] imageId = new int[] {-1,-1,-1,-1};
     ArrayList<Posture> img ;
     int exerciseImg;
     String exerciseDes;
@@ -47,26 +45,15 @@ public class PostureActivity extends AppCompatActivity {
         context=getApplicationContext();
         PostureCollection postureCollection = PostureCollection.getInstance(this);
         int[] imageId = new int[] {0,1,2,3,4,5,6,7,8,9,10,11,12};
-        Log.i("Activity", "can go +1");
         img = postureCollection.getPosture(imageId);
-        Log.i("Activity","can go +1"+img);
-        Log.i("Activity","can go +2");
         exerciseImg=(img.get(count)).getImage();
-        Log.i("Activity",""+(img.get(count)).getImage());
-        Log.i("Activity","can go +3");
         exerciseDes=(img.get(count)).getDescription();
-        Log.i("Activity", "" + (img.get(count)).getDescription());
-        Log.i("Activity","can go +4");
         txtDes.setText(exerciseDes);
-        Log.i("Activity", "can go +5");
         imgView.setBackgroundResource(exerciseImg);
-        Log.i("Activity", "can go +6");
         // Get the background, which has been compiled to an AnimationDrawable object.
         frameAnimation = (AnimationDrawable) imgView.getBackground();
-        Log.i("Activity", "can go +7");
         // Start the animation (looped playback by default).
         frameAnimation.start();
-        Log.i("Activity", "can go +8");
 
         previous.setOnClickListener(new View.OnClickListener() {
             @Override

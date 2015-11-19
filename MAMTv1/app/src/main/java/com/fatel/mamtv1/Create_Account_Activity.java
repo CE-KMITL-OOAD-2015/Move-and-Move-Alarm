@@ -1,9 +1,7 @@
 package com.fatel.mamtv1;
 
-import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -67,13 +65,9 @@ public class Create_Account_Activity extends AppCompatActivity {
 
         else if(password.getText().toString().equals(rePassword.getText().toString()))
         {
-           // Intent intent = new Intent(this,MainActivity.class);
-            //mManager.registerUser(username.getText().toString(), password.getText().toString()); ลงทะเบียน username กับ password ลงฐานข้อมูลก่อนไปหน้า main
+
+            //ลงทะเบียน username กับ password ลงฐานข้อมูลก่อนไปหน้า main
             mUserManage.createNewUser(username.getText().toString(),password.getText().toString(),this);
-
-
-           // Log.i("User", "funh createuser ");
-            //startActivity(intent);intent);
 
         }
     }

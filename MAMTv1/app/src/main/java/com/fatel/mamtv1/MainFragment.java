@@ -1,26 +1,13 @@
 package com.fatel.mamtv1;
 
-
-import android.app.AlarmManager;
-
 import android.content.Context;
-
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.ImageView;
 import android.widget.TextView;
-
 import com.bumptech.glide.Glide;
-import com.squareup.picasso.Picasso;
-
-import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URL;
 import java.util.Calendar;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -62,8 +49,6 @@ public class MainFragment extends android.support.v4.app.Fragment {
         TextView day = (TextView) view.findViewById(R.id.daycurrent);
         String days = getCurrentDay();
         day.setText(days);
-        //day.setVisibility(View.VISIBLE);
-        Log.i("Day",days);
     }
     public String getCurrentDay(){
         Calendar now = Calendar.getInstance();
