@@ -17,7 +17,7 @@ public class UserActivityProgress extends Model {
         this.tableName = "userActivity_progress";
 
         this.addRequiredField("numberOfAccept");
-        this.addRequiredField("numberOfCancel");
+        this.addRequiredField("cancelActivity");
         this.addRequiredField("userID");
     }
 
@@ -38,7 +38,8 @@ public class UserActivityProgress extends Model {
         model.numberOfCancel = converter.toInt(progressData.get("numberOfCancel"));
         model.cancelActivity = converter.toInt(progressData.get("cancelActivity"));
         model.date = (Date) progressData.get("date");
-
+        model.createdDate = (Date) progressData.get("createdDate");
+        model.modifiedDate = (Date) progressData.get("modifiedDate");
         return model;
     }
 
@@ -46,6 +47,7 @@ public class UserActivityProgress extends Model {
     public HashMap<String, Object> getValues() //get all values from model
     {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         HashMap<String, Object> temp = new HashMap<>();
 
         temp.put("numberOfAccept", numberOfAccept);
@@ -54,6 +56,8 @@ public class UserActivityProgress extends Model {
         temp.put("userID", user.getID());
         if(date != null)
             temp.put("date", sdf.format(date));
+        if(modifiedDate != null)
+            temp.put("modifiedDate", sdf2.format(modifiedDate));
 
         return temp;
     }
@@ -67,6 +71,7 @@ public class UserActivityProgress extends Model {
         temp.put("numberOfAccept", numberOfAccept);
         temp.put("numberOfCancel", numberOfCancel);
         temp.put("cancelActivity", cancelActivity);
+        temp.put("user", user.getGeneralValues());
         if(date != null)
             temp.put("date", sdf.format(date));
 

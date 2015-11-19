@@ -1,6 +1,5 @@
 package movealarm.kmitl.net;
 
-import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
@@ -256,7 +255,7 @@ public class Group extends Model{
 
     public HashMap<String, Object> addMember(User user)
     {
-        if(amountMember > 10)
+        if(amountMember > 9)
             return StatusDescription.createProcessStatus(false, "The group has reached the maximum members limit now.");
 
         for(User item : temp_addedUserList) { //loop to check duplicated user
@@ -400,7 +399,7 @@ public class Group extends Model{
 
             for(int i = 0; i < temp_scoreLogList.size(); i++) {
                 HashMap<String, Object> item = temp_scoreLogList.get(i);
-                valuesSet[i] = "" + item.get("group_id") + ", " + item.get("currentScore") + ", " + item.get("modifiedScore") + ", '" + item.get("description") + "'"; //concat string
+                valuesSet[i] = "" + item.get("id") + ", " + item.get("currentScore") + ", " + item.get("modifiedScore") + ", '" + item.get("description") + "'"; //concat string
             }
 
             String colNameSet = "group_id, currentScore, modifiedScore, description"; //set of column name of values

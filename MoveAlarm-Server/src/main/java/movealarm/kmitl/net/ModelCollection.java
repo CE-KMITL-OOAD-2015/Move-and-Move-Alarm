@@ -27,7 +27,6 @@ public class ModelCollection {
         } catch (Exception e) {
             System.out.println("An error has occurred in ModelCollection.find()");
             System.out.println(e);
-            databaseInquirer.startConnection();
         }
         return null;
     }
@@ -39,7 +38,6 @@ public class ModelCollection {
         } catch (Exception e) {
             System.out.println("An error has occurred in ModelCollection.all()");
             System.out.println(e);
-            databaseInquirer.startConnection();
         }
         return null;
     }
@@ -51,7 +49,6 @@ public class ModelCollection {
         } catch (Exception e) {
             System.out.println("An error has occurred in ModelCollection.where()");
             System.out.println(e);
-            databaseInquirer.startConnection();
         }
         return null;
     }
@@ -80,7 +77,6 @@ public class ModelCollection {
         } catch (Exception e) {
             System.out.println("An error has occurred in while creating a model name '" + model.getClass().getSimpleName() + "'.");
             System.out.println(e);
-            databaseInquirer.startConnection();
         }
         return null;
     }
@@ -108,7 +104,6 @@ public class ModelCollection {
         } catch (Exception e) {
             System.out.println("An error has occurred in while saving a model name '" + model.getClass().getSimpleName() + "'.");
             System.out.println(e);
-            databaseInquirer.startConnection();
         }
         return false;
     }
@@ -121,7 +116,6 @@ public class ModelCollection {
         } catch (Exception e) {
             System.out.println("An error has occurred in while deleting a model name '" + model.getClass().getSimpleName() + "'.");
             System.out.println(e);
-            databaseInquirer.startConnection();
             return false;
         }
         return true;
@@ -135,7 +129,6 @@ public class ModelCollection {
         } catch (Exception e) {
             e.printStackTrace();
             System.out.println("An error has occurred while updating data.");
-            databaseInquirer.startConnection();
             return false;
         }
     }

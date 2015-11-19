@@ -17,9 +17,7 @@ public class GroupActivityProgress extends Model {
         this.tableName = "groupActivity_progress";
 
         this.addRequiredField("numberOfAccept");
-        this.addRequiredField("numberOfCancel");
         this.addRequiredField("cancelActivity");
-        this.addRequiredField("date");
         this.addRequiredField("groupID");
     }
 
@@ -40,14 +38,18 @@ public class GroupActivityProgress extends Model {
         model.numberOfCancel = converter.toInt(progressData.get("numberOfCancel"));
         model.cancelActivity = converter.toInt(progressData.get("cancelActivity"));
         model.date = (Date) progressData.get("date");
+        model.createdDate = (Date) progressData.get("createdDate");
+        model.modifiedDate = (Date) progressData.get("modifiedDate");
 
         return model;
     }
+
 
     @Override
     public HashMap<String, Object> getValues() //get all values from model
     {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat sdf2 = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
         HashMap<String, Object> temp = new HashMap<>();
 
         temp.put("numberOfAccept", numberOfAccept);
@@ -56,6 +58,8 @@ public class GroupActivityProgress extends Model {
         temp.put("groupID", group.getID());
         if(date != null)
             temp.put("date", sdf.format(date));
+        if(modifiedDate != null)
+            temp.put("modifiedDate", sdf2.format(modifiedDate));
 
         return temp;
     }
@@ -69,6 +73,7 @@ public class GroupActivityProgress extends Model {
         temp.put("numberOfAccept", numberOfAccept);
         temp.put("numberOfCancel", numberOfCancel);
         temp.put("cancelActivity", cancelActivity);
+        temp.put("group", group.getGeneralValues());
         if(date != null)
             temp.put("date", sdf.format(date));
 
@@ -103,5 +108,15 @@ public class GroupActivityProgress extends Model {
     {
         this.date = date;
         updateModifiedDate();
+    }
+
+    public void increaseAcceptTime(int time)
+    {
+        this.numberOfAccept += time;
+    }
+
+    public void increaseCancelTime(int time)
+    {
+        this.cancelActivity += time;
     }
 }

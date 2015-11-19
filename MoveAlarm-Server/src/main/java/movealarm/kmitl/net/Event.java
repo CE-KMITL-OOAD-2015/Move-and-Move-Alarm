@@ -22,7 +22,7 @@ public class Event extends Model{
 
     public static Event find(int id)
     {
-        HashMap<String, Object> event_map = modelCollection.find("event",id);
+        HashMap<String, Object> event_map = modelCollection.find("event", id);
         if(event_map == null) {
             return null;
         }
@@ -62,7 +62,7 @@ public class Event extends Model{
 
     public static Event[] where(String colName, String operator, String value, String extraCondition)
     {
-        return where(colName,operator,value + " " + extraCondition); //where method with extra condition
+        return where(colName, operator, value + " " + extraCondition); //where method with extra condition
     }
 
     public static Event[] all()
@@ -101,12 +101,18 @@ public class Event extends Model{
     @Override
     public HashMap<String, Object> getGeneralValues()
     {
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss"); // like getValues method but return only common value
+        SimpleDateFormat sdf = new SimpleDateFormat("HH-mm-ss"); // like getValues method but return only common value
         Converter converter = Converter.getInstance();
-        Posture[] arrayOfPosture = this.postures.toArray(new Posture[postures.size()]);
+        ArrayList<HashMap<String, Object>> temp = new ArrayList<>();
+
+        for(Posture item : postures) {
+            temp.add(item.getGeneralValues());
+        }
+
+        HashMap<String, Object>[] arrayOfPosture = temp.toArray(new HashMap[temp.size()]);
         HashMap<String, Object> event_map = new HashMap<>();
         event_map.put("time", sdf.format(this.time));
-        event_map.put("postures", converter.ModelArrayToHashMapArray(arrayOfPosture));
+        event_map.put("postures", arrayOfPosture);
         return event_map;
     }
 
