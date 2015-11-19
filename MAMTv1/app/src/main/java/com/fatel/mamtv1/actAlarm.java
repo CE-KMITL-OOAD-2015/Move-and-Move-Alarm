@@ -17,7 +17,7 @@ import android.os.Vibrator;
 
 
 
-public class actAlarm extends AppCompatActivity {
+public class ActAlarm extends AppCompatActivity {
     private Vibrator v;
     private MediaPlayer m;
     private Ringtone r;
@@ -64,8 +64,7 @@ public class actAlarm extends AppCompatActivity {
 
     public void linkActivity(View view){
         //history
-        HistoryHelper mhistoryHelper = new HistoryHelper(this);
-        History history = mhistoryHelper.getHistoryUser(UserManage.getInstance(this).getCurrentIdUser());
+        History history = History.findHistory(UserManage.getInstance(this).getCurrentIdUser(), this);
         history.addaccept(1);
         history.save(this);
         Intent intent = new Intent(this, Activity.class);
@@ -76,11 +75,10 @@ public class actAlarm extends AppCompatActivity {
 
     public void linkHome(View view){
         //history
-        HistoryHelper mhistoryHelper = new HistoryHelper(this);
-        History history = mhistoryHelper.getHistoryUser(UserManage.getInstance(this).getCurrentIdUser());
+        History history = History.findHistory(UserManage.getInstance(this).getCurrentIdUser(),this);
         history.addcancel(1);
         history.save(this);
-        Intent i1 = new Intent(actAlarm.this, MainActivity.class);
+        Intent i1 = new Intent(ActAlarm.this, MainActivity.class);
         startActivity(i1);
         Intent i = new Intent(getBaseContext(), AlarmReceiver.class);
         Bundle b = new Bundle();

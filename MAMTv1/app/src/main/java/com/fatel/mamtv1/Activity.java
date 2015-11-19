@@ -119,17 +119,8 @@ public class Activity extends AppCompatActivity {
 
             public void onFinish() {
                 txtA.setText("Activity Time done!");
-
-                //history
-                //go to main
                 Intent i1 = new Intent(Activity.this, PreShareActivity.class);
-               // Bundle b1 = new Bundle();
-                //b1.putExtra("key", "main");
-                //i1.putExtra("key", "main");
                 startActivity(i1);
-                //Intent intent = new Intent(Activity.this, MainActivity.class);
-                //startActivity(intent);
-
                 requesAddscore();
             }
         }.start();
@@ -139,8 +130,7 @@ public class Activity extends AppCompatActivity {
     public void linkHome(View view)
     {
         //history
-        HistoryHelper mhistoryHelper = new HistoryHelper(this);
-        History history = mhistoryHelper.getHistoryUser(UserManage.getInstance(this).getCurrentIdUser());
+        History history = History.findHistory(UserManage.getInstance(this).getCurrentIdUser(),this);
         history.subaccept(1);
         history.addcancel(1);
         history.save(this);

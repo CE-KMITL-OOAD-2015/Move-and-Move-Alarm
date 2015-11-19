@@ -61,8 +61,7 @@ public class EventactAlarm extends AppCompatActivity {
 
     public void linkActivity(View view){
         //history
-        HistorygroupHelper mhistorygroupHelper = new HistorygroupHelper(this);
-        Historygroup historygroup = mhistorygroupHelper.getHistoryGroup(UserManage.getInstance(this).getCurrentIdGroup());
+        Historygroup historygroup = Historygroup.findHistorygroup(UserManage.getInstance(this).getCurrentIdGroup(), this);
         if(historygroup!=null){
             historygroup.addaccept(1);
             historygroup.save(this);
@@ -76,8 +75,7 @@ public class EventactAlarm extends AppCompatActivity {
 
     public void linkHome(View view){
         //history
-        HistorygroupHelper mhistorygrouphelper = new HistorygroupHelper(this);
-        Historygroup historygroup = mhistorygrouphelper.getHistoryGroup(UserManage.getInstance(this).getCurrentIdGroup());
+        Historygroup historygroup = Historygroup.findHistorygroup(UserManage.getInstance(this).getCurrentIdGroup(),this);
         if(historygroup!=null){
             historygroup.addcancel(1);
             historygroup.save(this);

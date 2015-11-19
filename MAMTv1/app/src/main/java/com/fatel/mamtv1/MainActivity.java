@@ -51,8 +51,6 @@ public class MainActivity extends AppCompatActivity {
     Bundle passimg;
     String tempid;
     DBAlarmHelper mAlarmHelper;
-    private HistoryHelper mhistoryHelper;
-    private HistorygroupHelper mhistorygroupHelper;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -124,8 +122,7 @@ public class MainActivity extends AppCompatActivity {
         mDrawerToggle.syncState();
 
         //history
-        mhistoryHelper = new HistoryHelper(this);
-        History history = mhistoryHelper.getHistoryUser(UserManage.getInstance(this).getCurrentIdUser());
+        History history = History.findHistory(UserManage.getInstance(this).getCurrentIdUser(),this);
         if(history==null){
             history = new History(UserManage.getInstance(this).getCurrentIdUser());
             history.save(this);
@@ -133,8 +130,7 @@ public class MainActivity extends AppCompatActivity {
         }
 //
         //historygroup
-        mhistorygroupHelper = new HistorygroupHelper(this);
-        Historygroup historygroup = mhistorygroupHelper.getHistoryGroup(UserManage.getInstance(this).getCurrentIdGroup());
+        Historygroup historygroup = Historygroup.findHistorygroup(UserManage.getInstance(this).getCurrentIdGroup(),this);
         if(historygroup==null&&UserManage.getInstance(this).getCurrentIdGroup()!=0){
             historygroup = new Historygroup(UserManage.getInstance(this).getCurrentIdGroup());
             historygroup.save(this);

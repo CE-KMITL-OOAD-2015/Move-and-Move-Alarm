@@ -80,7 +80,7 @@ public class History {
             historyHelper.updateHistoryUser(this);
         }
     }
-    public static History findhistory(int idUser,Context context){
+    public static History findHistory(int idUser,Context context){
         HistoryHelper historyHelper = new HistoryHelper(context);
         return historyHelper.getHistoryUser(idUser);
     }

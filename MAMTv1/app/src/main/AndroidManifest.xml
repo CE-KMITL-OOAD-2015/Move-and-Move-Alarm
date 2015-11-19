@@ -35,7 +35,7 @@
             android:screenOrientation="portrait" >
         </activity>
         <activity
-            android:name=".actAlarm"
+            android:name=".ActAlarm"
             android:label="@string/title_activity_act_alarm"
             android:screenOrientation="portrait" >
         </activity>

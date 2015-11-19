@@ -81,7 +81,7 @@ public class Historygroup {
             historygroupHelper.updateHistoryGroup(this);
         }
     }
-    public static Historygroup findhistorygroup(int idGroup,Context context){
+    public static Historygroup findHistorygroup(int idGroup,Context context){
         HistorygroupHelper historygroupHelper = new HistorygroupHelper(context);
         return historygroupHelper.getHistoryGroup(idGroup);
     }

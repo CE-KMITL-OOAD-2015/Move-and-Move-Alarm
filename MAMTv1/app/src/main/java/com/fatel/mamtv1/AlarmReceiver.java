@@ -32,7 +32,7 @@ public class AlarmReceiver extends BroadcastReceiver {
                     if (manager!= null) {
                        manager.cancel(pendingIntent);
                     }
-                    Intent i = new Intent(context, actAlarm.class);
+                    Intent i = new Intent(context, ActAlarm.class);
                     i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                     context.startActivity(i);
                     Toast.makeText(context, "I'm running", Toast.LENGTH_SHORT).show();
@@ -132,18 +132,13 @@ public class AlarmReceiver extends BroadcastReceiver {
     public void setfrq(Context context,String massage){
 
         if(massage==null||massage.equalsIgnoreCase("act")){
-            Intent i = new Intent(context, actAlarm.class);
+            Intent i = new Intent(context, ActAlarm.class);
             i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             context.startActivity(i);
             Toast.makeText(context, "I'm running", Toast.LENGTH_SHORT).show();
         }
         else{
-            /*if (manager!= null) {
-                manager.cancel(pendingIntent);
-            }*/
             Intent alarmIntent = new Intent(context , AlarmReceiver.class);
-            //Intent alarmIntent = new Intent(context , actAlarm.class);
-
             AlarmManager manager = (AlarmManager) context.getSystemService(Context.ALARM_SERVICE);
             Alarm alarm = mAlarmHelper.getAlarm();
             int frequency = Integer.parseInt(alarm.getFrq());
@@ -225,7 +220,7 @@ public class AlarmReceiver extends BroadcastReceiver {
     }
     public void setnextstart(Context context,String message){
         if((message==null||message.equalsIgnoreCase("act"))&&checkday()){
-            Intent i = new Intent(context, actAlarm.class);
+            Intent i = new Intent(context, ActAlarm.class);
             i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             context.startActivity(i);
             Toast.makeText(context, "I'm running", Toast.LENGTH_SHORT).show();

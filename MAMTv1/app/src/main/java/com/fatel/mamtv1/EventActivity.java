@@ -130,8 +130,7 @@ public class EventActivity extends AppCompatActivity {
     public void linkHome(View view)
     {
         //history
-        HistorygroupHelper mhistorygroupHelper = new HistorygroupHelper(this);
-        Historygroup historygroup = mhistorygroupHelper.getHistoryGroup(UserManage.getInstance(this).getCurrentIdGroup());
+        Historygroup historygroup = Historygroup.findHistorygroup(UserManage.getInstance(this).getCurrentIdGroup(), this);
         if(historygroup!=null){
             historygroup.subaccept(1);
             historygroup.addcancel(1);

@@ -67,12 +67,12 @@ public class HistoryHelper extends SQLiteOpenHelper {
         //Log.d("temp", temp + "");
         return false;
     }
-    public History getHistoryUser(int idUeser){
+    public History getHistoryUser(int idUser){
         SQLiteDatabase db = this.getReadableDatabase();
         Cursor cursor = db.query(History.TABLE, new String[]{History.Column.ID,
                 History.Column.IDUSER, History.Column.NUMACCEPT, History.Column.CANCEL
         }, History.Column.IDUSER + " = ? ", new String[]
-                {String.valueOf(idUeser)}, null, null, null, null);
+                {String.valueOf(idUser)}, null, null, null, null);
         History history = null;
         boolean check = false;
         if(cursor != null){
