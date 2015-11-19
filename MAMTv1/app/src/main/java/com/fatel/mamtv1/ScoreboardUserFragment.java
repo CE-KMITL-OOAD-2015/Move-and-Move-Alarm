@@ -65,7 +65,7 @@ public class ScoreboardUserFragment extends Fragment {
         ranking0 = (TextView) rootView.findViewById(R.id.userranking);
         String tempid = UserManage.getInstance((Context) Cache.getInstance().getData("MainActivityContext")).getCurrentFacebookId();
         Log.i("iduserscore",tempid);
-        Log.i("username",UserManage.getInstance((Context) Cache.getInstance().getData("MainActivityContext")).getCurrentUsername());
+        //Log.i("username",UserManage.getInstance((Context) Cache.getInstance().getData("MainActivityContext")).getCurrentUsername());
         if (!tempid.equals("fb0.0")) {
             if (!tempid.equals("fb0")) {
                     user0.setText(UserManage.getInstance((Context) Cache.getInstance().getData("MainActivityContext")).getCurrentFacebookFirstName());
@@ -75,8 +75,8 @@ public class ScoreboardUserFragment extends Fragment {
         }
         Log.i("score", UserManage.getInstance((Context) Cache.getInstance().getData("MainActivityContext")).getCurrentScore() + "");
         score0.setText(UserManage.getInstance((Context) Cache.getInstance().getData("MainActivityContext")).getCurrentScore() + "");
-        String url = "http://203.151.92.196:8080/user/findByRank";
-        String url2 = "http://203.151.92.196:8080/user/getUserRank";
+        String url = HttpConnector.URL + "user/findByRank";
+        String url2 = HttpConnector.URL + "user/getUserRank";
 
         StringRequest userScoreboardRequest = new StringRequest(Request.Method.POST, url, //create new string request with POST method
                 new Response.Listener<String>() { //create new listener to traces the data

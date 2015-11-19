@@ -133,8 +133,6 @@ public class UserManage {
                             HashMap<String, Object> userData = converter.JSONToHashMap(converter.toString(data.get("user")));
                             HashMap<String, Object> groupData = converter.JSONToHashMap(converter.toString(data.get("group")));
 
-                            Log.i("group data", groupData.toString());
-
                             Cache.getInstance().putData("groupData", groupData);
                             int idUser = converter.toInt(userData.get("id"));
                             String facebookID = converter.toString(userData.get("facebookID"));
@@ -155,7 +153,8 @@ public class UserManage {
                             UserManage.getInstance(context).getCurrentUser().setScore(converter.toInt(userData.get("score")));
                             UserManage.getInstance(context).getCurrentUser().setGender(converter.toInt(userData.get("gender")));
                             UserManage.getInstance(context).getCurrentUser().setEmail(converter.toString(userData.get("email")));
-                            UserManage.getInstance(context).getCurrentUser().setIdGroup(converter.toInt(groupData.get("id")));
+                            if(groupData != null)
+                                UserManage.getInstance(context).getCurrentUser().setIdGroup(converter.toInt(groupData.get("id")));
                             UserManage.getInstance(context).getCurrentUser().setFacebookID(converter.toString(userData.get("facebookID")).substring(2));
                             UserManage.getInstance(context).getCurrentUser().setFacebookFirstName(converter.toString(userData.get("facebookFirstName")));
                             UserManage.getInstance(context).getCurrentUser().setFacebookLastName(converter.toString(userData.get("facebookLastName ")));
