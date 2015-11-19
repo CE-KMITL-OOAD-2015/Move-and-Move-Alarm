@@ -1,0 +1,97 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent" tools:context="com.fatel.mamtv1.ProfileFragment">
+
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:id="@+id/profile_image_p"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:src="@drawable/test"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="40dp"/>
+    <LinearLayout
+        android:id="@+id/prouser"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:paddingTop="10dp">
+        <TextView
+            android:id="@+id/textsex"
+            android:paddingLeft="20dp"
+            android:layout_width="170dp"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:textColor="@android:color/black"
+            android:text="Username"/>
+        <TextView
+            android:id="@+id/edituser"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:textColor="@android:color/black"
+            android:text="-"/>
+    </LinearLayout>
+    <LinearLayout
+        android:id="@+id/proname"
+        android:layout_below="@id/prouser"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:paddingTop="10dp">
+   <TextView
+       android:id="@+id/textname"
+       android:paddingLeft="20dp"
+       android:layout_width="170dp"
+       android:layout_height="wrap_content"
+       android:textSize="20sp"
+       android:textColor="@android:color/black"
+       android:text="Name"/>
+    <TextView
+        android:id="@+id/editproname"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:textColor="@android:color/black"
+        android:text="-"/>
+</LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/prosurname"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerVertical="true"
+        android:layout_below="@id/proname"
+        android:paddingTop="10dp">
+        <TextView
+            android:id="@+id/textsurname"
+            android:paddingLeft="20dp"
+            android:layout_width="170dp"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:textColor="@android:color/black"
+            android:text="Surname"
+            />
+        <TextView
+            android:id="@+id/editsurproname"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="20sp"
+            android:textColor="@android:color/black"
+            android:text="-"/>
+
+    </LinearLayout>
+
+
+    <Button
+        android:id="@+id/edit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="@drawable/selectoredit"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:onClick="editname"
+        />
+</RelativeLayout>

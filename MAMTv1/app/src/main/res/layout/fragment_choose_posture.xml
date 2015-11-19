@@ -1,0 +1,317 @@
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools" android:layout_width="match_parent"
+    android:layout_height="match_parent" tools:context="com.fatel.mamtv1.ChoosePostureFragment">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:fillViewport="true"
+        tools:context="com.fatel.mamtv1.ChoosePostureFragment"
+        >
+
+    <Button
+        android:id="@+id/post1"
+        android:text="Posture #1"
+        android:gravity="center"
+        android:textStyle="bold"
+
+        android:textColor="#FF7E3D"
+        android:textSize="20sp"
+        android:layout_gravity="center"
+
+        android:shadowColor="#919191"
+        android:shadowDx="3"
+        android:shadowDy="3"
+        android:shadowRadius="5"
+        android:layout_marginTop="30dp"
+        android:layout_centerHorizontal="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAllCaps="false"
+
+        android:background="@drawable/buttonshape3"
+
+        android:onClick="linkPosture1"
+        />
+    <Button
+        android:id="@+id/post2"
+        android:layout_below="@id/post1"
+        android:text="Posture #2"
+        android:gravity="center"
+        android:textStyle="bold"
+
+        android:textColor="#FF7E3D"
+        android:textSize="20sp"
+        android:layout_gravity="center"
+        android:background="@drawable/buttonshape3"
+
+        android:shadowColor="#919191"
+        android:shadowDx="3"
+        android:shadowDy="3"
+        android:shadowRadius="5"
+        android:layout_marginTop="30dp"
+        android:layout_centerHorizontal="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAllCaps="false"
+        android:onClick="linkPosture2"
+        />
+    <Button
+        android:id="@+id/post3"
+        android:layout_below="@id/post2"
+        android:text="Posture #3"
+        android:gravity="center"
+        android:textStyle="bold"
+
+        android:textColor="#FF7E3D"
+        android:textSize="20sp"
+        android:layout_gravity="center"
+        android:background="@drawable/buttonshape3"
+
+        android:shadowColor="#919191"
+        android:shadowDx="3"
+        android:shadowDy="3"
+        android:shadowRadius="5"
+        android:layout_marginTop="30dp"
+        android:layout_centerHorizontal="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAllCaps="false"
+        android:onClick="linkPosture3"
+        />
+    <Button
+        android:id="@+id/post4"
+        android:layout_below="@id/post3"
+        android:text="Posture #4"
+        android:gravity="center"
+        android:textStyle="bold"
+
+        android:textColor="#FF7E3D"
+        android:textSize="20sp"
+        android:layout_gravity="center"
+        android:background="@drawable/buttonshape3"
+
+        android:shadowColor="#919191"
+        android:shadowDx="3"
+        android:shadowDy="3"
+        android:shadowRadius="5"
+        android:layout_marginTop="30dp"
+        android:layout_centerHorizontal="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAllCaps="false"
+        android:onClick="linkPosture4"
+        />
+    <Button
+        android:id="@+id/post5"
+        android:layout_below="@id/post4"
+        android:text="Posture #5"
+        android:gravity="center"
+        android:textStyle="bold"
+
+        android:textColor="#FF7E3D"
+        android:textSize="20sp"
+        android:layout_gravity="center"
+        android:background="@drawable/buttonshape3"
+
+        android:shadowColor="#919191"
+        android:shadowDx="3"
+        android:shadowDy="3"
+        android:shadowRadius="5"
+        android:layout_marginTop="30dp"
+        android:layout_centerHorizontal="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAllCaps="false"
+        android:onClick="linkPosture5"
+        />
+    <Button
+        android:id="@+id/post6"
+        android:layout_below="@id/post5"
+        android:text="Posture #6"
+        android:gravity="center"
+        android:textStyle="bold"
+
+        android:textColor="#FF7E3D"
+        android:textSize="20sp"
+        android:layout_gravity="center"
+        android:background="@drawable/buttonshape3"
+
+        android:shadowColor="#919191"
+        android:shadowDx="3"
+        android:shadowDy="3"
+        android:shadowRadius="5"
+        android:layout_marginTop="30dp"
+        android:layout_centerHorizontal="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAllCaps="false"
+        android:onClick="linkPosture6"
+        />
+    <Button
+        android:id="@+id/post7"
+        android:layout_below="@id/post6"
+        android:text="Posture #7"
+        android:gravity="center"
+        android:textStyle="bold"
+
+        android:textColor="#FF7E3D"
+        android:textSize="20sp"
+        android:layout_gravity="center"
+        android:background="@drawable/buttonshape3"
+
+        android:shadowColor="#919191"
+        android:shadowDx="3"
+        android:shadowDy="3"
+        android:shadowRadius="5"
+        android:layout_marginTop="30dp"
+        android:layout_centerHorizontal="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAllCaps="false"
+        android:onClick="linkPosture7"
+        />
+    <Button
+        android:id="@+id/post8"
+        android:layout_below="@id/post7"
+        android:text="Posture #8"
+        android:gravity="center"
+        android:textStyle="bold"
+
+        android:textColor="#FF7E3D"
+        android:textSize="20sp"
+        android:layout_gravity="center"
+        android:background="@drawable/buttonshape3"
+
+        android:shadowColor="#919191"
+        android:shadowDx="3"
+        android:shadowDy="3"
+        android:shadowRadius="5"
+        android:layout_marginTop="30dp"
+        android:layout_centerHorizontal="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAllCaps="false"
+        android:onClick="linkPosture8"
+        />
+    <Button
+        android:id="@+id/post9"
+        android:layout_below="@id/post8"
+        android:text="Posture #9"
+        android:gravity="center"
+        android:textStyle="bold"
+
+        android:textColor="#FF7E3D"
+        android:textSize="20sp"
+        android:layout_gravity="center"
+        android:background="@drawable/buttonshape3"
+
+        android:shadowColor="#919191"
+        android:shadowDx="3"
+        android:shadowDy="3"
+        android:shadowRadius="5"
+        android:layout_marginTop="30dp"
+        android:layout_centerHorizontal="true"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textAllCaps="false"
+        android:onClick="linkPosture9"
+        />
+
+        <Button
+            android:id="@+id/post10"
+            android:layout_below="@id/post9"
+            android:text="Posture #10"
+            android:gravity="center"
+            android:textStyle="bold"
+
+            android:textColor="#FF7E3D"
+            android:textSize="20sp"
+            android:layout_gravity="center"
+            android:background="@drawable/buttonshape3"
+
+            android:shadowColor="#919191"
+            android:shadowDx="3"
+            android:shadowDy="3"
+            android:shadowRadius="5"
+            android:layout_marginTop="30dp"
+            android:layout_centerHorizontal="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAllCaps="false"
+            android:onClick="linkPosture10"
+            />
+
+        <Button
+            android:id="@+id/post11"
+            android:layout_below="@id/post10"
+            android:text="Posture #11"
+            android:gravity="center"
+            android:textStyle="bold"
+
+            android:textColor="#FF7E3D"
+            android:textSize="20sp"
+            android:layout_gravity="center"
+            android:background="@drawable/buttonshape3"
+
+            android:shadowColor="#919191"
+            android:shadowDx="3"
+            android:shadowDy="3"
+            android:shadowRadius="5"
+            android:layout_marginTop="30dp"
+            android:layout_centerHorizontal="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAllCaps="false"
+            android:onClick="linkPosture11"
+            />
+
+        <Button
+            android:id="@+id/post12"
+            android:layout_below="@id/post11"
+            android:text="Posture #12"
+            android:gravity="center"
+            android:textStyle="bold"
+
+            android:textColor="#FF7E3D"
+            android:textSize="20sp"
+            android:layout_gravity="center"
+            android:background="@drawable/buttonshape3"
+
+            android:shadowColor="#919191"
+            android:shadowDx="3"
+            android:shadowDy="3"
+            android:shadowRadius="5"
+            android:layout_marginTop="30dp"
+            android:layout_centerHorizontal="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAllCaps="false"
+            android:onClick="linkPosture12"
+            />
+
+        <Button
+            android:id="@+id/post13"
+            android:layout_below="@id/post12"
+            android:text="Posture #13"
+            android:gravity="center"
+            android:textStyle="bold"
+
+            android:textColor="#FF7E3D"
+            android:textSize="20sp"
+            android:layout_gravity="center"
+            android:background="@drawable/buttonshape3"
+
+            android:shadowColor="#919191"
+            android:shadowDx="3"
+            android:shadowDy="3"
+            android:shadowRadius="5"
+            android:layout_marginTop="30dp"
+            android:layout_centerHorizontal="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAllCaps="false"
+            android:layout_marginBottom="30dp"
+            android:onClick="linkPosture13"
+            />
+    </RelativeLayout>
+</ScrollView>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+    <Button
+        android:id="@+id/reset"
+        android:layout_width="300dp"
+        android:layout_height="80dp"
+        android:background="@drawable/selectorsetting"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:onClick="linktoreset"
+        />
+
+    <TextView
+        android:layout_marginLeft="40dp"
+        android:layout_marginTop="90dp"
+        android:id="@+id/txt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="40sp"
+        android:text="Notification"
+        android:textColor="#FF7700"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"/>
+    <Switch
+        android:layout_marginTop="90dp"
+        android:layout_marginLeft="15dp"
+        android:id="@+id/mySwitch"
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+        android:layout_toRightOf="@+id/txt" />
+
+</RelativeLayout>
