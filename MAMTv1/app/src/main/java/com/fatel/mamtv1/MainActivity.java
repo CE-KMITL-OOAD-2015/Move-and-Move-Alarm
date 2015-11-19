@@ -13,6 +13,7 @@ import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v4.widget.DrawerLayout;
 import android.os.Bundle;
 import android.text.Html;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -529,7 +530,7 @@ public class MainActivity extends AppCompatActivity {
                 switch (which){
                     case DialogInterface.BUTTON_POSITIVE:
                         Log.i("name",""+isEmpty(name));
-                        Log.i("surname",""+isEmpty(surname));
+                        Log.i("surname", "" + isEmpty(surname));
                         if(!isEmpty(name)){
                             //do
                             Log.i("name",""+name.getText().toString());
