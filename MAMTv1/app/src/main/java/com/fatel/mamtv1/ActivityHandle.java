@@ -1,5 +1,9 @@
 package com.fatel.mamtv1;
 
+import android.content.Context;
+
+import java.util.ArrayList;
+
 /**
  * Created by Administrator on 31/10/2558.
  */
@@ -39,4 +43,10 @@ public class ActivityHandle {
         }
 
     }
+    public ArrayList<Posture> getRandomPosture(Context context){
+        PostureCollection postureCollection= PostureCollection.getInstance(context);
+        ArrayList<Posture> randomPosture = postureCollection.getPosture(getImageId());
+        return  randomPosture;
+    }
+
 }

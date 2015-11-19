@@ -8,7 +8,6 @@ import android.media.RingtoneManager;
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -16,8 +15,6 @@ import android.view.Window;
 import android.view.WindowManager;
 import android.os.Vibrator;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
 
 
 public class actAlarm extends AppCompatActivity {
@@ -71,9 +68,6 @@ public class actAlarm extends AppCompatActivity {
         History history = mhistoryHelper.getHistoryUser(UserManage.getInstance(this).getCurrentIdUser());
         history.addaccept(1);
         history.save(this);
-        Log.i("historyacc", UserManage.getInstance(this).getCurrentIdUser() + "");
-        Log.i("historyacc",history.getNumberOfAccept()+"");
-        Log.i("historyacc",history.gettotal()+"");
         Intent intent = new Intent(this, Activity.class);
         startActivity(intent);
         v.cancel();
@@ -86,15 +80,8 @@ public class actAlarm extends AppCompatActivity {
         History history = mhistoryHelper.getHistoryUser(UserManage.getInstance(this).getCurrentIdUser());
         history.addcancel(1);
         history.save(this);
-        Log.i("historycancel", UserManage.getInstance(this).getCurrentIdUser()+ "");
-        Log.i("historycancel", history.getCancelActivity() + "");
-        Log.i("historycancel", history.gettotal() + "");
         Intent i1 = new Intent(actAlarm.this, MainActivity.class);
-        // Bundle b1 = new Bundle();
-        //b1.putExtra("key", "main");
-        //i1.putExtra("key", "main");
         startActivity(i1);
-        //sendBroadcast(i1);
         Intent i = new Intent(getBaseContext(), AlarmReceiver.class);
         Bundle b = new Bundle();
         b.putString("key", "first");
@@ -102,10 +89,7 @@ public class actAlarm extends AppCompatActivity {
         sendBroadcast(i);
         v.cancel();
         m.reset();
-        //AlarmManager manager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-        //int interval = 60*1000*1;
-        //PendingIntent pendingIntent = PendingIntent.getBroadcast(actAlarm.this, 0, i, 0);
-        //manager.setExact(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + interval, pendingIntent);
+
     }
 
 }

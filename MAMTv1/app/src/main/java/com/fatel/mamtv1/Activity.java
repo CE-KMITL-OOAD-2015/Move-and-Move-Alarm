@@ -1,7 +1,5 @@
 package com.fatel.mamtv1;
 
-import android.app.AlarmManager;
-import android.app.PendingIntent;
 
 import android.content.Context;
 
@@ -11,7 +9,6 @@ import android.graphics.drawable.AnimationDrawable;
 import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.View;
@@ -22,10 +19,6 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
 import android.widget.ImageView;
-
-import android.content.ContentValues;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.widget.Toast;
 
 import com.android.volley.Request;
@@ -43,7 +36,6 @@ public class Activity extends AppCompatActivity {
     ImageView imgView;
     AnimationDrawable frameAnimation;
     int count=0;
-    //int[] imageId = new int[] {-1,-1,-1,-1};
     ArrayList<Posture> img ;
     int exerciseImg;
     String exerciseDes;
@@ -53,7 +45,6 @@ public class Activity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-        Log.i("Activity", "Can go");
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity);
         final Window win= getWindow();
@@ -67,29 +58,21 @@ public class Activity extends AppCompatActivity {
         imgView=(ImageView) findViewById(R.id.img);
         ActivityHandle activityHandle=new ActivityHandle();
         context=getApplicationContext();
-        PostureCollection postureCollection= PostureCollection.getInstance(this);
+        img = activityHandle.getRandomPosture(this);
 
-        Log.i("Activity","can go +1");
-        img = postureCollection.getPosture(activityHandle.getImageId());
-        Log.i("Activity","can go +1"+img);
-        Log.i("Activity","can go +2");
         exerciseImg=(img.get(count)).getImage();
-        Log.i("Activity",""+(img.get(count)).getImage());
-        Log.i("Activity","can go +3 id:"+img.get(count));
+
         exerciseDes=(img.get(count)).getDescription();
-        Log.i("Activity",""+(img.get(count)).getDescription());
-        Log.i("Activity","can go +4");
+
         txtDes.setText(exerciseDes);
-        Log.i("Activity", "can go +5");
+
         imgView.setBackgroundResource(exerciseImg);
-        Log.i("Activity", "can go +6");
+
         // Get the background, which has been compiled to an AnimationDrawable object.
         frameAnimation = (AnimationDrawable) imgView.getBackground();
-        Log.i("Activity","can go +7");
+
         // Start the animation (looped playback by default).
         frameAnimation.start();
-        Log.i("Activity", "can go +8");
-
         new CountDownTimer(15000, 1000) {
 
             public void onTick(long millisUntilFinished) {
@@ -152,46 +135,6 @@ public class Activity extends AppCompatActivity {
         }.start();
 
     }
-  /*  public void random(){
-        for(int i=0;i<4;i++){
-            boolean same=true;
-            int x=0;
-            while(same){
-                same=false;
-                x=(int)(Math.random() * 9);
-                for(int j=0;j<i;j++) {
-                    if (x == imageId[j]){
-                        same=true;
-                        break;
-                    }
-                }
-            }
-            imageId[i]=x;
-        }
-
-    }*/
-/*
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
-        }
-
-        return super.onOptionsItemSelected(item);
-    }*/
 
     public void linkHome(View view)
     {
@@ -201,14 +144,9 @@ public class Activity extends AppCompatActivity {
         history.subaccept(1);
         history.addcancel(1);
         history.save(this);
-        Log.i("historycancel", UserManage.getInstance(this).getCurrentIdUser() + "");
-        Log.i("historycancel", history.getCancelActivity() + "");
-        Log.i("historycancel", history.gettotal() + "");
 
         Intent i1 = new Intent(Activity.this, MainActivity.class);
-        // Bundle b1 = new Bundle();
-        //b1.putExtra("key", "main");
-        //i1.putExtra("key", "main");
+
         startActivity(i1);
         //sendBroadcast(i1);
         Intent i = new Intent(getBaseContext(), AlarmReceiver.class);
@@ -217,10 +155,7 @@ public class Activity extends AppCompatActivity {
         b.putString("key", "first");
         i.putExtras(b);
         sendBroadcast(i);
-        //AlarmManager manager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-        //int interval = 60*1000*1;
-        //PendingIntent pendingIntent = PendingIntent.getBroadcast(Activity.this, 0, i, 0);
-       // manager.setExact(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + interval, pendingIntent);
+
     }
 
     public void requesAddscore()
@@ -231,7 +166,7 @@ public class Activity extends AppCompatActivity {
                 new Response.Listener<String>() { //create new listener to traces the data
                     @Override
                     public void onResponse(String response) { //when listener is activated
-                        Log.i("volley", response);
+
 
                         HashMap<String, Object> data = converter.JSONToHashMap(response);
                         if((boolean) data.get("status")) {
@@ -245,7 +180,7 @@ public class Activity extends AppCompatActivity {
                 }, new Response.ErrorListener() { //create error listener to trace an error if download process fail
             @Override
             public void onErrorResponse(VolleyError volleyError) { //when error listener is activated
-                Log.i("volley", volleyError.toString());
+
                 makeToast("Cannot connect to server. Please check the Internet setting.");
             }
         }) { //define POST parameters
@@ -259,7 +194,7 @@ public class Activity extends AppCompatActivity {
                 JSON.put("score", point);
                 JSON.put("user", userData);
                 JSON.put("description", "Done activity! Get 1 point.");
-                Log.i("JSON", converter.HashMapToJSON(JSON));
+
                 map.put("JSON", converter.HashMapToJSON(JSON));
 
                 return map;
