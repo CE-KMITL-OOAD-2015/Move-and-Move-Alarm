@@ -1,42 +1,41 @@
 package movealarm.kmitl.net;
 
-import java.sql.SQLException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 
-/**
- * Created by Moobi on 01-Nov-15.
- */
 public class Group extends Model{
     private String name = null;
     private String status = null;
     private int score = 0;
     private int amountMember = 0;
     private User admin = null;
-    private ArrayList<User> members = null;
-    private ArrayList<User> temp_addedUserList = null;
-    private ArrayList<User> temp_removeUserList = null;
-    private ArrayList<HashMap<String, Object>> temp_scoreLogList = null;
+    private Converter converter = Converter.getInstance();
+    private ArrayList<User> members;
+    private ArrayList<User> temp_addedUserList; //create temp list to keep temporary added users until next saving model
+    private ArrayList<User> temp_removeUserList; //create temp list to keep temporary removed users until next saving model
+    private ArrayList<HashMap<String, Object>> temp_scoreLogList; //create temp list to keep temporary score logs until next saving model
 
     public Group()
     {
-        this.tableName = "groups";
-        this.requiredFields = new ArrayList<>();
-        this.requiredFields.add("name");
-        this.requiredFields.add("adminID");
-        members = new ArrayList<>();
+        this.tableName = "groups"; //table name in the database
+        this.addRequiredField("name"); //this model cannot be saved until the required fields were filled
+        this.addRequiredField("adminID");
+        members = new ArrayList<>(); //create list of members
         temp_addedUserList = new ArrayList<>();
         temp_removeUserList = new ArrayList<>();
         temp_scoreLogList = new ArrayList<>();
     }
 
-    public static Group find(int id) //find is a static method that will provide object group by enter a group id.
+    public static Group find(int id) //a static method that will provide model type 'group' by enter a group id.
     {
-        HashMap<String, Object> temp = modelCollection.find("groups", id); //create temp to catch data from database.
-        Group model = new Group();
-        //**attribute mapping process**
+        HashMap<String, Object> temp = modelCollection.find("groups", id); //create a temporary HashMap to keep data from the database.
+        if(temp == null) //if no data
+            return null;
+
+        Group model = new Group(); //create new model
+        //**process of attribute mapping**
         model.id = (int) temp.get("id");
         model.createdDate = (Date) temp.get("createdDate");
         model.name = "" + temp.get("name");
@@ -46,9 +45,9 @@ public class Group extends Model{
         model.amountMember = (int) temp.get("amountMember");
         model.modifiedDate = (Date) temp.get("modifiedDate");
 
-        //**object mapping process**, one group can has many members.
+        //**process of object mapping**, one group can has many members.
         model.members = new ArrayList<>();
-        ArrayList<HashMap<String, Object>> user_temp = modelCollection.where("user", "groupID", "=", "" + model.id); //create user_temp to catch data from database.
+        ArrayList<HashMap<String, Object>> user_temp = modelCollection.where("user", "groupID", "=", "" + model.id); //create user_temp to keep data from the database.
         for(HashMap<String, Object> item : user_temp) {
             User user = User.find((int) item.get("id"));
             model.members.add(user);
@@ -56,12 +55,13 @@ public class Group extends Model{
         return model;
     }
 
-    public static Group[] where(String colName, String operator, String value)
+    public static Group[] where(String colName, String operator, String value) //a static method that will provide a group of models of type 'group' by enter a condition such as 'a group that has at least 60 points'
     {
-        ArrayList<HashMap<String, Object>> temp = modelCollection.where("groups", colName, operator, value);
+        ArrayList<HashMap<String, Object>> temp = modelCollection.where("groups", colName, operator, value); //query data from the database
         ArrayList<Group> collection = new ArrayList<>();
-        for(HashMap<String, Object> item : temp) {
-            Group model = new Group();
+        for(HashMap<String, Object> item : temp) { //if data objects > 0
+            Group model = new Group(); //create new model to make data mapping
+            //**data mapping process**
             model.id = (int) item.get("id");
             model.createdDate = (Date) item.get("createdDate");
             model.name = "" + item.get("name");
@@ -70,7 +70,7 @@ public class Group extends Model{
             model.admin = User.find((int) item.get("adminID"));
             model.amountMember = (int) item.get("amountMember");
             model.modifiedDate = (Date) item.get("modifiedDate");
-
+            //**map user models to group**
             model.members = new ArrayList<>();
             ArrayList<HashMap<String, Object>> user_temp = modelCollection.where("user", "groupID", "=", "" + model.id); //create user_temp to catch data from database.
             for(HashMap<String, Object> data : user_temp) {
@@ -78,18 +78,18 @@ public class Group extends Model{
                 model.members.add(user);
             }
 
-            collection.add(model);
+            collection.add(model); //add to ArrayList of group
         }
 
         return  collection.toArray(new Group[collection.size()]);
     }
 
-    public static Group[] where(String colName, String operator, String value, String extraCondition)
+    public static Group[] where(String colName, String operator, String value, String extraCondition) //where method with more conditions
     {
         return where(colName, operator, value + " " + extraCondition);
     }
 
-    public static Group[] all()
+    public static Group[] all() //get all of groups in the database
     {
         ArrayList<HashMap<String, Object>> temp = modelCollection.all("groups");
         ArrayList<Group> collection = new ArrayList<>();
@@ -118,11 +118,11 @@ public class Group extends Model{
     }
 
     @Override
-    public HashMap<String, Object> getValues()
+    public HashMap<String, Object> getValues() //transform all object's values to HashMap format
     {
-        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss"); //define date format
         HashMap<String, Object> temp = new HashMap<>();
-        temp.put("name", name);
+        temp.put("name", name); //map attribute name with value
         temp.put("status", status);
         temp.put("score", score);
         temp.put("amountMember", amountMember);
@@ -130,7 +130,24 @@ public class Group extends Model{
         if(modifiedDate == null)
             temp.put("modifiedDate", null);
         else
-            temp.put("modifiedDate", sdf.format(modifiedDate));
+            temp.put("modifiedDate", sdf.format(modifiedDate)); //convert date to defined format
+        return temp;
+    }
+
+    @Override
+    public HashMap<String, Object> getGeneralValues() //return only common values, external uses
+    {
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd hh:mm:ss");
+        HashMap<String, Object> temp = new HashMap<>();
+        Converter converter = Converter.getInstance();
+        User[] arrayOfMembers = members.toArray(new User[members.size()]);
+        temp.put("id", id);
+        temp.put("name", name);
+        temp.put("status", status);
+        temp.put("score", score);
+        temp.put("members", converter.ModelArrayToHashMapArray(arrayOfMembers));
+        temp.put("amountMember", amountMember);
+        temp.put("admin", admin.getGeneralValues());
         return temp;
     }
 
@@ -175,19 +192,20 @@ public class Group extends Model{
 
     public HashMap<String, Object> increaseScore(int score, String description)
     {
-        HashMap<String, Object> temp_scoreLog = new HashMap<>();
-        int changedScore = Math.abs(score);
+        HashMap<String, Object> temp_scoreLog = new HashMap<>(); //create HashMap to keep fields of 1 unsaved score log
+        int changeScore = Math.abs(score); //get only positive integer
 
-        this.score += changedScore;
-        temp_scoreLog.put("group_id", id);
+        this.score += changeScore; //change the current score
+        //one score log consists of group id, current score(score after change), change score and description of changing score
+        temp_scoreLog.put("id", id);
         temp_scoreLog.put("currentScore", this.score);
-        temp_scoreLog.put("modifiedScore", changedScore);
+        temp_scoreLog.put("modifiedScore", changeScore);
         temp_scoreLog.put("description", description);
-        temp_scoreLogList.add(temp_scoreLog);
+        temp_scoreLogList.add(temp_scoreLog); //add to the temporary list
 
         updateModifiedDate();
 
-        return StatusDescription.createProcessStatus(true);
+        return StatusDescription.createProcessStatus(true); //return status of process is true when process is success
     }
 
     public HashMap<String, Object> decreaseScore(int score, String description)
@@ -195,11 +213,11 @@ public class Group extends Model{
         HashMap<String, Object> temp_scoreLog = new HashMap<>();
         int changedScore = Math.abs(score);
 
-        if(this.score - changedScore < 0)
+        if(this.score - changedScore < 0) //a score after changing must be positive integer
             return StatusDescription.createProcessStatus(false, "The score cannot be under zero.");
 
         this.score -= changedScore;
-        temp_scoreLog.put("group_id", id);
+        temp_scoreLog.put("id", id);
         temp_scoreLog.put("currentScore", this.score);
         temp_scoreLog.put("modifiedScore", -changedScore);
         temp_scoreLog.put("description", description);
@@ -230,14 +248,22 @@ public class Group extends Model{
         return admin;
     }
 
+    public int getScore()
+    {
+        return score;
+    }
+
     public HashMap<String, Object> addMember(User user)
     {
-        for(User item : temp_addedUserList) {
+        if(amountMember > 9)
+            return StatusDescription.createProcessStatus(false, "The group has reached the maximum members limit now.");
+
+        for(User item : temp_addedUserList) { //loop to check duplicated user
             if(item.getID() == user.getID())
                 return StatusDescription.createProcessStatus(false, "This user is already added to the temporary added list.");
         }
 
-        for(User item : members) {
+        for(User item : members) { //loop to check duplicated user
             if (user.getID() == item.getID())
                 return StatusDescription.createProcessStatus(false, "This user is already added to this group.");
         }
@@ -268,95 +294,125 @@ public class Group extends Model{
     }
 
     @Override
-    public HashMap<String, Object> save()
+    public HashMap<String, Object> save() //all processes will not be affected until this method is called
     {
         if(admin == null)
             return StatusDescription.createProcessStatus(false, "The group must have an admin user before saving.");
 
-        HashMap<String, Object> requiredFields = checkRequiredFields();
-        if(requiredFields != null)
-            return requiredFields;
+        if(checkRequiredFields() != null) //if some required fields are still not filled
+            return checkRequiredFields(); //break saving process and return error with required fields name
 
-        if(createdDate == null) {
-            HashMap<String, Object> temp = modelCollection.create(this);
+        if(createdDate == null) { //if this model has never been saved
+            HashMap<String, Object> temp = modelCollection.create(this); //create new row on the database and get id, created date
+
             if(temp == null)
-                return StatusDescription.createProcessStatus(false, "Cannot save due to a database error.");
-            id = Integer.parseInt("" + temp.get("id"));
-            createdDate = (Date) temp.get("createdDate");
-            return StatusDescription.createProcessStatus(true);
+                return StatusDescription.createProcessStatus(false, "Cannot save due to a database error."); //return error description with break saving process
+
+            id = converter.toInt(temp.get("id")); //set id
+            createdDate = (Date) temp.get("createdDate"); //set created date
+            //return StatusDescription.createProcessStatus(true);
         }
 
-        if(temp_addedUserList.size() != 0) {
-            SQLInquirer sqlInquirer = SQLInquirer.getInstance();
-            for(User user : temp_addedUserList) {
-                try {
-                    sqlInquirer.update("user", "groupID='" + id + "'", "id", "=", "" + user.getID());
-                    amountMember++;
-                } catch (SQLException e) {
-                    System.out.println("An error has occurred while adding a member.");
-                    e.printStackTrace();
-                    return StatusDescription.createProcessStatus(false, "An error has occurred while adding a member.");
-                }
-            }
-        }
+        HashMap<String, Object> addGroupIDStatus = addGroupIDToUser(); //change group id of each user
+        if(addGroupIDStatus != null && (boolean) addGroupIDStatus.get("status") == false) //if an error has occurred while changing group id of each user on the database
+            return addGroupIDStatus; //break saving process and return error description
 
-        if(temp_removeUserList.size() != 0) {
-            SQLInquirer sqlInquirer = SQLInquirer.getInstance();
-            for(User user : temp_removeUserList) {
-                try {
-                    sqlInquirer.update("user", "groupID=NULL", "id", "=", "" + user.getID());
-                    amountMember--;
-                } catch (SQLException e) {
-                    System.out.println("An error has occurred while removing a member.");
-                    e.printStackTrace();
-                    return StatusDescription.createProcessStatus(false, "An error has occurred while removing a member.");
-                }
-            }
-        }
+        HashMap<String, Object> removeGroupIDStatus = removeGroupIDFromUser(); //remove group id of each user
+        if(removeGroupIDStatus != null && (boolean) removeGroupIDStatus.get("status") == false) //if an error has occurred while removing group id of each user on the database
+            return removeGroupIDStatus; //break saving process and return error description
 
-        if(temp_scoreLogList.size() != 0) {
-            SQLInquirer sqlInquirer = SQLInquirer.getInstance();
-            String[] valuesSet = new String[temp_scoreLogList.size()];
+        HashMap<String, Object> addScoreLogStatus = addScoreLogToDatabase(); //add score log to database
+        if(addScoreLogStatus != null && (boolean) addScoreLogStatus.get("status") == false) //if an error has occurred while adding score logs to the database
+            return addScoreLogStatus; //break saving process and return error description
 
-            for(int i = 0; i < temp_scoreLogList.size(); i++) {
-                HashMap<String, Object> item = temp_scoreLogList.get(i);
-                valuesSet[i] = "" + item.get("groupID") + ", " + item.get("currentScore") + ", " + item.get("modifiedScore") + ", '" + item.get("description") + "'";
-            }
-
-            String colNameSet = "group_id, currentScore, modifiedScore, description";
-
-            try {
-                sqlInquirer.insertMultiple("group_score", colNameSet, valuesSet);
-            } catch (SQLException e) {
-                System.out.println("An error has occurred while adding a score log.");
-                e.printStackTrace();
-                return StatusDescription.createProcessStatus(false, "An error has occurred while adding a score log.");
-            }
-        }
-
-        temp_addedUserList = null;
-        temp_removeUserList = null;
-        temp_scoreLogList = null;
-
-        return StatusDescription.createProcessStatus(modelCollection.save(this));
+        return StatusDescription.createProcessStatus(modelCollection.save(this)); //if saving process is success
     }
 
     @Override
     public HashMap<String, Object> delete()
     {
-        SQLInquirer sqlInquirer = SQLInquirer.getInstance();
-        try {
-            sqlInquirer.delete("group_score", "groupID = " + id);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-        temp_removeUserList = members;
-        save();
-        return StatusDescription.createProcessStatus(modelCollection.delete(this));
+        if(!modelCollection.manualDeleteData("group_score", "groupID = " + id)) //if deleting data on the database is not success
+            return StatusDescription.createProcessStatus(false, "An error has occurred while deleting data on the database.");
+
+        temp_removeUserList = members; //remove all members of group
+        save(); //save to let process affects
+        return StatusDescription.createProcessStatus(modelCollection.delete(this)); //return delete status
     }
 
     public Date getModifiedDate()
     {
         return modifiedDate;
+    }
+
+    public HashMap<String, Object> addGroupIDToUser()
+    {
+        if(temp_addedUserList.size() != 0) { //if temporary list is not empty
+            for(User user : temp_addedUserList) {
+                if(modelCollection.manualEditData("user", "groupID='" + id + "'", "id", "=", converter.toString(user.getID()))) {//if updating data on database is success
+                    amountMember++; //increase amount of members
+                    members.add(user);
+                }
+                else {
+                    System.out.println("An error has occurred while adding a member."); //or database error
+                    return StatusDescription.createProcessStatus(false, "An error has occurred while adding a member.");
+                }
+
+                temp_addedUserList.clear(); //clear temp list
+                return StatusDescription.createProcessStatus(true);
+            }
+        }
+
+        return null;
+    }
+
+    public HashMap<String, Object> removeGroupIDFromUser()
+    {
+        if(temp_removeUserList.size() != 0) { //if temporary list is not empty
+            for(User user : temp_removeUserList) {
+                if(modelCollection.manualEditData("user", "groupID=NULL", "id", "=", "" + user.getID())) {
+                    amountMember--;
+
+                    for(User item : members) {
+                        if(item.getID() == user.getID()){
+                            members.remove(item);
+                            break;
+                        }
+                    }
+                }
+                else {
+                    System.out.println("An error has occurred while removing a member.");
+                    return StatusDescription.createProcessStatus(false, "An error has occurred while removing a member.");
+                }
+            }
+
+            temp_removeUserList.clear(); //clear temp list
+            return StatusDescription.createProcessStatus(true);
+        }
+
+        return null;
+    }
+
+    public HashMap<String, Object> addScoreLogToDatabase()
+    {
+        if(temp_scoreLogList.size() != 0) { //if temporary list is not empty
+            String[] valuesSet = new String[temp_scoreLogList.size()]; //create array to keep a set of values of each score log
+
+            for(int i = 0; i < temp_scoreLogList.size(); i++) {
+                HashMap<String, Object> item = temp_scoreLogList.get(i);
+                valuesSet[i] = "" + item.get("id") + ", " + item.get("currentScore") + ", " + item.get("modifiedScore") + ", '" + item.get("description") + "'"; //concat string
+            }
+
+            String colNameSet = "group_id, currentScore, modifiedScore, description"; //set of column name of values
+
+            if(!modelCollection.manualInsertDataMultiple("group_score", colNameSet, valuesSet)) { //if inserting data to the database is error
+                System.out.println("An error has occurred while adding a score log.");
+                return StatusDescription.createProcessStatus(false, "An error has occurred while adding a score log.");
+            }
+
+            temp_scoreLogList.clear(); //clear temp score log list
+            return StatusDescription.createProcessStatus(true);
+        }
+
+        return null;
     }
 }
