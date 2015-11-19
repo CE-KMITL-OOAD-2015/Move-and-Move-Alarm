@@ -604,6 +604,7 @@ public class MainActivity extends AppCompatActivity {
                             Log.i("surname",""+surname.getText().toString());
                             UserManage.getInstance(MainActivity.this).getCurrentUser().setLastName(surname.getText().toString());
                         }
+                        UserManage.getInstance(MainActivity.this).updateUser(MainActivity.this);
                         Fragment fragment = null;
                         Class fragmentClass;
                         fragmentClass = ProfileFragment.class;
