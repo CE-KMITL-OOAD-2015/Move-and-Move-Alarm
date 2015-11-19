@@ -1,4 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
+<<<<<<< d05d52fdd1e6ba1b93394832c15fc145d8f6fd07
 <<<<<<< 0b7e0378cd33570bfa1185bc574bf8df48e77294
 <merger version="3"><dataSet config="debug"><source path="D:\workooad\Move2\Move-and-Move-Alarm\MAMTv1\app\libraries\CircularProgressBar\build\intermediates\bundles\debug\assets"/></dataSet><dataSet config="main"><source path="D:\workooad\Move2\Move-and-Move-Alarm\MAMTv1\app\libraries\CircularProgressBar\src\androidTest\assets"/></dataSet></merger>
 =======
@@ -12,3 +13,6 @@
 <merger version="3"><dataSet config="debug"><source path="C:\msys64\home\Moobi\Move-and-Move-Alarm\MAMTv1\app\libraries\CircularProgressBar\build\intermediates\bundles\debug\assets"/></dataSet><dataSet config="main"><source path="C:\msys64\home\Moobi\Move-and-Move-Alarm\MAMTv1\app\libraries\CircularProgressBar\src\androidTest\assets"/></dataSet></merger>
 >>>>>>> prepare for connect to API
 >>>>>>> prepare for connect to API
+=======
+<merger version="3"><dataSet config="debug"><source path="C:\msys64\home\Moobi\Move-and-Move-Alarm\MAMTv1\app\libraries\CircularProgressBar\build\intermediates\bundles\debug\assets"/></dataSet><dataSet config="main"><source path="C:\msys64\home\Moobi\Move-and-Move-Alarm\MAMTv1\app\libraries\CircularProgressBar\src\androidTest\assets"/></dataSet></merger>
+>>>>>>> removed picture below group info table.

@@ -25,9 +25,9 @@ public class GroupMainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_group_main);
-        groupCode = (TextView)findViewById(R.id.groupcode);
-        adminName = (TextView)findViewById(R.id.adminname);
-        groupName = (TextView)findViewById(R.id.groupname);
+        groupCode = (TextView)findViewById(R.id.textView22);
+        adminName = (TextView)findViewById(R.id.textView42);
+        groupName = (TextView)findViewById(R.id.textView32);
         amountMember = (TextView)findViewById(R.id.amount);
         groupScore = (TextView)findViewById(R.id.score);
         getEvent = (TextView)findViewById(R.id.getEvent);
