@@ -5,8 +5,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.renderscript.Sampler;
-import android.util.Log;
 
 import java.sql.Blob;
 
@@ -43,14 +41,12 @@ public class UserHelper extends SQLiteOpenHelper {
                 User.Column.LOGIN,
                 User.Column.IDGROUP,
                 User.Column.STATESW);
-        Log.i(TAG, CREATE_USER_TABLE);
         db.execSQL(CREATE_USER_TABLE);
     }
     @Override
     public void onUpgrade(SQLiteDatabase db,int oldVersion,int newVersion){
         String DROP_USER_TABLE = "DROP TABLE IF EXISTS"+ User.TABLE;
         db.execSQL(DROP_USER_TABLE);
-        Log.i(TAG,"Upgrade Database from "+oldVersion+" to "+newVersion);
         onCreate(db);
     }
     public int addUser(User user) {
@@ -73,7 +69,6 @@ public class UserHelper extends SQLiteOpenHelper {
         values.put(User.Column.STATESW,user.getStatesw());
         long id = sqLiteDatabase.insert(User.TABLE, null, values);
         sqLiteDatabase.close();
-        Log.i(TAG, "funh adduser id :" + id + " user:" + user.getUserName() + " iduser:" + user.getIdUser());
         return ((int)id);
     }
     public void updateUser(User user){
@@ -122,7 +117,6 @@ public class UserHelper extends SQLiteOpenHelper {
                 }, User.Column.IDUSER + " = ? ",
                 new String[]{String.valueOf(idUser)}, null, null, null, null);
         User user;
-        Log.i("User", "getUser :" + idUser +" ,"+cursor);
         boolean check=false;
         if (cursor != null) {
             check = cursor.moveToFirst();
@@ -184,7 +178,6 @@ public class UserHelper extends SQLiteOpenHelper {
 
     sqLiteDatabase.delete(User.TABLE, User.Column.ID + " = ? ",
             new String[] { String.valueOf(id) });
-      //  sqLiteDatabase.delete(User.TABLE, User.Column.ID + " = " + id, null);
 
         sqLiteDatabase.close();
     }

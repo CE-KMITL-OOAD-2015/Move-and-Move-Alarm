@@ -5,7 +5,6 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 import android.database.sqlite.SQLiteOpenHelper;
-import android.util.Log;
 
 /**
  * Created by Monthon on 17/11/2558.
@@ -25,14 +24,12 @@ public class HistorygroupHelper extends SQLiteOpenHelper{
                 Historygroup.Column.IDGROUP,
                 Historygroup.Column.NUMACCEPT,
                 Historygroup.Column.CANCEL);
-        Log.i(TAG, CREATE_HISTORYGROUP_TEBLE);
         db.execSQL(CREATE_HISTORYGROUP_TEBLE);
     }
     @Override
     public void onUpgrade(SQLiteDatabase db,int oldVersion,int newVersion){
         String DROP_HISTORYGROUP_TABLE ="DROP TABLE IF EXISTS"+Historygroup.TABLE;
         db.execSQL(DROP_HISTORYGROUP_TABLE);
-        Log.i(TAG,"Upgrade Database from"+oldVersion+" to "+newVersion);
         onCreate(db);
     }
     public int addHistoryGroup(Historygroup history){
@@ -43,7 +40,6 @@ public class HistorygroupHelper extends SQLiteOpenHelper{
         values.put(Historygroup.Column.CANCEL, history.getCancelEvent());
         long id = sqLiteDatabase.insert(Historygroup.TABLE,null,values);
         sqLiteDatabase.close();
-        Log.i(TAG, "Add history :" + id + " id user: " + history.getIdGroup());
         return ((int)id);
     }
     public void updateHistoryGroup(Historygroup history){
@@ -76,7 +72,6 @@ public class HistorygroupHelper extends SQLiteOpenHelper{
         }, Historygroup.Column.IDGROUP + " = ? ", new String[]
                 {String.valueOf(idGroup)}, null, null, null, null);
         Historygroup history = null;
-        Log.i("History","getHistoryGroup :" + idGroup+" ,"+cursor);
         boolean check = false;
         if(cursor != null){
             check = cursor.moveToFirst();

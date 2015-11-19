@@ -2,7 +2,6 @@ package com.fatel.mamtv1;
 
 import android.content.Context;
 import android.provider.BaseColumns;
-import android.util.Log;
 
 /**
  * Created by Monthon on 16/11/2558.
@@ -76,11 +75,9 @@ public class History {
         HistoryHelper historyHelper = new HistoryHelper(context);
         if(this.id == -1) {
             this.id = historyHelper.addHistoryUser(this);
-            Log.i("History", "M savenew :" + id);
         }
         else {
             historyHelper.updateHistoryUser(this);
-            Log.i("History", "M saveold :" + id);
         }
     }
     public static History findhistory(int idUser,Context context){

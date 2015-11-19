@@ -7,12 +7,10 @@ import android.graphics.BitmapFactory;
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.ImageView;
 
 import com.facebook.AccessToken;
@@ -51,7 +49,6 @@ public class ShareActivity extends AppCompatActivity {
 
         private void performPublish(PendingAction action){
             AccessToken accessToken = AccessToken.getCurrentAccessToken();
-            Log.i("log in", "" + accessToken); // new add
 
             if(accessToken != null){
                 pendingAction = action;
@@ -65,28 +62,16 @@ public class ShareActivity extends AppCompatActivity {
         protected void onCreate(Bundle savedInstanceState) {
             super.onCreate(savedInstanceState);
             setContentView(R.layout.activity_share);
-            Log.i("URI", "can pass");
             //Second Activity get a Uri path
             Bundle b = getIntent().getExtras();
-            Log.i("URI", "can pass1");
             if (b != null) {
                 //String uri_Str= b.getString("uri_Str");
                 //Imguri = Uri.parse(uri_Str);
-                Log.i("URI", "can pass1.1");
                 Imguri = getIntent().getParcelableExtra("uri");
-                Log.i("URI", "can pass2");
             }
-            Log.i("URI", "" + Imguri);
-
 
             imgPreview = (ImageView) findViewById(R.id.imgNxtPreview);
             previewCapturedImage(Imguri);
-
-
-            //add for editText บ่ได้ใช้ คิดว่าจะตัด caption ทิ้ง
-//            EditText myCaption = (EditText)findViewById(R.id.caption);
-//            String myCap = myCaption.getText().toString();
-
 
             //add for activity_share facebook
             postPicBtn = (Button) findViewById(R.id.btn_share);  //btn_postPic    btn_share
@@ -146,7 +131,6 @@ public class ShareActivity extends AppCompatActivity {
 
                 final Bitmap bitmap = BitmapFactory.decodeFile(img.getPath(),
                         options);
-                Log.i("path",""+img.getPath());
 
                 imgPreview.setImageBitmap(bitmap);
             } catch (NullPointerException e) {
@@ -159,14 +143,6 @@ public class ShareActivity extends AppCompatActivity {
         //add for activity_share facebook(picture)
         private void postPicture(){
             Profile profile = Profile.getCurrentProfile();
-            if(profile==null)
-                Log.i("profile","null");
-            else
-                Log.i("profile","!null");
-            if(Imguri==null)
-                Log.i("uri","null");
-            else
-                Log.i("uri",""+Imguri);
             Bitmap picture = BitmapFactory.decodeFile(Imguri.getPath());
             SharePhoto pictureToShare = new SharePhoto.Builder()
                     .setBitmap(picture)
@@ -206,9 +182,6 @@ public class ShareActivity extends AppCompatActivity {
             switch (oldPendingAction){
                 case NONE:
                     break;
-                //case POST_LINK:
-                //    postLink();
-                //    break;
                 case POST_PICTURE:
                     postPicture();
                     break;
@@ -252,20 +225,12 @@ public class ShareActivity extends AppCompatActivity {
                 };
     public void linkHome(View view){
         Intent i1 = new Intent(ShareActivity.this, MainActivity.class);
-        // Bundle b1 = new Bundle();
-        //b1.putExtra("key", "main");
-        //i1.putExtra("key", "main");
         startActivity(i1);
-        //sendBroadcast(i1);
         Intent i = new Intent(getBaseContext(), AlarmReceiver.class);
         Bundle b = new Bundle();
         b.putString("key", "first");
         i.putExtras(b);
         sendBroadcast(i);
-        //AlarmManager manager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-        //int interval = 60*1000*1;
-        //PendingIntent pendingIntent = PendingIntent.getBroadcast(actAlarm.this, 0, i, 0);
-        //manager.setExact(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + interval, pendingIntent);
     }
 
 

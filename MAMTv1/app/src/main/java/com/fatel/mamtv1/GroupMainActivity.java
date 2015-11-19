@@ -3,7 +3,6 @@ package com.fatel.mamtv1;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -33,17 +32,12 @@ public class GroupMainActivity extends AppCompatActivity {
         groupScore = (TextView)findViewById(R.id.score);
         getEvent = (TextView)findViewById(R.id.getEvent);
 
-        Log.i("Group", "start group fragment");
         Converter converter = Converter.getInstance();
 
         try {
             HashMap<String, Object> groupData = (HashMap<String, Object>) Cache.getInstance().getData("groupData");
             HashMap<String, Object> userData = converter.JSONToHashMap(converter.toString(groupData.get("admin")));
             HashMap<String, Object> eventData = (HashMap<String, Object>) Cache.getInstance().getData("eventData");
-
-            Log.i("Group groupData", groupData.toString());
-            Log.i("Group userData", userData.toString());
-            Log.i("Group eventData", eventData.toString());
 
             DateFormat dateFormat = new SimpleDateFormat("HH-mm-ss");
             Date date = dateFormat.parse(converter.toString(eventData.get("time")));
@@ -61,7 +55,6 @@ public class GroupMainActivity extends AppCompatActivity {
             groupScore.setText("" + converter.toInt(groupData.get("score")));
             getEvent.setText(date.getHours() + ":" + date.getMinutes());
         } catch (Exception e) {
-            Log.i("Group", e.toString());
         }
     }
 

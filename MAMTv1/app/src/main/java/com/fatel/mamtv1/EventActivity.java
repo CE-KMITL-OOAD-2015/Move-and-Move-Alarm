@@ -3,12 +3,9 @@ package com.fatel.mamtv1;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.drawable.AnimationDrawable;
-import android.media.Image;
 import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
-import android.view.Menu;
-import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -21,11 +18,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 
-import java.text.DateFormat;
-import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.concurrent.TimeUnit;
@@ -38,7 +31,6 @@ public class EventActivity extends AppCompatActivity {
     ImageView imgView;
     AnimationDrawable frameAnimation;
     int count=0;
-    //int[] imageId = new int[] {-1,-1,-1,-1};
     ArrayList<Posture> img ;
     int exerciseImg;
     String exerciseDes;
@@ -126,15 +118,7 @@ public class EventActivity extends AppCompatActivity {
                 //history
                 //go to main
                 Intent i1 = new Intent(EventActivity.this, MainActivity.class);
-                // Bundle b1 = new Bundle();
-                //b1.putExtra("key", "main");
-                //i1.putExtra("key", "main");
                 startActivity(i1);
-                //Intent intent = new Intent(Activity.this, MainActivity.class);
-                //startActivity(intent);
-
-                //set frq
-
                 //send score to back
                 requesAddscore();
             }
