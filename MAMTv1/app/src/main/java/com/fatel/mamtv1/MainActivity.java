@@ -597,11 +597,28 @@ public class MainActivity extends AppCompatActivity {
                         if(!isEmpty(name)){
                             //do
                             Log.i("name",""+name.getText().toString());
+                            UserManage.getInstance(MainActivity.this).getCurrentUser().setFirstName(name.getText().toString());
                         }
                         if(!isEmpty(surname)) {
                             //do
                             Log.i("surname",""+surname.getText().toString());
+                            UserManage.getInstance(MainActivity.this).getCurrentUser().setLastName(surname.getText().toString());
                         }
+                        Fragment fragment = null;
+                        Class fragmentClass;
+                        fragmentClass = ProfileFragment.class;
+                        try {
+                            fragment = (Fragment) fragmentClass.newInstance();
+                        } catch (Exception e) {
+                            e.printStackTrace();
+                        }
+
+                        // Insert the fragment by replacing any existing fragment
+                        FragmentManager fragmentManager = getSupportFragmentManager();//getActivity()
+                        FragmentTransaction tx = fragmentManager.beginTransaction();
+                        tx.setCustomAnimations(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
+                        tx.addToBackStack(null);
+                        tx.replace(R.id.container, fragment).commit();
                         break;
 
                     case DialogInterface.BUTTON_NEGATIVE:
@@ -623,6 +640,7 @@ public class MainActivity extends AppCompatActivity {
         builder.setView(layout);
         builder.setMessage("Edit information").setPositiveButton("Yes", dialogClickListener)
                 .setNegativeButton("No", dialogClickListener).show();
+
     }
     private boolean isEmpty(EditText myeditText) {
         return myeditText.getText().toString().trim().length() == 0;
