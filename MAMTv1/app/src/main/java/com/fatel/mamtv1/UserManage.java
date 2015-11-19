@@ -133,6 +133,8 @@ public class UserManage {
                             HashMap<String, Object> userData = converter.JSONToHashMap(converter.toString(data.get("user")));
                             HashMap<String, Object> groupData = converter.JSONToHashMap(converter.toString(data.get("group")));
 
+                            Log.i("group data", groupData.toString());
+
                             Cache.getInstance().putData("groupData", groupData);
                             int idUser = converter.toInt(userData.get("id"));
                             String facebookID = converter.toString(userData.get("facebookID"));
@@ -153,7 +155,8 @@ public class UserManage {
                             UserManage.getInstance(context).getCurrentUser().setScore(converter.toInt(userData.get("score")));
                             UserManage.getInstance(context).getCurrentUser().setGender(converter.toInt(userData.get("gender")));
                             UserManage.getInstance(context).getCurrentUser().setEmail(converter.toString(userData.get("email")));
-                            UserManage.getInstance(context).getCurrentUser().setFacebookID(converter.toString(userData.get("facebookID")));
+                            UserManage.getInstance(context).getCurrentUser().setIdGroup(converter.toInt(groupData.get("id")));
+                            UserManage.getInstance(context).getCurrentUser().setFacebookID(converter.toString(userData.get("facebookID")).substring(2));
                             UserManage.getInstance(context).getCurrentUser().setFacebookFirstName(converter.toString(userData.get("facebookFirstName")));
                             UserManage.getInstance(context).getCurrentUser().setFacebookLastName(converter.toString(userData.get("facebookLastName ")));
                             UserManage.getInstance(context).getCurrentUser().setLogin(1);
@@ -183,8 +186,10 @@ public class UserManage {
             protected Map<String, String> getParams() {
 
                 Map<String, String> map = new HashMap<>(); //create map to keep variables
-                map.put("facebookID", id); //API variable name
+                map.put("facebookID", "fb" + id); //API variable name
                 map.put("facebookFirstName", name);
+
+                Log.i("map", map.toString());
 
                 return map;
             }

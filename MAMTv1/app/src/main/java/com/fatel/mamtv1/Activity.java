@@ -131,7 +131,7 @@ public class Activity extends AppCompatActivity {
     public void linkHome(View view)
     {
         //history
-        History history = History.findHistory(UserManage.getInstance(this).getCurrentIdUser(),this);
+        History history = History.findHistory(UserManage.getInstance(this).getCurrentIdUser(), this);
         history.subaccept(1);
         history.addcancel(1);
         history.save(this);
@@ -146,7 +146,8 @@ public class Activity extends AppCompatActivity {
         b.putString("key", "first");
         i.putExtras(b);
         sendBroadcast(i);
-
+        Cache.getInstance().putData("isCancelActivity", true);
+        finish();
     }
 
     public void requestAddScore()
