@@ -74,8 +74,7 @@ public class CreateGroupActivity extends AppCompatActivity {
                                 user.save(CreateGroupActivity.this);
                                 Cache.getInstance().putData("groupData", groupData);
 
-                                startActivity(new Intent(CreateGroupActivity.this, GroupMainActivity.class));
-                                finish();
+                                requestEvent();
                             }
                             else {
                                 makeToast(converter.toString(data.get("description")));
@@ -110,5 +109,36 @@ public class CreateGroupActivity extends AppCompatActivity {
     public void makeToast(String text)
     {
         Toast.makeText(this, text, Toast.LENGTH_SHORT).show();
+    }
+
+    public void requestEvent()
+    {
+        String url = HttpConnector.URL + "event/getEvent";
+        StringRequest eventRequest = new StringRequest(Request.Method.GET, url, //create new string request with POST method
+                new Response.Listener<String>() { //create new listener to traces the data
+                    @Override
+                    public void onResponse(String response) { //when listener is activated
+                        Converter converter = Converter.getInstance();
+                        Cache cache = Cache.getInstance();
+                        HashMap<String, Object> data = converter.JSONToHashMap(response);
+                        if((boolean) data.get("status")) {
+                            HashMap<String, Object> eventData = converter.JSONToHashMap("" + data.get("event"));
+                            cache.putData("eventData", eventData);
+
+                            startActivity(new Intent(CreateGroupActivity.this, GroupMainActivity.class));
+                            finish();
+                        }
+                        else {
+                            makeToast(converter.toString(data.get("description")));
+                        }
+                    }
+                }, new Response.ErrorListener() { //create error listener to trace an error if download process fail
+            @Override
+            public void onErrorResponse(VolleyError volleyError) { //when error listener is activated
+                makeToast("Cannot connect to server. Please check the Internet setting.");
+            }
+        });
+
+        HttpConnector.getInstance(this).addToRequestQueue(eventRequest);
     }
 }

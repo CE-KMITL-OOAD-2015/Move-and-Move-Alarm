@@ -1,18 +1,2 @@
 <?xml version="1.0" encoding="utf-8"?>
-<<<<<<< 0b7e0378cd33570bfa1185bc574bf8df48e77294
-<merger version="3"><dataSet config="main"><source path="D:\workooad\Move2\Move-and-Move-Alarm\MAMTv1\app\libraries\CircularProgressBar\src\main\assets"/></dataSet><dataSet config="release"><source path="D:\workooad\Move2\Move-and-Move-Alarm\MAMTv1\app\libraries\CircularProgressBar\src\release\assets"/></dataSet></merger>
-=======
-<<<<<<< 85ec3680feaed8af8d811f3e167035dbccec1932
-<<<<<<< HEAD
-<merger version="3"><dataSet config="main"><source path="C:\Users\kid14\Documents\GitHub\Move-and-Move-Alarm\MAMTv1\app\libraries\CircularProgressBar\src\main\assets"/></dataSet><dataSet config="release"><source path="C:\Users\kid14\Documents\GitHub\Move-and-Move-Alarm\MAMTv1\app\libraries\CircularProgressBar\src\release\assets"/></dataSet></merger>
-=======
-<merger version="3"><dataSet config="main"><source path="D:\workooad\Move2\Move-and-Move-Alarm\MAMTv1\app\libraries\CircularProgressBar\src\main\assets"/></dataSet><dataSet config="release"><source path="D:\workooad\Move2\Move-and-Move-Alarm\MAMTv1\app\libraries\CircularProgressBar\src\release\assets"/></dataSet></merger>
->>>>>>> delete comment alarmfragment
-=======
-<<<<<<< 0e24d4a9ca5fcf0a3c4b9e7efd7f75e0cd52d7d7
-<merger version="3"><dataSet config="main"><source path="C:\Users\kid14\Documents\GitHub\Move-and-Move-Alarm\MAMTv1\app\libraries\CircularProgressBar\src\main\assets"/></dataSet><dataSet config="release"><source path="C:\Users\kid14\Documents\GitHub\Move-and-Move-Alarm\MAMTv1\app\libraries\CircularProgressBar\src\release\assets"/></dataSet></merger>
-=======
 <merger version="3"><dataSet config="main"><source path="C:\msys64\home\Moobi\Move-and-Move-Alarm\MAMTv1\app\libraries\CircularProgressBar\src\main\assets"/></dataSet><dataSet config="release"><source path="C:\msys64\home\Moobi\Move-and-Move-Alarm\MAMTv1\app\libraries\CircularProgressBar\src\release\assets"/></dataSet></merger>
->>>>>>> prepare for connect to API
->>>>>>> prepare for connect to API
->>>>>>> prepare for connect to API

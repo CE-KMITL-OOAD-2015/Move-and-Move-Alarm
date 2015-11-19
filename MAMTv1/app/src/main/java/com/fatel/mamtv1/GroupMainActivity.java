@@ -41,6 +41,7 @@ public class GroupMainActivity extends AppCompatActivity {
 
             DateFormat dateFormat = new SimpleDateFormat("HH-mm-ss");
             Date date = dateFormat.parse(converter.toString(eventData.get("time")));
+            dateFormat = new SimpleDateFormat("hh : mm  aa");
 
             String groupID = "" + converter.toInt(groupData.get("id"));
             String userName = converter.toString(userData.get("userName"));
@@ -53,7 +54,7 @@ public class GroupMainActivity extends AppCompatActivity {
             adminName.setText(nameOfAdmin);
             amountMember.setText("" + converter.toInt(groupData.get("amountMember")));
             groupScore.setText("" + converter.toInt(groupData.get("score")));
-            getEvent.setText(date.getHours() + ":" + date.getMinutes());
+            getEvent.setText(dateFormat.format(date));
         } catch (Exception e) {
         }
     }

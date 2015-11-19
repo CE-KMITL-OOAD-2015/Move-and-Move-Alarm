@@ -5,159 +5,297 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     android:paddingBottom="@dimen/activity_vertical_margin"
     tools:context="com.fatel.mamtv1.GroupMainActivity">
-    <LinearLayout
-        android:layout_marginTop="30dp"
-        android:id="@+id/GroupCodeL"
-        android:layout_width="wrap_content"
+
+    <RelativeLayout
+
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal">
-        <TextView
-            android:id="@+id/gc"
-            android:text="Group Code : "
-            android:layout_width="150dp"
+        android:id="@+id/relativeLayout">
+        <TableLayout
+            android:id="@+id/table"
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:textSize="20sp"
-            android:textColor="#f5ab35"/>
+            android:orientation="horizontal"
+            android:stretchColumns="*" >
 
-        <TextView
-            android:id="@+id/groupcode"
-            android:text="Unknown"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="20sp"
-            android:textColor="#f5ab35"/>
-    </LinearLayout>
 
-    <LinearLayout
-        android:layout_marginTop="20dp"
-        android:id="@+id/GroupNameL"
-        android:layout_below="@id/GroupCodeL"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal">
-        <TextView
-            android:id="@+id/gn"
-            android:text="Group Name : "
-            android:layout_width="150dp"
-            android:layout_height="wrap_content"
-            android:textSize="20sp"
-            android:textColor="#f5ab35"/>
+            <!-- display this button in 3rd column via layout_column(zero based) -->
 
-        <TextView
-            android:id="@+id/groupname"
-            android:text="Unknown"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="20sp"
-            android:textColor="#f5ab35"/>
-    </LinearLayout>
+            <TableRow
+                android:id="@+id/tableRow2"
+                android:layout_width="150dp"
+                android:layout_height="50dp"
+                android:background="#FF8C00" >
 
-    <LinearLayout
-        android:id="@+id/AdminL"
-        android:layout_marginTop="20dp"
-        android:layout_below="@id/GroupNameL"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-        <TextView
-            android:layout_width="150dp"
-            android:layout_height="wrap_content"
-            android:text="Admin :  "
-            android:textSize="20sp"
-            android:textColor="#f5ab35"/>
-        <TextView
-            android:id="@+id/adminname"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="20sp"
-            android:textColor="#f5ab35"
-            android:text="Unknown"
-            />
+                <TextView
+                    android:id="@+id/textView21"
+                    android:text="Group Code : "
+                    android:layout_width="150dp"
+                    android:layout_height="50dp"
+                    android:textSize="20sp"
+                    android:textColor="#ffffff"/>
 
-    </LinearLayout>
 
-    <LinearLayout
-        android:id="@+id/MemberL"
-        android:layout_marginTop="20dp"
-        android:layout_below="@id/AdminL"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-        <TextView
-            android:layout_width="150dp"
-            android:layout_height="wrap_content"
-            android:textSize="20sp"
-            android:textColor="#f5ab35"
-            android:text="Member : "/>
-        <TextView
-            android:id="@+id/amount"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="20sp"
-            android:textColor="#f5ab35"
-            android:text="0"/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="20sp"
-            android:textColor="#f5ab35"
-            android:text=" / "/>
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="20sp"
-            android:textColor="#f5ab35"
-            android:text="10"/>
-        <Button
-            android:layout_marginLeft="10dp"
-            android:layout_width="85dp"
-            android:layout_height="25dp"
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
 
-            android:background="@drawable/selectormem"
-            android:onClick="linkMember"/>
-    </LinearLayout>
+                    <View style="@style/Divider" />
+                </LinearLayout>
+                    <TextView
+                        android:gravity="center"
+                        android:id="@+id/textView22"
+                        android:text="-"
+                        android:layout_width="150dp"
+                        android:layout_height="50dp"
+                        android:textSize="20sp"
+                        android:textColor="#ffffff"/>
+            </TableRow>
 
-    <LinearLayout
-        android:id="@+id/ScoreL"
-        android:layout_marginTop="20dp"
-        android:layout_below="@id/MemberL"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-        <TextView
-            android:layout_width="150dp"
-            android:layout_height="wrap_content"
-            android:text="Score :  "
-            android:textSize="20sp"
-            android:textColor="#f5ab35"/>
-        <TextView
-            android:id="@+id/score"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="20sp"
-            android:textColor="#f5ab35"
-            android:text="0"
-            />
+            <TableRow
+                android:id="@+id/tableRow3"
+                android:layout_width="150dp"
+                android:layout_height="50dp"
+                android:background="#FFA500" >
 
-    </LinearLayout>
+                <TextView
+                    android:id="@+id/textView31"
+                    android:text="Group Name : "
+                    android:layout_width="150dp"
+                    android:layout_height="50dp"
+                    android:textSize="20sp"
+                    android:textColor="#ffffff"/>
+
+
+                <LinearLayout
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal"
+                    >
+
+                    <View style="@style/Divider" />
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/textView32"
+                    android:text="-"
+                    android:gravity="center"
+                    android:layout_width="150dp"
+                    android:layout_height="50dp"
+                    android:textSize="20sp"
+                    android:textColor="#ffffff"/>
+
+
+
+            </TableRow>
+
+
+            <TableRow
+                android:id="@+id/tableRow4"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#FF8C00" >
+
+                <TextView
+                    android:id="@+id/textView41"
+                    android:layout_width="150dp"
+                    android:layout_height="50dp"
+                    android:text="Admin :  "
+                    android:textSize="20sp"
+                    android:textColor="#ffffff"/>
+
+
+                <LinearLayout
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent"
+                    android:orientation="horizontal">
+
+                    <View style="@style/Divider" />
+                </LinearLayout>
+
+                <TextView
+                    android:gravity="center"
+                    android:id="@+id/textView42"
+                    android:layout_width="150dp"
+                    android:layout_height="50dp"
+                    android:textSize="20sp"
+                    android:textColor="#ffffff"
+                    android:text="-"
+                    />
+
+
+
+            </TableRow>
+
+
+
+            <TableRow
+                android:id="@+id/tableRow6"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#FFA500" >
+
+                <TextView
+                    android:layout_width="150dp"
+                    android:layout_height="50dp"
+                    android:text="Score :  "
+                    android:textSize="20sp"
+                    android:textColor="#ffffff"/>
+
+
+                <LinearLayout
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent" >
+
+                    <View style="@style/Divider" />
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/score"
+                    android:gravity="center"
+                    android:layout_width="wrap_content"
+                    android:layout_height="50dp"
+                    android:textSize="20sp"
+                    android:textColor="#ffffff"
+                    android:text="0"
+                    android:layout_column="2" />
+
+
+            </TableRow>
+
+            <TableRow
+                android:id="@+id/tableRow7"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="#FF8C00" >
+
+
+                <TextView
+
+                    android:id="@+id/Event"
+                    android:text="Event time : "
+                    android:layout_width="150dp"
+                    android:layout_height="50dp"
+                    android:textSize="20sp"
+                    android:textColor="#ffffff"/>
+
+
+
+                <LinearLayout
+                    android:layout_width="1dp"
+                    android:layout_height="match_parent" >
+
+                    <View style="@style/Divider" />
+                </LinearLayout>
+
+                <TextView
+                    android:id="@+id/getEvent"
+                    android:text="-"
+                    android:gravity="center"
+                    android:layout_width="wrap_content"
+                    android:layout_height="50dp"
+                    android:textSize="20sp"
+                    android:textColor="#ffffff"
+                    />
+
+
+            </TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"></TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"></TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"></TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"></TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"></TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"></TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"></TableRow>
+
+            <TableRow
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+            </TableRow>
+
+
+        </TableLayout>
+
+    </RelativeLayout>
 
     <TextView
-        android:layout_marginTop="20dp"
-        android:layout_below="@id/ScoreL"
-        android:id="@+id/Event"
-        android:text="Event time : "
+        android:layout_marginTop="30dp"
+        android:id="@+id/mem"
         android:layout_width="150dp"
         android:layout_height="wrap_content"
         android:textSize="20sp"
-        android:textColor="#f5ab35"/>
+        android:textColor="#ff8c00"
+        android:text="Member : "
+        android:layout_below="@id/relativeLayout"/>
+
+
+
     <TextView
-        android:id="@+id/getEvent"
-        android:layout_marginTop="20dp"
-        android:text="Unknown"
+        android:layout_below="@id/relativeLayout"
+        android:layout_marginTop="30dp"
+        android:layout_toRightOf="@id/mem"
+        android:id="@+id/amount"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="20sp"
-        android:textColor="#f5ab35"
-        android:layout_below="@id/ScoreL"
-        android:layout_toRightOf="@id/Event"
-        android:layout_toEndOf="@id/Event"
+        android:textColor="#ff8c00"
+        android:text="0"/>
+    <TextView
+        android:layout_marginTop="30dp"
+        android:id="@+id/slash"
+        android:layout_toRightOf="@id/amount"
+        android:layout_below="@id/relativeLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:textColor="#ff8c00"
+        android:text=" / "/>
+    <TextView
+        android:layout_marginTop="30dp"
+        android:id="@+id/all"
+        android:layout_toRightOf="@id/slash"
+        android:layout_below="@id/relativeLayout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:textColor="#ff8c00"
+        android:text="10"/>
+
+
+    <Button
+        android:layout_marginTop="30dp"
+        android:layout_marginLeft="50dp"
+        android:layout_toRightOf="@id/all"
+        android:layout_below="@id/relativeLayout"
+        android:layout_width="85dp"
+        android:layout_height="25dp"
+
+        android:background="@drawable/selectormem"
+        android:onClick="linkMember"
+
          />
 
     <ImageView
@@ -167,5 +305,6 @@
         android:layout_width="150dp"
         android:layout_height="150dp"
         android:src="@drawable/groupimg2"/>
+
 
 </RelativeLayout>

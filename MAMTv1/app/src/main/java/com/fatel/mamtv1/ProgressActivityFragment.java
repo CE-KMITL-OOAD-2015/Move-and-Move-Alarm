@@ -47,7 +47,8 @@ public class ProgressActivityFragment extends Fragment {
         //cal % of circular progress
         HistoryHelper mhistoryHelper = new HistoryHelper(getActivity());
         History history = mhistoryHelper.getHistoryUser(UserManage.getInstance(getActivity()).getCurrentIdUser());
-        if(history.gettotal()==0){
+        //History history = (History) Cache.getInstance().getData("userHistory");
+        if(history != null && history.gettotal()==0){
             cirProgressstatus = 0;
             cancelPercent = 0;
             mProgressStatus = 0;

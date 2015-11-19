@@ -81,8 +81,8 @@ public class ScoreboardGroupFragment extends Fragment {
         score0 = (TextView)rootView.findViewById(R.id.scoregroup);
         ranking0 = (TextView)rootView.findViewById(R.id.groupranking);
 
-        String url = "http://203.151.92.196:8080/group/findByRank";
-        String url2 = "http://203.151.92.196:8080/group/getGroupRank";
+        String url = HttpConnector.URL + "group/findByRank";
+        String url2 = HttpConnector.URL + "group/getGroupRank";
         StringRequest groupScoreboardRequest = new StringRequest(Request.Method.POST, url, //create new string request with POST method
                 new Response.Listener<String>() { //create new listener to traces the data
                     @Override
@@ -132,7 +132,7 @@ public class ScoreboardGroupFragment extends Fragment {
             final HashMap<String, Object> groupData = (HashMap<String, Object>) Cache.getInstance().getData("groupData");
             Log.i("nameg",Converter.getInstance().toString(groupData.get("name")));
             group0.setText(Converter.getInstance().toString(groupData.get("name")));
-            score0.setText(Converter.getInstance().toString(groupData.get("score")));
+            score0.setText("" + Converter.getInstance().toInt(groupData.get("score")));
 
             StringRequest groupRankingRequest = new StringRequest(Request.Method.POST, url2, //create new string request with POST method
                     new Response.Listener<String>() { //create new listener to traces the data
