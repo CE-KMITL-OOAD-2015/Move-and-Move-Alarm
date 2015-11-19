@@ -45,10 +45,7 @@ public class MainActivity extends AppCompatActivity {
     private TextView header;
     private TextView user;
     CircleImageView profilepic;
-    String firstName;
-    String lastName;
     public String id;
-    Bundle passimg;
     String tempid;
     DBAlarmHelper mAlarmHelper;
     @Override
@@ -71,8 +68,10 @@ public class MainActivity extends AppCompatActivity {
         tempid = UserManage.getInstance(this).getCurrentFacebookID();
         if(!tempid.equals("0.0")) {
             if(!tempid.equals("0")) {
-                //tempid = tempid.substring(0, 1) + tempid.substring(2, 17);
-                Glide.with(this).load("https://graph.facebook.com/" + tempid + "/picture?type=large").into(profilepic);
+                if(!(tempid.equals("fb0.0"))) {
+                    //tempid = tempid.substring(0, 1) + tempid.substring(2, 17);
+                    Glide.with(this).load("https://graph.facebook.com/" + tempid + "/picture?type=large").into(profilepic);
+                }
             }
         }
 
@@ -135,11 +134,12 @@ public class MainActivity extends AppCompatActivity {
         }
 //
         //historygroup
-
+        Log.i("idface",UserManage.getInstance(this).getCurrentFacebookId());
         Historygroup historygroup = Historygroup.findHistorygroup(UserManage.getInstance(this).getCurrentIdGroup(),this);
         if(historygroup==null&&UserManage.getInstance(this).getCurrentIdGroup()!=0){
+            Log.i("historygroup","success");
             historygroup = new Historygroup(UserManage.getInstance(this).getCurrentIdGroup());
-            history.save(this);
+            historygroup.save(this);
             Cache.getInstance().putData("groupHistory", historygroup);
             requestGroupProgress();
         }

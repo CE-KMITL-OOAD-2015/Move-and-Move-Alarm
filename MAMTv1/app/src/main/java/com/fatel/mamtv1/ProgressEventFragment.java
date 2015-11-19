@@ -4,6 +4,7 @@ package com.fatel.mamtv1;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -49,8 +50,9 @@ public class ProgressEventFragment extends Fragment {
         timeFracE = (TextView) view.findViewById(R.id.timeFractionE);
 
         //cal % of circular progress
-        HistorygroupHelper mhistorygroupHelper = new HistorygroupHelper(getActivity());
-        Historygroup historygroup = mhistorygroupHelper.getHistoryGroup(UserManage.getInstance(getActivity()).getCurrentIdGroup());
+        //HistorygroupHelper mhistorygroupHelper = new HistorygroupHelper(getActivity());
+        Log.i("numgroup",""+UserManage.getInstance(getActivity()).getCurrentIdGroup());
+        Historygroup historygroup = Historygroup.findHistorygroup(UserManage.getInstance(getActivity()).getCurrentIdGroup(),getActivity());
         if(historygroup==null){
             cirProgressstatusE = 0;
             cancelPercentE = 0;
