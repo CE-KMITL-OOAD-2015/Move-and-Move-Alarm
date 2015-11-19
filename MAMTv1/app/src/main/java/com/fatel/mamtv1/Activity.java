@@ -119,7 +119,7 @@ public class Activity extends AppCompatActivity {
 
             public void onFinish() {
                 txtA.setText("Activity Time done!");
-                Intent i1 = new Intent(Activity.this, PreShareActivity.class);
+                Intent i1 = new Intent(Activity.this, Camera.class);
                 startActivity(i1);
                 requesAddscore();
             }

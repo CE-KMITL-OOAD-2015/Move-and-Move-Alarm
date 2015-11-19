@@ -76,7 +76,7 @@
             android:screenOrientation="portrait" >
         </activity>
         <activity
-            android:name=".PreShareActivity"
+            android:name=".Camera"
             android:label="@string/title_activity_pre"
             android:screenOrientation="portrait" >
         </activity>
