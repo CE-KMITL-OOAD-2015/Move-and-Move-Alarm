@@ -73,7 +73,7 @@ public class GroupActivityProgress extends Model {
         temp.put("numberOfAccept", numberOfAccept);
         temp.put("numberOfCancel", numberOfCancel);
         temp.put("cancelActivity", cancelActivity);
-        temp.put("group", group);
+        temp.put("group", group.getGeneralValues());
         if(date != null)
             temp.put("date", sdf.format(date));
 
@@ -108,5 +108,15 @@ public class GroupActivityProgress extends Model {
     {
         this.date = date;
         updateModifiedDate();
+    }
+
+    public void increaseAcceptTime(int time)
+    {
+        this.numberOfAccept += time;
+    }
+
+    public void increaseCancelTime(int time)
+    {
+        this.cancelActivity += time;
     }
 }

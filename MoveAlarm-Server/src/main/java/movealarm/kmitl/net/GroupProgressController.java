@@ -118,8 +118,8 @@ public class GroupProgressController {
             progress.setGroup(group);
         }
 
-        progress.setNumberOfAccept(converter.toInt(progressData.get("numberOfAccept")));
-        progress.setCancelActivity(converter.toInt(progressData.get("cancelActivity")));
+        progress.increaseAcceptTime(converter.toInt(progressData.get("numberOfAccept")));
+        progress.increaseCancelTime(converter.toInt(progressData.get("cancelActivity")));
 
         try {
             progress.setDate((Date) progressData.get("date"));
