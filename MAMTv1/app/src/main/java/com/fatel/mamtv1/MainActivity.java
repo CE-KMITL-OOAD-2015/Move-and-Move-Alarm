@@ -45,10 +45,7 @@ public class MainActivity extends AppCompatActivity {
     private TextView header;
     private TextView user;
     CircleImageView profilepic;
-    String firstName;
-    String lastName;
     public String id;
-    Bundle passimg;
     String tempid;
     DBAlarmHelper mAlarmHelper;
     @Override

@@ -9,6 +9,7 @@ import android.net.Uri;
 import android.os.Vibrator;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -61,6 +62,7 @@ public class EventactAlarm extends AppCompatActivity {
 
     public void linkActivity(View view){
         //history
+        Log.i("linkacti",""+UserManage.getInstance(this).getCurrentIdGroup());
         Historygroup historygroup = Historygroup.findHistorygroup(UserManage.getInstance(this).getCurrentIdGroup(), this);
         if(historygroup!=null){
             historygroup.addaccept(1);
@@ -76,6 +78,7 @@ public class EventactAlarm extends AppCompatActivity {
 
     public void linkHome(View view){
         //history
+        Log.i("linkhome",""+UserManage.getInstance(this).getCurrentIdGroup());
         Historygroup historygroup = Historygroup.findHistorygroup(UserManage.getInstance(this).getCurrentIdGroup(),this);
         if(historygroup!=null){
             historygroup.addcancel(1);
