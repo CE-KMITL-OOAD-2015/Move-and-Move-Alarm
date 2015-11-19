@@ -9,6 +9,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.net.Uri;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
@@ -26,7 +27,9 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -164,8 +167,9 @@ public class MainActivity extends AppCompatActivity {
         if(history==null){
             history = new History(UserManage.getInstance(this).getCurrentIdUser());
             history.save(this);
+            //
         }
-
+//
         //historygroup
         mhistorygroupHelper = new HistorygroupHelper(this);
         Historygroup historygroup = mhistorygroupHelper.getHistoryGroup(UserManage.getInstance(this).getCurrentIdGroup());
@@ -405,8 +409,8 @@ public class MainActivity extends AppCompatActivity {
                         mAlarmHelper.deleteSetAlarm("1");
                         mDrawerLayout.closeDrawers();
                         makeToast("Delete set time");
-                        Intent intent = new Intent(MainActivity.this, MainActivity.class);
-                        startActivity(intent);
+                        //Intent intent = new Intent(MainActivity.this, MainActivity.class);
+                        //startActivity(intent);
                         break;
 
                     case DialogInterface.BUTTON_NEGATIVE:
@@ -553,5 +557,50 @@ public class MainActivity extends AppCompatActivity {
         });
 
         HttpConnector.getInstance(this).addToRequestQueue(eventRequest);
+    }
+    public void editname(View view){
+        final EditText name = new EditText(this);
+        final EditText surname = new EditText(this);
+        name.setText("");
+        surname.setText("");
+        DialogInterface.OnClickListener dialogClickListener = new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialog, int which) {
+                switch (which){
+                    case DialogInterface.BUTTON_POSITIVE:
+                        Log.i("name",""+isEmpty(name));
+                        Log.i("surname",""+isEmpty(surname));
+                        if(!isEmpty(name)){
+                            //do
+                            Log.i("name",""+name.getText().toString());
+                        }
+                        if(!isEmpty(surname)) {
+                            //do
+                            Log.i("surname",""+surname.getText().toString());
+                        }
+                        break;
+
+                    case DialogInterface.BUTTON_NEGATIVE:
+                        //No button clicked
+                        break;
+                }
+            }
+        };
+        name.setTextColor(Color.WHITE);
+        surname.setTextColor(Color.WHITE);
+        LinearLayout layout = new LinearLayout(this);
+        layout.setOrientation(LinearLayout.VERTICAL);
+        name.setHint(Html.fromHtml("<font color='#B0B0B0'>Name</font>"));
+        layout.addView(name);
+        surname.setHint(Html.fromHtml("<font color='#B0B0B0'>Surname</font>"));
+        layout.addView(surname);
+        AlertDialog.Builder builder = new AlertDialog.Builder(this, AlertDialog.THEME_HOLO_DARK);
+        builder.setTitle("Edit");
+        builder.setView(layout);
+        builder.setMessage("Edit information").setPositiveButton("Yes", dialogClickListener)
+                .setNegativeButton("No", dialogClickListener).show();
+    }
+    private boolean isEmpty(EditText myeditText) {
+        return myeditText.getText().toString().trim().length() == 0;
     }
 }

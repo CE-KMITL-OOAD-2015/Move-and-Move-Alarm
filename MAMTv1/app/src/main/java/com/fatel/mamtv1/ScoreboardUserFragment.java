@@ -1,7 +1,6 @@
 package com.fatel.mamtv1;
 
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.util.Log;
@@ -14,12 +13,10 @@ import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
-import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 
 public class ScoreboardUserFragment extends Fragment {
@@ -27,14 +24,15 @@ public class ScoreboardUserFragment extends Fragment {
     TextView user0;
     TextView score0;
     TextView ranking0;
+
+    public ScoreboardUserFragment() {
+    }
+
     public static ScoreboardUserFragment newInstance() {
         // Required empty public constructor
         ScoreboardUserFragment fragment = new ScoreboardUserFragment();
         return fragment;
     }
-
-    public ScoreboardUserFragment() { }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater, final ViewGroup container,
@@ -62,19 +60,19 @@ public class ScoreboardUserFragment extends Fragment {
         scoresTextView.add((TextView) rootView.findViewById(R.id.textView93));
         scoresTextView.add((TextView) rootView.findViewById(R.id.textView103));
         scoresTextView.add((TextView) rootView.findViewById(R.id.textView113));
-        user0 = (TextView)rootView.findViewById(R.id.userscore);
-        score0 = (TextView)rootView.findViewById(R.id.scoreuser);
-        ranking0 = (TextView)rootView.findViewById(R.id.userranking);
+        user0 = (TextView) rootView.findViewById(R.id.userscore);
+        score0 = (TextView) rootView.findViewById(R.id.scoreuser);
+        ranking0 = (TextView) rootView.findViewById(R.id.userranking);
         String tempid = UserManage.getInstance((Context) Cache.getInstance().getData("MainActivityContext")).getCurrentFacebookId();
-        if(!tempid.equals("0.0")) {
+        if (!tempid.equals("0.0")) {
             if (!tempid.equals("0")) {
                 user0.setText(UserManage.getInstance((Context) Cache.getInstance().getData("MainActivityContext")).getCurrentFacebookFirstName());
             }
-        }else {
+        } else {
             user0.setText(UserManage.getInstance((Context) Cache.getInstance().getData("MainActivityContext")).getCurrentUsername());
         }
-        Log.i("score",UserManage.getInstance((Context) Cache.getInstance().getData("MainActivityContext")).getCurrentScore()+"");
-        score0.setText(UserManage.getInstance((Context) Cache.getInstance().getData("MainActivityContext")).getCurrentScore()+"");
+        Log.i("score", UserManage.getInstance((Context) Cache.getInstance().getData("MainActivityContext")).getCurrentScore() + "");
+        score0.setText(UserManage.getInstance((Context) Cache.getInstance().getData("MainActivityContext")).getCurrentScore() + "");
         String url = "http://203.151.92.196:8080/user/findByRank";
         String url2 = "http://203.151.92.196:8080/user/getUserRank";
 
@@ -86,11 +84,10 @@ public class ScoreboardUserFragment extends Fragment {
                         Converter converter = Converter.getInstance();
                         HashMap<String, Object> data = converter.JSONToHashMap(response);
                         try {
-                            if((boolean) data.get("status"))
-                            {
+                            if ((boolean) data.get("status")) {
                                 ArrayList<HashMap<String, Object>> users = converter.toHashMapArrayList(data.get("users"));
                                 int size = users.size();
-                                for(int i = 0; i < size; i++) {
+                                for (int i = 0; i < size; i++) {
                                     HashMap<String, Object> userData = users.get(i);
                                     String userName = converter.toString(userData.get("userName"));
                                     String name = (userName == null || userName.equals("")) ? converter.toString(userData.get("facebookFirstName")) : userName;
@@ -125,8 +122,8 @@ public class ScoreboardUserFragment extends Fragment {
                     public void onResponse(String response) { //when listener is activated
                         Log.i("volley", response);
                         Converter converter = Converter.getInstance();
-                        Log.i("res",response);
-                       // HashMap<String, Object> data = converter.JSONToHashMap(response);
+                        Log.i("res", response);
+                        // HashMap<String, Object> data = converter.JSONToHashMap(response);
                         try {
                             //if((boolean) data.get("status"))
                             //{
@@ -146,8 +143,8 @@ public class ScoreboardUserFragment extends Fragment {
             protected Map<String, String> getParams() {
                 Map<String, String> map = new HashMap<String, String>(); //create map to keep variables
                 User user = UserManage.getInstance((Context) Cache.getInstance().getData("MainActivityContext")).getCurrentUser();
-                HashMap<String,Object> usermap = new HashMap<>();
-                usermap.put("id",user.getIdUser());
+                HashMap<String, Object> usermap = new HashMap<>();
+                usermap.put("id", user.getIdUser());
                 map.put("JSON", Converter.getInstance().HashMapToJSON(usermap));
                 return map;
             }
