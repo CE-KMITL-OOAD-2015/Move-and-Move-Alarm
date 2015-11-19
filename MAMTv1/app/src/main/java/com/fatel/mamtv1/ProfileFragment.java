@@ -47,15 +47,10 @@ public class ProfileFragment extends android.support.v4.app.Fragment {
         if(!tempid.equals("0.0")) {
             if(!tempid.equals("0")) {
                 if(!(tempid.equals("fb0.0"))) {
-                    tempid = tempid.substring(0, 1) + tempid.substring(2, 17);
                     Glide.with(this).load("https://graph.facebook.com/" + tempid + "/picture?type=large").into(propic);
                 }
             }
         }
-        Log.i("username",UserManage.getInstance((Context) Cache.getInstance().getData("MainActivityContext")).getCurrentUser().getUserName());
-        Log.i("firstname",UserManage.getInstance((Context) Cache.getInstance().getData("MainActivityContext")).getCurrentUser().getFirstName()+"");
-        Log.i("FBname",UserManage.getInstance((Context) Cache.getInstance().getData("MainActivityContext")).getCurrentUser().getFacebookFirstName()+"");
-        Log.i("Lastname",UserManage.getInstance((Context) Cache.getInstance().getData("MainActivityContext")).getCurrentUser().getLastName()+"");
 
         if(!(UserManage.getInstance((Context) Cache.getInstance().getData("MainActivityContext")).getCurrentUsername()+"").equals("null"))
             user.setText(UserManage.getInstance((Context) Cache.getInstance().getData("MainActivityContext")).getCurrentUsername());
