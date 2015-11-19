@@ -80,9 +80,21 @@
             android:textSize="20sp"
             android:textColor="@android:color/black"
             android:text="Unknown"/>
+
     </LinearLayout>
 
 
+    <Button
+        android:id="@+id/edit"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Edit"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentEnd="true"
+        android:layout_marginBottom="46dp"
+        android:onClick="editname"
+        />
 
 
 </RelativeLayout>
