@@ -16,30 +16,6 @@ public class GroupProgressController {
     private Converter converter = Converter.getInstance();
     private DatabaseInterface databaseInquirer = SQLInquirer.getInstance();
 
-    @RequestMapping("/groupProgress/createLog")
-    public String createLog(@RequestParam(value = "JSON", required = true, defaultValue = "0")String JSON)
-    {
-        HashMap<String, Object> data = converter.JSONToHashMap(JSON);
-        HashMap<String, Object> groupData = converter.JSONToHashMap(converter.toString(data.get("group")));
-        HashMap<String, Object> logData = converter.JSONToHashMap(converter.toString(data.get("activityLog")));
-
-        Group group = Group.find(converter.toInt(groupData.get("id")));
-        if(group == null)
-            return converter.HashMapToJSON(StatusDescription.createProcessStatus(false, "Group does not exist."));
-
-        if(logData == null)
-            return converter.HashMapToJSON(StatusDescription.createProcessStatus(false, "Server cannot receive log data."));
-
-        GroupActivityProgress progress = new GroupActivityProgress();
-        progress.setGroup(group);
-        progress.setDate((Date) logData.get("date"));
-        progress.setNumberOfAccept(converter.toInt(logData.get("numberOfAccept")));
-        progress.setNumberOfCancel(converter.toInt(logData.get("numberOfCancel")));
-        progress.setCancelActivity(converter.toInt(logData.get("cancelActivity")));
-
-        return converter.HashMapToJSON(progress.save());
-    }
-
     @RequestMapping("/groupProgress/getAllGroupLogs")
     public String getAllLog(@RequestParam(value = "JSON", required = true, defaultValue = "0")String JSON)
     {
@@ -104,4 +80,55 @@ public class GroupProgressController {
 
         return converter.HashMapToJSON(response);
     }
+
+    @RequestMapping("/groupProgress/getByGroup")
+    public String getByGroup(@RequestParam(value = "JSON", required = true, defaultValue = "0")String JSON)
+    {
+        HashMap<String, Object> data = converter.JSONToHashMap(JSON);
+        HashMap<String, Object> groupData = converter.JSONToHashMap(converter.toString(data.get("group")));
+
+        Group group = Group.find(converter.toInt(groupData.get("id")));
+        if(group == null)
+            return converter.HashMapToJSON(StatusDescription.createProcessStatus(false, "group does not exist."));
+
+        GroupActivityProgress progress = GroupActivityProgress.findByGroup(group);
+        if(progress == null)
+            return converter.HashMapToJSON(StatusDescription.createProcessStatus(false, "No group activity progress."));
+
+        HashMap<String, Object> response = StatusDescription.createProcessStatus(true);
+        response.put("progress", progress.getGeneralValues());
+
+        return converter.HashMapToJSON(response);
+    }
+
+    @RequestMapping("/groupProgress/save")
+    public String updateProgress(@RequestParam(value = "JSON", required = true, defaultValue = "0")String JSON)
+    {
+        HashMap<String, Object> data = converter.JSONToHashMap(JSON);
+        HashMap<String, Object> groupData = converter.JSONToHashMap(converter.toString(data.get("group")));
+        HashMap<String, Object> progressData = converter.JSONToHashMap(converter.toString(data.get("activityProgress")));
+
+        Group group = Group.find(converter.toInt(groupData.get("id")));
+        if(group == null)
+            return converter.HashMapToJSON(StatusDescription.createProcessStatus(false, "group does not exist."));
+
+        GroupActivityProgress progress = GroupActivityProgress.findByGroup(group);
+        if(progress == null) {
+            progress = new GroupActivityProgress();
+            progress.setGroup(group);
+        }
+
+        progress.increaseAcceptTime(converter.toInt(progressData.get("numberOfAccept")));
+        progress.increaseCancelTime(converter.toInt(progressData.get("cancelActivity")));
+
+        try {
+            progress.setDate((Date) progressData.get("date"));
+            progress.setNumberOfCancel(converter.toInt(progressData.get("numberOfCancel")));
+        } catch (Exception e) {
+
+        }
+
+        return converter.HashMapToJSON(progress.save());
+    }
+
 }

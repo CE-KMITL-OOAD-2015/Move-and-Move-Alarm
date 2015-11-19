@@ -163,7 +163,8 @@ public class UserController {
     @RequestMapping("/user/updateUser")
     public String updateUser(@RequestParam(value="JSON", required = true, defaultValue = "") String JSON)
     {
-        HashMap<String, Object> userData = converter.JSONToHashMap(JSON); //convert receive data to HashMap format
+        HashMap<String, Object> data = converter.JSONToHashMap(JSON); //convert receive data to HashMap format
+        HashMap<String, Object> userData = converter.JSONToHashMap(converter.toString(data.get("user")));
         User user = User.find(converter.toInt(userData.get("id")));
 
         if(user == null)  //if user does not exist
@@ -174,7 +175,10 @@ public class UserController {
         try {
             user.setFirstName(converter.toString(userData.get("firstName")));
             user.setLastName(converter.toString(userData.get("lastName")));
-            user.setGender(converter.toInt(userData.get("gender")));
+            if(converter.toString(userData.get("gender")).equals("female"))
+                user.setGender(0);
+            else if(converter.toString(userData.get("gender")).equals("male"))
+                user.setGender(1);
             user.setAge(converter.toInt(userData.get("age")));
             user.setFacebookID(converter.toString(userData.get("facebookID")));
             user.setFacebookFirstName(converter.toString(userData.get("facebookFirstName")));
@@ -302,7 +306,7 @@ public class UserController {
         try {
             user = User.where("userName", "=", userName)[0]; //user name is unique so when query data by using user name, the database must return only one row
             currentPassword = crypto.decryption(user.getPassword()); //decrypt and check
-        } catch (NullPointerException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
