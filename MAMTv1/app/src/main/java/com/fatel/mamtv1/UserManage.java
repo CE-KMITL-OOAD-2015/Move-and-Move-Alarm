@@ -131,7 +131,10 @@ public class UserManage {
 
                         if((boolean) data.get("status")) {
                             HashMap<String, Object> userData = converter.JSONToHashMap(converter.toString(data.get("user")));
-                            HashMap<String, Object> groupData = converter.JSONToHashMap(converter.toString(data.get("group")));
+                            HashMap<String, Object> groupData = null;
+                            if(data.get("group") != null) {
+                                groupData = converter.JSONToHashMap(converter.toString(data.get("group")));
+                            }
 
                             Cache.getInstance().putData("groupData", groupData);
                             int idUser = converter.toInt(userData.get("id"));

@@ -1,0 +1,10 @@
+﻿at 3.41 am
+
+# Please enter the commit message for your changes. Lines starting
+# with '#' will be ignored, and an empty message aborts the commit.
+# On branch improve/historygroup
+# Changes to be committed:
+#	modified:   MAMTv1/app/src/main/java/com/fatel/mamtv1/ScoreboardUserFragment.java
+#	modified:   MAMTv1/app/src/main/java/com/fatel/mamtv1/UserManage.java
+#
+
