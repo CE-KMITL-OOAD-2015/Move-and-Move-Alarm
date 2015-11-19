@@ -306,7 +306,7 @@ public class UserController {
         try {
             user = User.where("userName", "=", userName)[0]; //user name is unique so when query data by using user name, the database must return only one row
             currentPassword = crypto.decryption(user.getPassword()); //decrypt and check
-        } catch (NullPointerException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
