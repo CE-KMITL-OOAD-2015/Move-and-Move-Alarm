@@ -97,6 +97,7 @@ Log.i("xx",mAlarmHelper.checkdata()+"");
         bt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 if(mChkboxSun.isChecked()){
                     mdays += "1";
                 }
@@ -151,11 +152,14 @@ Log.i("xx",mAlarmHelper.checkdata()+"");
                     alarm.setStopinterval(mFinishAP.getSelectedItem().toString());
                     alarm.setDay(mdays.toString());
                     alarm.setFrq(mFreq.getSelectedItem().toString());
+                    //mAlarmHelper.deleteSetAlarm("1");
+                    Log.i("checkAlarm",mAlarmHelper.checkdata()+"");
                     if (ID == -1 && (mAlarmHelper.checkdata()==0)) {
                         mAlarmHelper.addAlarm(alarm);
                     } else {
                         mAlarmHelper.UpdateAlarm(alarm);
                     }
+                    mdays = "";
                 Intent mServiceIntent = new Intent(getActivity(), AlarmReceiver.class);
                 pendingIntent = PendingIntent.getBroadcast(getActivity(),0,mServiceIntent,0);
                 start();

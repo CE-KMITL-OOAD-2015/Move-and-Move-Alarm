@@ -71,6 +71,7 @@ public class AlarmReceiver extends BroadcastReceiver {
         Calendar calendar = Calendar.getInstance();
         calendar.setTimeInMillis(System.currentTimeMillis());
         Alarm alarm = mAlarmHelper.getAlarm();
+        Log.i("Day",alarm.getDay());
         //choose day return true
         if (Integer.parseInt(alarm.getDay().substring(calendar.get(Calendar.DAY_OF_WEEK) - 1, calendar.get(Calendar.DAY_OF_WEEK))) == 1)
             return true;
