@@ -20,22 +20,24 @@
     <LinearLayout android:id="@+id/btn_block"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
         android:layout_alignParentBottom="true"
         android:orientation="horizontal">
 
         <Button
             android:id="@+id/btn_cancel"
-            android:layout_width="170dp"
-            android:layout_height="wrap_content"
+            android:layout_width="150dp"
+            android:layout_height="50dp"
             android:onClick="linkHome"
-            android:text="CANCEL"/>
+            android:background="@drawable/selectorcancel"/>
 
         <Button
+            android:layout_marginLeft="20dp"
             android:id="@+id/btn_share"
-            android:layout_width="170dp"
-            android:layout_height="wrap_content"
+            android:layout_width="150dp"
+            android:layout_height="50dp"
             android:onClick="linkHome"
-            android:text="SHARE"/>
+            android:background="@drawable/sharef"/>
     </LinearLayout>
 
 

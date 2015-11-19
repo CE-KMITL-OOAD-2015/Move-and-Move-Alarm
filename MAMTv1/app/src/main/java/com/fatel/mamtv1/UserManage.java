@@ -312,9 +312,42 @@ public class UserManage {
     }
 
 
-    private void updateUser(){
-        //update currentuser to server
+    public void updateUser(final Context context){
+        String url = HttpConnector.URL + "user/updateUser";
+        StringRequest updateUserDataRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() { //create new request
+            @Override
+            public void onResponse(String response) { //when the results have come
+                Converter converter = Converter.getInstance();
+                HashMap<String, Object> data = converter.JSONToHashMap(response);
+                Log.i("volley 1", response); //throw the result to the console.
+                if((boolean) data.get("status"))
+                    Toast.makeText(context, "Data is already updated.", Toast.LENGTH_SHORT).show();
+                else
+                    Toast.makeText(context, converter.toString(data.get("description")), Toast.LENGTH_SHORT).show();
+            }
+        }, new Response.ErrorListener() { //create error listener to catch when the error has occurred
+            @Override
+            public void onErrorResponse(VolleyError volleyError) { //when the error that the server cannot handle by itself has occurred
+                Log.i("volley error", volleyError.toString()); //show the error
+            }
+        }) {
+            @Override //override the send parameters to server manually by POST method
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> map = new HashMap<>();
+                HashMap<String, Object> user = UserManage.currentUser.getGeneralValues(); //create HashMap to keep all the values in one place to be 1 object
+                HashMap<String, Object> JSON = new HashMap<>(); //create HashMap again to keep the above user object
 
+                JSON.put("user", user); //the API receive the values in one parameter name JSON
+
+                Log.i("user", "" + user);
+
+                map.put("JSON", Converter.getInstance().HashMapToJSON(JSON));
+
+                return map; //send the value name JSON to the server
+            }
+        };
+
+        HttpConnector.getInstance(context).addToRequestQueue(updateUserDataRequest);
     }
 
     // get set
@@ -322,7 +355,7 @@ public class UserManage {
         if(currentUser!=null){
             currentUser.addScore(score);
             currentUser.save(context);
-            updateUser();
+            updateUser(context);
         }
     }
 
@@ -336,63 +369,63 @@ public class UserManage {
         if(currentUser!=null){
             currentUser.setFirstName(firstName);
             currentUser.save(context);
-            updateUser();
+            updateUser(context);
         }
     }
     public void setLastName(String lastName,Context context){
         if(currentUser!=null){
             currentUser.setLastName(lastName);
             currentUser.save(context);
-            updateUser();
+            updateUser(context);
         }
     }
     public void setAge(int age,Context context){
         if(currentUser!=null){
             currentUser.setAge(age);
             currentUser.save(context);
-            updateUser();
+            updateUser(context);
         }
     }
     public void setGender(int gender,Context context){
         if(currentUser!=null){
             currentUser.setGender(gender);
             currentUser.save(context);
-            updateUser();
+            updateUser(context);
         }
     }
     public void setEmail(String email,Context context){
         if(currentUser!=null){
             currentUser.setEmail(email);
             currentUser.save(context);
-            updateUser();
+            updateUser(context);
         }
     }
     public void setFacebookID(String facebookID,Context context){
         if(currentUser!=null){
             currentUser.setFacebookID(facebookID);
             currentUser.save(context);
-            updateUser();
+            updateUser(context);
         }
     }
     public  void setFacebookFirstName(String facebookFirstName,Context context){
         if(currentUser!=null){
             currentUser.setFacebookFirstName(facebookFirstName);
             currentUser.save(context);
-            updateUser();
+            updateUser(context);
         }
     }
     public void setFacebookLastName(String facebookLastName,Context context){
         if(currentUser!=null){
             currentUser.setFacebookLastName(facebookLastName);
             currentUser.save(context);
-            updateUser();
+            updateUser(context);
         }
     }
     public void setProfileImage(int profileImage,Context context) {
         if(currentUser!=null){
             currentUser.setProfileImage(profileImage);
             currentUser.save(context);
-            updateUser();
+            updateUser(context);
         }
     }
 
@@ -436,7 +469,7 @@ public String getCurrentUsername(){return currentUser.getUserName();}
         if(currentUser!=null){
             currentUser.setIdGroup(idGroup);
             currentUser.save(context);
-            updateUser();
+            updateUser(context);
         }
     }
     public int getCurrentStateSw(){
@@ -446,7 +479,7 @@ public String getCurrentUsername(){return currentUser.getUserName();}
         if(currentUser!=null){
             currentUser.setStatesw(stateSw);
             currentUser.save(context);
-            updateUser();
+            updateUser(context);
         }
     }
 }
