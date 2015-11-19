@@ -37,8 +37,10 @@ public class MainFragment extends android.support.v4.app.Fragment {
         String tempid = UserManage.getInstance((Context) Cache.getInstance().getData("MainActivityContext")).getCurrentFacebookId();
         if(!tempid.equals("0.0")) {
             if (!tempid.equals("0")) {
-                //tempid = tempid.substring(0, 1) + tempid.substring(2, 17);
-                Glide.with(this).load("https://graph.facebook.com/" + tempid + "/picture?type=large").into(propic);
+                if(!(tempid.equals("fb0.0"))) {
+                    //tempid = tempid.substring(0, 1) + tempid.substring(2, 17);
+                    Glide.with(this).load("https://graph.facebook.com/" + tempid + "/picture?type=large").into(propic);
+                }
             }
         }
         score = (TextView)view.findViewById(R.id.scoreNum);

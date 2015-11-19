@@ -112,7 +112,7 @@ public class ScoreboardGroupFragment extends Fragment {
                 }, new Response.ErrorListener() { //create error listener to trace an error if download process fail
             @Override
             public void onErrorResponse(VolleyError volleyError) { //when error listener is activated
-                Log.i("volley", volleyError.toString());
+                Log.i("volley", "on error"+volleyError.toString());
             }
         }) { //define POST parameters
             @Override

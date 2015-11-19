@@ -51,7 +51,7 @@ public class ProgressEventFragment extends Fragment {
 
         //cal % of circular progress
         //HistorygroupHelper mhistorygroupHelper = new HistorygroupHelper(getActivity());
-        Log.i("drawprogress",""+UserManage.getInstance(getActivity()).getCurrentIdGroup());
+        Log.i("numgroup",""+UserManage.getInstance(getActivity()).getCurrentIdGroup());
         Historygroup historygroup = Historygroup.findHistorygroup(UserManage.getInstance(getActivity()).getCurrentIdGroup(),getActivity());
         if(historygroup==null){
             cirProgressstatusE = 0;
