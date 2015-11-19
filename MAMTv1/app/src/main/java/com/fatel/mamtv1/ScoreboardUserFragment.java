@@ -64,9 +64,11 @@ public class ScoreboardUserFragment extends Fragment {
         score0 = (TextView) rootView.findViewById(R.id.scoreuser);
         ranking0 = (TextView) rootView.findViewById(R.id.userranking);
         String tempid = UserManage.getInstance((Context) Cache.getInstance().getData("MainActivityContext")).getCurrentFacebookId();
-        if (!tempid.equals("0.0")) {
-            if (!tempid.equals("0")) {
-                user0.setText(UserManage.getInstance((Context) Cache.getInstance().getData("MainActivityContext")).getCurrentFacebookFirstName());
+        Log.i("iduserscore",tempid);
+        Log.i("username",UserManage.getInstance((Context) Cache.getInstance().getData("MainActivityContext")).getCurrentUsername());
+        if (!tempid.equals("fb0.0")) {
+            if (!tempid.equals("fb0")) {
+                    user0.setText(UserManage.getInstance((Context) Cache.getInstance().getData("MainActivityContext")).getCurrentFacebookFirstName());
             }
         } else {
             user0.setText(UserManage.getInstance((Context) Cache.getInstance().getData("MainActivityContext")).getCurrentUsername());

@@ -143,11 +143,9 @@ public class EventActivity extends AppCompatActivity {
         }
         //history
         Historygroup historygroup = Historygroup.findHistorygroup(UserManage.getInstance(this).getCurrentIdGroup(), this);
-        if(historygroup!=null){
-            historygroup.subaccept(1);
-            historygroup.addcancel(1);
-            historygroup.save(this);
-        }
+        historygroup.subaccept(1);
+        historygroup.addcancel(1);
+        historygroup.save(this);
         Intent i1 = new Intent(EventActivity.this, MainActivity.class);
 
         startActivity(i1);
