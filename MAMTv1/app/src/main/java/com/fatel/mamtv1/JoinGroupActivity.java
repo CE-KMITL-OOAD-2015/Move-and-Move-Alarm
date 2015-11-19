@@ -121,14 +121,14 @@ public class JoinGroupActivity extends AppCompatActivity {
                 new Response.Listener<String>() { //create new listener to traces the data
                     @Override
                     public void onResponse(String response) { //when listener is activated
-                        Log.i("volley", response);
+                        Log.i("volle event", response);
                         Converter converter = Converter.getInstance();
                         Cache cache = Cache.getInstance();
                         HashMap<String, Object> data = converter.JSONToHashMap(response);
                         if((boolean) data.get("status")) {
                             HashMap<String, Object> eventData = converter.JSONToHashMap("" + data.get("event"));
                             cache.putData("eventData", eventData);
-                            
+
                             Intent intent3 = new Intent(JoinGroupActivity.this, GroupMainActivity.class);
                             startActivity(intent3);
                             finish();

@@ -126,14 +126,26 @@ public class MainActivity extends AppCompatActivity {
         if(history==null){
             history = new History(UserManage.getInstance(this).getCurrentIdUser());
             history.save(this);
-            //
+            Cache.getInstance().putData("userHistory", history);
+            requestUserProgress();
+        }
+        else{
+            Cache.getInstance().putData("userHistory", history);
+            requestSendUserProgress();
         }
 //
         //historygroup
+
         Historygroup historygroup = Historygroup.findHistorygroup(UserManage.getInstance(this).getCurrentIdGroup(),this);
         if(historygroup==null&&UserManage.getInstance(this).getCurrentIdGroup()!=0){
             historygroup = new Historygroup(UserManage.getInstance(this).getCurrentIdGroup());
-            historygroup.save(this);
+            history.save(this);
+            Cache.getInstance().putData("groupHistory", historygroup);
+            requestGroupProgress();
+        }
+        else if(UserManage.getInstance(this).getCurrentIdGroup()!=0){
+            Cache.getInstance().putData("groupHistory", historygroup);
+            requestSendGroupProgress();
         }
     }
 
@@ -411,8 +423,7 @@ public class MainActivity extends AppCompatActivity {
                         if((boolean) data.get("status")) {
                             HashMap<String, Object> groupData = converter.JSONToHashMap(converter.toString(data.get("group")));
                             cache.putData("groupData", groupData);
-                            Intent intent3 = new Intent(MainActivity.this, nxtActivity);
-                            startActivity(intent3);
+                            requestEvent(nxtActivity);
                         }
                         else {
                             makeToast(converter.toString(data.get("description")));
@@ -421,12 +432,13 @@ public class MainActivity extends AppCompatActivity {
                 }, new Response.ErrorListener() { //create error listener to trace an error if download process fail
             @Override
             public void onErrorResponse(VolleyError volleyError) { //when error listener is activated
-                makeToast("Cannot connect to server. Please check the Internet setting.");
+                Log.i("volley", volleyError.toString());
+                makeToast("Cannot connect to server or internal server error.");
             }
         }) { //define POST parameters
             @Override
             protected Map<String, String> getParams() {
-                Map<String, String> map = new HashMap<String, String>(); //create map to keep variables
+                Map<String, String> map = new HashMap<>(); //create map to keep variables
                 map.put("id", "" + UserManage.getInstance(MainActivity.this).getCurrentUser().getIdGroup());
 
                 return map;
@@ -449,7 +461,7 @@ public class MainActivity extends AppCompatActivity {
                         if((boolean) data.get("status")) {
                             HashMap<String, Object> groupData = converter.JSONToHashMap(converter.toString(data.get("group")));
                             cache.putData("groupData", groupData);
-                            makeToast("sync process completed.");
+                            makeToast("syncing completed.");
                         }
                         else {
                             makeToast(converter.toString(data.get("description")));
@@ -458,7 +470,8 @@ public class MainActivity extends AppCompatActivity {
                 }, new Response.ErrorListener() { //create error listener to trace an error if download process fail
             @Override
             public void onErrorResponse(VolleyError volleyError) { //when error listener is activated
-                makeToast("Cannot connect to server. Please check the Internet setting.");
+                Log.i("volley", volleyError.toString());
+                makeToast("Cannot connect to server or internal server error.");
             }
         }) { //define POST parameters
             @Override
@@ -509,12 +522,64 @@ public class MainActivity extends AppCompatActivity {
                 }, new Response.ErrorListener() { //create error listener to trace an error if download process fail
             @Override
             public void onErrorResponse(VolleyError volleyError) { //when error listener is activated
-                makeToast("Cannot connect to server. Please check the Internet setting.");
+                Log.i("volley", volleyError.toString());
+                makeToast("Cannot connect to server or internal server error.");
             }
         });
 
         HttpConnector.getInstance(this).addToRequestQueue(eventRequest);
     }
+
+    public void requestEvent(Class nextActivity)
+    {
+        final Class nxtActivity = nextActivity;
+        String url = HttpConnector.URL + "event/getEvent";
+        StringRequest eventRequest = new StringRequest(Request.Method.GET, url, //create new string request with POST method
+                new Response.Listener<String>() { //create new listener to traces the data
+                    @Override
+                    public void onResponse(String response) { //when listener is activated
+                        Log.i("volley 5", response);
+                        Converter converter = Converter.getInstance();
+                        Cache cache = Cache.getInstance();
+                        HashMap<String, Object> data = converter.JSONToHashMap(response);
+                        if((boolean) data.get("status")) {
+                            Log.i("event" , "" + data.get("event"));
+                            HashMap<String, Object> eventData = converter.JSONToHashMap("" + data.get("event"));
+                            cache.putData("eventData", eventData);
+                            DateFormat dateFormat = new SimpleDateFormat("HH-mm-ss");
+                            Date date = null;
+                            try {
+                                date = dateFormat.parse(converter.toString(eventData.get("time")));
+                            } catch (ParseException e) {
+                                e.printStackTrace();
+                            }
+
+                            String time = ""+date.getHours()+"."+date.getMinutes();
+                            Intent intent = new Intent(getBaseContext(), EventReceiver.class);
+                            Bundle b = new Bundle();
+                            b.putString("event", time);
+                            intent.putExtras(b);
+                            sendBroadcast(intent);
+
+                            Intent intent3 = new Intent(MainActivity.this, nxtActivity);
+                            startActivity(intent3);
+
+                        }
+                        else {
+                            makeToast(converter.toString(data.get("description")));
+                        }
+                    }
+                }, new Response.ErrorListener() { //create error listener to trace an error if download process fail
+            @Override
+            public void onErrorResponse(VolleyError volleyError) { //when error listener is activated
+                Log.i("volley", volleyError.toString());
+                makeToast("Cannot connect to server or internal server error.");
+            }
+        });
+
+        HttpConnector.getInstance(this).addToRequestQueue(eventRequest);
+    }
+
     public void editname(View view){
         final EditText name = new EditText(this);
         final EditText surname = new EditText(this);
@@ -578,5 +643,191 @@ public class MainActivity extends AppCompatActivity {
     }
     private boolean isEmpty(EditText myeditText) {
         return myeditText.getText().toString().trim().length() == 0;
+    }
+
+    public void requestUserProgress()
+    {
+        String url = HttpConnector.URL + "userProgress/getByUser";
+        StringRequest progressRequest = new StringRequest(Request.Method.POST, url, //create new string request with POST method
+                new Response.Listener<String>() { //create new listener to traces the data
+                    @Override
+                    public void onResponse(String response) { //when listener is activated
+                        Log.i("volley 8", response);
+                        Converter converter = Converter.getInstance();
+                        HashMap<String, Object> data = converter.JSONToHashMap(response);
+                        if((boolean) data.get("status")) {
+                            HashMap<String, Object> progress = converter.JSONToHashMap(converter.toString(data.get("progress")));
+                            HashMap<String, Object> userData = converter.JSONToHashMap(converter.toString(progress.get("user")));
+
+                            History history = (History) Cache.getInstance().getData("userHistory");
+                            history.setCancelActivity(converter.toInt(progress.get("cancelActivity")));
+                            history.setNumberOfAccept(converter.toInt(progress.get("numberOfAccept")));
+                            history.setIdUser(converter.toInt(userData.get("id")));
+                            history.save(MainActivity.this);
+                            makeToast("syncing completed.");
+                        }
+                        else {
+                            makeToast(converter.toString(data.get("description")));
+                        }
+                    }
+                }, new Response.ErrorListener() { //create error listener to trace an error if download process fail
+            @Override
+            public void onErrorResponse(VolleyError volleyError) { //when error listener is activated
+                Log.i("volley", volleyError.toString());
+                makeToast("Cannot connect to server or internal server error.");
+            }
+        }) { //define POST parameters
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> map = new HashMap<String, String>(); //create map to keep variables
+                HashMap<String, Object> JSON = new HashMap<>();
+                JSON.put("user", UserManage.getInstance(MainActivity.this).getCurrentUser().getGeneralValues());
+                map.put("JSON", Converter.getInstance().HashMapToJSON(JSON));
+                return map;
+            }
+        };
+
+        HttpConnector.getInstance(this).addToRequestQueue(progressRequest);
+    }
+
+    public void requestSendUserProgress()
+    {
+        String url = HttpConnector.URL + "userProgress/save";
+        StringRequest progressRequest = new StringRequest(Request.Method.POST, url, //create new string request with POST method
+                new Response.Listener<String>() { //create new listener to traces the data
+                    @Override
+                    public void onResponse(String response) { //when listener is activated
+                        Log.i("volley", response);
+                        Converter converter = Converter.getInstance();
+                        HashMap<String, Object> data = converter.JSONToHashMap(response);
+                        if((boolean) data.get("status")) {
+                            makeToast("syncing completed.");
+                        }
+                        else {
+                            makeToast(converter.toString(data.get("description")));
+                        }
+                    }
+                }, new Response.ErrorListener() { //create error listener to trace an error if download process fail
+            @Override
+            public void onErrorResponse(VolleyError volleyError) { //when error listener is activated
+                Log.i("volley", volleyError.toString());
+                makeToast("Cannot connect to server or internal server error.");
+            }
+        }) { //define POST parameters
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> map = new HashMap<>(); //create map to keep variables
+                HashMap<String, Object> JSON = new HashMap<>();
+                HashMap<String, Object> progress;
+
+                Log.i("volley", "user request");
+
+                final History history = (History) Cache.getInstance().getData("userHistory");
+
+                progress = history.getGeneralValues();
+                JSON.put("user", UserManage.getInstance(MainActivity.this).getCurrentUser().getGeneralValues());
+                JSON.put("activityProgress", progress);
+                map.put("JSON", Converter.getInstance().HashMapToJSON(JSON));
+                return map;
+            }
+        };
+
+        HttpConnector.getInstance(this).addToRequestQueue(progressRequest);
+    }
+
+    public void requestGroupProgress()
+    {
+        String url = HttpConnector.URL + "groupProgress/getByGroup";
+        StringRequest progressRequest = new StringRequest(Request.Method.POST, url, //create new string request with POST method
+                new Response.Listener<String>() { //create new listener to traces the data
+                    @Override
+                    public void onResponse(String response) { //when listener is activated
+                        Log.i("volley 9", response);
+                        Converter converter = Converter.getInstance();
+                        HashMap<String, Object> data = converter.JSONToHashMap(response);
+                        if((boolean) data.get("status")) {
+                            HashMap<String, Object> progress = converter.JSONToHashMap("" + data.get("progress"));
+                            HashMap<String, Object> groupData = converter.JSONToHashMap("" + progress.get("group"));
+                            Historygroup history = (Historygroup) Cache.getInstance().getData("groupHistory");
+                            history.setCancelEvent(converter.toInt(progress.get("cancelActivity")));
+                            history.setNumberOfAccept(converter.toInt(progress.get("numberOfAccept")));
+                            history.save(MainActivity.this);
+                            makeToast("syncing completed.");
+                        }
+                        else {
+                            makeToast(converter.toString(data.get("description")));
+                        }
+                    }
+                }, new Response.ErrorListener() { //create error listener to trace an error if download process fail
+            @Override
+            public void onErrorResponse(VolleyError volleyError) { //when error listener is activated
+                Log.i("volley", volleyError.toString());
+                makeToast("Cannot connect to server or internal server error.");
+            }
+        }) { //define POST parameters
+            @Override
+            protected Map<String, String> getParams() {
+                User currentUser = UserManage.getInstance(MainActivity.this).getCurrentUser();
+                Map<String, String> map = new HashMap<>(); //create map to keep variables
+                HashMap<String, Object> JSON = new HashMap<>();
+                HashMap<String, Object> group = new HashMap<>();
+                group.put("id", currentUser.getIdGroup());
+                JSON.put("group", group);
+                map.put("JSON", Converter.getInstance().HashMapToJSON(JSON));
+                return map;
+            }
+        };
+
+        HttpConnector.getInstance(this).addToRequestQueue(progressRequest);
+    }
+
+    public void requestSendGroupProgress()
+    {
+        String url = HttpConnector.URL + "groupProgress/save";
+        StringRequest progressRequest = new StringRequest(Request.Method.POST, url, //create new string request with POST method
+                new Response.Listener<String>() { //create new listener to traces the data
+                    @Override
+                    public void onResponse(String response) { //when listener is activated
+                        Log.i("volley", response);
+                        Log.i("volley", "in sending group request");
+                        Converter converter = Converter.getInstance();
+                        HashMap<String, Object> data = converter.JSONToHashMap(response);
+                        if((boolean) data.get("status")) {
+                            makeToast("syncing completed.");
+                        }
+                        else {
+                            makeToast(converter.toString(data.get("description")));
+                        }
+                    }
+                }, new Response.ErrorListener() { //create error listener to trace an error if download process fail
+            @Override
+            public void onErrorResponse(VolleyError volleyError) { //when error listener is activated
+                Log.i("volley", volleyError.toString());
+                makeToast("Cannot connect to server or internal server error.");
+            }
+        }) { //define POST parameters
+            @Override
+            protected Map<String, String> getParams() {
+                Map<String, String> map = new HashMap<>(); //create map to keep variables
+                HashMap<String, Object> JSON = new HashMap<>();
+                HashMap<String, Object> group = new HashMap<>();
+                HashMap<String, Object> progress;
+
+                Log.i("volley", "group request");
+
+                group.put("id", UserManage.getInstance(MainActivity.this).getCurrentIdGroup());
+
+                final Historygroup history = (Historygroup) Cache.getInstance().getData("groupHistory");
+
+                progress = history.getGeneralValues();
+                JSON.put("group", group);
+                JSON.put("activityProgress", progress);
+                Log.i("progress", "" + progress);
+                map.put("JSON", Converter.getInstance().HashMapToJSON(JSON));
+                return map;
+            }
+        };
+
+        HttpConnector.getInstance(this).addToRequestQueue(progressRequest);
     }
 }

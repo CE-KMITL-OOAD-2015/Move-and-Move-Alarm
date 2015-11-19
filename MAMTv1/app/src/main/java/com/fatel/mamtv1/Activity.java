@@ -9,6 +9,7 @@ import android.graphics.drawable.AnimationDrawable;
 import android.os.CountDownTimer;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.Window;
 import android.view.WindowManager;
 import android.view.View;
@@ -121,7 +122,7 @@ public class Activity extends AppCompatActivity {
                 txtA.setText("Activity Time done!");
                 Intent i1 = new Intent(Activity.this, Camera.class);
                 startActivity(i1);
-                requesAddscore();
+                requestAddScore();
             }
         }.start();
 
@@ -148,7 +149,7 @@ public class Activity extends AppCompatActivity {
 
     }
 
-    public void requesAddscore()
+    public void requestAddScore()
     {
         final Converter converter = Converter.getInstance();
         String url = HttpConnector.URL + "user/increaseScore";
@@ -160,7 +161,7 @@ public class Activity extends AppCompatActivity {
 
                         HashMap<String, Object> data = converter.JSONToHashMap(response);
                         if((boolean) data.get("status")) {
-                            makeToast("Sync process completed.");
+                            makeToast("Done activity! Get 1 point.");
                             UserManage.getInstance(Activity.this).addScore(1, Activity.this);
                         }
                         else {
@@ -170,8 +171,8 @@ public class Activity extends AppCompatActivity {
                 }, new Response.ErrorListener() { //create error listener to trace an error if download process fail
             @Override
             public void onErrorResponse(VolleyError volleyError) { //when error listener is activated
-
-                makeToast("Cannot connect to server. Please check the Internet setting.");
+                Log.i("volley", volleyError.toString());
+                makeToast("Cannot connect to server or internal server error.");
             }
         }) { //define POST parameters
             @Override
@@ -191,7 +192,7 @@ public class Activity extends AppCompatActivity {
             }
         };
 
-        HttpConnector.getInstance((Context) Cache.getInstance().getData("MainActivityContext")).addToRequestQueue(eventRequest);
+        HttpConnector.getInstance(this).addToRequestQueue(eventRequest);
     }
 
     public void makeToast(String text)

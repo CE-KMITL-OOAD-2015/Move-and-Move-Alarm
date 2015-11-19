@@ -71,6 +71,7 @@ public class EventactAlarm extends AppCompatActivity {
         startActivity(intent);
         v.cancel();
         m.reset();
+        finish();
     }
 
     public void linkHome(View view){
@@ -86,7 +87,7 @@ public class EventactAlarm extends AppCompatActivity {
         startActivity(i1);
         v.cancel();
         m.reset();
-
+        finish();
     }
 
 }

@@ -39,7 +39,7 @@ public class UserManage {
 
     public void loginUser (String username,String password, final Context context){
 
-        String url = "http://203.151.92.196:8080/user/login"; //url of login API
+        String url = HttpConnector.URL + "user/login"; //url of login API
         final String un = username;
         final String pw = password;
         StringRequest loginRequest = new StringRequest(Request.Method.POST, url, //create new string request with POST method
@@ -118,7 +118,7 @@ public class UserManage {
     }
     public void loginFBUser(String facebookID,String facebookFirstName,Context context){
 
-        String url = "http://203.151.92.196:8080/user/loginFacebook"; //url of login API
+        String url = HttpConnector.URL + "user/loginFacebook"; //url of login API
         final String id = facebookID;
         final String name = facebookFirstName;
         StringRequest loginFBRequest = new StringRequest(Request.Method.POST, url, //create new string request with POST method
@@ -211,7 +211,7 @@ public class UserManage {
 
     public void createNewUser(String username,String password, final Context context){
 
-        String url = "http://203.151.92.196:8080/user/createUser";
+        String url = HttpConnector.URL + "user/createUser";
         final String un = username;
         final String pw = password;
         StringRequest stringRequest = new StringRequest(Request.Method.POST, url, new Response.Listener<String>() { //create new request
@@ -242,10 +242,6 @@ public class UserManage {
                 }
                 else
                     Log.i("volley ", "s==null");
-
-                /*HashMap<String, Object> userData = Converter.getInstance().JsonToHashMap(s); //convert the result into HashMap format
-                Cache.getInstance().putData("idUser", userData.get("id"));
-                Log.i("User", "addnewuser :" + userData.get("id"));*/
 
             }
         }, new Response.ErrorListener() { //create error listener to catch when the error has occurred

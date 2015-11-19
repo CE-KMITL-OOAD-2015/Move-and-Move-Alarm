@@ -61,7 +61,7 @@ public class ProgressEventFragment extends Fragment {
             timeFracE.setText((0 * timePerPicE) + "/" + (0 * timePerPicE) + "min");
 
         }
-        else if(historygroup.gettotal()==0){
+        else if(historygroup!=null&&historygroup.gettotal()==0){
             cirProgressstatusE = 0;
             cancelPercentE = 0;
             mProgressStatusE = 0;

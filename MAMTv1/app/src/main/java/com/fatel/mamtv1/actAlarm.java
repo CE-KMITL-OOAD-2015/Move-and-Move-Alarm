@@ -87,7 +87,6 @@ public class ActAlarm extends AppCompatActivity {
         sendBroadcast(i);
         v.cancel();
         m.reset();
-
     }
 
 }
