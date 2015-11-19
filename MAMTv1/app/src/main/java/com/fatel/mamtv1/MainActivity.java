@@ -71,7 +71,7 @@ public class MainActivity extends AppCompatActivity {
         tempid = UserManage.getInstance(this).getCurrentFacebookID();
         if(!tempid.equals("0.0")) {
             if(!tempid.equals("0")) {
-                tempid = tempid.substring(0, 1) + tempid.substring(2, 17);
+                //tempid = tempid.substring(0, 1) + tempid.substring(2, 17);
                 Glide.with(this).load("https://graph.facebook.com/" + tempid + "/picture?type=large").into(profilepic);
             }
         }

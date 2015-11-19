@@ -215,7 +215,7 @@ public class User {
         userData.put("age",this.getAge());
         userData.put("score",this.getScore());
         userData.put("profileImage",this.getProfileImage());
-        userData.put("facebookID",this.getFacebookID());
+        userData.put("facebookID", "fb" + this.getFacebookID());
         userData.put("facebookFirstName",this.getFacebookFirstName());
         userData.put("facebookLastName",this.getFacebookLastName());
         userData.put("gender",this.getGender());
