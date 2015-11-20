@@ -64,9 +64,10 @@ public class EventactAlarm extends AppCompatActivity {
         //history
         Log.i("linkacti",""+UserManage.getInstance(this).getCurrentIdGroup());
         Historygroup historygroup = Historygroup.findHistorygroup(UserManage.getInstance(this).getCurrentIdGroup(), this);
-        historygroup.addaccept(1);
-        historygroup.save(this);
-
+        if(historygroup!=null){
+            historygroup.addaccept(1);
+            historygroup.save(this);
+        }
 
         Intent intent = new Intent(this, EventActivity.class);
         startActivity(intent);
@@ -77,10 +78,12 @@ public class EventactAlarm extends AppCompatActivity {
 
     public void linkHome(View view){
         //history
-        Log.i("linkhome",""+UserManage.getInstance(this).getCurrentIdGroup());
+        Log.i("link",""+UserManage.getInstance(this).getCurrentIdGroup());
         Historygroup historygroup = Historygroup.findHistorygroup(UserManage.getInstance(this).getCurrentIdGroup(),this);
-        historygroup.addcancel(1);
-        historygroup.save(this);
+        if(historygroup!=null){
+            historygroup.addcancel(1);
+            historygroup.save(this);
+        }
 
         Intent i1 = new Intent(EventactAlarm.this, MainActivity.class);
 
