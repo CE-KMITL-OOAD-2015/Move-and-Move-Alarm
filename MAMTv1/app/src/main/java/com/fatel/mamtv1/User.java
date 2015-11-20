@@ -1,101 +1,226 @@
 package com.fatel.mamtv1;
 
+import android.content.Context;
 import android.provider.BaseColumns;
+import android.util.Log;
+
+import java.util.HashMap;
 
 /**
  * Created by Monthon on 3/11/2558.
  */
 public class User {
     private int id;
-    private String name;
-    private String username;
-    private String password;
+    private int idUser;
+    private String firstName;
+    private String lastName;
+    private String userName;
+    private int age;
+    private int score;
+    private int gender;
     private String email;
-    private String facebookid;
-    private String age;
-    private String gender;
-    private int image;
-    public static final String DATABASE_NAME = "fatel_user.db";
+    private String facebookID;
+    private String facebookFirstName;
+    private String facebookLastName;
+    private int profileImage;
+    private int login;
+    private int idGroup;
+    private int statesw;
     public static final int DATABASE_VERSION = 1;
     public static final String TABLE = "user";
     public class Column{
         public static final String ID = BaseColumns._ID;
-        public static final String NAME = "name";
+        public static final String IDUSER = "iduser";
+        public static final String FIRSTNAME = "firstname";
+        public static final String LASTNAME = "lastname";
         public static final String USERNAME = "username";
-        public static final String PASSWORD = "password";
+        public static final String AGE = "age";
+        public static final String SCORE = "score";
+        public static final String GENDER = "gender";
         public static final String EMAIL = "email";
         public static final String FACEBOOKID = "facebookid";
-        public static final String AGE = "age";
-        public static final String GENDER = "gender";
-        public static final String IMAGE = "image";
+        public static final String FACEBOOKFIRSTNAME = "facebookfirstname";
+        public static final String FACEBOOKLASTNAME = "facebooklastname";
+        public static final String PROFILEIMAGE = "profileimage";
+        public static final String LOGIN = "login";
+        public static final String IDGROUP = "idgroup";
+        public static final String STATESW = "statesw";
     }
     public User(){
     }
-    public User(int id, String name, String username, String password, String email,
-                String facebookid, String age, String gender, int image){
-        this.id = id;
-        this.name = name;
-        this.username = username;
-        this.password = password;
-        this.email = email;
-        this.facebookid = facebookid;
+    public User(int idUser, String username){
+        this.id=-1;
+        this.score=0;
+        this.login=0;
+        this.facebookID="0";
+        this.idUser = idUser;
+        this.userName = username;
+        this.statesw =1;
+    }
+    public User(int idUser,String facebookID,String facebookFirstName){
+        this.id=-1;
+        this.score=0;
+        this.login=0;
+        this.idUser = idUser;
+        this.facebookID = facebookID;
+        this.facebookFirstName = facebookFirstName;
+        this.statesw =1;
+    }
+    public User(int id,int idUser,String firstName, String lastName, String username,int age,int score
+            ,int gender,String email, String facebookID, String facebookFirstName,
+                String facebookLastName, int profileImage,int login,int idGroup,int statesw){
+        this.id=id;
+        this.idUser = idUser;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.userName = username;
         this.age = age;
+        this.score = score;
         this.gender = gender;
-        this.image = image;
+        this.email = email;
+        this.facebookID=facebookID;
+        this.facebookFirstName=facebookFirstName;
+        this.facebookLastName=facebookLastName;
+        this.profileImage = profileImage;
+        this.login=login;
+        this.idGroup=idGroup;
+        this.statesw = statesw;
+    }
+    public void save (Context context){
+
+        UserHelper userHelper = new UserHelper(context);
+        if(this.id == -1) {
+            this.id = userHelper.addUser(this);
+            Log.i("User", "funh savenew :" + id);
+        }
+        else {
+            userHelper.updateUser(this);
+            Log.i("User", "funh saveold :" + id);
+        }
+    }
+    public static User find(int idUser,Context context){
+        UserHelper userHelper = new UserHelper(context);
+        if(userHelper.getUser(idUser)==null){
+            return null;
+        }
+        else
+            return userHelper.getUser(idUser);
+    }
+    public static User checkLogin(Context context){
+        UserHelper userHelper = new UserHelper(context);
+        return userHelper.checkLoginUser();
     }
 
     public int getId(){
         return id;
     }
-    public String getName(){
-        return name;
+    public int getIdUser(){
+        return idUser;
     }
-    public String getUsername(){
-        return username;
+    public String getFirstName(){
+        return firstName;
     }
-    public String getPassword(){
-        return password;
+    public String getLastName(){
+        return lastName;
+    }
+    public String getUserName(){
+        return userName;
+    }
+    public int getAge(){
+        return age;
+    }
+    public int getScore(){
+        return score;
+    }
+    public int getGender(){
+        return gender;
     }
     public String getEmail(){
         return email;
     }
-    public String getFacebookid(){
-        return facebookid;
+    public String getFacebookID(){
+        return facebookID;
     }
-    public String getAge(){
-        return age;
+    public String getFacebookFirstName(){
+        return facebookFirstName;
     }
-    public String getGender(){
-        return gender;
+    public String getFacebookLastName(){
+        return facebookLastName;
     }
-    public int getImage(){
-        return image;
+    public int getStatesw(){return statesw;}
+    public int getProfileImage(){
+        return profileImage;
     }
+    public int getLogin(){ return login; }
+    public int getIdGroup(){return idGroup;}
     public void setId(int id){
         this.id = id;
     }
-    public void setName(String name){
-        this.name = name;
+    public void setIdUser(int idUser){
+        this.idUser = idUser;
     }
-    public void setUsername(String username){
-        this.username = username;
+    public void setFirstName(String firstName){
+        this.firstName = firstName;
     }
-    public void setPassword(String password){
-        this.password = password;
+    public void setLastName(String lastName){
+        this.lastName = lastName;
+    }
+    public void setUserName(String userName){
+        this.userName = userName;
+    }
+    public void setAge(int age){
+        this.age = age;
+    }
+    public void setScore(int score){
+        this.score = score;
+    }
+    public void setGender(int gender){
+        this.gender = gender;
     }
     public void setEmail(String email){
         this.email = email;
     }
-    public void setFacebookid(String facebookid){
-        this.facebookid = facebookid;
+    public void setFacebookID(String facebookID){
+        this.facebookID = facebookID;
     }
-    public void setAge(String age){
-        this.age = age;
+    public  void setFacebookFirstName(String facebookFirstName){
+        this.facebookFirstName = facebookFirstName;
     }
-    public void setGender(String gender){
-        this.gender = gender;
+    public void setFacebookLastName(String facebookLastName){
+        this.facebookLastName = facebookLastName;
     }
-    public void setImage(int image){
-        this.image = image;
+    public void setProfileImage(int profileImage) {
+        this.profileImage = profileImage;
+    }
+    public void addScore(int score){
+        this.score+=score;
+    }
+
+    public void setLogin(int login) {
+        this.login = login;
+    }
+
+    public void setIdGroup(int idGroup){this.idGroup = idGroup;}
+    public void setStatesw(int statesw){
+        this.statesw = statesw;
+    }
+    
+    public HashMap<String, Object> getGeneralValues()
+    {
+        HashMap<String, Object> userData = new HashMap<>();
+        userData.put("id", this.getIdUser());
+        userData.put("firstName",this.getFirstName());
+        userData.put("lastName",this.getLastName());
+        userData.put("userName",this.getUserName());
+        userData.put("age",this.getAge());
+        userData.put("score",this.getScore());
+        userData.put("profileImage",this.getProfileImage());
+        userData.put("facebookID", "fb" + this.getFacebookID());
+        userData.put("facebookFirstName",this.getFacebookFirstName());
+        userData.put("facebookLastName",this.getFacebookLastName());
+        userData.put("gender",this.getGender());
+        userData.put("email",this.getEmail());
+
+        return userData;
     }
 }

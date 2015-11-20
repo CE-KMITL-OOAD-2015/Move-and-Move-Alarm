@@ -14,6 +14,8 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.Spinner;
+import android.widget.Toast;
+import android.widget.TextView;
 
 
 /**
@@ -94,6 +96,7 @@ public class AlarmFragment extends android.support.v4.app.Fragment {
         bt.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 if(mChkboxSun.isChecked()){
                     mdays += "1";
                 }
@@ -139,6 +142,7 @@ public class AlarmFragment extends android.support.v4.app.Fragment {
 
                 //keep data
                     Alarm alarm = new Alarm();
+                    alarm.setId(1);
                     alarm.setStarthr(mStartHr.getSelectedItem().toString());
                     alarm.setStartmin(mStartMin.getSelectedItem().toString());
                     alarm.setStophr(mFinishHr.getSelectedItem().toString());
@@ -152,14 +156,13 @@ public class AlarmFragment extends android.support.v4.app.Fragment {
                     } else {
                         mAlarmHelper.UpdateAlarm(alarm);
                     }
+                    mdays = "";
                 Intent mServiceIntent = new Intent(getActivity(), AlarmReceiver.class);
                 pendingIntent = PendingIntent.getBroadcast(getActivity(),0,mServiceIntent,0);
                 start();
-                FragmentTransaction tx = getFragmentManager().beginTransaction();
-                tx.setCustomAnimations(android.R.anim.slide_in_left, android.R.anim.slide_out_right);
-                tx.replace(R.id.container, new MainFragment());
-                tx.addToBackStack(null);
-                tx.commit();
+
+                Toast.makeText(getActivity(), "SetAlarm Successful", Toast.LENGTH_SHORT).show();
+
             }
         });
         return view;
@@ -281,88 +284,13 @@ public class AlarmFragment extends android.support.v4.app.Fragment {
         return spinner;
     }
     public void start() {
-        /*manager = (AlarmManager) getActivity().getSystemService(Context.ALARM_SERVICE);
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTimeInMillis(System.currentTimeMillis());
-        SimpleDateFormat sdf = new SimpleDateFormat("HH:mm:ss.SSS");
-        Log.i("Day",sdf.format(calendar.getTime())+" "+calendar.get(Calendar.DAY_OF_WEEK)+" "+alarm.getDay()+" "
-                +calendar.get(Calendar.HOUR_OF_DAY)+" "+calendar.get(Calendar.MINUTE));
-        String startin = alarm.getStartinterval();
-        int starthour = Integer.parseInt(alarm.getStarthr());
-        int startmin = Integer.parseInt(alarm.getStartmin());
-        if(startin.equalsIgnoreCase("am")){
-            if(starthour==12)
-                starthour = 0;
-        }
-        else{
-            if(starthour==12)
-                starthour=12;
-            else
-                starthour+=12;
-        }
-        Log.i("fragment",calendar.get(Calendar.HOUR_OF_DAY)+" start "+starthour+" "
-                +calendar.get(Calendar.MINUTE)+" "+startmin);
-        calendar.set(Calendar.HOUR_OF_DAY, starthour);
-        calendar.set(Calendar.MINUTE, startmin);
-        calendar.set(Calendar.SECOND, 0);
-        manager.set(AlarmManager.RTC_WAKEUP, calendar.getTimeInMillis(), pendingIntent);*/
+
         Intent i = new Intent(getActivity(), AlarmReceiver.class);
         Bundle b = new Bundle();
         b.putString("key", "set");
         i.putExtras(b);
         getActivity().sendBroadcast(i);
     }
-    /*public void cancel(){
-            if (manager!= null&&checkcanceltime()) {
-                manager.cancel(pendingIntent);
-            }
-            if (checkcanceltime()==false) {
-                start();
-            }
-            else{
-                manager = (AlarmManager) getActivity().getSystemService(Context.ALARM_SERVICE);
-                int interval = 60*1000*10;
-                manager.setExact(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + interval, pendingIntent);
-            }
-    }
-    public boolean checkcanceltime(){
-        Calendar calendar = Calendar.getInstance();
-        calendar.setTimeInMillis(System.currentTimeMillis());
 
-        String stopin = alarm.getStopinterval();
-        int stophour = Integer.parseInt(alarm.getStophr());
-        int stopmin = Integer.parseInt(alarm.getStopmin());
-        int frequency = Integer.parseInt(alarm.getFrq());
-        if(stopin.equalsIgnoreCase("am")){
-            if(stophour==12)
-                stophour = 0;
-        }
-        else{
-            if(stophour==12)
-                stophour=12;
-            else
-                stophour+=12;
-        }
-        if(frequency+stopmin>59){
-            int tempmin = frequency+stopmin;
-            stopmin = tempmin-(60*(tempmin/60));
-            stophour += tempmin/60;
-        }
-        int currenthour = calendar.get(Calendar.HOUR_OF_DAY);
-        int currentmin = calendar.get(Calendar.MINUTE);
-        if(frequency+currentmin>59){
-            int tempmin = frequency+currentmin;
-            currentmin = tempmin-(60*(tempmin/60));
-            currenthour += tempmin/60;
-        }
-        if(Integer.parseInt(alarm.getDay().substring(calendar.get(Calendar.DAY_OF_WEEK)-1,calendar.get(Calendar.DAY_OF_WEEK)))==0){
-            return true;
-        }
-        else if(currenthour<=stophour&&currentmin<=stopmin){
-            return true;
-        }
-        else{
-            return false;
-        }
-    }*/
+
 }

@@ -1,9 +1,11 @@
 package com.fatel.mamtv1;
 
-import android.app.AlarmManager;
-import android.app.PendingIntent;
 import android.content.Context;
 import android.content.Intent;
+import android.media.MediaPlayer;
+import android.media.Ringtone;
+import android.media.RingtoneManager;
+import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -11,9 +13,14 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.os.Vibrator;
 
-public class actAlarm extends AppCompatActivity {
 
+
+public class ActAlarm extends AppCompatActivity {
+    private Vibrator v;
+    private MediaPlayer m;
+    private Ringtone r;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -21,6 +28,16 @@ public class actAlarm extends AppCompatActivity {
         final Window win= getWindow();
         win.addFlags(WindowManager.LayoutParams.FLAG_SHOW_WHEN_LOCKED | WindowManager.LayoutParams.FLAG_DISMISS_KEYGUARD);
         win.addFlags(WindowManager.LayoutParams.FLAG_KEEP_SCREEN_ON | WindowManager.LayoutParams.FLAG_TURN_SCREEN_ON);
+        long[] pattern = {0, 500, 1000};
+        v = (Vibrator) getSystemService(Context.VIBRATOR_SERVICE);
+        Uri notification = RingtoneManager.getDefaultUri(RingtoneManager.TYPE_RINGTONE);
+        m = MediaPlayer.create(this,notification);
+       // m.reset();
+        //m = MediaPlayer.create(this,notification);
+        m.setLooping(true);
+        m.start();
+        v.vibrate(pattern, 0);
+
     }
 
     @Override
@@ -46,27 +63,30 @@ public class actAlarm extends AppCompatActivity {
     }
 
     public void linkActivity(View view){
+        //history
+        History history = History.findHistory(UserManage.getInstance(this).getCurrentIdUser(), this);
+        history.addaccept(1);
+        history.save(this);
         Intent intent = new Intent(this, Activity.class);
         startActivity(intent);
+        v.cancel();
+        m.reset();
     }
 
     public void linkHome(View view){
-        Intent i1 = new Intent(actAlarm.this, MainActivity.class);
-        // Bundle b1 = new Bundle();
-        //b1.putExtra("key", "main");
-        //i1.putExtra("key", "main");
+        //history
+        History history = History.findHistory(UserManage.getInstance(this).getCurrentIdUser(),this);
+        history.addcancel(1);
+        history.save(this);
+        Intent i1 = new Intent(ActAlarm.this, MainActivity.class);
         startActivity(i1);
-        //sendBroadcast(i1);
         Intent i = new Intent(getBaseContext(), AlarmReceiver.class);
-
         Bundle b = new Bundle();
         b.putString("key", "first");
         i.putExtras(b);
         sendBroadcast(i);
-        //AlarmManager manager = (AlarmManager) getSystemService(Context.ALARM_SERVICE);
-        //int interval = 60*1000*1;
-        //PendingIntent pendingIntent = PendingIntent.getBroadcast(actAlarm.this, 0, i, 0);
-        //manager.setExact(AlarmManager.RTC_WAKEUP, System.currentTimeMillis() + interval, pendingIntent);
+        v.cancel();
+        m.reset();
     }
 
 }

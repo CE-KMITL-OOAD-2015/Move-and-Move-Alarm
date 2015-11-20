@@ -1,6 +1,5 @@
 package com.fatel.mamtv1;
 
-import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.Menu;
@@ -11,10 +10,12 @@ import android.widget.Toast;
 
 public class Create_Account_Activity extends AppCompatActivity {
 
+    UserManage mUserManage;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.create__account_layout);
+        mUserManage = UserManage.getInstance(this);
     }
 
     @Override
@@ -47,28 +48,27 @@ public class Create_Account_Activity extends AppCompatActivity {
         username = (EditText)findViewById(R.id.enter_username);
         password = (EditText)findViewById(R.id.enter_password);
         rePassword = (EditText)findViewById(R.id.enter_repassword);
+         Cache.getInstance().putData("CreateAccountContext", this);
 
-        if(username.getText().toString().equals(""))
+
+
+        if(username.getText().toString().equals("") || password.getText().toString().equals(""))
         {
-            Toast toast = Toast.makeText(this, "Please enter Username or Password", Toast.LENGTH_SHORT);
+            Toast toast = Toast.makeText(this, "Please enter Username and Password", Toast.LENGTH_SHORT);
             toast.show();
         }
-        if(password.getText().toString().equals(""))
+        else if((username.getText().toString().length()<6) || (password.getText().toString().length()<6))
         {
-            Toast toast = Toast.makeText(this, "Please enter Password", Toast.LENGTH_SHORT);
+            Toast toast = Toast.makeText(this, "Please enter Username and Password at least 6 characters", Toast.LENGTH_SHORT);
             toast.show();
         }
 
         else if(password.getText().toString().equals(rePassword.getText().toString()))
         {
-            Intent intent = new Intent(this,MainActivity.class);
-            //mManager.registerUser(username.getText().toString(), password.getText().toString()); ลงทะเบียน username กับ password ลงฐานข้อมูลก่อนไปหน้า main
-            Toast.makeText(this, "Create Successful", Toast.LENGTH_SHORT).show();
-            startActivity(intent);
-        }
-        else {
-            Toast toast = Toast.makeText(this, "Password not match", Toast.LENGTH_SHORT);
-            toast.show();
+
+            //ลงทะเบียน username กับ password ลงฐานข้อมูลก่อนไปหน้า main
+            mUserManage.createNewUser(username.getText().toString(),password.getText().toString(),this);
+
         }
     }
 }

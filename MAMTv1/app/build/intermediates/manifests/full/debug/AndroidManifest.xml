@@ -8,6 +8,23 @@
         android:minSdkVersion="16"
         android:targetSdkVersion="23" />
 
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    //add for share facebook
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    //add for sync with camera
+    <uses-feature android:name="android.hardware.camera" />
+    //for use camera
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    // for store
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    // for record video
+    <uses-permission android:name="android.permission.VIBRATE" />
+    //Vibrate devite
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    //Ringtone
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -15,12 +32,111 @@
         android:theme="@style/AppTheme" >
         <activity
             android:name="com.fatel.mamtv1.MainActivity"
-            android:label="@string/app_name" >
+            android:label="@string/app_name"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name="com.fatel.mamtv1.Activity"
+            android:label="@string/title_activity_"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name="com.fatel.mamtv1.ActAlarm"
+            android:label="@string/title_activity_act_alarm"
+            android:screenOrientation="portrait" >
+        </activity>
+
+        <receiver android:name="com.fatel.mamtv1.AlarmReceiver" />
+        <receiver
+            android:name="com.fatel.mamtv1.BootBroadcastReceiver"
+            android:enabled="true" >
+            <intent-filter>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+            </intent-filter>
+        </receiver>
+        <receiver android:name="com.fatel.mamtv1.EventReceiver" />
+
+        <activity
+            android:name="com.fatel.mamtv1.Intro_Activity"
+            android:label="@string/title_activity_intro_"
+            android:screenOrientation="portrait" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+        <activity
+            android:name="com.fatel.mamtv1.Login_Activity"
+            android:label="@string/title_activity_login_"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name="com.fatel.mamtv1.Create_Account_Activity"
+            android:label="@string/title_activity_create__account_"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name="com.fatel.mamtv1.ShareActivity"
+            android:label="@string/title_activity_shared"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name="com.fatel.mamtv1.Camera"
+            android:label="@string/title_activity_pre"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name="com.fatel.mamtv1.PostureActivity"
+            android:label="@string/title_activity_posture"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name="com.fatel.mamtv1.ScoreboardActivity"
+            android:label="@string/title_activity_scoreboard" >
+        </activity>
+        <activity
+            android:name="com.facebook.FacebookActivity"
+            android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
+            android:label="@string/app_name"
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+
+        <provider
+            android:name="com.facebook.FacebookContentProvider"
+            android:authorities="com.facebook.app.FacebookContentProvider536873643131521"
+            android:exported="true" />
+
+        <meta-data
+            android:name="com.facebook.sdk.ApplicationId"
+            android:value="@string/facebook_app_id" />
+
+        <activity
+            android:name="com.fatel.mamtv1.CreateGroupActivity"
+            android:label="@string/title_activity_create_group" >
+        </activity>
+        <activity
+            android:name="com.fatel.mamtv1.JoinGroupActivity"
+            android:label="@string/title_activity_join_group" >
+        </activity>
+        <activity
+            android:name="com.fatel.mamtv1.GroupMainActivity"
+            android:label="@string/title_activity_group_main" >
+        </activity>
+        <activity
+            android:name="com.fatel.mamtv1.MemberGroupActivity"
+            android:label="@string/title_activity_member_group" >
+        </activity>
+        <activity
+            android:name="com.fatel.mamtv1.ProgressActivity"
+            android:label="@string/title_activity_progress" >
+        </activity>
+        <activity
+            android:name="com.fatel.mamtv1.EventActivity"
+            android:label="@string/title_activity_event" >
+        </activity>
+        <activity
+            android:name="com.fatel.mamtv1.EventactAlarm"
+            android:label="@string/title_activity_eventact_alarm" >
         </activity>
     </application>
 

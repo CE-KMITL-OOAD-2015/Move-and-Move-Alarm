@@ -1,9 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.fatel.mamtv1" >
-    <uses-permission android:name="android.permission.INTERNET"/>
-    <uses-permission android:name="android.permission.WAKE_LOCK"/>
-    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED"/>
+
+    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+    <uses-permission android:name="android.permission.WAKE_LOCK" />
+    <uses-permission android:name="android.permission.RECEIVE_BOOT_COMPLETED" />
+    //add for share facebook
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    //add for sync with camera
+    <uses-feature android:name="android.hardware.camera" />
+    //for use camera
+    <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
+    // for store
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    // for record video
+    <uses-permission android:name="android.permission.VIBRATE" />
+    //Vibrate devite
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    //Ringtone
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
@@ -11,56 +26,112 @@
         android:theme="@style/AppTheme" >
         <activity
             android:name=".MainActivity"
-            android:label="@string/app_name" >
-
+            android:label="@string/app_name"
+            android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name=".Activity"
-            android:label="@string/title_activity_" >
+            android:label="@string/title_activity_"
+            android:screenOrientation="portrait" >
         </activity>
         <activity
-            android:name=".actAlarm"
-            android:label="@string/title_activity_act_alarm" >
+            android:name=".ActAlarm"
+            android:label="@string/title_activity_act_alarm"
+            android:screenOrientation="portrait" >
         </activity>
 
-        <receiver android:name=".AlarmReceiver"></receiver>
-        <receiver android:name=".BootBroadcastReceiver"
-            android:enabled="true">
+        <receiver android:name=".AlarmReceiver" />
+        <receiver
+            android:name=".BootBroadcastReceiver"
+            android:enabled="true" >
             <intent-filter>
-                <action android:name="android.intent.action.BOOT_COMPLETED"></action>
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
             </intent-filter>
         </receiver>
+        <receiver android:name=".EventReceiver" />
 
         <activity
             android:name=".Intro_Activity"
-            android:label="@string/title_activity_intro_" >
-
+            android:label="@string/title_activity_intro_"
+            android:screenOrientation="portrait" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
-            
         </activity>
         <activity
             android:name=".Login_Activity"
-            android:label="@string/title_activity_login_" >
+            android:label="@string/title_activity_login_"
+            android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name=".Create_Account_Activity"
-            android:label="@string/title_activity_create__account_" >
+            android:label="@string/title_activity_create__account_"
+            android:screenOrientation="portrait" >
         </activity>
-
+        <activity
+            android:name=".ShareActivity"
+            android:label="@string/title_activity_shared"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".Camera"
+            android:label="@string/title_activity_pre"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".PostureActivity"
+            android:label="@string/title_activity_posture"
+            android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name=".ScoreboardActivity"
+            android:label="@string/title_activity_scoreboard" >
+        </activity>
         <activity
             android:name="com.facebook.FacebookActivity"
             android:configChanges="keyboard|keyboardHidden|screenLayout|screenSize|orientation"
             android:label="@string/app_name"
-            android:theme="@android:style/Theme.Translucent.NoTitleBar"/>
+            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+
+        <provider
+            android:name="com.facebook.FacebookContentProvider"
+            android:authorities="com.facebook.app.FacebookContentProvider536873643131521"
+            android:exported="true" />
 
         <meta-data
             android:name="com.facebook.sdk.ApplicationId"
-            android:value="@string/facebook_app_id"/>
+            android:value="@string/facebook_app_id" />
 
+        <activity
+            android:name=".CreateGroupActivity"
+            android:label="@string/title_activity_create_group" >
+        </activity>
+        <activity
+            android:name=".JoinGroupActivity"
+            android:label="@string/title_activity_join_group" >
+        </activity>
+        <activity
+            android:name=".GroupMainActivity"
+            android:label="@string/title_activity_group_main" >
+        </activity>
+        <activity
+            android:name=".MemberGroupActivity"
+            android:label="@string/title_activity_member_group" >
+        </activity>
+        <activity
+            android:name=".ProgressActivity"
+            android:label="@string/title_activity_progress" >
+        </activity>
+        <activity
+            android:name=".EventActivity"
+            android:label="@string/title_activity_event" >
+        </activity>
+        <activity
+            android:name=".EventactAlarm"
+            android:label="@string/title_activity_eventact_alarm" >
+        </activity>
     </application>
 
 </manifest>

@@ -1,5 +1,0 @@
-<animation-list   android:id="@+id/myprogress" android:oneshot="false"
-    xmlns:android="http://schemas.android.com/apk/res/android">
-    <item android:drawable="@drawable/p4_1" android:duration="600" />
-    <item android:drawable="@drawable/p4_2" android:duration="600" />
-</animation-list>

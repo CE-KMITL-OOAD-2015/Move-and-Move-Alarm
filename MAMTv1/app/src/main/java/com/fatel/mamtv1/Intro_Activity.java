@@ -13,6 +13,12 @@ public class Intro_Activity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.intro_layout);
+        if(UserManage.getInstance(this).checkCurrentLogin(this))
+        {
+            Intent intent = new Intent(this, MainActivity.class);
+            startActivity(intent);
+            finish();
+        }
     }
 
     @Override
@@ -41,11 +47,13 @@ public class Intro_Activity extends AppCompatActivity {
     {
         Intent intent = new Intent(this,Login_Activity.class);
         startActivity(intent);
+        finish();
     }
 
     public void linkCreate(View view)
     {
         Intent intent = new Intent(this,Create_Account_Activity.class);
         startActivity(intent);
+        finish();
     }
 }
