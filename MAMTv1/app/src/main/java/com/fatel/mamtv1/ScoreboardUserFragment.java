@@ -68,7 +68,20 @@ public class ScoreboardUserFragment extends Fragment {
         //Log.i("username",UserManage.getInstance((Context) Cache.getInstance().getData("MainActivityContext")).getCurrentUsername());
         if (!tempid.equals("fb0.0")) {
             if (!tempid.equals("fb0")) {
-                    user0.setText(UserManage.getInstance((Context) Cache.getInstance().getData("MainActivityContext")).getCurrentFacebookFirstName());
+                if(!tempid.equals("0")){
+                    if(!tempid.equals("0.0")){
+                        user0.setText(UserManage.getInstance((Context) Cache.getInstance().getData("MainActivityContext")).getCurrentFacebookFirstName());
+                    }
+                    else {
+                        user0.setText(UserManage.getInstance((Context) Cache.getInstance().getData("MainActivityContext")).getCurrentUsername());
+                    }
+                }
+                else {
+                    user0.setText(UserManage.getInstance((Context) Cache.getInstance().getData("MainActivityContext")).getCurrentUsername());
+                }
+            }
+            else {
+                user0.setText(UserManage.getInstance((Context) Cache.getInstance().getData("MainActivityContext")).getCurrentUsername());
             }
         } else {
             user0.setText(UserManage.getInstance((Context) Cache.getInstance().getData("MainActivityContext")).getCurrentUsername());
@@ -89,6 +102,7 @@ public class ScoreboardUserFragment extends Fragment {
                             if ((boolean) data.get("status")) {
                                 ArrayList<HashMap<String, Object>> users = converter.toHashMapArrayList(data.get("users"));
                                 int size = users.size();
+                                Log.i("amount", "" + size);
                                 for (int i = 0; i < size; i++) {
                                     HashMap<String, Object> userData = users.get(i);
                                     String userName = converter.toString(userData.get("userName"));
@@ -99,7 +113,7 @@ public class ScoreboardUserFragment extends Fragment {
                                 }
                             }
                         } catch (Exception e) {
-                            Log.i("scoreboard error", e.toString());
+                            Log.i("error", e.toString());
                         }
                     }
                 }, new Response.ErrorListener() { //create error listener to trace an error if download process fail

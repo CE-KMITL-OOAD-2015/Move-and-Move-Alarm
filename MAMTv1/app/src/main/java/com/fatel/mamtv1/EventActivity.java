@@ -142,13 +142,16 @@ public class EventActivity extends AppCompatActivity {
             time2=null;
         }
         //history
-        Historygroup historygroup = Historygroup.findHistorygroup(UserManage.getInstance(this).getCurrentIdGroup(), this);
-        historygroup.subaccept(1);
-        historygroup.addcancel(1);
-        historygroup.save(this);
+
+            Historygroup historygroup = Historygroup.findHistorygroup(UserManage.getInstance(this).getCurrentIdGroup(), this);
+        if(historygroup!=null) {
+            historygroup.subaccept(1);
+            historygroup.addcancel(1);
+             historygroup.save(this);
+        }
         Intent i1 = new Intent(EventActivity.this, MainActivity.class);
 
-        startActivity(i1);
+            startActivity(i1);
     }
 
     public void requesAddscore()
