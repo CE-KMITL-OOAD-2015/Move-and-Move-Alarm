@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
-
     <group android:checkableBehavior="single">
         <item
             android:id="@+id/nav_home_fragment"
@@ -9,6 +8,9 @@
             android:id="@+id/nav_alarm_fragment"
             android:title="Alarm" />
         <item
+            android:id="@+id/nav_progress_fragment"
+            android:title="Progress"/>
+        <item
             android:id="@+id/nav_posture_fragment"
             android:title="Postures" />
         <item
@@ -16,7 +18,7 @@
             android:title="Group" />
         <item
             android:id="@+id/nav_lboard_fragment"
-            android:title="Leaderboard" />
+            android:title="Scoreboard" />
         <item
             android:id="@+id/nav_set_fragment"
             android:title="Setting" />
@@ -30,4 +32,4 @@
             android:id="@+id/nav_logout_fragment"
             android:title="Log out" />
     </group>
-</menu><!-- From: file:/D:/Work/Year3%20Term1/OOAD/Move-and-Move-Alarm/Move-and-Move-Alarm/MAMTv1/app/src/main/res/menu/drawer_view.xml -->
+</menu><!-- From: file:/C:/Users/kid14/Documents/Move-Alarm/Move-and-Move-Alarm/MAMTv1/app/src/main/res/menu/drawer_view.xml -->

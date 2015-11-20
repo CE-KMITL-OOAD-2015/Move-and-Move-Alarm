@@ -4,4 +4,4 @@
     <item android:id="@+id/action_settings" android:title="@string/action_settings"
         android:orderInCategory="100" app:showAsAction="never" />
 </menu>
-<!-- From: file:/D:/Work/Year3%20Term1/OOAD/Move-and-Move-Alarm/Move-and-Move-Alarm/MAMTv1/app/src/main/res/menu/menu_main.xml -->
+<!-- From: file:/C:/Users/kid14/Documents/Move-Alarm/Move-and-Move-Alarm/MAMTv1/app/src/main/res/menu/menu_main.xml -->

@@ -4,6 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+
     <!-- Content -->
     <FrameLayout
         android:id="@+id/container"
@@ -16,7 +17,9 @@
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
         android:layout_gravity="start"
-        android:background="@android:color/white"
+        android:background="#f5ab35"
         app:headerLayout="@layout/header"
-        app:menu="@menu/drawer_view" />
-</android.support.v4.widget.DrawerLayout><!-- From: file:/D:/Work/Year3%20Term1/OOAD/Move-and-Move-Alarm/Move-and-Move-Alarm/MAMTv1/app/src/main/res/layout/activity_main.xml -->
+        app:menu="@menu/drawer_view"
+        app:itemTextColor="@android:color/white"
+         />
+</android.support.v4.widget.DrawerLayout><!-- From: file:/C:/Users/kid14/Documents/Move-Alarm/Move-and-Move-Alarm/MAMTv1/app/src/main/res/layout/activity_main.xml -->

@@ -1,65 +1,273 @@
 -- Merging decision tree log ---
 manifest
-ADDED from D:\Work\Year3 Term1\OOAD\Move-and-Move-Alarm\Move-and-Move-Alarm\MAMTv1\app\src\main\AndroidManifest.xml:2:1-21:12
+ADDED from C:\Users\kid14\Documents\Move-Alarm\Move-and-Move-Alarm\MAMTv1\app\src\main\AndroidManifest.xml:2:1-137:12
 	package
-		ADDED from D:\Work\Year3 Term1\OOAD\Move-and-Move-Alarm\Move-and-Move-Alarm\MAMTv1\app\src\main\AndroidManifest.xml:3:5-31
-		INJECTED from D:\Work\Year3 Term1\OOAD\Move-and-Move-Alarm\Move-and-Move-Alarm\MAMTv1\app\src\main\AndroidManifest.xml
-		INJECTED from D:\Work\Year3 Term1\OOAD\Move-and-Move-Alarm\Move-and-Move-Alarm\MAMTv1\app\src\main\AndroidManifest.xml
+		ADDED from C:\Users\kid14\Documents\Move-Alarm\Move-and-Move-Alarm\MAMTv1\app\src\main\AndroidManifest.xml:3:5-31
+		INJECTED from C:\Users\kid14\Documents\Move-Alarm\Move-and-Move-Alarm\MAMTv1\app\src\main\AndroidManifest.xml
+		INJECTED from C:\Users\kid14\Documents\Move-Alarm\Move-and-Move-Alarm\MAMTv1\app\src\main\AndroidManifest.xml
 	android:versionName
-		INJECTED from D:\Work\Year3 Term1\OOAD\Move-and-Move-Alarm\Move-and-Move-Alarm\MAMTv1\app\src\main\AndroidManifest.xml
-		INJECTED from D:\Work\Year3 Term1\OOAD\Move-and-Move-Alarm\Move-and-Move-Alarm\MAMTv1\app\src\main\AndroidManifest.xml
+		INJECTED from C:\Users\kid14\Documents\Move-Alarm\Move-and-Move-Alarm\MAMTv1\app\src\main\AndroidManifest.xml
+		INJECTED from C:\Users\kid14\Documents\Move-Alarm\Move-and-Move-Alarm\MAMTv1\app\src\main\AndroidManifest.xml
 	xmlns:android
-		ADDED from D:\Work\Year3 Term1\OOAD\Move-and-Move-Alarm\Move-and-Move-Alarm\MAMTv1\app\src\main\AndroidManifest.xml:2:11-69
+		ADDED from C:\Users\kid14\Documents\Move-Alarm\Move-and-Move-Alarm\MAMTv1\app\src\main\AndroidManifest.xml:2:11-69
 	android:versionCode
-		INJECTED from D:\Work\Year3 Term1\OOAD\Move-and-Move-Alarm\Move-and-Move-Alarm\MAMTv1\app\src\main\AndroidManifest.xml
-		INJECTED from D:\Work\Year3 Term1\OOAD\Move-and-Move-Alarm\Move-and-Move-Alarm\MAMTv1\app\src\main\AndroidManifest.xml
+		INJECTED from C:\Users\kid14\Documents\Move-Alarm\Move-and-Move-Alarm\MAMTv1\app\src\main\AndroidManifest.xml
+		INJECTED from C:\Users\kid14\Documents\Move-Alarm\Move-and-Move-Alarm\MAMTv1\app\src\main\AndroidManifest.xml
+uses-permission#android.permission.INTERNET
+ADDED from C:\Users\kid14\Documents\Move-Alarm\Move-and-Move-Alarm\MAMTv1\app\src\main\AndroidManifest.xml:5:5-67
+	android:name
+		ADDED from C:\Users\kid14\Documents\Move-Alarm\Move-and-Move-Alarm\MAMTv1\app\src\main\AndroidManifest.xml:5:22-64
+uses-permission#android.permission.ACCESS_NETWORK_STATE
+ADDED from C:\Users\kid14\Documents\Move-Alarm\Move-and-Move-Alarm\MAMTv1\app\src\main\AndroidManifest.xml:6:5-79
+	android:name
+		ADDED from C:\Users\kid14\Documents\Move-Alarm\Move-and-Move-Alarm\MAMTv1\app\src\main\AndroidManifest.xml:6:22-76
+uses-permission#android.permission.WAKE_LOCK
+ADDED from C:\Users\kid14\Documents\Move-Alarm\Move-and-Move-Alarm\MAMTv1\app\src\main\AndroidManifest.xml:7:5-68
+	android:name
+		ADDED from C:\Users\kid14\Documents\Move-Alarm\Move-and-Move-Alarm\MAMTv1\app\src\main\AndroidManifest.xml:7:22-65
+uses-permission#android.permission.RECEIVE_BOOT_COMPLETED
+ADDED from C:\Users\kid14\Documents\Move-Alarm\Move-and-Move-Alarm\MAMTv1\app\src\main\AndroidManifest.xml:8:5-81
+	android:name
+		ADDED from C:\Users\kid14\Documents\Move-Alarm\Move-and-Move-Alarm\MAMTv1\app\src\main\AndroidManifest.xml:8:22-78
+uses-permission#android.permission.READ_EXTERNAL_STORAGE
+ADDED from C:\Users\kid14\Documents\Move-Alarm\Move-and-Move-Alarm\MAMTv1\app\src\main\AndroidManifest.xml:10:5-80
+	android:name
+		ADDED from C:\Users\kid14\Documents\Move-Alarm\Move-and-Move-Alarm\MAMTv1\app\src\main\AndroidManifest.xml:10:22-77
+uses-feature#android.hardware.camera
+ADDED from C:\Users\kid14\Documents\Move-Alarm\Move-and-Move-Alarm\MAMTv1\app\src\main\AndroidManifest.xml:12:5-60
+	android:name
+		ADDED from C:\Users\kid14\Documents\Move-Alarm\Move-and-Move-Alarm\MAMTv1\app\src\main\AndroidManifest.xml:12:19-57
+uses-permission#android.permission.WRITE_EXTERNAL_STORAGE
+ADDED from C:\Users\kid14\Documents\Move-Alarm\Move-and-Move-Alarm\MAMTv1\app\src\main\AndroidManifest.xml:14:5-81
+	android:name
+		ADDED from C:\Users\kid14\Documents\Move-Alarm\Move-and-Move-Alarm\MAMTv1\app\src\main\AndroidManifest.xml:14:22-78
+uses-permission#android.permission.RECORD_AUDIO
+ADDED from C:\Users\kid14\Documents\Move-Alarm\Move-and-Move-Alarm\MAMTv1\app\src\main\AndroidManifest.xml:16:5-71
+	android:name
+		ADDED from C:\Users\kid14\Documents\Move-Alarm\Move-and-Move-Alarm\MAMTv1\app\src\main\AndroidManifest.xml:16:22-68
+uses-permission#android.permission.VIBRATE
+ADDED from C:\Users\kid14\Documents\Move-Alarm\Move-and-Move-Alarm\MAMTv1\app\src\main\AndroidManifest.xml:18:5-66
+	android:name
+		ADDED from C:\Users\kid14\Documents\Move-Alarm\Move-and-Move-Alarm\MAMTv1\app\src\main\AndroidManifest.xml:18:22-63
 application
-ADDED from D:\Work\Year3 Term1\OOAD\Move-and-Move-Alarm\Move-and-Move-Alarm\MAMTv1\app\src\main\AndroidManifest.xml:5:5-19:19
-MERGED from [com.android.support:appcompat-v7:23.0.1] D:\Work\Year3 Term1\OOAD\Move-and-Move-Alarm\Move-and-Move-Alarm\MAMTv1\app\build\intermediates\exploded-aar\com.android.support\appcompat-v7\23.0.1\AndroidManifest.xml:22:5-20
-MERGED from [com.android.support:support-v4:23.0.1] D:\Work\Year3 Term1\OOAD\Move-and-Move-Alarm\Move-and-Move-Alarm\MAMTv1\app\build\intermediates\exploded-aar\com.android.support\support-v4\23.0.1\AndroidManifest.xml:22:5-20
-MERGED from [com.android.support:support-v4:23.0.1] D:\Work\Year3 Term1\OOAD\Move-and-Move-Alarm\Move-and-Move-Alarm\MAMTv1\app\build\intermediates\exploded-aar\com.android.support\support-v4\23.0.1\AndroidManifest.xml:22:5-20
-MERGED from [com.android.support:design:22.2.0] D:\Work\Year3 Term1\OOAD\Move-and-Move-Alarm\Move-and-Move-Alarm\MAMTv1\app\build\intermediates\exploded-aar\com.android.support\design\22.2.0\AndroidManifest.xml:22:5-20
-MERGED from [com.android.support:appcompat-v7:23.0.1] D:\Work\Year3 Term1\OOAD\Move-and-Move-Alarm\Move-and-Move-Alarm\MAMTv1\app\build\intermediates\exploded-aar\com.android.support\appcompat-v7\23.0.1\AndroidManifest.xml:22:5-20
-MERGED from [com.android.support:support-v4:23.0.1] D:\Work\Year3 Term1\OOAD\Move-and-Move-Alarm\Move-and-Move-Alarm\MAMTv1\app\build\intermediates\exploded-aar\com.android.support\support-v4\23.0.1\AndroidManifest.xml:22:5-20
-MERGED from [com.android.support:support-v4:23.0.1] D:\Work\Year3 Term1\OOAD\Move-and-Move-Alarm\Move-and-Move-Alarm\MAMTv1\app\build\intermediates\exploded-aar\com.android.support\support-v4\23.0.1\AndroidManifest.xml:22:5-20
-MERGED from [de.hdodenhof:circleimageview:1.2.1] D:\Work\Year3 Term1\OOAD\Move-and-Move-Alarm\Move-and-Move-Alarm\MAMTv1\app\build\intermediates\exploded-aar\de.hdodenhof\circleimageview\1.2.1\AndroidManifest.xml:9:5-20
+ADDED from C:\Users\kid14\Documents\Move-Alarm\Move-and-Move-Alarm\MAMTv1\app\src\main\AndroidManifest.xml:22:5-135:19
+MERGED from [com.android.support:appcompat-v7:23.0.1] C:\Users\kid14\Documents\Move-Alarm\Move-and-Move-Alarm\MAMTv1\app\build\intermediates\exploded-aar\com.android.support\appcompat-v7\23.0.1\AndroidManifest.xml:22:5-20
+MERGED from [com.android.support:support-v4:23.1.0] C:\Users\kid14\Documents\Move-Alarm\Move-and-Move-Alarm\MAMTv1\app\build\intermediates\exploded-aar\com.android.support\support-v4\23.1.0\AndroidManifest.xml:22:5-20
+MERGED from [com.android.support:support-v4:23.1.0] C:\Users\kid14\Documents\Move-Alarm\Move-and-Move-Alarm\MAMTv1\app\build\intermediates\exploded-aar\com.android.support\support-v4\23.1.0\AndroidManifest.xml:22:5-20
+MERGED from [com.android.support:design:22.2.0] C:\Users\kid14\Documents\Move-Alarm\Move-and-Move-Alarm\MAMTv1\app\build\intermediates\exploded-aar\com.android.support\design\22.2.0\AndroidManifest.xml:22:5-20
+MERGED from [com.android.support:appcompat-v7:23.0.1] C:\Users\kid14\Documents\Move-Alarm\Move-and-Move-Alarm\MAMTv1\app\build\intermediates\exploded-aar\com.android.support\appcompat-v7\23.0.1\AndroidManifest.xml:22:5-20
+MERGED from [com.android.support:support-v4:23.1.0] C:\Users\kid14\Documents\Move-Alarm\Move-and-Move-Alarm\MAMTv1\app\build\intermediates\exploded-aar\com.android.support\support-v4\23.1.0\AndroidManifest.xml:22:5-20
+MERGED from [com.android.support:support-v4:23.1.0] C:\Users\kid14\Documents\Move-Alarm\Move-and-Move-Alarm\MAMTv1\app\build\intermediates\exploded-aar\com.android.support\support-v4\23.1.0\AndroidManifest.xml:22:5-20
+MERGED from [de.hdodenhof:circleimageview:1.2.1] C:\Users\kid14\Documents\Move-Alarm\Move-and-Move-Alarm\MAMTv1\app\build\intermediates\exploded-aar\de.hdodenhof\circleimageview\1.2.1\AndroidManifest.xml:9:5-20
+MERGED from [com.facebook.android:facebook-android-sdk:4.6.0] C:\Users\kid14\Documents\Move-Alarm\Move-and-Move-Alarm\MAMTv1\app\build\intermediates\exploded-aar\com.facebook.android\facebook-android-sdk\4.6.0\AndroidManifest.xml:28:5-20
+MERGED from [com.android.support:support-v4:23.1.0] C:\Users\kid14\Documents\Move-Alarm\Move-and-Move-Alarm\MAMTv1\app\build\intermediates\exploded-aar\com.android.support\support-v4\23.1.0\AndroidManifest.xml:22:5-20
+MERGED from [MAMTv1.app.libraries:volley:unspecified] C:\Users\kid14\Documents\Move-Alarm\Move-and-Move-Alarm\MAMTv1\app\build\intermediates\exploded-aar\MAMTv1.app.libraries\volley\unspecified\AndroidManifest.xml:9:5-20
+MERGED from [com.android.support:cardview-v7:23.1.0] C:\Users\kid14\Documents\Move-Alarm\Move-and-Move-Alarm\MAMTv1\app\build\intermediates\exploded-aar\com.android.support\cardview-v7\23.1.0\AndroidManifest.xml:22:5-20
+MERGED from [com.android.support:support-v4:23.1.0] C:\Users\kid14\Documents\Move-Alarm\Move-and-Move-Alarm\MAMTv1\app\build\intermediates\exploded-aar\com.android.support\support-v4\23.1.0\AndroidManifest.xml:22:5-20
+MERGED from [MAMTv1.app.libraries:CircularProgressBar:unspecified] C:\Users\kid14\Documents\Move-Alarm\Move-and-Move-Alarm\MAMTv1\app\build\intermediates\exploded-aar\MAMTv1.app.libraries\CircularProgressBar\unspecified\AndroidManifest.xml:9:5-20
 	android:label
-		ADDED from D:\Work\Year3 Term1\OOAD\Move-and-Move-Alarm\Move-and-Move-Alarm\MAMTv1\app\src\main\AndroidManifest.xml:8:9-41
+		ADDED from C:\Users\kid14\Documents\Move-Alarm\Move-and-Move-Alarm\MAMTv1\app\src\main\AndroidManifest.xml:25:9-41
 	android:allowBackup
-		ADDED from D:\Work\Year3 Term1\OOAD\Move-and-Move-Alarm\Move-and-Move-Alarm\MAMTv1\app\src\main\AndroidManifest.xml:6:9-35
+		ADDED from C:\Users\kid14\Documents\Move-Alarm\Move-and-Move-Alarm\MAMTv1\app\src\main\AndroidManifest.xml:23:9-35
 	android:icon
-		ADDED from D:\Work\Year3 Term1\OOAD\Move-and-Move-Alarm\Move-and-Move-Alarm\MAMTv1\app\src\main\AndroidManifest.xml:7:9-43
+		ADDED from C:\Users\kid14\Documents\Move-Alarm\Move-and-Move-Alarm\MAMTv1\app\src\main\AndroidManifest.xml:24:9-43
 	android:theme
-		ADDED from D:\Work\Year3 Term1\OOAD\Move-and-Move-Alarm\Move-and-Move-Alarm\MAMTv1\app\src\main\AndroidManifest.xml:9:9-40
+		ADDED from C:\Users\kid14\Documents\Move-Alarm\Move-and-Move-Alarm\MAMTv1\app\src\main\AndroidManifest.xml:26:9-40
 activity#com.fatel.mamtv1.MainActivity
-ADDED from D:\Work\Year3 Term1\OOAD\Move-and-Move-Alarm\Move-and-Move-Alarm\MAMTv1\app\src\main\AndroidManifest.xml:10:9-18:20
+ADDED from C:\Users\kid14\Documents\Move-Alarm\Move-and-Move-Alarm\MAMTv1\app\src\main\AndroidManifest.xml:27:9-31:20
+	android:screenOrientation
+		ADDED from C:\Users\kid14\Documents\Move-Alarm\Move-and-Move-Alarm\MAMTv1\app\src\main\AndroidManifest.xml:30:13-49
 	android:label
-		ADDED from D:\Work\Year3 Term1\OOAD\Move-and-Move-Alarm\Move-and-Move-Alarm\MAMTv1\app\src\main\AndroidManifest.xml:12:13-45
+		ADDED from C:\Users\kid14\Documents\Move-Alarm\Move-and-Move-Alarm\MAMTv1\app\src\main\AndroidManifest.xml:29:13-45
 	android:name
-		ADDED from D:\Work\Year3 Term1\OOAD\Move-and-Move-Alarm\Move-and-Move-Alarm\MAMTv1\app\src\main\AndroidManifest.xml:11:13-41
+		ADDED from C:\Users\kid14\Documents\Move-Alarm\Move-and-Move-Alarm\MAMTv1\app\src\main\AndroidManifest.xml:28:13-41
+activity#com.fatel.mamtv1.Activity
+ADDED from C:\Users\kid14\Documents\Move-Alarm\Move-and-Move-Alarm\MAMTv1\app\src\main\AndroidManifest.xml:32:9-36:20
+	android:screenOrientation
+		ADDED from C:\Users\kid14\Documents\Move-Alarm\Move-and-Move-Alarm\MAMTv1\app\src\main\AndroidManifest.xml:35:13-49
+	android:label
+		ADDED from C:\Users\kid14\Documents\Move-Alarm\Move-and-Move-Alarm\MAMTv1\app\src\main\AndroidManifest.xml:34:13-52
+	android:name
+		ADDED from C:\Users\kid14\Documents\Move-Alarm\Move-and-Move-Alarm\MAMTv1\app\src\main\AndroidManifest.xml:33:13-37
+activity#com.fatel.mamtv1.ActAlarm
+ADDED from C:\Users\kid14\Documents\Move-Alarm\Move-and-Move-Alarm\MAMTv1\app\src\main\AndroidManifest.xml:37:9-41:20
+	android:screenOrientation
+		ADDED from C:\Users\kid14\Documents\Move-Alarm\Move-and-Move-Alarm\MAMTv1\app\src\main\AndroidManifest.xml:40:13-49
+	android:label
+		ADDED from C:\Users\kid14\Documents\Move-Alarm\Move-and-Move-Alarm\MAMTv1\app\src\main\AndroidManifest.xml:39:13-61
+	android:name
+		ADDED from C:\Users\kid14\Documents\Move-Alarm\Move-and-Move-Alarm\MAMTv1\app\src\main\AndroidManifest.xml:38:13-37
+receiver#com.fatel.mamtv1.AlarmReceiver
+ADDED from C:\Users\kid14\Documents\Move-Alarm\Move-and-Move-Alarm\MAMTv1\app\src\main\AndroidManifest.xml:43:9-51
+	android:name
+		ADDED from C:\Users\kid14\Documents\Move-Alarm\Move-and-Move-Alarm\MAMTv1\app\src\main\AndroidManifest.xml:43:19-48
+receiver#com.fatel.mamtv1.BootBroadcastReceiver
+ADDED from C:\Users\kid14\Documents\Move-Alarm\Move-and-Move-Alarm\MAMTv1\app\src\main\AndroidManifest.xml:44:9-50:20
+	android:enabled
+		ADDED from C:\Users\kid14\Documents\Move-Alarm\Move-and-Move-Alarm\MAMTv1\app\src\main\AndroidManifest.xml:46:13-35
+	android:name
+		ADDED from C:\Users\kid14\Documents\Move-Alarm\Move-and-Move-Alarm\MAMTv1\app\src\main\AndroidManifest.xml:45:13-50
+intent-filter#android.intent.action.BOOT_COMPLETED
+ADDED from C:\Users\kid14\Documents\Move-Alarm\Move-and-Move-Alarm\MAMTv1\app\src\main\AndroidManifest.xml:47:13-49:29
+action#android.intent.action.BOOT_COMPLETED
+ADDED from C:\Users\kid14\Documents\Move-Alarm\Move-and-Move-Alarm\MAMTv1\app\src\main\AndroidManifest.xml:48:17-79
+	android:name
+		ADDED from C:\Users\kid14\Documents\Move-Alarm\Move-and-Move-Alarm\MAMTv1\app\src\main\AndroidManifest.xml:48:25-76
+receiver#com.fatel.mamtv1.EventReceiver
+ADDED from C:\Users\kid14\Documents\Move-Alarm\Move-and-Move-Alarm\MAMTv1\app\src\main\AndroidManifest.xml:51:9-51
+	android:name
+		ADDED from C:\Users\kid14\Documents\Move-Alarm\Move-and-Move-Alarm\MAMTv1\app\src\main\AndroidManifest.xml:51:19-48
+activity#com.fatel.mamtv1.Intro_Activity
+ADDED from C:\Users\kid14\Documents\Move-Alarm\Move-and-Move-Alarm\MAMTv1\app\src\main\AndroidManifest.xml:53:9-62:20
+	android:screenOrientation
+		ADDED from C:\Users\kid14\Documents\Move-Alarm\Move-and-Move-Alarm\MAMTv1\app\src\main\AndroidManifest.xml:56:13-49
+	android:label
+		ADDED from C:\Users\kid14\Documents\Move-Alarm\Move-and-Move-Alarm\MAMTv1\app\src\main\AndroidManifest.xml:55:13-58
+	android:name
+		ADDED from C:\Users\kid14\Documents\Move-Alarm\Move-and-Move-Alarm\MAMTv1\app\src\main\AndroidManifest.xml:54:13-43
 intent-filter#android.intent.action.MAIN+android.intent.category.LAUNCHER
-ADDED from D:\Work\Year3 Term1\OOAD\Move-and-Move-Alarm\Move-and-Move-Alarm\MAMTv1\app\src\main\AndroidManifest.xml:13:13-17:29
+ADDED from C:\Users\kid14\Documents\Move-Alarm\Move-and-Move-Alarm\MAMTv1\app\src\main\AndroidManifest.xml:57:13-61:29
 action#android.intent.action.MAIN
-ADDED from D:\Work\Year3 Term1\OOAD\Move-and-Move-Alarm\Move-and-Move-Alarm\MAMTv1\app\src\main\AndroidManifest.xml:14:17-69
+ADDED from C:\Users\kid14\Documents\Move-Alarm\Move-and-Move-Alarm\MAMTv1\app\src\main\AndroidManifest.xml:58:17-69
 	android:name
-		ADDED from D:\Work\Year3 Term1\OOAD\Move-and-Move-Alarm\Move-and-Move-Alarm\MAMTv1\app\src\main\AndroidManifest.xml:14:25-66
+		ADDED from C:\Users\kid14\Documents\Move-Alarm\Move-and-Move-Alarm\MAMTv1\app\src\main\AndroidManifest.xml:58:25-66
 category#android.intent.category.LAUNCHER
-ADDED from D:\Work\Year3 Term1\OOAD\Move-and-Move-Alarm\Move-and-Move-Alarm\MAMTv1\app\src\main\AndroidManifest.xml:16:17-77
+ADDED from C:\Users\kid14\Documents\Move-Alarm\Move-and-Move-Alarm\MAMTv1\app\src\main\AndroidManifest.xml:60:17-77
 	android:name
-		ADDED from D:\Work\Year3 Term1\OOAD\Move-and-Move-Alarm\Move-and-Move-Alarm\MAMTv1\app\src\main\AndroidManifest.xml:16:27-74
+		ADDED from C:\Users\kid14\Documents\Move-Alarm\Move-and-Move-Alarm\MAMTv1\app\src\main\AndroidManifest.xml:60:27-74
+activity#com.fatel.mamtv1.Login_Activity
+ADDED from C:\Users\kid14\Documents\Move-Alarm\Move-and-Move-Alarm\MAMTv1\app\src\main\AndroidManifest.xml:63:9-67:20
+	android:screenOrientation
+		ADDED from C:\Users\kid14\Documents\Move-Alarm\Move-and-Move-Alarm\MAMTv1\app\src\main\AndroidManifest.xml:66:13-49
+	android:label
+		ADDED from C:\Users\kid14\Documents\Move-Alarm\Move-and-Move-Alarm\MAMTv1\app\src\main\AndroidManifest.xml:65:13-58
+	android:name
+		ADDED from C:\Users\kid14\Documents\Move-Alarm\Move-and-Move-Alarm\MAMTv1\app\src\main\AndroidManifest.xml:64:13-43
+activity#com.fatel.mamtv1.Create_Account_Activity
+ADDED from C:\Users\kid14\Documents\Move-Alarm\Move-and-Move-Alarm\MAMTv1\app\src\main\AndroidManifest.xml:68:9-72:20
+	android:screenOrientation
+		ADDED from C:\Users\kid14\Documents\Move-Alarm\Move-and-Move-Alarm\MAMTv1\app\src\main\AndroidManifest.xml:71:13-49
+	android:label
+		ADDED from C:\Users\kid14\Documents\Move-Alarm\Move-and-Move-Alarm\MAMTv1\app\src\main\AndroidManifest.xml:70:13-68
+	android:name
+		ADDED from C:\Users\kid14\Documents\Move-Alarm\Move-and-Move-Alarm\MAMTv1\app\src\main\AndroidManifest.xml:69:13-52
+activity#com.fatel.mamtv1.ShareActivity
+ADDED from C:\Users\kid14\Documents\Move-Alarm\Move-and-Move-Alarm\MAMTv1\app\src\main\AndroidManifest.xml:73:9-77:20
+	android:screenOrientation
+		ADDED from C:\Users\kid14\Documents\Move-Alarm\Move-and-Move-Alarm\MAMTv1\app\src\main\AndroidManifest.xml:76:13-49
+	android:label
+		ADDED from C:\Users\kid14\Documents\Move-Alarm\Move-and-Move-Alarm\MAMTv1\app\src\main\AndroidManifest.xml:75:13-58
+	android:name
+		ADDED from C:\Users\kid14\Documents\Move-Alarm\Move-and-Move-Alarm\MAMTv1\app\src\main\AndroidManifest.xml:74:13-42
+activity#com.fatel.mamtv1.Camera
+ADDED from C:\Users\kid14\Documents\Move-Alarm\Move-and-Move-Alarm\MAMTv1\app\src\main\AndroidManifest.xml:78:9-82:20
+	android:screenOrientation
+		ADDED from C:\Users\kid14\Documents\Move-Alarm\Move-and-Move-Alarm\MAMTv1\app\src\main\AndroidManifest.xml:81:13-49
+	android:label
+		ADDED from C:\Users\kid14\Documents\Move-Alarm\Move-and-Move-Alarm\MAMTv1\app\src\main\AndroidManifest.xml:80:13-55
+	android:name
+		ADDED from C:\Users\kid14\Documents\Move-Alarm\Move-and-Move-Alarm\MAMTv1\app\src\main\AndroidManifest.xml:79:13-35
+activity#com.fatel.mamtv1.PostureActivity
+ADDED from C:\Users\kid14\Documents\Move-Alarm\Move-and-Move-Alarm\MAMTv1\app\src\main\AndroidManifest.xml:83:9-87:20
+	android:screenOrientation
+		ADDED from C:\Users\kid14\Documents\Move-Alarm\Move-and-Move-Alarm\MAMTv1\app\src\main\AndroidManifest.xml:86:13-49
+	android:label
+		ADDED from C:\Users\kid14\Documents\Move-Alarm\Move-and-Move-Alarm\MAMTv1\app\src\main\AndroidManifest.xml:85:13-59
+	android:name
+		ADDED from C:\Users\kid14\Documents\Move-Alarm\Move-and-Move-Alarm\MAMTv1\app\src\main\AndroidManifest.xml:84:13-44
+activity#com.fatel.mamtv1.ScoreboardActivity
+ADDED from C:\Users\kid14\Documents\Move-Alarm\Move-and-Move-Alarm\MAMTv1\app\src\main\AndroidManifest.xml:88:9-91:20
+	android:label
+		ADDED from C:\Users\kid14\Documents\Move-Alarm\Move-and-Move-Alarm\MAMTv1\app\src\main\AndroidManifest.xml:90:13-62
+	android:name
+		ADDED from C:\Users\kid14\Documents\Move-Alarm\Move-and-Move-Alarm\MAMTv1\app\src\main\AndroidManifest.xml:89:13-47
+activity#com.facebook.FacebookActivity
+ADDED from C:\Users\kid14\Documents\Move-Alarm\Move-and-Move-Alarm\MAMTv1\app\src\main\AndroidManifest.xml:92:9-96:75
+	android:label
+		ADDED from C:\Users\kid14\Documents\Move-Alarm\Move-and-Move-Alarm\MAMTv1\app\src\main\AndroidManifest.xml:95:13-45
+	android:configChanges
+		ADDED from C:\Users\kid14\Documents\Move-Alarm\Move-and-Move-Alarm\MAMTv1\app\src\main\AndroidManifest.xml:94:13-96
+	android:theme
+		ADDED from C:\Users\kid14\Documents\Move-Alarm\Move-and-Move-Alarm\MAMTv1\app\src\main\AndroidManifest.xml:96:13-72
+	android:name
+		ADDED from C:\Users\kid14\Documents\Move-Alarm\Move-and-Move-Alarm\MAMTv1\app\src\main\AndroidManifest.xml:93:13-57
+provider#com.facebook.FacebookContentProvider
+ADDED from C:\Users\kid14\Documents\Move-Alarm\Move-and-Move-Alarm\MAMTv1\app\src\main\AndroidManifest.xml:98:9-101:39
+	android:authorities
+		ADDED from C:\Users\kid14\Documents\Move-Alarm\Move-and-Move-Alarm\MAMTv1\app\src\main\AndroidManifest.xml:100:13-90
+	android:exported
+		ADDED from C:\Users\kid14\Documents\Move-Alarm\Move-and-Move-Alarm\MAMTv1\app\src\main\AndroidManifest.xml:101:13-36
+	android:name
+		ADDED from C:\Users\kid14\Documents\Move-Alarm\Move-and-Move-Alarm\MAMTv1\app\src\main\AndroidManifest.xml:99:13-64
+meta-data#com.facebook.sdk.ApplicationId
+ADDED from C:\Users\kid14\Documents\Move-Alarm\Move-and-Move-Alarm\MAMTv1\app\src\main\AndroidManifest.xml:103:9-105:55
+	android:value
+		ADDED from C:\Users\kid14\Documents\Move-Alarm\Move-and-Move-Alarm\MAMTv1\app\src\main\AndroidManifest.xml:105:13-52
+	android:name
+		ADDED from C:\Users\kid14\Documents\Move-Alarm\Move-and-Move-Alarm\MAMTv1\app\src\main\AndroidManifest.xml:104:13-58
+activity#com.fatel.mamtv1.CreateGroupActivity
+ADDED from C:\Users\kid14\Documents\Move-Alarm\Move-and-Move-Alarm\MAMTv1\app\src\main\AndroidManifest.xml:107:9-110:20
+	android:label
+		ADDED from C:\Users\kid14\Documents\Move-Alarm\Move-and-Move-Alarm\MAMTv1\app\src\main\AndroidManifest.xml:109:13-64
+	android:name
+		ADDED from C:\Users\kid14\Documents\Move-Alarm\Move-and-Move-Alarm\MAMTv1\app\src\main\AndroidManifest.xml:108:13-48
+activity#com.fatel.mamtv1.JoinGroupActivity
+ADDED from C:\Users\kid14\Documents\Move-Alarm\Move-and-Move-Alarm\MAMTv1\app\src\main\AndroidManifest.xml:111:9-114:20
+	android:label
+		ADDED from C:\Users\kid14\Documents\Move-Alarm\Move-and-Move-Alarm\MAMTv1\app\src\main\AndroidManifest.xml:113:13-62
+	android:name
+		ADDED from C:\Users\kid14\Documents\Move-Alarm\Move-and-Move-Alarm\MAMTv1\app\src\main\AndroidManifest.xml:112:13-46
+activity#com.fatel.mamtv1.GroupMainActivity
+ADDED from C:\Users\kid14\Documents\Move-Alarm\Move-and-Move-Alarm\MAMTv1\app\src\main\AndroidManifest.xml:115:9-118:20
+	android:label
+		ADDED from C:\Users\kid14\Documents\Move-Alarm\Move-and-Move-Alarm\MAMTv1\app\src\main\AndroidManifest.xml:117:13-62
+	android:name
+		ADDED from C:\Users\kid14\Documents\Move-Alarm\Move-and-Move-Alarm\MAMTv1\app\src\main\AndroidManifest.xml:116:13-46
+activity#com.fatel.mamtv1.MemberGroupActivity
+ADDED from C:\Users\kid14\Documents\Move-Alarm\Move-and-Move-Alarm\MAMTv1\app\src\main\AndroidManifest.xml:119:9-122:20
+	android:label
+		ADDED from C:\Users\kid14\Documents\Move-Alarm\Move-and-Move-Alarm\MAMTv1\app\src\main\AndroidManifest.xml:121:13-64
+	android:name
+		ADDED from C:\Users\kid14\Documents\Move-Alarm\Move-and-Move-Alarm\MAMTv1\app\src\main\AndroidManifest.xml:120:13-48
+activity#com.fatel.mamtv1.ProgressActivity
+ADDED from C:\Users\kid14\Documents\Move-Alarm\Move-and-Move-Alarm\MAMTv1\app\src\main\AndroidManifest.xml:123:9-126:20
+	android:label
+		ADDED from C:\Users\kid14\Documents\Move-Alarm\Move-and-Move-Alarm\MAMTv1\app\src\main\AndroidManifest.xml:125:13-60
+	android:name
+		ADDED from C:\Users\kid14\Documents\Move-Alarm\Move-and-Move-Alarm\MAMTv1\app\src\main\AndroidManifest.xml:124:13-45
+activity#com.fatel.mamtv1.EventActivity
+ADDED from C:\Users\kid14\Documents\Move-Alarm\Move-and-Move-Alarm\MAMTv1\app\src\main\AndroidManifest.xml:127:9-130:20
+	android:label
+		ADDED from C:\Users\kid14\Documents\Move-Alarm\Move-and-Move-Alarm\MAMTv1\app\src\main\AndroidManifest.xml:129:13-57
+	android:name
+		ADDED from C:\Users\kid14\Documents\Move-Alarm\Move-and-Move-Alarm\MAMTv1\app\src\main\AndroidManifest.xml:128:13-42
+activity#com.fatel.mamtv1.EventactAlarm
+ADDED from C:\Users\kid14\Documents\Move-Alarm\Move-and-Move-Alarm\MAMTv1\app\src\main\AndroidManifest.xml:131:9-134:20
+	android:label
+		ADDED from C:\Users\kid14\Documents\Move-Alarm\Move-and-Move-Alarm\MAMTv1\app\src\main\AndroidManifest.xml:133:13-66
+	android:name
+		ADDED from C:\Users\kid14\Documents\Move-Alarm\Move-and-Move-Alarm\MAMTv1\app\src\main\AndroidManifest.xml:132:13-42
 uses-sdk
-INJECTED from D:\Work\Year3 Term1\OOAD\Move-and-Move-Alarm\Move-and-Move-Alarm\MAMTv1\app\src\main\AndroidManifest.xml reason: use-sdk injection requested
-MERGED from [com.android.support:appcompat-v7:23.0.1] D:\Work\Year3 Term1\OOAD\Move-and-Move-Alarm\Move-and-Move-Alarm\MAMTv1\app\build\intermediates\exploded-aar\com.android.support\appcompat-v7\23.0.1\AndroidManifest.xml:20:5-43
-MERGED from [com.android.support:support-v4:23.0.1] D:\Work\Year3 Term1\OOAD\Move-and-Move-Alarm\Move-and-Move-Alarm\MAMTv1\app\build\intermediates\exploded-aar\com.android.support\support-v4\23.0.1\AndroidManifest.xml:20:5-43
-MERGED from [com.android.support:support-v4:23.0.1] D:\Work\Year3 Term1\OOAD\Move-and-Move-Alarm\Move-and-Move-Alarm\MAMTv1\app\build\intermediates\exploded-aar\com.android.support\support-v4\23.0.1\AndroidManifest.xml:20:5-43
-MERGED from [com.android.support:design:22.2.0] D:\Work\Year3 Term1\OOAD\Move-and-Move-Alarm\Move-and-Move-Alarm\MAMTv1\app\build\intermediates\exploded-aar\com.android.support\design\22.2.0\AndroidManifest.xml:20:5-43
-MERGED from [com.android.support:appcompat-v7:23.0.1] D:\Work\Year3 Term1\OOAD\Move-and-Move-Alarm\Move-and-Move-Alarm\MAMTv1\app\build\intermediates\exploded-aar\com.android.support\appcompat-v7\23.0.1\AndroidManifest.xml:20:5-43
-MERGED from [com.android.support:support-v4:23.0.1] D:\Work\Year3 Term1\OOAD\Move-and-Move-Alarm\Move-and-Move-Alarm\MAMTv1\app\build\intermediates\exploded-aar\com.android.support\support-v4\23.0.1\AndroidManifest.xml:20:5-43
-MERGED from [com.android.support:support-v4:23.0.1] D:\Work\Year3 Term1\OOAD\Move-and-Move-Alarm\Move-and-Move-Alarm\MAMTv1\app\build\intermediates\exploded-aar\com.android.support\support-v4\23.0.1\AndroidManifest.xml:20:5-43
-MERGED from [de.hdodenhof:circleimageview:1.2.1] D:\Work\Year3 Term1\OOAD\Move-and-Move-Alarm\Move-and-Move-Alarm\MAMTv1\app\build\intermediates\exploded-aar\de.hdodenhof\circleimageview\1.2.1\AndroidManifest.xml:5:5-7:41
+INJECTED from C:\Users\kid14\Documents\Move-Alarm\Move-and-Move-Alarm\MAMTv1\app\src\main\AndroidManifest.xml reason: use-sdk injection requested
+MERGED from [com.android.support:appcompat-v7:23.0.1] C:\Users\kid14\Documents\Move-Alarm\Move-and-Move-Alarm\MAMTv1\app\build\intermediates\exploded-aar\com.android.support\appcompat-v7\23.0.1\AndroidManifest.xml:20:5-43
+MERGED from [com.android.support:support-v4:23.1.0] C:\Users\kid14\Documents\Move-Alarm\Move-and-Move-Alarm\MAMTv1\app\build\intermediates\exploded-aar\com.android.support\support-v4\23.1.0\AndroidManifest.xml:20:5-43
+MERGED from [com.android.support:support-v4:23.1.0] C:\Users\kid14\Documents\Move-Alarm\Move-and-Move-Alarm\MAMTv1\app\build\intermediates\exploded-aar\com.android.support\support-v4\23.1.0\AndroidManifest.xml:20:5-43
+MERGED from [com.android.support:design:22.2.0] C:\Users\kid14\Documents\Move-Alarm\Move-and-Move-Alarm\MAMTv1\app\build\intermediates\exploded-aar\com.android.support\design\22.2.0\AndroidManifest.xml:20:5-43
+MERGED from [com.android.support:appcompat-v7:23.0.1] C:\Users\kid14\Documents\Move-Alarm\Move-and-Move-Alarm\MAMTv1\app\build\intermediates\exploded-aar\com.android.support\appcompat-v7\23.0.1\AndroidManifest.xml:20:5-43
+MERGED from [com.android.support:support-v4:23.1.0] C:\Users\kid14\Documents\Move-Alarm\Move-and-Move-Alarm\MAMTv1\app\build\intermediates\exploded-aar\com.android.support\support-v4\23.1.0\AndroidManifest.xml:20:5-43
+MERGED from [com.android.support:support-v4:23.1.0] C:\Users\kid14\Documents\Move-Alarm\Move-and-Move-Alarm\MAMTv1\app\build\intermediates\exploded-aar\com.android.support\support-v4\23.1.0\AndroidManifest.xml:20:5-43
+MERGED from [de.hdodenhof:circleimageview:1.2.1] C:\Users\kid14\Documents\Move-Alarm\Move-and-Move-Alarm\MAMTv1\app\build\intermediates\exploded-aar\de.hdodenhof\circleimageview\1.2.1\AndroidManifest.xml:5:5-7:41
+MERGED from [com.facebook.android:facebook-android-sdk:4.6.0] C:\Users\kid14\Documents\Move-Alarm\Move-and-Move-Alarm\MAMTv1\app\build\intermediates\exploded-aar\com.facebook.android\facebook-android-sdk\4.6.0\AndroidManifest.xml:24:5-26:41
+MERGED from [com.android.support:support-v4:23.1.0] C:\Users\kid14\Documents\Move-Alarm\Move-and-Move-Alarm\MAMTv1\app\build\intermediates\exploded-aar\com.android.support\support-v4\23.1.0\AndroidManifest.xml:20:5-43
+MERGED from [com.viewpagerindicator:library:2.4.1] C:\Users\kid14\Documents\Move-Alarm\Move-and-Move-Alarm\MAMTv1\app\build\intermediates\exploded-aar\com.viewpagerindicator\library\2.4.1\AndroidManifest.xml:3:5-42
+MERGED from [MAMTv1.app.libraries:volley:unspecified] C:\Users\kid14\Documents\Move-Alarm\Move-and-Move-Alarm\MAMTv1\app\build\intermediates\exploded-aar\MAMTv1.app.libraries\volley\unspecified\AndroidManifest.xml:7:5-43
+MERGED from [com.android.support:cardview-v7:23.1.0] C:\Users\kid14\Documents\Move-Alarm\Move-and-Move-Alarm\MAMTv1\app\build\intermediates\exploded-aar\com.android.support\cardview-v7\23.1.0\AndroidManifest.xml:20:5-43
+MERGED from [com.android.support:recyclerview-v7:23.1.0] C:\Users\kid14\Documents\Move-Alarm\Move-and-Move-Alarm\MAMTv1\app\build\intermediates\exploded-aar\com.android.support\recyclerview-v7\23.1.0\AndroidManifest.xml:20:5-43
+MERGED from [com.android.support:support-v4:23.1.0] C:\Users\kid14\Documents\Move-Alarm\Move-and-Move-Alarm\MAMTv1\app\build\intermediates\exploded-aar\com.android.support\support-v4\23.1.0\AndroidManifest.xml:20:5-43
+MERGED from [MAMTv1.app.libraries:CircularProgressBar:unspecified] C:\Users\kid14\Documents\Move-Alarm\Move-and-Move-Alarm\MAMTv1\app\build\intermediates\exploded-aar\MAMTv1.app.libraries\CircularProgressBar\unspecified\AndroidManifest.xml:5:5-7:41
 	android:targetSdkVersion
-		INJECTED from D:\Work\Year3 Term1\OOAD\Move-and-Move-Alarm\Move-and-Move-Alarm\MAMTv1\app\src\main\AndroidManifest.xml
-		INJECTED from D:\Work\Year3 Term1\OOAD\Move-and-Move-Alarm\Move-and-Move-Alarm\MAMTv1\app\src\main\AndroidManifest.xml
+		INJECTED from C:\Users\kid14\Documents\Move-Alarm\Move-and-Move-Alarm\MAMTv1\app\src\main\AndroidManifest.xml
+		INJECTED from C:\Users\kid14\Documents\Move-Alarm\Move-and-Move-Alarm\MAMTv1\app\src\main\AndroidManifest.xml
 	android:minSdkVersion
-		INJECTED from D:\Work\Year3 Term1\OOAD\Move-and-Move-Alarm\Move-and-Move-Alarm\MAMTv1\app\src\main\AndroidManifest.xml
-		INJECTED from D:\Work\Year3 Term1\OOAD\Move-and-Move-Alarm\Move-and-Move-Alarm\MAMTv1\app\src\main\AndroidManifest.xml
+		INJECTED from C:\Users\kid14\Documents\Move-Alarm\Move-and-Move-Alarm\MAMTv1\app\src\main\AndroidManifest.xml
+		INJECTED from C:\Users\kid14\Documents\Move-Alarm\Move-and-Move-Alarm\MAMTv1\app\src\main\AndroidManifest.xml

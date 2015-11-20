@@ -142,21 +142,25 @@ tools:context="com.fatel.mamtv1.AlarmFragment">
         android:layout_height="wrap_content"
         android:orientation="horizontal">
         <CheckBox
+            android:id="@+id/chkboxSun"
             android:layout_width="70dp"
             android:layout_height="wrap_content"
             android:text="Sun"
             />
         <CheckBox
+            android:id="@+id/chkboxMon"
             android:layout_width="70dp"
             android:layout_height="wrap_content"
             android:text="Mon"
             />
         <CheckBox
+            android:id="@+id/chkboxTue"
             android:layout_width="70dp"
             android:layout_height="wrap_content"
             android:text="Tue"
             />
         <CheckBox
+            android:id="@+id/chkboxWed"
             android:layout_width="70dp"
             android:layout_height="wrap_content"
             android:text="Wed"
@@ -167,16 +171,19 @@ tools:context="com.fatel.mamtv1.AlarmFragment">
         android:layout_height="wrap_content"
         android:orientation="horizontal">
         <CheckBox
+            android:id="@+id/chkboxThu"
             android:layout_width="70dp"
             android:layout_height="wrap_content"
             android:text="Thu"
             />
         <CheckBox
+            android:id="@+id/chkboxFri"
             android:layout_width="70dp"
             android:layout_height="wrap_content"
             android:text="Fri"
             />
         <CheckBox
+            android:id="@+id/chkboxSat"
             android:layout_width="70dp"
             android:layout_height="wrap_content"
             android:text="Sat"
@@ -228,7 +235,6 @@ tools:context="com.fatel.mamtv1.AlarmFragment">
     </LinearLayout>
 </LinearLayout>
 <Button
-    android:id="@+id/buttonSet"
     android:layout_below="@id/seq_blk"
     android:text="Set"
     android:gravity="center"
@@ -236,7 +242,7 @@ tools:context="com.fatel.mamtv1.AlarmFragment">
     android:textColor="#FFF5F5"
     android:textSize="20sp"
     android:layout_gravity="center"
-    android:background="@drawable/buttonshape"
+    android:background="@drawable/buttonshape3"
     android:shadowColor="#919191"
     android:shadowDx="3"
     android:shadowDy="3"
@@ -246,5 +252,6 @@ tools:context="com.fatel.mamtv1.AlarmFragment">
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:textAllCaps="false"
+    android:id="@+id/buttonSet"
     />
-</RelativeLayout><!-- From: file:/D:/Work/Year3%20Term1/OOAD/Move-and-Move-Alarm/Move-and-Move-Alarm/MAMTv1/app/src/main/res/layout/fragment_alarm.xml -->
+</RelativeLayout><!-- From: file:/C:/Users/kid14/Documents/Move-Alarm/Move-and-Move-Alarm/MAMTv1/app/src/main/res/layout/fragment_alarm.xml -->
